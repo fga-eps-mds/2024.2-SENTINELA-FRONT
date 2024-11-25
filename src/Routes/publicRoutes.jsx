@@ -8,6 +8,7 @@ const PublicRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<Login />} />
+      <Route path="/login" element={<Login />} />
       <Route path="/filiacao" element={<MemberShip />} />
       <Route path="/recuperar-senha" element={<PasswordRecovery />} />
       <Route path="/trocar-senha/:token" element={<ChangePasswordPage />} />
