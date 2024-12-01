@@ -27,67 +27,55 @@
     align-self: flex-start;
 }
 .carteirinha-info div{
-    align-content: flex-start;
-    background-color: white;
     border-radius: 5px;
     font-size: 11px;
 }
 
 .titular div{
     margin-top: 3px;
-    text-align: center;
-    width: 300px;
-}
-
-.dataDeNascimento div{
-    margin-top: 3px;
-    text-align: center;
-    width: 120px;
-
-}
-
-.dataExpedicao div{
-    margin-top: 3px;
-    text-align: center;
-    width: 120px;
-    
-
-}
-
-.CPF div{
-    margin-top: 3px;
-    text-align: center;
-    width: 120px;
-}
-
-.validade div{
-    margin-top: 3px;
-    text-align: center;
-    margin-left: 0px;
-    width: 120px;
+    text-align: start;
+    width: 300px;background-color: white;
+    border-radius: 3px;
+    padding: 5px 28px;
 }
 
 .titular{
     font-size: 11px;
-
 }
 
-.dataDeNascimento{
-    font-size: 11px;
+.datas{
+    display: flex;
     margin-top: 30px;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.teste{
+    background-color: white;
+    border-radius: 3px;
+    padding: 5px 28px;
+    margin-top: 5px;
 }
 
 .dataExpedicao{
+    display: 1;
     font-size: 11px;
-
 }
 
-.CPF{
-    font-size: 11px;
+.dataDeNascimento{
+    display: 1;
+}
 
+.CPFValidade{
+    display: flex;
+    margin-top: 30px;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
 }
 
 .validade{
+    display: 1;
     font-size: 11px;
-
 }

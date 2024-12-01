@@ -26,24 +26,24 @@ const Carteirinha = () => {
                         <strong>TITULAR: </strong>
                         <div>{list.titular}</div>
                         </body>
-                        <body className="dataDeNascimento">
-                        <strong>DATA DE NASCIMENTO: </strong>
-                        <div>{list.dataDeNascimento}</div>
-                        </body>
-                        <body className="dataExpedicao">
-                        <strong>DATA DE EXPEDIÇÃO: </strong>
-                        <div>{list.dataExpedicao}</div>
-                        </body>
-                        <body className="CPF">
-                        <strong>CPF: </strong>
-                        <div>{list.CPF}</div>
-                        </body>
-                        <body className="validade">
-                        <strong>VALIDADE: </strong>
-                        <div>{list.validade}</div>
-                        </body>
+                        <div className="datas">
+                        <div className="dataDeNascimento">
+                        <p > <strong>DATA DE NASCIMENTO:</strong> </p> <br/> <p><spam className="teste"> {list.dataDeNascimento}</spam> </p>
+                        </div>
+                        <div className="dataExpedicao">
+                        <p > <strong>DATA DE EXPEDIÇÃO:</strong> </p> <br/> <p><spam className="teste"> {list.dataExpedicao}</spam> </p>
+                        </div>
+                        </div>
+                        <div className="CPFValidade">
+                        <div className="CPF">
+                        <p><strong>CPF:</strong></p> <br/> <p> <spam className="teste"> {list.CPF}</spam> </p>
+                        </div>
+                        <div className="validade">
+                        <p><strong>VALIDADE:</strong></p> <br/> <p> <spam className="teste"> {list.validade}</spam> </p>
+                        </div>
+                        </div>
                         <body>
-                        <img src = "LogoSentinela.png"/>   
+                        <img src="LogoSentinela.png"/>
                         </body>
                     </div>
                 </div>
