@@ -26,50 +26,68 @@
     margin-left: 20px;
     align-self: flex-start;
 }
-.carteirinha-info div {
+.carteirinha-info div{
+    align-content: flex-start;
     background-color: white;
     border-radius: 5px;
     font-size: 11px;
 }
 
 .titular div{
-    width: 63%;
+    margin-top: 3px;
+    text-align: center;
+    width: 300px;
 }
 
 .dataDeNascimento div{
+    margin-top: 3px;
+    text-align: center;
+    width: 120px;
 
 }
 
 .dataExpedicao div{
+    margin-top: 3px;
+    text-align: center;
+    width: 120px;
+    
 
 }
 
 .CPF div{
+    margin-top: 3px;
+    text-align: center;
     width: 120px;
 }
 
 .validade div{
+    margin-top: 3px;
     text-align: center;
     margin-left: 0px;
     width: 120px;
 }
 
 .titular{
+    font-size: 11px;
 
 }
 
 .dataDeNascimento{
-    margin-top: 10px;
+    font-size: 11px;
+    margin-top: 30px;
 }
 
 .dataExpedicao{
+    font-size: 11px;
 
 }
 
 .CPF{
+    font-size: 11px;
 
 }
 
 .validade{
+    font-size: 11px;
 
 }

@@ -7,11 +7,12 @@ import sentinela_logo from "../../../assets/sentinela-logo.png";
 import { checkAction, usePermissions } from "../../../Utils/permission";
 import LabeledTextField from "../../../../src/Components/LabeledTextField";
 import DataSelect from "../../../Components/DataSelect/index.jsx";
+import LogoSentinela from "../../../assets/sindpol-logo.png";
 
 const Carteirinha = () => {
     const { user } = useAuth();
     const permissions = usePermissions();
-    const list = {titular:"Dannyeclisson", dataDeNascimento:"24/11/2001", dataExpedicao:"21/06/2019", CPF:"07488558154", validade:"teste"}
+    const list = {titular:"Dannyeclisson", dataDeNascimento:"24/11/2001", dataExpedicao:"21/06/2019", CPF:"074.885.581-54", validade:"teste"}
     return (
         user && (
             <section className="container">
@@ -40,6 +41,9 @@ const Carteirinha = () => {
                         <body className="validade">
                         <strong>VALIDADE: </strong>
                         <div>{list.validade}</div>
+                        </body>
+                        <body>
+                        <img src = "LogoSentinela.png"/>   
                         </body>
                     </div>
                 </div>
