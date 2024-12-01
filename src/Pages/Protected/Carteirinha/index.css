@@ -1,14 +1,75 @@
 .carteirinha-header {
-    text-align: center;
+    align-self: start;
     margin-bottom: 20px;
+    margin-left: 30px;
 }
 
-.carteirinha-header h1{
-    font-size: 18px;
-    color: #AE883C;
-    margin: 0;
+.carteirinha-header h1 {
+    font-weight: 900;
+    letter-spacing: -2.5px;
+    line-height: 123.5%;
+    font-size: 50px;
+    color: #AE883C !important;
+    margin: -12px;
+    margin-top: 30px;
+    margin-left: -12px;
+    text-shadow: 0px 4px 4px rgba(226, 183, 61, 0.25);
+}
+.carteirinha-header p {
+    color: #341F14;
+    font-size: 11px;
+    margin-left: -10px;
+    font-weight: bold;
+}
+.carteirinha-info {
+    margin-top: -14px;
+    margin-left: 20px;
+    align-self: flex-start;
+}
+.carteirinha-info div {
+    background-color: white;
+    border-radius: 5px;
+    font-size: 11px;
 }
 
-.carteirinha-info{
+.titular div{
+    width: 63%;
+}
+
+.dataDeNascimento div{
+
+}
+
+.dataExpedicao div{
+
+}
+
+.CPF div{
+    width: 120px;
+}
+
+.validade div{
+    text-align: center;
+    margin-left: 0px;
+    width: 120px;
+}
+
+.titular{
+
+}
+
+.dataDeNascimento{
+    margin-top: 10px;
+}
+
+.dataExpedicao{
+
+}
+
+.CPF{
+
+}
+
+.validade{
 
 }

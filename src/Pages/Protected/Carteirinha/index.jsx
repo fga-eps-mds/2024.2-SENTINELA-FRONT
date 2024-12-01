@@ -15,20 +15,33 @@ const Carteirinha = () => {
     return (
         user && (
             <section className="container">
-                <div className="row">
-                    <card>
-                        <header className="carteirinha-header">
-                            <h1>SINDPOL-DF</h1>
-                            <p>SINDICATO DOS POLICIAIS PENAIS DO DISTRITO FEDERAL</p>
-                        </header>
-                        <div className="carteirinha-info">
-                        <p><strong>TITULAR: </strong>{list.titular} </p>
-                        <p><strong>DATA DE NASCIMENTO: </strong>{list.dataDeNascimento} </p>
-                        <p><strong>DATA DE EXPEDIÇÃO: </strong>{list.dataExpedicao} </p>
-                        <p><strong>CPF: </strong>{list.CPF} </p>
-                        <p><strong>VALIDADE: </strong>{list.validade} </p>
-                        </div>
-                    </card>
+                <div className="card">
+                    <header className="carteirinha-header">
+                        <h1>SINDPOL-DF</h1>
+                        <p>SINDICATO DOS POLICIAIS PENAIS DO DISTRITO FEDERAL</p>
+                    </header>
+                    <div className="carteirinha-info">
+                        <body className="titular">
+                        <strong>TITULAR: </strong>
+                        <div>{list.titular}</div>
+                        </body>
+                        <body className="dataDeNascimento">
+                        <strong>DATA DE NASCIMENTO: </strong>
+                        <div>{list.dataDeNascimento}</div>
+                        </body>
+                        <body className="dataExpedicao">
+                        <strong>DATA DE EXPEDIÇÃO: </strong>
+                        <div>{list.dataExpedicao}</div>
+                        </body>
+                        <body className="CPF">
+                        <strong>CPF: </strong>
+                        <div>{list.CPF}</div>
+                        </body>
+                        <body className="validade">
+                        <strong>VALIDADE: </strong>
+                        <div>{list.validade}</div>
+                        </body>
+                    </div>
                 </div>
 
 
