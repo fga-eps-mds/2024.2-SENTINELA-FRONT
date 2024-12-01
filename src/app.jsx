@@ -6,6 +6,7 @@ import theme from "./Styles/global";
 import { ThemeProvider } from "@mui/material";
 import Routes from "./Routes";
 import SideBar from "./Components/SideBar";
+import Footer from "./Components/Footer";
 import { BrowserRouter } from "react-router-dom";
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
                 <Routes />
               </div>
             </div>
+            <Footer />
           </BrowserRouter>
         </AuthProvider>
       </ThemeProvider>
