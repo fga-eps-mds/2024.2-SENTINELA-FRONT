@@ -97,6 +97,14 @@ export default function SideBar({ fullHeight = true }) {
         setIsSideBarOpen(false);
       }}
     />,
+    <SideButton
+      key="vantagens"
+      text="VANTAGENS"
+      onClick={() => {
+        navigate("/vantagens");
+        setIsSideBarOpen(false);
+      }}
+    />,
   ];
 
   return (
