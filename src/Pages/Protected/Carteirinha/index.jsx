@@ -17,13 +17,17 @@ const Carteirinha = () => {
             <section className="container">
                 <div className="row">
                     <card>
+                        <header className="carteirinha-header">
+                            <h1>SINDPOL-DF</h1>
+                            <p>SINDICATO DOS POLICIAIS PENAIS DO DISTRITO FEDERAL</p>
+                        </header>
+                        <div className="carteirinha-info">
                         <p><strong>TITULAR: </strong>{list.titular} </p>
                         <p><strong>DATA DE NASCIMENTO: </strong>{list.dataDeNascimento} </p>
                         <p><strong>DATA DE EXPEDIÇÃO: </strong>{list.dataExpedicao} </p>
                         <p><strong>CPF: </strong>{list.CPF} </p>
                         <p><strong>VALIDADE: </strong>{list.validade} </p>
-
-
+                        </div>
                     </card>
                 </div>
 
