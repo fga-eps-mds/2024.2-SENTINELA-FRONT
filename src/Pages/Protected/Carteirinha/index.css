@@ -6,51 +6,53 @@
     background-color: #fff;
     min-height: 100vh;
     gap: 15px;
+    box-sizing: border-box; /* Garante que o padding não afete o tamanho total */
 }
 
 .carteirinha {
     background: #eae3d7;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: 650px;
+    width: 90%;  /* Ajuste a largura para 90% da tela */
+    max-width: 650px; /* Garantindo que não ultrapasse 650px */
     padding: 20px 30px;
     text-align: center;
     font-family: Arial, sans-serif;
-}
-
-.carteirinha-header {
-    margin-bottom: 20px;
 }
 
 .carteirinha-header h1 {
     font-weight: 900;
     letter-spacing: -2.5px;
     line-height: 123.5%;
-    font-size: 50px;
+    font-size: 3rem; /* Ajuste para uma unidade mais fluida */
     color: #AE883C !important;
     margin: -12px;
     margin-top: 30px;
     margin-left: -12px;
     text-shadow: 0px 4px 4px rgba(226, 183, 61, 0.25);
 }
+
 .carteirinha-header p {
     color: #341F14;
-    font-size: 11px;
+    font-size: 0.9rem; /* Usando rem para flexibilidade */
     margin-top: 10px;
     margin-left: -10px;
     font-weight: 500;
 }
-.Sind{
+
+.Sind {
     color: #AE883C !important;
-    font-size: 14px !important;
+    font-size: 1rem !important;
     font-weight: bold !important;
     text-shadow: 0px 4px 4px rgba(226, 183, 61, 0.25);
 }
+
 .info-and-badge {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
     gap: 20px;
+    flex-wrap: wrap; /* Permite que os itens quebrem a linha em telas pequenas */
 }
 
 .carteirinha-info {
@@ -61,12 +63,11 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 10px;
-    
 }
 
 .info-block {
     text-align: left;
-    font-size: 14px;
+    font-size: 1rem;
 }
 
 .info-block strong {
@@ -75,7 +76,7 @@
 }
 
 .info-block span {
-    font-size: 13px;
+    font-size: 0.9rem;
     color: #333;
 }
 
@@ -92,7 +93,7 @@
 }
 
 .badge-section p {
-    font-size: 12px;
+    font-size: 1rem;
     font-weight: bold;
     color: #555;
 }
@@ -105,26 +106,27 @@
 .qr-code {
     width: 200px;
     margin-bottom: 10px;
-    border: 7px solid #d49a3c; 
-    border-radius: 5px; 
-    padding: 5px; 
+    border: 7px solid #d49a3c;
+    border-radius: 5px;
+    padding: 5px;
     background-color: #fff;
 }
-.qr-code-numero{
+
+.qr-code-numero {
     font-weight: 900;
     line-height: 123.5%;
-    font-size: 50px;
+    font-size: 3rem; /* Ajustado para escala fluida */
     color: #341F14 !important;
     margin: -12px;
     text-shadow: 0px 4px 4px rgba(226, 183, 61, 0.25);
-
 }
 
 .carteirinha-footer {
     color: #341F14;
-    font-size: 12px;
+    font-size: 1rem;
     margin-top: 10px;
-    font-weight:300;
+    font-weight: 300;
+    text-align: center; /* Garantindo centralização */
 }
 
 .social-media {
@@ -137,63 +139,81 @@
 }
 
 .social-icon {
-    font-size: 20px; 
+    font-size: 1.5rem; /* Ajuste no tamanho */
     color: #333;
     cursor: pointer;
     transition: color 0.3s ease;
 }
 
 .social-icon:hover {
-    color: #d49a3c; 
+    color: #d49a3c;
 }
 
 .download-button {
-    padding: 12px 75px; 
-    background-color: #EAE3D7; 
-    color: #7F5539; 
-    font-size: 16px; 
-    font-weight: bold; 
-    border: none; 
-    border: 3px solid #7F5539; 
-    border-radius: 30px; 
-    cursor: pointer; 
-    transition: background-color 0.3s ease, transform 0.3s ease; 
+    padding: 12px 75px;
+    background-color: #EAE3D7;
+    color: #7F5539;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border: 3px solid #7F5539;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
     text-transform: uppercase;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    display: inline-block; 
+    display: inline-block;
 }
 
 .download-button:hover {
-    background-color: #EAE3D7; 
-    transform: scale(1.05); 
+    background-color: #EAE3D7;
+    transform: scale(1.05);
 }
 
 .download-button:focus {
-    outline: none; /* Remove o contorno padrão do foco */
+    outline: none;
 }
 
-.info-color{
+.info-color {
     background-color: white;
     border-radius: 4px;
     padding: 5px 28px;
     margin-top: 5px;
-
 }
+
 .social-icon {
-    width: 20px; 
+    width: 20px;
     height: 20px;
 }
 
 .footer-logos {
     display: flex;
-    justify-content: center;
-    margin-left: 500px;
-    
+    justify-content: flex-end; /* Ajustando para o canto direito */
+    gap: 10px;
+    margin-left: 20px;
 }
 
 .footer-logo {
-    width: 50px; 
+    width: 50px;
     height: auto;
-   
+}
 
+/* Responsividade */
+@media (max-width: 768px) {
+    .carteirinha {
+        width: 95%; 
+    }
+
+    .carteirinha-header h1 {
+        font-size: 2.5rem; /* Menor em telas menores */
+    }
+
+    .social-icon {
+        font-size: 1.2rem; /* Tamanho menor para ícones */
+    }
+
+    .footer-logos {
+        justify-content: center; /* Centraliza as logos */
+        margin-left: 0;
+    }
 }
