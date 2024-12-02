@@ -14,12 +14,17 @@ const Carteirinha = () => {
 
   const downloadPDF = async () => {
     const element = cardRef.current;
-    
+
     if (!element) {
       console.error("Elemento não encontrado!");
       return;
     }
-  
+
+    const button = element.querySelector(".download-button");
+    if (button) {
+      button.style.display = "none"; // Oculta o botão
+    }
+
     const scale = 3;
     const canvas = await html2canvas(element, {
       scale,
@@ -27,17 +32,20 @@ const Carteirinha = () => {
       logging: true,
       allowTaint: true,
       scrollX: 0,
-      scrollY: -window.scrollY,  
+      scrollY: -window.scrollY,
     });
-  
+
     const imgData = canvas.toDataURL("image/png");
-  
+
     const pdf = new jsPDF("p", "mm", "a4");
-    const cardWidth = 210;  
+    const cardWidth = 210;
     const cardHeight = (canvas.height * cardWidth) / canvas.width;
-  
-    pdf.addImage(imgData, "PNG", 10, 10, cardWidth, cardHeight); 
+
+    pdf.addImage(imgData, "PNG", 10, 5, cardWidth, cardHeight);
     pdf.save("carteirinha.pdf");
+
+    button.style.display = ""; // Mostra o botão novamente
+
   };
   
   
