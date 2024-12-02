@@ -63,7 +63,7 @@ const Carteirinha = () => {
             <div className="info-line">
               <div className="info-block">
                 <strong>TITULAR:</strong><br />
-                <p className="info-color"><span>{list.titular}</span></p>
+                <p className="info-color-titular"><span>{list.titular}</span></p>
               </div>
             </div>
             <div className="info-line">
@@ -106,7 +106,7 @@ const Carteirinha = () => {
         </footer>
         <div className="qr-section">
           <img src={qrCode} alt="QR Code" className="qr-code" />
-          <p className="qr-code-numero">0000</p>
+          <p className="qr-code-numero">(61) 3321-1949</p>
         </div>
   
         <footer className="carteirinha-footer">
