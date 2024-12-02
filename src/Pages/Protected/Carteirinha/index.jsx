@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import "./index.css";
 
 import { jsPDF } from "jspdf";
@@ -11,6 +11,22 @@ import { FaFacebook, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
 
 const Carteirinha = () => {
   const cardRef = useRef(null);
+  const [membershipData, setMembershipData] = useState(null);
+
+  // Fetch Membership data
+  useEffect(() => {
+    const fetchMembership = async () => {
+      try {
+        const response = await fetch("http://localhost:3001/membership");
+        const data = await response.json();
+        setMembershipData(data);
+      } catch (error) {
+        console.error("Erro ao buscar os dados do membership:", error);
+      }
+    };
+
+    fetchMembership();
+  }, []);
 
   const downloadPDF = async () => {
     const element = cardRef.current;
@@ -45,17 +61,19 @@ const Carteirinha = () => {
     pdf.save("carteirinha.pdf");
 
     button.style.display = ""; // Mostra o botão novamente
+  };
 
-  };
-  
-  
-  const list = {
-    titular: "Dannyeclisson",
-    dataDeNascimento: "24/11/2001",
-    dataExpedicao: "21/06/2019",
-    CPF: "074.885.581-54",
-    validade: "30/11/2024",
-  };
+  // Render loading state
+  if (!membershipData) {
+    return <div>Carregando dados...</div>;
+  }
+
+  const {
+    name,
+    birthDate,
+    cpf,
+    expeditionDate,
+  } = membershipData;
 
   return (
     <div className="carteirinha-container" ref={cardRef}>
@@ -64,38 +82,38 @@ const Carteirinha = () => {
           <h1>SINDPOL-DF</h1>
           <p>SINDICATO DOS POLICIAIS PENAIS DO DISTRITO FEDERAL</p>
         </header>
-  
+
         {/* Informações e Badge */}
         <div className="info-and-badge">
           <div className="carteirinha-info">
             <div className="info-line">
               <div className="info-block">
                 <strong>TITULAR:</strong><br />
-                <p className="info-color-titular"><span>{list.titular}</span></p>
+                <p className="info-color-titular"><span>{name}</span></p>
               </div>
             </div>
             <div className="info-line">
               <div className="info-block">
                 <strong>DATA DE NASCIMENTO:</strong><br />
-                <p className="info-color"><span>{list.dataDeNascimento}</span></p>
+                <p className="info-color"><span>{new Date(birthDate).toLocaleDateString()}</span></p>
               </div>
               <div className="info-block">
                 <strong>DATA DE EXPEDIÇÃO:</strong><br />
-                <p className="info-color"><span>{list.dataExpedicao}</span></p>
+                <p className="info-color"><span>{new Date(expeditionDate).toLocaleDateString()}</span></p>
               </div>
             </div>
             <div className="info-line">
               <div className="info-block">
                 <strong>CPF:</strong><br />
-                <p className="info-color"><span>{list.CPF}</span></p>
+                <p className="info-color"><span>{cpf}</span></p>
               </div>
               <div className="info-block">
                 <strong>VALIDADE:</strong><br />
-                <p className="info-color"><span>{list.validade}</span></p>
+                <p className="info-color"><span>30/11/2024</span></p>
               </div>
             </div>
           </div>
-  
+
           {/* Badge Section */}
           <div className="badge-section">
             <img src={badgeLogo} alt="Sindicalizado Badge" className="badge-logo" />
@@ -103,7 +121,7 @@ const Carteirinha = () => {
           </div>
         </div>
       </div>
-  
+
       {/* Segunda Parte da Carteirinha */}
       <div className="carteirinha">
         <footer className="carteirinha-footer">
@@ -116,7 +134,7 @@ const Carteirinha = () => {
           <img src={qrCode} alt="QR Code" className="qr-code" />
           <p className="qr-code-numero">(61) 3321-1949</p>
         </div>
-  
+
         <footer className="carteirinha-footer">
           <p>sindpol.org.br / contato@sindpol.org.br</p>
           <div className="social-media">
@@ -132,12 +150,11 @@ const Carteirinha = () => {
           </div>
         </footer>
       </div>
-  
+
       {/* Botão */}
       <button onClick={downloadPDF} className="download-button">BAIXAR CARTEIRINHA</button>
     </div>
   );
-  
 };
 
 export default Carteirinha;
