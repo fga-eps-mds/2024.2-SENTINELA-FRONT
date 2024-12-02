@@ -6,6 +6,7 @@ import UserCreatePage from "../Pages/Protected/Users/userCreatePage";
 import UserListPage from "../Pages/Protected/Users/userListPage";
 import UserHubPage from "../Pages/Protected/Users/userHubPage";
 import UserUpdatePage from "../Pages/Protected/Users/userUpdatePage";
+import UserUpdate from "../Pages/Protected/Users/userUpdate";
 import Supplier from "../Pages/Protected/Supplier/CreateSupplier";
 import ListSupplier from "../Pages/Protected/Supplier/ListSupplier";
 import ViewSupplier from "../Pages/Protected/Supplier/UpdateSupplier";
@@ -77,6 +78,9 @@ const ProtectedRoutes = () => {
           />
         }
       />
+      
+      <Route path="/user" element={<UserUpdate />} />
+
       <Route path="/usuarios/editar/:nome" element={<UserUpdatePage />} />
       <Route
         path="/usuarios"
@@ -88,6 +92,7 @@ const ProtectedRoutes = () => {
           />
         }
       />
+
       <Route path="/filiados/:id" element={<ViewMembershipPage />} />
       <Route
         path="/usuarios/hub"

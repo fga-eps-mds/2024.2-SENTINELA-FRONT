@@ -32,6 +32,21 @@ export const getUsers = async () => {
   }
 };
 
+export const getLoggedUser = async () => {
+  try {
+    const token = getToken();
+    const response = await APIUsers.get(`/user`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error(`Erro ao buscar usuário com ID ${id}:`, error);
+  }
+};
+
+
 export const getUserById = async (id) => {
   try {
     const token = getToken();
@@ -104,6 +119,37 @@ export const patchUserById = async (id, updatedUser) => {
 
     const response = await APIUsers.patch(
       `/users/patch/${id}`,
+      { updatedUser },
+      {
+        params: {
+          userId: `${user._id}`,
+          moduleName: "users",
+          action: "update",
+        },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error(`Erro ao atualizar usuário com ID ${id}:`, error);
+    throw error;
+  }
+};
+
+export const update = async (id, updatedUser) => {
+  try {
+    const token = getToken();
+    const user = getUser();
+
+    if (!user || !user._id) {
+      throw new Error("Usuário não encontrado ou sem ID.");
+    }
+
+    const response = await APIUsers.put(
+      `/user`,
       { updatedUser },
       {
         params: {
