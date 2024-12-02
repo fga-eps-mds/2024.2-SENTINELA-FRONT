@@ -1,7 +1,25 @@
+.carteirinha-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #fff;
+    min-height: 100vh;
+    gap: 15px;
+}
+
+.carteirinha {
+    background: #eae3d7;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 650px;
+    padding: 20px 30px;
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
 .carteirinha-header {
-    align-self: start;
     margin-bottom: 20px;
-    margin-left: 30px;
 }
 
 .carteirinha-header h1 {
@@ -18,64 +36,164 @@
 .carteirinha-header p {
     color: #341F14;
     font-size: 11px;
+    margin-top: 10px;
     margin-left: -10px;
-    font-weight: bold;
+    font-weight: 500;
 }
-.carteirinha-info {
-    margin-top: -14px;
-    margin-left: 20px;
-    align-self: flex-start;
+.Sind{
+    color: #AE883C !important;
+    font-size: 14px !important;
+    font-weight: bold !important;
+    text-shadow: 0px 4px 4px rgba(226, 183, 61, 0.25);
 }
-.carteirinha-info div{
-    border-radius: 5px;
-    font-size: 11px;
-}
-
-.titular div{
-    margin-top: 3px;
-    text-align: start;
-    width: 300px;background-color: white;
-    border-radius: 3px;
-    padding: 5px 28px;
-}
-
-.titular{
-    font-size: 11px;
-}
-
-.datas{
+.info-and-badge {
     display: flex;
-    margin-top: 30px;
+    align-items: flex-start;
     justify-content: space-between;
-    gap: 10px;
+    gap: 20px;
+}
+
+.carteirinha-info {
+    flex: 2;
+}
+
+.info-line {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    
+}
+
+.info-block {
+    text-align: left;
+    font-size: 14px;
+}
+
+.info-block strong {
+    font-weight: bold;
+    color: #555;
+}
+
+.info-block span {
+    font-size: 13px;
+    color: #333;
+}
+
+.badge-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+}
+
+.badge-logo {
+    width: 150px;
     margin-bottom: 10px;
 }
 
-.teste{
+.badge-section p {
+    font-size: 12px;
+    font-weight: bold;
+    color: #555;
+}
+
+.qr-section {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.qr-code {
+    width: 200px;
+    margin-bottom: 10px;
+    border: 7px solid #d49a3c; 
+    border-radius: 5px; 
+    padding: 5px; 
+    background-color: #fff;
+}
+.qr-code-numero{
+    font-weight: 900;
+    line-height: 123.5%;
+    font-size: 50px;
+    color: #341F14 !important;
+    margin: -12px;
+    text-shadow: 0px 4px 4px rgba(226, 183, 61, 0.25);
+
+}
+
+.carteirinha-footer {
+    color: #341F14;
+    font-size: 12px;
+    margin-top: 10px;
+    font-weight:300;
+}
+
+.social-media {
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.social-icon {
+    font-size: 20px; 
+    color: #333;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.social-icon:hover {
+    color: #d49a3c; 
+}
+
+.download-button {
+    padding: 12px 75px; 
+    background-color: #EAE3D7; 
+    color: #7F5539; 
+    font-size: 16px; 
+    font-weight: bold; 
+    border: none; 
+    border: 3px solid #7F5539; 
+    border-radius: 30px; 
+    cursor: pointer; 
+    transition: background-color 0.3s ease, transform 0.3s ease; 
+    text-transform: uppercase;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: inline-block; 
+}
+
+.download-button:hover {
+    background-color: #EAE3D7; 
+    transform: scale(1.05); 
+}
+
+.download-button:focus {
+    outline: none; /* Remove o contorno padrão do foco */
+}
+
+.info-color{
     background-color: white;
-    border-radius: 3px;
+    border-radius: 4px;
     padding: 5px 28px;
     margin-top: 5px;
+
+}
+.social-icon {
+    width: 20px; 
+    height: 20px;
 }
 
-.dataExpedicao{
-    display: 1;
-    font-size: 11px;
-}
-
-.dataDeNascimento{
-    display: 1;
-}
-
-.CPFValidade{
+.footer-logos {
     display: flex;
-    margin-top: 30px;
-    justify-content: space-between;
-    gap: 10px;
-    margin-bottom: 10px;
+    justify-content: center;
+    margin-left: 500px;
+    
 }
 
-.validade{
-    display: 1;
-    font-size: 11px;
+.footer-logo {
+    width: 50px; 
+    height: auto;
+   
+
 }
