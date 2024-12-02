@@ -1,5 +1,5 @@
 const User = require("../Models/userSchema");
-
+const membership = await Membership.find('');
 const bcrypt = require("bcryptjs");
 const {
     generateToken,
@@ -290,6 +290,16 @@ const changePasswordInProfile = async (req, res) => {
         return res.status(500).send(error);
     }
 };
+const teste = async (req, res) => {
+    try {
+        const { status } = req.query;
+        const membership = await Membership.find({ religion: { $ne: null } });
+        return res.status(200).send(membership);
+    } catch (error) {
+        return res.status(400).send({ error });
+    }
+    return res.status(201).send('Xabl2');
+};
 
 module.exports = {
     signUp,
@@ -301,4 +311,5 @@ module.exports = {
     recoverPassword,
     changePassword,
     changePasswordInProfile,
+    teste,
 };

@@ -60,22 +60,26 @@ const createMembershipForm = async (req, res) => {
 };
 
 const getMembershipForm = async (req, res) => {
-    const sindRole = await Role.findOne({ name: "sindicalizado" });
-    if (!sindRole) {
-        console.error(
-            'Role "sindicalizado" não encontrada. Crie a role antes de adicionar o usuário administrador.'
-        );
-        return;
-    }
     try {
+        const sindRole = await Role.findOne({ name: "sindicalizado" });
+        if (!sindRole) {
+            console.error('Role "sindicalizado" não encontrada.');
+            // prettier-ignore
+            return res
+            .status(404).send({ error: 'Role "sindicalizado" não encontrada.' });
+        }
+
         const { status } = req.query;
-        const query = status
-            ? { role: sindRole._id, status: status }
-            : { role: null };
+        const query = {
+            role: sindRole._id,
+            ...(status && { status }), // Adiciona status apenas se existir
+        };
+
         const membership = await Membership.find(query);
         return res.status(200).send(membership);
     } catch (error) {
-        return res.status(400).send({ error });
+        console.error("Erro no getMembershipForm:", error);
+        return res.status(400).send({ error: error.message });
     }
 };
 
