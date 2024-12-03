@@ -1,11 +1,8 @@
 const User = require("../Models/userSchema");
-<<<<<<< HEAD
-const membership = await Membership.find('');
-=======
 const jwt = require("jsonwebtoken");
 const { SECRET } = process.env;
 
->>>>>>> 2125dc2b78880eae6e6de5b1dc191f67d6d7e254
+
 const bcrypt = require("bcryptjs");
 const {
     generateToken,
