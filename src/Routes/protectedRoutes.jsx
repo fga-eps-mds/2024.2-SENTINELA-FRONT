@@ -17,7 +17,6 @@ import Benefits from "../Pages/Protected/Benefit/Benefits";
 import BenefitsList from "../Pages/Protected/Benefit/BenefitsList";
 import BenefitsCreate from "../Pages/Protected/Benefit/BenefitsCreate";
 import BenefitsUpdate from "../Pages/Protected/Benefit/BenefitsUpdate";
-import CarteirinhaPage from "../Pages/Protected/Carteirinha/index.jsx";
 import ViewMembershipPage from "../Pages/Protected/Users/ViewMembershipPage";
 import FinanceHubPage from "../Pages/Protected/Finance/FinanceHubPage";
 import FinanceBankAccount from "../Pages/Protected/Finance/BankAccountCreate";
@@ -172,16 +171,6 @@ const ProtectedRoutes = () => {
           />
         }
       />
-      <Route
-       path="/carteirinha"
-       element={
-         <PermissionProtect
-           element={<CarteirinhaPage />}
-           moduleName="users"
-           actions={["read", "create"]}
-           />
-         }
-        />
       <Route
         path="/beneficios/editar/:id"
         element={
