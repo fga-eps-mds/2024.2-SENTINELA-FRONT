@@ -19,7 +19,8 @@ const Carteirinha = () => {
       try {
         const response = await fetch("http://localhost:3001/membership");
         const data = await response.json();
-        setMembershipData(data);
+        setMembershipData(data[0]);
+        console.log('alohaa', data)
       } catch (error) {
         console.error("Erro ao buscar os dados do membership:", error);
       }
@@ -57,7 +58,7 @@ const Carteirinha = () => {
     const cardWidth = 210;
     const cardHeight = (canvas.height * cardWidth) / canvas.width;
 
-    pdf.addImage(imgData, "PNG", 10, 5, cardWidth, cardHeight);
+    pdf.addImage(imgData, "PNG", 10, 10, cardWidth, cardHeight);
     pdf.save("carteirinha.pdf");
 
     button.style.display = ""; // Mostra o botão novamente
@@ -73,6 +74,7 @@ const Carteirinha = () => {
     birthDate,
     cpf,
     expeditionDate,
+    hiringDate
   } = membershipData;
 
   return (
@@ -108,8 +110,8 @@ const Carteirinha = () => {
                 <p className="info-color"><span>{cpf}</span></p>
               </div>
               <div className="info-block">
-                <strong>VALIDADE:</strong><br />
-                <p className="info-color"><span>30/11/2024</span></p>
+                <strong>CONTRATAÇÃO:</strong><br />
+                <p className="info-color"><span>{new Date(hiringDate).toLocaleDateString()}</span></p>
               </div>
             </div>
           </div>
