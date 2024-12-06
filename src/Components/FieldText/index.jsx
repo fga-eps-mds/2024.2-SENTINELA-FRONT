@@ -9,6 +9,7 @@ export default function FieldText({
   disabled,
   onBlur,
   erro,
+  type,
 }) {
   return (
     <TextField
@@ -20,6 +21,7 @@ export default function FieldText({
       disabled={disabled}
       onBlur={onBlur}
       error={erro}
+      type={type}
       sx={{
         margin: ".7rem",
         background: "#EAE3D7",
@@ -59,4 +61,5 @@ FieldText.propTypes = {
   disabled: PropTypes.bool,
   onBlur: PropTypes.func, // Added prop type for onBlur
   erro: PropTypes.bool, // Added prop type for erro
+  type: PropTypes.string,
 };
