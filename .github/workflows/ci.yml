@@ -99,48 +99,67 @@ jobs:
             - name: 🧪 Roda suíte de testes
               run: npm test
 
-  sonarcloud:
-        name: sonarcloud
-        # toDO: fix tests
-        # needs: [test]
-        runs-on: ubuntu-latest
+  sonarqube:
+    name: SonarQube
+    needs: [test]
+    runs-on: ubuntu-latest
+    env:
+      MONGO_URI: ${{ secrets.MONGO_URI }}
+      MONGO_INITDB_ROOT_USERNAME: ${{ secrets.MONGO_INITDB_ROOT_USERNAME }}
+      MONGO_INITDB_ROOT_PASSWORD: ${{ secrets.MONGO_INITDB_ROOT_PASSWORD }}
+      DB_HOST: ${{ secrets.DB_HOST }}
+      PORT: ${{ secrets.PORT }}
+      EMAIL: ${{ secrets.EMAIL }}
+      SECRET: ${{ secrets.SECRET }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@v4
         env:
-            MONGO_URI: ${{ secrets.MONGO_URI }}
-            MONGO_INITDB_ROOT_USERNAME: ${{ secrets.MONGO_INITDB_ROOT_USERNAME }}
-            MONGO_INITDB_ROOT_PASSWORD: ${{ secrets.MONGO_INITDB_ROOT_PASSWORD }}
-            DB_HOST: ${{ secrets.DB_HOST }}
-            PORT: ${{ secrets.PORT }}
-            EMAIL: ${{ secrets.EMAIL }}
-            SECRET: ${{ secrets.SECRET }}
-        continue-on-error: true
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v3
-              with:
-                  fetch-depth: 0
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
-            - name: 📬 Caching
-              uses: actions/cache@v3
-              with:
-                  path: |
-                      ${{ github.workspace }}/node_modules
-                      ${{ github.workspace }}/dist
-                  key: ${{ runner.os }}-jest-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/*.{js,jsx,ts,tsx}') }}
-                  restore-keys: |
-                      ${{ runner.os }}-jest-${{ hashFiles('**/package-lock.json') }}-
+  # sonarcloud:
+  #   name: sonarcloud
+  #   needs: [test]
+  #   runs-on: ubuntu-latest
+  #   env:
+  #     MONGO_URI: ${{ secrets.MONGO_URI }}
+  #     MONGO_INITDB_ROOT_USERNAME: ${{ secrets.MONGO_INITDB_ROOT_USERNAME }}
+  #     MONGO_INITDB_ROOT_PASSWORD: ${{ secrets.MONGO_INITDB_ROOT_PASSWORD }}
+  #     DB_HOST: ${{ secrets.DB_HOST }}
+  #     PORT: ${{ secrets.PORT }}
+  #     EMAIL: ${{ secrets.EMAIL }}
+  #     SECRET: ${{ secrets.SECRET }}
+  #   continue-on-error: true
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v3
+  #       with:
+  #         fetch-depth: 0
 
-            - name: 🧰 Instala bibliotecas e dependências
-              run: npm i
+  #     - name: 📬 Caching
+  #       uses: actions/cache@v3
+  #       with:
+  #         path: |
+  #           ${{ github.workspace }}/node_modules
+  #           ${{ github.workspace }}/dist
+  #         key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/*.{js,jsx,ts,tsx}') }}
+  #         restore-keys: |
+  #           ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}-
+  #     - name: 🧰 Instala bibliotecas e dependências
+  #       run: npm i
 
-            # todo quando tiver eslint
-            # - name: 📜 Relatório do eslint
-            #   run: npx eslint -f json -o reports/eslint-report.json src || true
+  #     - name: 📜 Relatório do eslint
+  #       run: npx eslint -f json -o reports/eslint-report.json src || true
 
-            # - name: 🧪 Testes e cobertura
-            #   run: JEST_SONAR=jest-sonar CI=true npm test -- --coverage
+  #     - name: 🧪 Testes e cobertura
+  #       run: JEST_SONAR=jest-sonar CI=true npm test -- --coverage --passWithNoTests
 
-            - name: SonarCloud Scan
-              uses: SonarSource/sonarcloud-github-action@master
-              env:
-                  GITHUB_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
-                  SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  #     - name: SonarCloud Scan
+  #       uses: SonarSource/sonarcloud-github-action@master
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
+  #         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
