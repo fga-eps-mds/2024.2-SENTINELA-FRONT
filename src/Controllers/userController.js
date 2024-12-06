@@ -2,7 +2,6 @@ const User = require("../Models/userSchema");
 const jwt = require("jsonwebtoken");
 const { SECRET } = process.env;
 
-
 const bcrypt = require("bcryptjs");
 const {
     generateToken,
@@ -177,21 +176,21 @@ const deleteUser = async (req, res) => {
     }
 };
 
-const update = async(req, res) => {
+const update = async (req, res) => {
     let userId;
-    
-    const token = req.headers.authorization?.split(' ')[1];
+    const token = req.headers.authorization?.split(" ")[1];
 
     if (!token) {
-        return res.status(401).json({ message: 'Token não fornecido' });
+        return res.status(401).json({ message: "Token não fornecido" });
     }
 
     try {
         const decoded = jwt.verify(token, SECRET);
 
         userId = decoded.id;
+        // eslint-disable-next-line no-unused-vars
     } catch (err) {
-        return res.status(401).json({ message: 'Token inválido ou expirado' });
+        return res.status(401).json({ message: "Token inválido ou expirado" });
     }
 
     try {
@@ -199,7 +198,7 @@ const update = async(req, res) => {
         if (!user) {
             return res.status(404).send();
         }
-        
+
         Object.assign(user, req.body.updatedUser);
 
         user.updatedAt = new Date();
@@ -210,7 +209,7 @@ const update = async(req, res) => {
     } catch (error) {
         res.status(400).send(error);
     }
-}
+};
 
 const recoverPassword = async (req, res) => {
     try {
@@ -330,13 +329,14 @@ const changePasswordInProfile = async (req, res) => {
 };
 const teste = async (req, res) => {
     try {
+        // eslint-disable-next-line no-unused-vars
         const { status } = req.query;
         const membership = await Membership.find({ religion: { $ne: null } });
         return res.status(200).send(membership);
     } catch (error) {
         return res.status(400).send({ error });
     }
-    return res.status(201).send('Xabl2');
+    return res.status(201).send("Xabl2");
 };
 
 module.exports = {

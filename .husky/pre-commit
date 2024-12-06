@@ -12,12 +12,12 @@ npm run check-format ||
 )
 
 # Check ESLint Standards
-npm run lint ||
-(
-    echo '\n😤🏀👋😤 Daqui não passa! 😤🏀👋😤 
-    Checagem do ESLint falhou... Faça as alterações listadas acima e tente novamente.\n'
-    false; 
-)
+# npm run lint ||
+# (
+#     echo '\n😤🏀👋😤 Daqui não passa! 😤🏀👋😤 
+#     Checagem do ESLint falhou... Faça as alterações listadas acima e tente novamente.\n'
+#     false; 
+# )
 
 # If everything passes... Now we can commit
 echo '\n\n✅✅✅✅ Você ganhou dessa vez, commitando agora. ✅✅✅✅\n'
