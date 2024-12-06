@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Button, FormControlLabel, Radio, RadioGroup } from "@mui/material";
 import FieldSelect from "../../../../Components/FieldSelect";
 import FieldText from "../../../../Components/FieldText";
 import Modal from "../../../../Components/Modal";
@@ -10,7 +9,7 @@ import {
   deleteUserById,
   getRoles,
   getLoggedUser,
-  update
+  updateLogged
 } from "../../../../Services/userService";
 import { checkAction, usePermissions } from "../../../../Utils/permission";
 import "./index.css";
@@ -37,9 +36,6 @@ export default function UserUpdatePage() {
   const [showDeletedModal, setShowDeletedModal] = useState(false);
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [isCelularValid, setIsCelularValid] = useState(true);
-
-  const canDelete = checkAction(permissions, "users", "delete");
-  const canUpdate = checkAction(permissions, "users", "update");
 
   useEffect(() => {
     const loadRoles = async () => {
@@ -104,20 +100,18 @@ export default function UserUpdatePage() {
       return;
     }
 
-    if (userId) {
-      const updatedUser = {
-        name: nomeCompleto,
-        email: email,
-        phone: trimmedCelular,
-        status: login === "Ativo",
-        role: perfilSelecionado,
-      };
-      try {
-        await update(userId, updatedUser);
-        handleSaveModal();
-      } catch (error) {
-        console.error(`Erro ao atualizar usuário com ID ${userId}:`, error);
-      }
+    const updatedUser = {
+      name: nomeCompleto,
+      email: email,
+      phone: trimmedCelular,
+      status: login === "Ativo",
+      role: perfilSelecionado,
+    };
+    try {
+      await updateLogged(updatedUser);
+      handleSaveModal();
+    } catch (error) {
+      console.error(`Erro ao atualizar usuário com ID ${userId}:`, error);
     }
   };
 
@@ -126,28 +120,14 @@ export default function UserUpdatePage() {
     setPerfilSelecionado(event.target.value);
 
   const handleSaveModal = () => setShowSaveModal(true);
-  const handleDeleteModal = () => setShowDeleteModal(true);
   const handleSaveCloseDialog = () => {
     setShowSaveModal(false);
-    navigate("/usuarios");
+    navigate("/user");
   };
   const handleDeleteCloseDialog = () => setShowDeleteModal(false);
   const handleDeletedCloseDialog = () => {
     setShowDeletedModal(false);
     navigate("/usuarios");
-  };
-
-  const handleNavigateToContributions = () => {
-    navigate(`/movimentacoes/contribuicoes/${nomeCompleto}`, {
-      state: {
-        userId,
-        nomeCompleto,
-        celular,
-        email,
-        login,
-        perfilSelecionado,
-      },
-    });
   };
 
   return (
@@ -188,35 +168,9 @@ export default function UserUpdatePage() {
         {!isEmailValid && (
           <label className="isValid">*Insira um email válido</label>
         )}
-        <Button
-          className="contribution-btn"
-          onClick={handleNavigateToContributions}
-        >
-          Histórico de Contribuições
-        </Button>
-        <h3>Perfil</h3>
-        <RadioGroup
-          className="perfil-radiogroup"
-          value={perfilSelecionado}
-          onChange={handlePerfilChange}
-        >
-          {roles
-            ?.filter((perfil) => perfil?.name !== "sindicalizado")
-            .map((perfil) => (
-              <FormControlLabel
-                key={perfil?.name}
-                value={perfil?._id}
-                control={<Radio />}
-                label={perfil?.name}
-              />
-            ))}
-        </RadioGroup>
-
+    
         <div className="double-buttons-user">
-          {canDelete && (
-            <SecondaryButton text="Deletar" onClick={handleDeleteModal} />
-          )}
-          {canUpdate && <PrimaryButton text="Salvar" onClick={handleSave} />}
+          <PrimaryButton text="Salvar" onClick={handleSave} />
         </div>
 
         <Modal alertTitle="Alterações Salvas" show={showSaveModal}>

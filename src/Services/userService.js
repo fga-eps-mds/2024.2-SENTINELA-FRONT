@@ -139,21 +139,14 @@ export const patchUserById = async (id, updatedUser) => {
   }
 };
 
-export const update = async (id, updatedUser) => {
+export const updateLogged = async (updatedUser) => {
   try {
     const token = getToken();
-    const user = getUser();
-
-    if (!user || !user._id) {
-      throw new Error("Usuário não encontrado ou sem ID.");
-    }
-
     const response = await APIUsers.put(
       `/user`,
       { updatedUser },
       {
         params: {
-          userId: `${user._id}`,
           moduleName: "users",
           action: "update",
         },
@@ -165,7 +158,7 @@ export const update = async (id, updatedUser) => {
 
     return response.data;
   } catch (error) {
-    console.error(`Erro ao atualizar usuário com ID ${id}:`, error);
+    console.error(`Erro ao atualizar usuário`, error);
     throw error;
   }
 };
