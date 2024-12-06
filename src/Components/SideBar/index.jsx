@@ -97,6 +97,15 @@ export default function SideBar({ fullHeight = true }) {
         setIsSideBarOpen(false);
       }}
     />,
+    <SideButton
+      hidden={checkModule(permissions, "users") ? "flex" : "none"}
+      key="carteirinha"
+      text="CARTEIRINHA"
+      onClick={() => {
+        navigate("/carteirinha");
+        setIsSideBarOpen(false);
+      }}
+    />
   ];
 
   return (
