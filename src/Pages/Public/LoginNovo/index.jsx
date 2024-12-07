@@ -44,8 +44,8 @@ export default function loginNovo() {
 
         <div className="links">
 
-          <a href="#">Filiar-me ao sindicato</a>
-          <a href="#">Ver vantagens</a>
+          <Link href="#" className="links-link">Filiar-me ao sindicato</Link>
+          <Link href="#" className="links-link">Ver vantagens</Link>
 
         </div>
       </div>
@@ -68,16 +68,18 @@ export default function loginNovo() {
             placeholder="Digite sua senha"
             type="password"
           />
+            <PrimaryButton
+              text="Entrar"
+              onClick={() => handleLogin()}
+              maxWidth="400px"
+              />
+              <div className="recupera-senha">
           <UnderlinedTextButton
             key="recupera-senha"
             text="Esqueci a senha"
             onClick={() => handlePasswordRecovery()}
           />
-        <PrimaryButton
-          text="Entrar"
-          onClick={() => handleLogin()}
-          maxWidth="400px"
-          />
+        </div>
         </div>
       </div >
 

@@ -41,26 +41,56 @@
     border:1px solid #000000;
 }
 
-.sideText{
+.sideText {
     display: inline-block; 
     justify-content: space-between; 
     flex-direction: column;
-    align-items: flex-start;
     width: 478px;
-    margin-top: 122px;
+    margin-top: 55px;
+    margin-left: 10px;
+    text-align: left;
 }
 
-.tittle{
+.tittle {
     font-size: 45px;
+    margin-bottom: 37px; 
+    margin-left: -50px;
 }
 
-.subTittle{
+.subTittle {
     font-size: 20px;
+    margin-top: 0; 
+    margin-bottom: 10px; 
+    margin-left: 15px;
 }
 
-.lead{
+.lead {
     font-size: 18px;
+    margin-left: 15px;
 }
+
+.links {
+    margin-top: 20px; 
+    display: flex;
+    flex-direction: row;
+    gap: 29px;
+    margin-left: 15px;
+}
+
+.links-link{
+    text-decoration: none;
+    background-color: #EBDEC9;
+    font-size: 16px;
+    color: #7F5539;
+    border: 1px solid #7F5539;
+    width: 200px;
+    height: 34px;
+    display: flex;
+    justify-content: center;
+    padding-top: 5px;
+    border-radius: 50px;
+}
+
 
 .sideLogin {
     display: flex; 
@@ -86,7 +116,7 @@
     display: flex;
     flex-direction: column; 
     gap: 15px; 
-    margin-top: 0;  /* Ajustado para manter o espaço adequado */
+    margin-top: 0;  
 }
 
 .sideLoginElements h2 {
