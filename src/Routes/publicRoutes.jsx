@@ -7,8 +7,6 @@ import Advantages from "../Pages/Public/Advantages";
 import LoginNovo from "../Pages/Public/LoginNovo";
 
 const PublicRoutes = () => {
-
-  
   return (
     <Routes>
       <Route path="/" element={<Login />} />

@@ -51,25 +51,35 @@ export default function loginNovo() {
       </div>
 
       <div className="sideLogin">
-       
-            <div className="sideLoginImage">
-              <img src={sindpol_logo} alt="Logo SindPol"  />
-            </div>
 
-          <div className="sideLoginElements">
-            <h2>Já é filiado? Entre na sua conta</h2>
-            <LabeledTextField
-              label="EMAIL"
-              placeholder="Digite seu email"
-              type="email"
-            />
-            <LabeledTextField
-              label="SENHA"
-              placeholder="Digite sua senha"
-              type="password"
-            />
-          </div>
-      </div>
+        <div className="sideLoginImage">
+          <img src={sindpol_logo} alt="Logo SindPol" />
+        </div>
+
+        <div className="sideLoginElements">
+          <h2>Já é filiado? Entre na sua conta</h2>
+          <LabeledTextField
+            label="EMAIL"
+            placeholder="Digite seu email"
+            type="email"
+          />
+          <LabeledTextField
+            label="SENHA"
+            placeholder="Digite sua senha"
+            type="password"
+          />
+          <UnderlinedTextButton
+            key="recupera-senha"
+            text="Esqueci a senha"
+            onClick={() => handlePasswordRecovery()}
+          />
+        <PrimaryButton
+          text="Entrar"
+          onClick={() => handleLogin()}
+          maxWidth="400px"
+          />
+        </div>
+      </div >
 
     </>
   );
