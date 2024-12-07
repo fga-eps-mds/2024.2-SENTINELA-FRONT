@@ -39,3 +39,57 @@ color: #3D160D;
     border-radius: 50px;
     border:1px solid #000000;
 }
+
+.sideText{
+    display: inline-block; 
+    justify-content: space-between; 
+    flex-direction: column;
+    align-items: flex-start;
+    width: 478px;
+    margin-top: 122px;
+}
+
+.tittle{
+    font-size: 45px;
+}
+.subTittle{
+    font-size: 20px;
+}
+.lead{
+    font-size: 18px;
+}
+
+
+
+
+
+
+.sideLogin {
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    float: right;
+    width: 714px; 
+    height: 394px; 
+    border: 1px solid #7F5539; 
+    border-radius: 20px; 
+    margin-top: 122px; 
+    margin-right: 46px;
+    background-color: #EBDEC9; 
+    padding: 43px; 
+}
+
+.sideLoginImage img {
+    max-width: 250px; 
+    height: auto; 
+}
+
+.sideLoginElements {
+    display: flex;
+    flex-direction: column; 
+    gap: 15px; 
+    margin-top: -135px;
+}
+.sideLoginElements h2{
+    font-size: 24px;
+}
