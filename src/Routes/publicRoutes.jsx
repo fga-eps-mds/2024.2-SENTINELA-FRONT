@@ -3,7 +3,7 @@ import Login from "../Pages/Public/Login";
 import MemberShip from "../Pages/Public/MemberShip";
 import PasswordRecovery from "../Pages/Public/PasswordRecovery";
 import ChangePasswordPage from "../Pages/Public/ChangePasswordPage";
-import VerifyMemberPage from "../pages/Public/VerifyMember";
+import VerifyMemberForm from "../Pages/Public/VerifyMember/VerifyMemberForm";
 
 const PublicRoutes = () => {
   return (
@@ -13,7 +13,7 @@ const PublicRoutes = () => {
       <Route path="/filiacao" element={<MemberShip />} />
       <Route path="/recuperar-senha" element={<PasswordRecovery />} />
       <Route path="/trocar-senha/:token" element={<ChangePasswordPage />} />
-      <Route path="/verificar-membro" element={<VerifyMemberPage />} />
+      <Route path="/verificar-membro" element={<VerifyMemberForm />} />
     </Routes>
   );
 };
