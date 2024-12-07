@@ -154,7 +154,7 @@ const Carteirinha = () => {
         </footer>
         <div className="qr-section">
           <div className="qr-code">
-          <QRCode value="http://localhost:5173/" size={64} />
+          <QRCode value="http://172.21.189.230:5173/verificar-membro" size={64} />
           </div>
           <p className="qr-code-numero">(61) 3321-1949</p>
         </div>
