@@ -9,8 +9,7 @@ import LoginNovo from "../Pages/Public/LoginNovo";
 const PublicRoutes = () => {
   return (
     <Routes>
-      <Route path="/" element={<Login />} />
-      <Route path="/novo" element={<LoginNovo />} />
+      <Route path="/" element={<LoginNovo />} />
       <Route path="/filiacao" element={<MemberShip />} />
       <Route path="/vantagens" element={<Advantages />}/>
       <Route path="/recuperar-senha" element={<PasswordRecovery />} />

@@ -12,7 +12,7 @@ import { BrowserRouter, useLocation } from "react-router-dom";
 function AppContent() {
   
   const location = useLocation();
-  const hideSideBarRoutes = ["/novo"];
+  const hideSideBarRoutes = ["/"];
 
   const shouldShowSideBar = !hideSideBarRoutes.includes(location.pathname);
 

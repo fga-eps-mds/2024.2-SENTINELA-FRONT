@@ -13,6 +13,41 @@ import { useNavigate } from "react-router-dom";
 
 
 export default function loginNovo() {
+
+  const context = useContext(AuthContext);
+  const navigate = useNavigate();
+  const { user } = useAuth();
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+  const [error, setError] = useState(""); // Adiciona um estado para mensagens de erro
+
+  const handleLogin = async () => {
+    if (!email || !senha) {
+      setError("Por favor, preencha todos os campos.");
+      return;
+    }
+
+    setError("");
+
+    const message = await context.Login(email, senha);
+
+    if (message) {
+      alert("erro de login. Senha ou email incorretos.");
+    } else {
+      navigate("/home");
+    }
+  };
+
+  const handlePasswordRecovery = () => {
+    navigate("/recuperar-senha");
+  };
+
+  useEffect(() => {
+    if (user) {
+      navigate("/home");
+      window.location.reload();
+    }
+  }, [user, navigate]);
   return (
     <>
       <div className="navBar">
@@ -42,7 +77,7 @@ export default function loginNovo() {
 
         <div className="links">
 
-          <Link href="#" className="links-link">Filiar-me ao sindicato</Link>
+          <Link to="/filiacao" className="links-link">Filiar-me ao sindicato</Link>
           <Link href="#" className="links-link">Ver vantagens</Link>
 
         </div>
@@ -60,17 +95,23 @@ export default function loginNovo() {
             label="EMAIL"
             placeholder="Digite seu email"
             type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <LabeledTextField
             label="SENHA"
             placeholder="Digite sua senha"
             type="password"
+            value={senha}
+            onChange={(e) => setSenha(e.target.value)}
           />
           <PrimaryButton
             text="Entrar"
             onClick={() => handleLogin()}
             maxWidth="400px"
           />
+          {error && <div className="error-message">{error}</div>}{" "}
+          {/* Exibe a mensagem de erro */}
           <div className="recupera-senha">
             <UnderlinedTextButton
               key="recupera-senha"
