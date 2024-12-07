@@ -10,13 +10,15 @@ import Footer from "./Components/Footer";
 import { BrowserRouter } from "react-router-dom";
 
 function App() {
+
   return (
     <div>
+      
       <ThemeProvider theme={theme}>
         <AuthProvider>
           <BrowserRouter>
             <div className="container">
-              <SideBar />
+              {/*<SideBar />*/}
               <div className="routes">
                 <Routes />
               </div>

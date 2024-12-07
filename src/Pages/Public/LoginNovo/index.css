@@ -1,0 +1,41 @@
+.navBar{
+    background-color: #EAE3D7;
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    height: 60px;
+}
+
+.navRight{
+    display: flex;
+    justify-content: flex-start;
+    height: 90px;
+    width: auto;
+    padding-left: 46px;
+}
+
+.navLeft{
+    display: flex;
+    justify-content: flex-end;
+    gap: 64px;
+    padding-right: 83px;
+}
+
+.navLink1, .navLink2{
+text-decoration: none;
+color: #3D160D;
+}
+.navLink1{
+    padding-top: 8px;
+}
+
+.navLink2{
+    background-color: #EBDEC9;
+    width: 100px;
+    height: 34px;
+    display: flex;
+    justify-content: center;
+    padding-top: 5px;
+    border-radius: 50px;
+    border:1px solid #000000;
+}
