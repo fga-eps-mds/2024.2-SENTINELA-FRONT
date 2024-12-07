@@ -46,23 +46,19 @@
     gap: 10px;
     margin-bottom: 15px;
     padding: 1rem;
+    line-height: 1.6; /* Espaçamento entre linhas */
+    margin-top: 10px;
+    font-size: 3.125rem;
+    letter-spacing: 0.5px; /* Espaçamento entre letras */
   }
   
   /* Ícone do cabeçalho */
   .modal-icon {
     color: #fff;
   }
-
-  .modal-box p {
+  .modal-description {
     line-height: 1.6; /* Espaçamento entre linhas */
     margin-top: 10px;
     font-size: 1.188rem;
-    letter-spacing: 0.5px; /* Espaçamento entre letras */
-  }
-
-  .modal-box h2 {
-    line-height: 1.6; /* Espaçamento entre linhas */
-    margin-top: 10px;
-    font-size: 3.125rem;
     letter-spacing: 0.5px; /* Espaçamento entre letras */
   }

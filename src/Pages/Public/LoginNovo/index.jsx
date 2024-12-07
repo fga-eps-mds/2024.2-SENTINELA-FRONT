@@ -121,7 +121,35 @@ export default function loginNovo() {
           </div>
         </div>
       </div >
-
+      <div className="advantages">
+        <div className= "advantages-titile">
+            <h1>Porque se filiar?</h1>
+        </div>
+        <div className= "advantages-subtitile">
+            <h2>Venha conhecer os benefícios que os filiados ao SINDPOL-DF possuem</h2>
+        </div>
+        <div className="containerCards">
+          {<AdvantagesCard />}
+          {<AdvantagesCard />}
+          {<AdvantagesCard />}
+          {<AdvantagesCard />}
+          {<AdvantagesCard />}
+          {<AdvantagesCard />}
+          {<AdvantagesCard />}
+          {<AdvantagesCard />}
+          {<AdvantagesCard />}
+          {<AdvantagesCard />}
+          {<AdvantagesCard />}
+          {<AdvantagesCard />}
+          {<AdvantagesCard />}
+          {<AdvantagesCard />}
+          {<AdvantagesCard />}
+          {<AdvantagesCard />}
+        </div>
+        <div className="containerCards">
+          
+        </div>
+      </div>
         
     </>
   );

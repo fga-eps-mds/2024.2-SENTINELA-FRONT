@@ -122,3 +122,14 @@
 .sideLoginElements h2 {
     font-size: 24px;
 }
+
+/* ----------------Vantagens---------------- */
+
+.containerCards {
+    display: flex;                /* Define flexbox */
+    justify-content: center;      /* Centraliza os cards horizontalmente */
+    flex-wrap: wrap;              /* Permite que os elementos quebrem linha */
+    gap: 1rem;                    /* Espaçamento entre os cards */
+    padding: 2rem 1rem;           /* Aumenta o espaçamento superior e lateral */
+    margin-top: 2rem;             /* Adiciona margem acima do container */
+}
