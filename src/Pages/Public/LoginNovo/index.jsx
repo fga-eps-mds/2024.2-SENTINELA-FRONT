@@ -12,8 +12,6 @@ import AuthContext, { useAuth } from "../../../Context/auth";
 import { useNavigate } from "react-router-dom";
 
 
-
-
 export default function loginNovo() {
   return (
     <>
@@ -68,21 +66,22 @@ export default function loginNovo() {
             placeholder="Digite sua senha"
             type="password"
           />
-            <PrimaryButton
-              text="Entrar"
-              onClick={() => handleLogin()}
-              maxWidth="400px"
-              />
-              <div className="recupera-senha">
-          <UnderlinedTextButton
-            key="recupera-senha"
-            text="Esqueci a senha"
-            onClick={() => handlePasswordRecovery()}
+          <PrimaryButton
+            text="Entrar"
+            onClick={() => handleLogin()}
+            maxWidth="400px"
           />
-        </div>
+          <div className="recupera-senha">
+            <UnderlinedTextButton
+              key="recupera-senha"
+              text="Esqueci a senha"
+              onClick={() => handlePasswordRecovery()}
+            />
+          </div>
         </div>
       </div >
 
+        
     </>
   );
 }
