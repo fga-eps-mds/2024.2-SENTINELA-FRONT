@@ -43,4 +43,31 @@
     font-family: "Noto Sans";
 }
 
+.botao2 {
+    color: #AE883C;
+    background-color: #eae3d7;
+    width: 269px;  
+    height: 44px;
+    border: 3px solid #AE883C;
+    margin-top: 20px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-family: "Noto Sans";
+}
+
+.botao3 {
+    color: #F9F6F3; 
+    background-color: #AE883C;
+    width: 269px;  
+    height: 52px;
+    border: 1px solid #eae3d7;
+    border-radius: 4px;
+    font-size: 10px;
+    font-family: "Noto Sans";
+}
+
+.botao3 h2 {
+    margin-top: 12px;
+
+}
 

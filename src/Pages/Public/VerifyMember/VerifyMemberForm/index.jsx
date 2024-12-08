@@ -83,8 +83,10 @@ const VerifyMemberForm = () => {
             {showModal && (
                 <div className="modal-overlay">
                     <div className="modal">
+                        <div className="botao3">
                         <h2>CPF não encontrado</h2>
-                        <button onClick={() => setShowModal(false)}>OK</button>
+                        </div>
+                        <button className="botao2" onClick={() => setShowModal(false)}>OK</button>
                     </div>
                 </div>
             )}
