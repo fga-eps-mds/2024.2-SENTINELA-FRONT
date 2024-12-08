@@ -1,26 +1,22 @@
 import React from "react";
+import PropTypes from "prop-types"
 import "./index.css";
 
-export default function AdvantagesModal() {
+export default function AdvantagesModal({title, description, onClose}) {
+
   return (
     <>
       <div className="modal-overlay">
         <div className="modal-box">
-          <button className="close-button">
+          <button className="close-button" onClick={onClose}>
             &times;
           </button>
           <div className="modal-header">
-            <h2>Titulo do Beneficio</h2>
+            <h2>{title}</h2>
           </div>
-          <div className = "modal-description">
+          <div className="modal-description">
             <p>
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-              ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-              aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-              pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-              culpa qui officia deserunt mollit anim id est laborum."
+              {description}
             </p>
             <p>
               Para mais informações, entre em contato com o Sindicato pelo número{" "}
@@ -32,3 +28,10 @@ export default function AdvantagesModal() {
     </>
   );
 }
+/*
+AdvantagesModal.propTypes = {
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  onClose: PropTypes.func.isRequired,
+};
+*/

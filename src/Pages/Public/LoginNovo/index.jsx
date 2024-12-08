@@ -10,6 +10,7 @@ import UnderlinedTextButton from "../../../Components/UnderlinedTextButton";
 import { useState, useContext, useEffect } from "react";
 import AuthContext, { useAuth } from "../../../Context/auth";
 import { useNavigate } from "react-router-dom";
+import AdvantagesModal from "../../../Components/AdvantagesModal";
 
 
 export default function loginNovo() {
@@ -42,12 +43,37 @@ export default function loginNovo() {
     navigate("/recuperar-senha");
   };
 
+  /* ------------Funções de Vantagens------------ */
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalTitle, setModalTitle] = useState("");
+  const [modalDescription, setModalDescription] = useState("");
+
+  const handleOpenModal = (title, description) => {
+    setModalTitle(title);
+    setModalDescription(description);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => setIsModalOpen(false);
+
+  const cards = [
+    { id: 1, title: "Benefício 1", description: "Detalhes do benefício 1" },
+    { id: 2, title: "Benefício 2", description: "Detalhes do benefício 2" },
+    { id: 3, title: "Benefício 3", description: "Detalhes do benefício 3" },
+  ];
+
   useEffect(() => {
     if (user) {
       navigate("/home");
       window.location.reload();
     }
   }, [user, navigate]);
+
+  useEffect(() => {
+    console.log("Modal Title:", modalTitle);
+    console.log("Modal Description:", modalDescription);
+  }, [modalTitle, modalDescription]);
   return (
     <>
       <div className="navBar">
@@ -121,36 +147,32 @@ export default function loginNovo() {
           </div>
         </div>
       </div >
+
       <div className="advantages">
+
         <div className= "advantages-titile">
             <h1>Porque se filiar?</h1>
         </div>
+
         <div className= "advantages-subtitile">
             <h2>Venha conhecer os benefícios que os filiados ao SINDPOL-DF possuem</h2>
         </div>
+
         <div className="containerCards">
-          {<AdvantagesCard />}
-          {<AdvantagesCard />}
-          {<AdvantagesCard />}
-          {<AdvantagesCard />}
-          {<AdvantagesCard />}
-          {<AdvantagesCard />}
-          {<AdvantagesCard />}
-          {<AdvantagesCard />}
-          {<AdvantagesCard />}
-          {<AdvantagesCard />}
-          {<AdvantagesCard />}
-          {<AdvantagesCard />}
-          {<AdvantagesCard />}
-          {<AdvantagesCard />}
-          {<AdvantagesCard />}
-          {<AdvantagesCard />}
-        </div>
-        <div className="containerCards">
+        {cards.map((card) => (
+          <AdvantagesCard key={card.id} title={card.title} onClick={() => handleOpenModal(card.title, card.description)}/>
+        ))}
           
         </div>
+        {isModalOpen && (
+        <AdvantagesModal
+        title={modalTitle}
+        description={modalDescription}
+        onClose = {() => handleCloseModal()}
+        />
+      )}
       </div>
-        
+      
     </>
   );
 }
