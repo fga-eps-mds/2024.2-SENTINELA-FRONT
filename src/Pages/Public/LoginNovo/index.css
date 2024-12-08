@@ -52,9 +52,10 @@
 }
 
 .tittle {
+    padding-left: 1rem;
     font-size: 45px;
     margin-bottom: 37px; 
-    margin-left: -50px;
+
 }
 
 .subTittle {
@@ -79,7 +80,6 @@
 
 .links-link{
     text-decoration: none;
-    background-color: #EBDEC9;
     font-size: 16px;
     color: #7F5539;
     border: 1px solid #7F5539;
@@ -124,6 +124,20 @@
 }
 
 /* ----------------Vantagens---------------- */
+.advantages{
+    padding-top: 8rem;
+    padding-left: 1.4rem;
+
+}
+
+.advantages-title{
+    font-size: 1.5rem;
+    color: #3D160D;
+}
+
+.advantages-subtitle{
+    font-size: 1.1rem;
+}
 
 .containerCards {
     display: flex;                /* Define flexbox */

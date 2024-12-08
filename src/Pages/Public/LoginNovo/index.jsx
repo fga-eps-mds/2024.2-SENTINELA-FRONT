@@ -95,7 +95,7 @@ export default function loginNovo() {
       </div>
 
       <div className="sideText">
-        <h1 className="tittle">Bem-vindo ao SINDPOL-DF</h1>
+        <h1 className="tittle">BEM-VINDO AO SINDPOL-DF</h1>
 
         <h5 className="subTittle">
           O Sindicato da Polícia Penal do Distrito Federal
@@ -156,18 +156,18 @@ export default function loginNovo() {
       </div>
 
       <div className="advantages">
-        <div className="advantages-titile">
-          <h1>Porque se filiar?</h1>
+        <div className="advantages-title">
+          <h1>PORQUE SE FILIAR?</h1>
         </div>
 
-        <div className="advantages-subtitile">
+        <div className="advantages-subtitle">
           <h2>
             Venha conhecer os benefícios que os filiados ao SINDPOL-DF possuem
           </h2>
         </div>
 
         <div className="containerCards">
-          {advantages.map((advantage) => (
+          {advantages?.map((advantage) => (
             <AdvantagesCard
               key={advantage._id}
               title={advantage.nome}
