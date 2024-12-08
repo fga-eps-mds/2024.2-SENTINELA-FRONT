@@ -155,16 +155,12 @@ export default function loginNovo() {
         </div>
       </div>
 
-      <div className="advantages">
-        <div className="advantages-title">
-          <h1>PORQUE SE FILIAR?</h1>
-        </div>
+      <div className="advantages"> 
+        <h1 className="advantages-title">PORQUE SE FILIAR?</h1>
 
-        <div className="advantages-subtitle">
-          <h2>
+          <h2 className="advantages-subtitle">
             Venha conhecer os benefícios que os filiados ao SINDPOL-DF possuem
           </h2>
-        </div>
 
         <div className="containerCards">
           {advantages?.map((advantage) => (
