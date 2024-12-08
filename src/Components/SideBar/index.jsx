@@ -97,14 +97,6 @@ export default function SideBar({ fullHeight = true }) {
         setIsSideBarOpen(false);
       }}
     />,
-    <SideButton
-      key="vantagens"
-      text="VANTAGENS"
-      onClick={() => {
-        navigate("/vantagens");
-        setIsSideBarOpen(false);
-      }}
-    />,
   ];
 
   return (
@@ -114,9 +106,11 @@ export default function SideBar({ fullHeight = true }) {
       </div>
       <div
         className={`side-bar ${isSideBarOpen ? "open" : ""}`}
-        style={{
-          height: fullHeight ? "100vh" : "100%",
-        }}
+        style={
+          {
+            //height: fullHeight ? "100vh" : "100%",
+          }
+        }
       >
         <img className="logo" src={sindpol_logo} alt="Sindpol Logo" />
         <img className="sentinela" src={sentinela_logo} alt="Sentinela Logo" />
@@ -164,7 +158,7 @@ export default function SideBar({ fullHeight = true }) {
             }}
           >
             Você está logado como {user?.name}
-          </h2>
+          </h2> 
           <ButtonGroup>
             <button
               key="logout"
@@ -173,6 +167,9 @@ export default function SideBar({ fullHeight = true }) {
                 context.Logout();
                 navigate("/");
                 window.location.reload();
+              }}
+              style={{
+                cursor: "pointer",
               }}
             >
               LOGOUT <RiLogoutCircleRLine className="logout-icon" />
