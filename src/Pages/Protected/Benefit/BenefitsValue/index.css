@@ -1,0 +1,89 @@
+.benefits-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+  font-family: "Noto Sans";
+  color: #332117;
+  height: 100%;
+}
+
+.benefits-header h1 {
+  font-size: 2.125rem;
+}
+
+.benefits-header p {
+  font-size: 1.5rem;
+  color: #341f14;
+  margin-bottom: 1.25rem;
+}
+
+.benefits-list {
+  width: 100%;
+}
+
+.box-benefits {
+  margin-top: 1.25rem;
+}
+
+.benefit-item {
+  display: flex;
+  align-items: center;
+  padding: 1rem 0;
+}
+
+.benefit-datails {
+  position: absolute;
+  justify-items: center;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.benefit-details-expanded {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  overflow-wrap: break-word;
+  gap: 7rem;
+  padding: 0.25rem 3rem;
+}
+
+.benefit-item > .MuiListItemText-primary {
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+
+.benefit-item .MuiListItemText-secondary {
+  font-weight: 300;
+  font-size: 0.875rem;
+  color: #8c7765;
+}
+
+@media (max-width: 890px) {
+  .benefits-container {
+    padding-top: 4rem;
+  }
+  .benefit-datails {
+    position: relative;
+    left: auto;
+    transform: none;
+  }
+  .benefit-item {
+    flex-direction: column;
+  }
+  .benefit-value {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    padding: 0.25rem 2rem;
+    border-radius: 10px;
+    background: #eae3d7;
+  }
+  .benefit-details-expanded {
+    flex-direction: column-reverse;
+    overflow-wrap: anywhere;
+    gap: 1rem;
+  }
+  .benefit-details-expanded .MuiListItemText-primary {
+    font-size: 0.85rem;
+  }
+}
