@@ -80,7 +80,7 @@ const login = async (req, res) => {
             const user = await User.findOne({
                 email: email,
                 //"Gamebiarra" Não deve ficar aqui no final
-                status: true
+                status: true,
             });
 
             if (!user) {
