@@ -56,7 +56,9 @@ export default function BenefitsValue() {
                         <ListItemText
                           primary="Valor"
                           secondary={
-                            index % 2 ? "Incluso na filiação" : "Disconto de 15%"
+                            index % 2
+                              ? "Incluso na filiação"
+                              : "Disconto de 15%"
                           }
                         />
                       </div>
@@ -78,7 +80,11 @@ export default function BenefitsValue() {
                       </div>
                     )}
 
-                    <Divider />
+                    <Divider
+                      style={{
+                        padding: "1rem 0 0 0"
+                      }}
+                    />
                   </div>
                 )
               )

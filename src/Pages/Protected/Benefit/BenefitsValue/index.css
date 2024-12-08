@@ -38,6 +38,13 @@
   transform: translateX(-50%);
 }
 
+.benefit-value {
+  position: absolute;
+  justify-items: center;
+  left: 85%;
+}
+
+
 .benefit-details-expanded {
   display: flex;
   justify-content: space-between;
@@ -85,5 +92,10 @@
   }
   .benefit-details-expanded .MuiListItemText-primary {
     font-size: 0.85rem;
+  }
+  .benefit-value {
+    position: relative;
+    left: auto;
+    transform: none;
   }
 }
