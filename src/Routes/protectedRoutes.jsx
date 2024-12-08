@@ -14,6 +14,7 @@ import RolesListPage from "../Pages/Protected/Roles/RolesListPage";
 import RolesUpdatePage from "../Pages/Protected/Roles/RolesUpdatePage";
 import MembershipRequest from "../Pages/Protected/MembershipRequests";
 import Benefits from "../Pages/Protected/Benefit/Benefits";
+import BenefitsValue from "../Pages/Protected/Benefit/BenefitsValue";
 import BenefitsList from "../Pages/Protected/Benefit/BenefitsList";
 import BenefitsCreate from "../Pages/Protected/Benefit/BenefitsCreate";
 import BenefitsUpdate from "../Pages/Protected/Benefit/BenefitsUpdate";
@@ -148,6 +149,16 @@ const ProtectedRoutes = () => {
             element={<Benefits />}
             moduleName="benefits"
             actions={["read", "update", "delete", "create"]}
+          />
+        }
+      />
+      <Route
+        path="/beneficios/valor"
+        element={
+          <PermissionProtect
+            element={<BenefitsValue />}
+            moduleName="benefits"
+            actions={["read"]}
           />
         }
       />
