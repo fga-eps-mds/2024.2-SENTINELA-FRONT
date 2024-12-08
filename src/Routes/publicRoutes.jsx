@@ -4,6 +4,7 @@ import MemberShip from "../Pages/Public/MemberShip";
 import PasswordRecovery from "../Pages/Public/PasswordRecovery";
 import ChangePasswordPage from "../Pages/Public/ChangePasswordPage";
 import VerifyMemberForm from "../Pages/Public/VerifyMember/VerifyMemberForm";
+import VerifyMemberActiveStatus from "../Pages/Public/VerifyMember/VerifyMemberActiveStatus";
 
 const PublicRoutes = () => {
   return (
@@ -14,6 +15,7 @@ const PublicRoutes = () => {
       <Route path="/recuperar-senha" element={<PasswordRecovery />} />
       <Route path="/trocar-senha/:token" element={<ChangePasswordPage />} />
       <Route path="/verificar-membro" element={<VerifyMemberForm />} />
+      <Route path="/verificar-membro/ativo" element={<VerifyMemberActiveStatus />} />
     </Routes>
   );
 };
