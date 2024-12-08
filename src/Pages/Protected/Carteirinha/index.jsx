@@ -8,7 +8,9 @@ import html2canvas from "html2canvas";
 import badgeLogo from "../../../assets/sindpol-logo.png";
 import penalLogo from "../../../assets/penal_df-min.png.png";
 import qrCode from "../../../assets/qr-code.png";
-import { FaFacebook, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
+import { FaFacebook, FaInstagram, FaYoutube } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
+
 
 const Carteirinha = () => {
   const cardRef = useRef(null);
@@ -154,7 +156,7 @@ const Carteirinha = () => {
         </footer>
         <div className="qr-section">
           <div className="qr-code">
-          <QRCode value="http://172.21.189.230:5173/verificar-membro" size={170} />
+          <QRCode value="http://localhost:5173/verificar-membro" size={170} /> {/* endereço que será passado no qrCode */}
           </div>
           <p className="qr-code-numero">(61) 3321-1949</p>
         </div>
@@ -165,7 +167,7 @@ const Carteirinha = () => {
           <FaInstagram className="social-icon" />
             <FaYoutube className="social-icon" />
             <FaFacebook className="social-icon" />
-            <FaTwitter className="social-icon" />
+            <FaXTwitter className="social-icon" />
           </div>
           <span>@sindpoldf</span>
           <div className="footer-logos">

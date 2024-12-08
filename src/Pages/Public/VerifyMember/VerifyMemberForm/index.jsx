@@ -18,6 +18,7 @@ const VerifyMemberForm = () => {
     const [showModal, setShowModal] = useState(false);
     const navigate = useNavigate();
 
+    // Função para validar o CPF
     const validateCPF = (cpf) => {
         cpf = cpf.replace(/\D/g, "");
         if (cpf.length !== 11 || /^(\d)\1+$/.test(cpf)) return false;
@@ -37,6 +38,22 @@ const VerifyMemberForm = () => {
         );
     };
 
+    // Função para formatar o CPF
+    const formatCPF = (value) => {
+        const onlyNumbers = value.replace(/\D/g, ""); // Remove caracteres não numéricos
+        return onlyNumbers
+            .replace(/(\d{3})(\d)/, "$1.$2") // Adiciona o primeiro ponto
+            .replace(/(\d{3})(\d)/, "$1.$2") // Adiciona o segundo ponto
+            .replace(/(\d{3})(\d{1,2})$/, "$1-$2"); // Adiciona o traço
+    };
+
+    // Manipulador de mudança do CPF
+    const handleCpfChange = (e) => {
+        const formattedCpf = formatCPF(e.target.value);
+        setCpf(formattedCpf); // Atualiza o estado com o CPF formatado
+    };
+
+    // Função para lidar com o envio do formulário
     const handleSubmit = () => {
         if (!name || !cpf) {
             setShowModal(true);
@@ -72,7 +89,8 @@ const VerifyMemberForm = () => {
                         id="cpf"
                         name="cpf"
                         value={cpf}
-                        onChange={(e) => setCpf(e.target.value)}
+                        onChange={handleCpfChange} // Formata o CPF ao digitar
+                        maxLength="14" // Limita o tamanho ao formato XXX.XXX.XXX-XX
                     />
                 </div>
             </div>
@@ -84,7 +102,7 @@ const VerifyMemberForm = () => {
                 <div className="modal-overlay">
                     <div className="modal">
                         <div className="botao3">
-                        <h2>CPF não encontrado</h2>
+                            <h2>CPF não encontrado</h2>
                         </div>
                         <button className="botao2" onClick={() => setShowModal(false)}>OK</button>
                     </div>
