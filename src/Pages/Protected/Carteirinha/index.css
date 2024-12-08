@@ -116,6 +116,7 @@
     align-content: center;
     width: 80px;
     margin-bottom: 10px;
+    margin: auto;  
     border: 3px solid #d49a3c;
     border-radius: 5px;
     padding: 5px;
@@ -150,6 +151,7 @@
 
 .social-icon {
     font-size: 20px; 
+    margin-top: 130px;
     color: #333;
     cursor: pointer;
     transition: color 0.3s ease;

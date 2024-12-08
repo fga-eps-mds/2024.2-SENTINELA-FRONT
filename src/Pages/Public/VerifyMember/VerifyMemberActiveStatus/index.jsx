@@ -8,6 +8,7 @@ import AuthContext, { useAuth } from "../../../../Context/auth.jsx";
 import { useNavigate, useLocation } from "react-router-dom";
 import Card from "../../../../Components/Card/index.jsx";
 import FieldText from "../../../../Components/FieldText/index.jsx";
+import badgeLogo from "../../../../assets/sindpol-logo.png";
 
 
 const VerifyMemberActiveStatus = () => {
@@ -16,33 +17,46 @@ const VerifyMemberActiveStatus = () => {
     const { name, cpf, status } = state || {}; // Valores padrão caso state seja nulo
 
     return (
-        <div>
+        <div className="block-container">
+        <div className="block">
+          <header className="block-header">
+            <h1>SINDPOL-DF</h1>
+            <p>SINDICATO DOS POLICIAIS PENAIS DO DISTRITO FEDERAL</p>
+            </header>
             <div>
-                <div className="info-block">
+                <div className="inf-line">
+                    <div className="inf-block">
                     <strong>TITULAR:</strong>
                     <br />
-                    <p className="info-color-titular">
+                    <p className="inf-color-titular">
                         <span>{name}</span>
                     </p>
                 </div>
-                <div className="info-block">
-                    <div>
+                </div>
+                <div className="inf-line">
+                    <div className="inf-block">
                         <strong>CPF:</strong>
                         <br />
-                        <p className="info-color-titular">
+                        <p className="inf-color">
                             <span>{cpf}</span>
                         </p>
                     </div>
-                    <div>
-                        <strong>STATUS:</strong>
+                    <div className="inf-block">
+                    <strong>STATUS:</strong>
                         <br />
-                        <p className="info-color-titular">
+                        <p className="inf-color">
                             <span>{status}</span>
                         </p>
+                    </div>
+                    <div className="foote-logos">
+                        <img src={badgeLogo} alt="Logo 1" className="foot-logo" />
+                        <p className="Sindicalizado">SINDICALIZADO</p>
+                    </div>
                     </div>
                 </div>
             </div>
         </div>
+       
     );
 };
 
