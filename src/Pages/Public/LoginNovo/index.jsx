@@ -48,6 +48,7 @@ export default function loginNovo() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalTitle, setModalTitle] = useState("");
   const [modalDescription, setModalDescription] = useState("");
+  const [advantages, setAdvantages] = useState([]);
 
   const handleOpenModal = (title, description) => {
     setModalTitle(title);
@@ -57,11 +58,14 @@ export default function loginNovo() {
 
   const handleCloseModal = () => setIsModalOpen(false);
 
-  const cards = [
-    { id: 1, title: "Benefício 1", description: "Detalhes do benefício 1" },
-    { id: 2, title: "Benefício 2", description: "Detalhes do benefício 2" },
-    { id: 3, title: "Benefício 3", description: "Detalhes do benefício 3" },
-  ];
+  useEffect(() => {
+    const getAdvantages = async () => {
+      const response = await getBenefitsForm();
+      setAdvantages(response);
+    };
+
+    getAdvantages();
+  }, []);
 
   useEffect(() => {
     if (user) {
@@ -159,16 +163,16 @@ export default function loginNovo() {
         </div>
 
         <div className="containerCards">
-        {cards.map((card) => (
-          <AdvantagesCard key={card.id} title={card.title} onClick={() => handleOpenModal(card.title, card.description)}/>
+        {advantages.map((advantage) => (
+          <AdvantagesCard key={advantage.id} title={advantage.title} onClick={() => handleOpenModal(advantage.title, advantage.description)}/>
         ))}
           
         </div>
         {isModalOpen && (
         <AdvantagesModal
-        title={modalTitle}
-        description={modalDescription}
-        onClose = {() => handleCloseModal()}
+          title={modalTitle}
+          description={modalDescription}
+          onClose = {() => handleCloseModal()}
         />
       )}
       </div>
