@@ -11,10 +11,9 @@ import { useState, useContext, useEffect } from "react";
 import AuthContext, { useAuth } from "../../../Context/auth";
 import { useNavigate } from "react-router-dom";
 import AdvantagesModal from "../../../Components/AdvantagesModal";
-
+import { getBenefitsForm } from "../../../Services/benefitsService";
 
 export default function loginNovo() {
-
   const context = useContext(AuthContext);
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -86,35 +85,39 @@ export default function loginNovo() {
         </div>
 
         <div className="navLeft">
-          <Link href="" className="navLink1">Vantagens</Link>
-          <Link to="/filiacao" className="navLink2">Filiar</Link>
+          <Link href="" className="navLink1">
+            Vantagens
+          </Link>
+          <Link to="/filiacao" className="navLink2">
+            Filiar
+          </Link>
         </div>
       </div>
 
       <div className="sideText">
-        <h1 className="tittle">
-          Bem-vindo ao SINDPOL-DF
-        </h1>
+        <h1 className="tittle">Bem-vindo ao SINDPOL-DF</h1>
 
         <h5 className="subTittle">
           O Sindicato da Polícia Penal do Distrito Federal
         </h5>
 
         <p className="lead">
-          Defendemos seus direitos, fortalecemos sua voz e construímos uma categoria unida e respeitada.
-          Faça parte dessa força e contribua para um futuro melhor para todos os policiais penais do Distrito Federal.
+          Defendemos seus direitos, fortalecemos sua voz e construímos uma
+          categoria unida e respeitada. Faça parte dessa força e contribua para
+          um futuro melhor para todos os policiais penais do Distrito Federal.
         </p>
 
         <div className="links">
-
-          <Link to="/filiacao" className="links-link">Filiar-me ao sindicato</Link>
-          <Link href="#" className="links-link">Ver vantagens</Link>
-
+          <Link to="/filiacao" className="links-link">
+            Filiar-me ao sindicato
+          </Link>
+          <Link href="#" className="links-link">
+            Ver vantagens
+          </Link>
         </div>
       </div>
 
       <div className="sideLogin">
-
         <div className="sideLoginImage">
           <img src={sindpol_logo} alt="Logo SindPol" />
         </div>
@@ -150,33 +153,38 @@ export default function loginNovo() {
             />
           </div>
         </div>
-      </div >
+      </div>
 
       <div className="advantages">
-
-        <div className= "advantages-titile">
-            <h1>Porque se filiar?</h1>
+        <div className="advantages-titile">
+          <h1>Porque se filiar?</h1>
         </div>
 
-        <div className= "advantages-subtitile">
-            <h2>Venha conhecer os benefícios que os filiados ao SINDPOL-DF possuem</h2>
+        <div className="advantages-subtitile">
+          <h2>
+            Venha conhecer os benefícios que os filiados ao SINDPOL-DF possuem
+          </h2>
         </div>
 
         <div className="containerCards">
-        {advantages.map((advantage) => (
-          <AdvantagesCard key={advantage.id} title={advantage.title} onClick={() => handleOpenModal(advantage.title, advantage.description)}/>
-        ))}
-          
+          {advantages.map((advantage) => (
+            <AdvantagesCard
+              key={advantage._id}
+              title={advantage.nome}
+              onClick={() =>
+                handleOpenModal(advantage.nome, advantage.descricao)
+              }
+            />
+          ))}
         </div>
         {isModalOpen && (
-        <AdvantagesModal
-          title={modalTitle}
-          description={modalDescription}
-          onClose = {() => handleCloseModal()}
-        />
-      )}
+          <AdvantagesModal
+            title={modalTitle}
+            description={modalDescription}
+            onClose={() => handleCloseModal()}
+          />
+        )}
       </div>
-      
     </>
   );
 }
