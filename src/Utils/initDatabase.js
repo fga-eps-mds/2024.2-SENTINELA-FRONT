@@ -1,10 +1,22 @@
+/*Para inicializar o Database você precisa criar um arquivo .env na raiz do projeto com os seguintes dados:
+######################################################################################
+    Admin_email=
+    Admin_celular=
+    Admin_senha=
+    User_email=
+    User_celular=
+    User_senha=
+######################################################################################
+Altere os dados de forma que melhor desejar para iniciar o banco de dados com um usuário comum e um usuario Administrador.
+Lembre-se de rodar o comando <npm install dotenv> para poder adicionar as variáveis com o arquivo env
+*/
+
 // ./utils/initRoles.js
 const mongoose = require("mongoose");
 const Role = require("../Models/roleSchema"); // Ajuste o caminho conforme necessário
 const User = require("../Models/userSchema");
 const bcrypt = require("bcryptjs");
-
-const salt = bcrypt.genSaltSync();
+const saltRounds = 13;
 
 const initializeRoles = async () => {
     const roles = [
@@ -53,7 +65,6 @@ const initializeRoles = async () => {
     ];
 
     try {
-        // Verificar se a conexão está aberta antes de executar
         if (mongoose.connection.readyState === 1) {
             for (const roleData of roles) {
                 const existingRole = await Role.findOne({
@@ -75,7 +86,6 @@ const initializeRoles = async () => {
     }
 
     try {
-        // Verificar se a conexão está aberta antes de executar
         if (mongoose.connection.readyState === 1) {
             // Busca o user 'administrador'
             const adminRole = await Role.findOne({ name: "administrador" });
@@ -93,18 +103,19 @@ const initializeRoles = async () => {
                 return;
             }
 
-            // Verifica se o usuário administrador já existe
             const existingAdmin = await User.findOne({
-                email: "admin@admin.com",
+                email: process.env.Admin_email,
             });
             if (!existingAdmin) {
-                const hashedPassword = await bcrypt.hash("senha", salt); // Altere a senha padrão conforme necessário
+                const hashedPassword = await bcrypt.hash(
+                    process.env.Admin_senha,
+                    saltRounds
+                );
 
-                // Cria o usuário administrador
                 const adminUser = new User({
                     name: "Admin",
-                    email: "admin@admin.com",
-                    phone: "1234567890",
+                    email: process.env.Admin_email,
+                    phone: process.env.Admin_celular,
                     status: true,
                     password: hashedPassword,
                     role: adminRole._id,
@@ -118,16 +129,18 @@ const initializeRoles = async () => {
             }
 
             const ExistingSindicalizado = await User.findOne({
-                email: "user@user.com",
+                email: process.env.User_email,
             });
             if (!ExistingSindicalizado) {
-                const hashedPassword = await bcrypt.hash("senha", salt); // Altere a senha padrão conforme necessário
+                const hashedPassword = await bcrypt.hash(
+                    process.env.User_senha,
+                    saltRounds
+                );
 
-                // Cria o usuário administrador
                 const sindUser = new User({
                     name: "User",
-                    email: "user@user.com",
-                    phone: "61981818181",
+                    email: process.env.User_email,
+                    phone: process.env.User_celular,
                     status: true,
                     password: hashedPassword,
                     role: userRole,
