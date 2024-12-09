@@ -372,7 +372,7 @@ describe("MemberShip Component", () => {
 
     // Preencher
     let inputs = container.querySelectorAll(".MuiFilledInput-input");
-    expect(inputs).toHaveLength(31);
+    expect(inputs).toHaveLength(32); //mudou de 31 no merge(82)
     inputs = Array.from(inputs).slice(-4);
     fireEvent.change(inputs[0], { target: { value: "João Teste" } });
     fireEvent.change(inputs[1], { target: { value: "Filho" } });
