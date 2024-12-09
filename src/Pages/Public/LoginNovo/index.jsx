@@ -5,22 +5,26 @@ import sindpol_logo from "../../../assets/sindpol-logo.png";
 import AdvantagesCard from "../../../Components/AdvantagesCard";
 import LabeledTextField from "../../../Components/LabeledTextField";
 import PrimaryButton from "../../../Components/PrimaryButton";
-import SecondaryButton from "../../../Components/SecondaryButton";
+//import SecondaryButton from "../../../Components/SecondaryButton";
 import UnderlinedTextButton from "../../../Components/UnderlinedTextButton";
 import { useState, useContext, useEffect } from "react";
 import AuthContext, { useAuth } from "../../../Context/auth";
 import { useNavigate } from "react-router-dom";
 import AdvantagesModal from "../../../Components/AdvantagesModal";
 import { getBenefitsForm } from "../../../Services/benefitsService";
-import { alignProperty } from "@mui/material/styles/cssUtils";
-import { RiAlignJustify } from "react-icons/ri";
 
 export default function loginNovo() {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const context = useContext(AuthContext);
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const navigate = useNavigate();
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const { user } = useAuth();
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [email, setEmail] = useState("");
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [senha, setSenha] = useState("");
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [error, setError] = useState(""); // Adiciona um estado para mensagens de erro
 
   const handleLogin = async () => {
@@ -46,9 +50,13 @@ export default function loginNovo() {
 
   /* ------------Funções de Vantagens------------ */
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [isModalOpen, setIsModalOpen] = useState(false);
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [modalTitle, setModalTitle] = useState("");
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [modalDescription, setModalDescription] = useState("");
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [advantages, setAdvantages] = useState([]);
 
   const handleOpenModal = (title, description) => {
@@ -69,6 +77,7 @@ export default function loginNovo() {
     }
   };
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     const getAdvantages = async () => {
       const response = await getBenefitsForm();
@@ -78,6 +87,7 @@ export default function loginNovo() {
     getAdvantages();
   }, []);
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     if (user) {
       navigate("/home");
@@ -85,6 +95,7 @@ export default function loginNovo() {
     }
   }, [user, navigate]);
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     console.log("Modal Title:", modalTitle);
     console.log("Modal Description:", modalDescription);
@@ -230,10 +241,9 @@ export default function loginNovo() {
             href="#topo"
             className="links-link"
             style={{
-              marginTop: "5rem",
+              marginTop: "3rem",
               textAlign: "center",
               maxWidth: "400px",
-              marginTop: "3rem",
             }}
             onClick={(e) => {
               e.preventDefault(); // Impede o comportamento padrão do link

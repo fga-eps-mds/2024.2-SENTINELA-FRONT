@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import Login from "../Pages/Public/Login";
+//import Login from "../Pages/Public/Login";
 import MemberShip from "../Pages/Public/MemberShip";
 import PasswordRecovery from "../Pages/Public/PasswordRecovery";
 import ChangePasswordPage from "../Pages/Public/ChangePasswordPage";

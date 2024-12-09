@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import { useRef } from "react";
 import QRCode from "react-qr-code";
 import "./index.css";
 
@@ -7,14 +7,13 @@ import html2canvas from "html2canvas";
 
 import badgeLogo from "../../../assets/sindpol-logo.png";
 import penalLogo from "../../../assets/penal_df-min.png.png";
-import qrCode from "../../../assets/qr-code.png";
+//import qrCode from "../../../assets/qr-code.png";
 import { FaFacebook, FaInstagram, FaYoutube } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 
-
 const Carteirinha = () => {
   const cardRef = useRef(null);
-  const [membershipData, setMembershipData] = useState(null);
+  //const [membershipData, setMembershipData] = useState(null);
 
   // Fetch Membership data
   /* useEffect(() => {
@@ -85,7 +84,6 @@ const Carteirinha = () => {
 
   */
 
-
   const list = {
     titular: "Dannyeclisson",
     dataDeNascimento: "24/11/2001",
@@ -107,32 +105,47 @@ const Carteirinha = () => {
           <div className="carteirinha-info">
             <div className="info-line">
               <div className="info-block">
-                <strong>TITULAR:</strong><br/>
-                <p className="info-color-titular"><span>{list.titular}</span></p>
+                <strong>TITULAR:</strong>
+                <br />
+                <p className="info-color-titular">
+                  <span>{list.titular}</span>
+                </p>
                 {/*<p className="info-color-titular"><span>{name}</span></p>*/}
               </div>
             </div>
             <div className="info-line">
               <div className="info-block">
-                <strong>DATA DE NASCIMENTO:</strong><br/>
-                <p className="info-color"><span>{list.dataDeNascimento}</span></p>
+                <strong>DATA DE NASCIMENTO:</strong>
+                <br />
+                <p className="info-color">
+                  <span>{list.dataDeNascimento}</span>
+                </p>
                 {/*<p className="info-color"><span>{new Date(birthDate).toLocaleDateString()}</span></p>*/}
               </div>
               <div className="info-block">
-                <strong>DATA DE EXPEDIÇÃO:</strong><br/>
-                <p className="info-color"><span>{list.dataExpedicao}</span></p>
+                <strong>DATA DE EXPEDIÇÃO:</strong>
+                <br />
+                <p className="info-color">
+                  <span>{list.dataExpedicao}</span>
+                </p>
                 {/*<p className="info-color"><span>{new Date(expeditionDate).toLocaleDateString()}</span></p>*/}
               </div>
             </div>
             <div className="info-line">
               <div className="info-block">
-                <strong>CPF:</strong><br/>
-                <p className="info-color"><span>{list.CPF}</span></p>
+                <strong>CPF:</strong>
+                <br />
+                <p className="info-color">
+                  <span>{list.CPF}</span>
+                </p>
                 {/*<p className="info-color"><span>{cpf}</span></p>*/}
               </div>
               <div className="info-block">
-                <strong>CONTRATAÇÃO:</strong><br/>
-                <p className="info-color"><span>{list.validade}</span></p>
+                <strong>CONTRATAÇÃO:</strong>
+                <br />
+                <p className="info-color">
+                  <span>{list.validade}</span>
+                </p>
                 {/*<p className="info-color"><span>{new Date(hiringDate).toLocaleDateString()}</span></p>*/}
               </div>
             </div>
@@ -140,7 +153,11 @@ const Carteirinha = () => {
 
           {/* Badge Section */}
           <div className="badge-section">
-            <img src={badgeLogo} alt="Sindicalizado Badge" className="badge-logo" />
+            <img
+              src={badgeLogo}
+              alt="Sindicalizado Badge"
+              className="badge-logo"
+            />
             <p className="Sind">SINDICALIZADO</p>
           </div>
         </div>
@@ -150,13 +167,14 @@ const Carteirinha = () => {
       <div className="carteirinha">
         <footer className="carteirinha-footer">
           <p>
-            Setor de Diversões Sul (SDS), Conjunto Baracat, Bloco F, 27, Salas 313/315,
-            Asa Sul, Brasília/DF, CEP 70392-900
+            Setor de Diversões Sul (SDS), Conjunto Baracat, Bloco F, 27, Salas
+            313/315, Asa Sul, Brasília/DF, CEP 70392-900
           </p>
         </footer>
         <div className="qr-section">
           <div className="qr-code">
-          <QRCode value="http://localhost:5173/verificar-membro" size={170} /> {/* endereço que será passado no qrCode */}
+            <QRCode value="http://localhost:5173/verificar-membro" size={170} />{" "}
+            {/* endereço que será passado no qrCode */}
           </div>
           <p className="qr-code-numero">(61) 3321-1949</p>
         </div>
@@ -164,7 +182,7 @@ const Carteirinha = () => {
         <footer className="carteirinha-footer">
           <p>sindpol.org.br / contato@sindpol.org.br</p>
           <div className="social-media">
-          <FaInstagram className="social-icon" />
+            <FaInstagram className="social-icon" />
             <FaYoutube className="social-icon" />
             <FaFacebook className="social-icon" />
             <FaXTwitter className="social-icon" />
@@ -178,7 +196,9 @@ const Carteirinha = () => {
       </div>
 
       {/* Botão */}
-      <button onClick={downloadPDF} className="download-button">BAIXAR CARTEIRINHA</button>
+      <button onClick={downloadPDF} className="download-button">
+        BAIXAR CARTEIRINHA
+      </button>
     </div>
   );
 };
