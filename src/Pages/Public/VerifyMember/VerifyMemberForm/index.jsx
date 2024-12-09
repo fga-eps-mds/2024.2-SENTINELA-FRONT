@@ -10,12 +10,11 @@ import { useNavigate } from "react-router-dom";
 import Card from "../../../../Components/Card/index.jsx";
 import FieldText from "../../../../Components/FieldText/index.jsx";
 
-
-
 const VerifyMemberForm = () => {
     const [name, setName] = useState("");
     const [cpf, setCpf] = useState("");
-    const [showModal, setShowModal] = useState(false);
+    const [showCpfModal, setShowCpfModal] = useState(false);
+    const [showNameModal, setShowNameModal] = useState(false);
     const navigate = useNavigate();
 
     // Função para validar o CPF
@@ -38,34 +37,44 @@ const VerifyMemberForm = () => {
         );
     };
 
+    const validateName = (name) => {
+        return /^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$/.test(name);
+    }
+
     // Função para formatar o CPF
     const formatCPF = (value) => {
-        const onlyNumbers = value.replace(/\D/g, ""); // Remove caracteres não numéricos
+        const onlyNumbers = value.replace(/\D/g, "");
         return onlyNumbers
-            .replace(/(\d{3})(\d)/, "$1.$2") // Adiciona o primeiro ponto
-            .replace(/(\d{3})(\d)/, "$1.$2") // Adiciona o segundo ponto
-            .replace(/(\d{3})(\d{1,2})$/, "$1-$2"); // Adiciona o traço
+            .replace(/(\d{3})(\d)/, "$1.$2")
+            .replace(/(\d{3})(\d)/, "$1.$2")
+            .replace(/(\d{3})(\d{1,2})$/, "$1-$2");
     };
 
     // Manipulador de mudança do CPF
     const handleCpfChange = (e) => {
         const formattedCpf = formatCPF(e.target.value);
-        setCpf(formattedCpf); // Atualiza o estado com o CPF formatado
+        setCpf(formattedCpf);
     };
 
     // Função para lidar com o envio do formulário
     const handleSubmit = () => {
         if (!name || !cpf) {
-            setShowModal(true);
+            setShowCpfModal(true);
             return;
         }
 
-        if (validateCPF(cpf)) {
-            setShowModal(false);
-            navigate("/verificar-membro/ativo", { state: { name, cpf, status: "ATIVO" } });
-        } else {
-            setShowModal(true);
+        if (!validateName(name)) {
+            setShowNameModal(true);
+            return;
         }
+
+        if (!validateCPF(cpf)) {
+            setShowCpfModal(true);
+            return;
+        }
+
+        // Se passou por todas as validações
+        navigate("/verificar-membro/ativo", { state: { name, cpf, status: "ATIVO" } });
     };
 
     return (
@@ -89,8 +98,8 @@ const VerifyMemberForm = () => {
                         id="cpf"
                         name="cpf"
                         value={cpf}
-                        onChange={handleCpfChange} // Formata o CPF ao digitar
-                        maxLength="14" // Limita o tamanho ao formato XXX.XXX.XXX-XX
+                        onChange={handleCpfChange}
+                        maxLength="14"
                     />
                 </div>
             </div>
@@ -98,19 +107,29 @@ const VerifyMemberForm = () => {
                 VERIFICAR STATUS
             </button>
 
-            {showModal && (
+            {showCpfModal && (
                 <div className="modal-overlay">
                     <div className="modal">
                         <div className="botao3">
-                            <h2>CPF não encontrado</h2>
+                            <h2>CPF inválido ou não encontrado</h2>
                         </div>
-                        <button className="botao2" onClick={() => setShowModal(false)}>OK</button>
+                        <button className="botao2" onClick={() => setShowCpfModal(false)}>OK</button>
+                    </div>
+                </div>
+            )}
+
+            {showNameModal && (
+                <div className="modal-overlay">
+                    <div className="modal">
+                        <div className="botao3">
+                            <h2>Nome inválido. Use apenas letras e espaços</h2>
+                        </div>
+                        <button className="botao2" onClick={() => setShowNameModal(false)}>OK</button>
                     </div>
                 </div>
             )}
         </div>
     );
 };
-
 
 export default VerifyMemberForm;
