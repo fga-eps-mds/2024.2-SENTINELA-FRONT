@@ -12,7 +12,7 @@ export default function AdvantagesModal({ title, description, onClose }) {
           </button>
 
           <h2 className="modal-header">{title}</h2>
-          <div className="modal-content">
+          <div className="modal-main-info">
             <p className="modal-description">{description}</p>
 
             <p className="modal-contacts">

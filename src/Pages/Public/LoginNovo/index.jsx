@@ -16,7 +16,6 @@ import { alignProperty } from "@mui/material/styles/cssUtils";
 import { RiAlignJustify } from "react-icons/ri";
 
 export default function loginNovo() {
-
   const context = useContext(AuthContext);
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -99,8 +98,19 @@ export default function loginNovo() {
         </div>
 
         <div className="navLeft">
-          <a href="#vantagens" className="navLink1">Vantagens</a>
-          <Link to="/filiacao" className="navLink2">Filiar</Link>
+          <a
+            href="#vantagens"
+            className="navLink1"
+            onClick={(e) => {
+              e.preventDefault(); // Impede o comportamento padrão do link
+              scrollToSection("vantagens"); // Faz o scroll suave
+            }}
+          >
+            Vantagens
+          </a>
+          <Link to="/filiacao" className="navLink2">
+            Filiar
+          </Link>
         </div>
       </div>
 
@@ -201,23 +211,39 @@ export default function loginNovo() {
             />
           ))}
         </div>
-        <a href="#topo" className="links-link" style={{
-           display: 'block', 
-           margin: '0 auto', 
-           textAlign: 'center'
-            }}>
-          Voltar ao Topo
-        </a>
 
-        <div className="button-filiar">
+        {isModalOpen && (
+          <AdvantagesModal
+            title={modalTitle}
+            description={modalDescription}
+            onClose={() => handleCloseModal()}
+          />
+        )}
+
+        <div className="button-botton">
           <PrimaryButton
             text="Quero filiar"
             onClick={() => navigate("/filiacao")}
             maxWidth={400}
           />
+          <a
+            href="#topo"
+            className="links-link"
+            style={{
+              marginTop: "5rem",
+              textAlign: "center",
+              maxWidth: "400px",
+              marginTop: "3rem",
+            }}
+            onClick={(e) => {
+              e.preventDefault(); // Impede o comportamento padrão do link
+              scrollToSection("topo"); // Faz o scroll suave
+            }}
+          >
+            Voltar ao Topo
+          </a>
         </div>
       </div>
-
     </>
   );
 }
