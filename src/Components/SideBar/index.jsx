@@ -105,7 +105,25 @@ export default function SideBar({ fullHeight = true }) {
         navigate("/carteirinha");
         setIsSideBarOpen(false);
       }}
-    />
+    />, 
+    <SideButton
+    hidden={user ? "none" : "flex"}
+    key="Verificarsindicalizado"
+    text="VERIFICAR SINDICALIZADO"
+    onClick={() => {
+      navigate("/verificar-membro");
+      setIsSideBarOpen(false);
+    }}
+    />, 
+    <SideButton
+    hidden={checkModule(permissions, "users") ? "flex" : "none"}
+    key="Verificarsindicalizado"
+    text="VERIFICAR SINDICALIZADO"
+    onClick={() => {
+      navigate("/verificar-membro");
+      setIsSideBarOpen(false);
+    }}
+  />
   ];
 
   return (
