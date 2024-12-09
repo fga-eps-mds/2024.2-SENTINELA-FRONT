@@ -16,6 +16,7 @@ import { alignProperty } from "@mui/material/styles/cssUtils";
 import { RiAlignJustify } from "react-icons/ri";
 
 export default function loginNovo() {
+
   const context = useContext(AuthContext);
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -92,18 +93,14 @@ export default function loginNovo() {
 
   return (
     <>
-      <div className="navBar">
+      <div className="navBar" id="topo">
         <div className="navRight">
           <img src={sentinela_logo} alt="Logo Sentinela" />
         </div>
 
         <div className="navLeft">
-          <Link href="" className="navLink1">
-            Vantagens
-          </Link>
-          <Link to="/filiacao" className="navLink2">
-            Filiar
-          </Link>
+          <a href="#vantagens" className="navLink1">Vantagens</a>
+          <Link to="/filiacao" className="navLink2">Filiar</Link>
         </div>
       </div>
 
@@ -204,13 +201,14 @@ export default function loginNovo() {
             />
           ))}
         </div>
-        {isModalOpen && (
-          <AdvantagesModal
-            title={modalTitle}
-            description={modalDescription}
-            onClose={() => handleCloseModal()}
-          />
-        )}
+        <a href="#topo" className="links-link" style={{
+           display: 'block', 
+           margin: '0 auto', 
+           textAlign: 'center'
+            }}>
+          Voltar ao Topo
+        </a>
+
         <div className="button-filiar">
           <PrimaryButton
             text="Quero filiar"
@@ -219,6 +217,7 @@ export default function loginNovo() {
           />
         </div>
       </div>
+
     </>
   );
 }

@@ -1,231 +1,265 @@
 .navBar {
-  background-color: #eae3d7;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 60px;
+    background-color: #EAE3D7;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 3.75rem; /* 60px */
 }
 
 .navRight {
-  display: flex;
-  justify-content: flex-start;
-  height: 90px;
-  width: auto;
-  padding-left: 46px;
+    display: flex;
+    justify-content: flex-start;
+    height: 5.625rem; /* 90px */
+    width: auto;
+    padding-left: 2.875rem; /* 46px */
 }
 
 .navLeft {
-  display: flex;
-  justify-content: flex-end;
-  gap: 64px;
-  padding-right: 83px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 4rem; /* 64px */
+    padding-right: 5.1875rem; /* 83px */
 }
 
-.navLink1,
-.navLink2 {
-  text-decoration: none;
-  color: #3d160d;
+.navLink1, .navLink2 {
+    text-decoration: none;
+    color: #3D160D;
 }
 
 .navLink1 {
-  padding-top: 8px;
+    padding-top: 0.5rem; /* 8px */
 }
 
 .navLink2 {
-  background-color: #ebdec9;
-  width: 100px;
-  height: 34px;
-  display: flex;
-  justify-content: center;
-  padding-top: 5px;
-  border-radius: 50px;
-  border: 1px solid #000000;
+    background-color: #EBDEC9;
+    width: 6.25rem; /* 100px */
+    height: 2.125rem; /* 34px */
+    display: flex;
+    justify-content: center;
+    padding-top: 0.3125rem; /* 5px */
+    border-radius: 3.125rem; /* 50px */
+    border: 0.0625rem solid #000000; /* 1px */
 }
 
 .sideText {
-  display: inline-block;
-  justify-content: space-between;
-  flex-direction: column;
-  width: 478px;
-  margin-top: 7rem;
-  margin-left: 2rem;
-  text-align: left;
+    display: inline-block;
+    justify-content: space-between;
+    flex-direction: column;
+    width: 29.875rem; /* 478px */
+    margin-top: 7rem;
+    margin-left: 2rem;
+    text-align: left;
 }
 
 .tittle {
-  padding-left: 1rem;
-  font-size: 45px;
-  margin-bottom: 37px;
+    padding-left: 1rem;
+    font-size: 2.8125rem; /* 45px */
+    margin-bottom: 2.3125rem; /* 37px */
 }
 
 .subTittle {
-  font-size: 20px;
-  margin-top: 0;
-  margin-bottom: 10px;
-  margin-left: 15px;
+    font-size: 1.25rem; /* 20px */
+    margin-top: 0;
+    margin-bottom: 0.625rem; /* 10px */
+    margin-left: 0.9375rem; /* 15px */
 }
 
 .lead {
-  font-size: 18px;
-  margin-left: 15px;
+    font-size: 1.125rem; /* 18px */
+    margin-left: 0.9375rem; /* 15px */
 }
 
 .links {
-  margin-top: 20px;
-  display: flex;
-  flex-direction: row;
-  gap: 29px;
-  margin-left: 15px;
+    margin-top: 1.25rem; /* 20px */
+    display: flex;
+    flex-direction: row;
+    gap: 1.8125rem; /* 29px */
+    margin-left: 0.9375rem; /* 15px */
 }
 
 .links-link {
-  text-decoration: none;
-  font-size: 16px;
-  color: #7f5539;
-  border: 1px solid #7f5539;
-  width: 200px;
-  height: 34px;
-  display: flex;
-  justify-content: center;
-  padding-top: 5px;
-  border-radius: 50px;
+    text-decoration: none;
+    font-size: 1rem; /* 16px */
+    color: #7F5539;
+    border: 0.0625rem solid #7F5539; /* 1px */
+    width: 12.5rem; /* 200px */
+    height: 2.125rem; /* 34px */
+    display: flex;
+    justify-content: center;
+    padding-top: 0.3125rem; /* 5px */
+    border-radius: 3.125rem; /* 50px */
 }
 
 .sideLogin {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  float: right;
-  width: 714px;
-  height: 394px;
-  border: 1px solid #7f5539;
-  border-radius: 20px;
-  margin-top: 122px;
-  margin-right: 46px;
-  background-color: #ebdec9;
-  padding: 43px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    float: right;
+    width: 44.625rem; /* 714px */
+    height: 24.625rem; /* 394px */
+    border: 0.0625rem solid #7F5539; /* 1px */
+    border-radius: 1.25rem; /* 20px */
+    margin-top: 7.625rem; /* 122px */
+    margin-right: 2.875rem; /* 46px */
+    background-color: #EBDEC9;
+    padding: 2.6875rem; /* 43px */
 }
 
 .sideLoginImage img {
-  max-width: 250px;
-  height: auto;
+    max-width: 15.625rem; /* 250px */
+    height: auto;
 }
 
 .sideLoginElements {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  margin-top: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9375rem; /* 15px */
+    margin-top: 0;
 }
 
 .sideLoginElements h2 {
-  font-size: 24px;
+    font-size: 1.5rem; /* 24px */
 }
 
 /* ----------------Vantagens---------------- */
 .advantages {
-  display: flex;
-  flex-direction: column;
-  width: 90%;
-  padding: 8rem 0;
-  margin-left: 3rem;
+    padding-top: 8rem;
+    margin-left: 3rem;
 }
 
-.advantages-titles {
-  max-width: 750px;
-}
 .advantages-title {
-  font-size: 3rem;
-}
-.advantages-subtitle {
-  font-size: 1.875rem;
+    font-size: 1.8rem;
 }
 
-.button-filiar {
-  display: flex;
-  justify-content: center;
-  width: 100%;
+.advantages-subtitle {
+    font-size: 2rem;
 }
 
 .containerCards {
-  display: flex; /* Define flexbox */
-  justify-content: center; /* Centraliza os cards horizontalmente */
-  flex-wrap: wrap; /* Permite que os elementos quebrem linha */
-  justify-content: space-evenly;
-  gap: 1rem; /* Espaçamento entre os cards */
-  padding: 3rem 1rem 5rem 1rem; /* Aumenta o espaçamento superior e lateral */
-  margin-top: 2rem; /* Adiciona margem acima do container */
-}
-
-.tittle-mobile, .login-image {
-  display: none;
-}
-
-@media (max-width: 1270px) {
-  .login-container {
     display: flex;
-    width: 100%;
-    flex-direction: column-reverse;
-    align-content: center;
     justify-content: center;
-    align-items: center;
     flex-wrap: wrap;
-  }
-  .sideLogin {
-    float: none;
-  }
-  .sideText {
-    width: 70%;
-    margin-left: 0;
-  }
-}
-@media (max-width: 840px) {
-  .sideLoginImage,
-  .tittle,
-  .subTittle,
-  .lead {
-    display: none;
-  }
-  .tittle-mobile {
-    display: block;
-    margin-top: 6rem;
-  }
-  .sideLogin {
-    width: auto;
-    height: auto;
-    margin: 0;
-  }
-  .links {
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    margin: 0;
-  }
-  .login-image img {
-    padding-top: 2.5rem;
-  }
-  .links-link {
-    width: 100%;
-  }
-  .sideText {
-    margin: 0;
+    gap: 1rem;
+    padding: 2rem 1rem;
     margin-top: 2rem;
-    padding: 0;
-    width: 100%;
-  }
-  .login-container {
-    padding: 0 2.5rem;
-  }
 }
-@media (max-width: 570px) {
-  .tittle-mobile {
-    display: block;
-    margin-top: 6rem;
-  }
-  .sideLogin {
-    padding: 1.5rem;
-  }
-  .sideLoginElements h2{
-    font-size: 0.75rem;
-  }
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .navBar {
+        flex-direction: column;
+        height: auto;
+        align-items: flex-start;
+        padding: 0.625rem; /* 10px */
+    }
+
+    .navRight img {
+        max-height: 6.875rem; /* 110px */
+        max-width: auto;
+        object-fit: contain;
+    }
+
+    .navLeft {
+        justify-content: center;
+        gap: 1.25rem; /* 20px */
+        padding-right: 0.9375rem; /* 15px */
+        flex-direction: column;
+        align-items: center;
+        margin-left: 8.75rem; /* 140px */
+    }
+
+    .navLink1, .navLink2 {
+        font-size: 0.875rem; /* 14px */
+        align-items: center;
+    }
+
+    .sideText {
+        width: 100%;
+        margin: 2rem 1rem;
+        text-align: center;
+    }
+
+    .tittle {
+        font-size: 2.25rem; /* 36px */
+    }
+
+    .subTittle {
+        font-size: 1.125rem; /* 18px */
+    }
+
+    .lead {
+        font-size: 1rem; /* 16px */
+    }
+
+    .links {
+        flex-direction: column;
+        gap: 0.9375rem; /* 15px */
+        align-items: center;
+        margin-left: 0;
+    }
+
+    .links-link {
+        width: 100%;
+        max-width: 18.75rem; /* 300px */
+    }
+
+    .sideLogin {
+        flex-direction: column;
+        width: 100%;
+        height: 37.5rem; /* 600px */
+        max-width: 31.25rem; /* 500px */
+        margin: 2rem auto;
+        padding: 1.25rem; /* 20px */
+    }
+
+    .sideLoginImage img {
+        max-width: 12.5rem; /* 200px */
+    }
+
+    .sideLoginElements h2 {
+        font-size: 1.25rem; /* 20px */
+    }
+}
+
+@media (max-width: 480px) {
+    .navLink2 {
+        width: 5rem; /* 80px */
+        font-size: 0.75rem; /* 12px */
+        height: 1.875rem; /* 30px */
+        padding-top: 0.1875rem; /* 3px */
+    }
+
+    .links-link {
+        font-size: 0.875rem; /* 14px */
+        height: 1.875rem; /* 30px */
+    }
+
+    .sideText {
+        margin: 1rem 0.5rem;
+    }
+
+    .tittle {
+        font-size: 1.75rem; /* 28px */
+    }
+
+    .subTittle {
+        font-size: 1rem; /* 16px */
+    }
+
+    .lead {
+        font-size: 0.875rem; /* 14px */
+    }
+
+    .containerCards {
+        gap: 0.5rem;
+        padding: 1rem;
+    }
+
+    .advantages-title {
+        font-size: 2rem;
+    }
+
+    .advantages-subtitle {
+        font-size: 1.5rem;
+    }
 }
