@@ -1,4 +1,4 @@
-# Sentinela 2024.1 - FRONTEND
+# Sentinela 2024.2- FRONTEND
 
 ## Comandos para rodar o projeto
 
