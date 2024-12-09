@@ -1,0 +1,63 @@
+@media screen and (max-width: 1080px) {
+  .double-box-user {
+    display: contents;
+    grid-template-columns: 0.5fr 0.5fr;
+  }
+
+  .double-buttons-user {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+  }
+
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: 100vh; /* Para que o conteúdo ocupe toda a altura da tela */
+    padding: 20px; /* Um pouco de padding para dar espaço interno */
+  }
+
+  .forms-container-user {
+    width: 100%;
+    max-width: 500px; /* Limite máximo da largura do formulário */
+    padding: 10px;
+    border-radius: 10px;
+  }
+
+  .password-edit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-top: 20px;
+  }
+
+  #addDependentBttn {
+    cursor: pointer;
+  }
+}
+
+@media screen and (min-width: 1080px) {
+  .double-buttons-user {
+    display: flex;
+    justify-content: space-between; /* Distribui os botões igualmente no espaço disponível */
+    align-items: end; /* Alinha os botões verticalmente */
+    gap: 20px;
+  }
+
+  .double-buttons-user button {
+    flex: 1; /* Faz com que os botões ocupem o espaço disponível igualmente */
+    height: 40px;
+  }
+
+  .forms-container-user {
+    padding-bottom: 40px; /* Garante um espaçamento ao final da página */
+  }
+
+  #addDependentBttn {
+    cursor: pointer;
+  }
+}
