@@ -15,6 +15,7 @@ import RolesListPage from "../Pages/Protected/Roles/RolesListPage";
 import RolesUpdatePage from "../Pages/Protected/Roles/RolesUpdatePage";
 import MembershipRequest from "../Pages/Protected/MembershipRequests";
 import Benefits from "../Pages/Protected/Benefit/Benefits";
+import BenefitsValue from "../Pages/Protected/Benefit/BenefitsValue";
 import BenefitsList from "../Pages/Protected/Benefit/BenefitsList";
 import BenefitsCreate from "../Pages/Protected/Benefit/BenefitsCreate";
 import BenefitsUpdate from "../Pages/Protected/Benefit/BenefitsUpdate";
@@ -158,6 +159,16 @@ const ProtectedRoutes = () => {
         }
       />
       <Route
+        path="/beneficios/valor"
+        element={
+          <PermissionProtect
+            element={<BenefitsValue />}
+            moduleName="benefits"
+            actions={["read"]}
+          />
+        }
+      />
+      <Route
         path="/beneficios/lista"
         element={
           <PermissionProtect
@@ -178,15 +189,15 @@ const ProtectedRoutes = () => {
         }
       />
       <Route
-       path="/carteirinha"
-       element={
-         <PermissionProtect
-           element={<CarteirinhaPage />}
-           moduleName="users"
-           actions={["read", "create"]}
-           />
-         }
-        />
+        path="/carteirinha"
+        element={
+          <PermissionProtect
+            element={<CarteirinhaPage />}
+            moduleName="users"
+            actions={["read", "create"]}
+          />
+        }
+      />
       <Route
         path="/beneficios/editar/:id"
         element={

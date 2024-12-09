@@ -6,24 +6,37 @@ import theme from "./Styles/global";
 import { ThemeProvider } from "@mui/material";
 import Routes from "./Routes";
 import SideBar from "./Components/SideBar";
-import { BrowserRouter } from "react-router-dom";
+import Footer from "./Components/Footer";
+import { BrowserRouter, useLocation } from "react-router-dom";
 
-function App() {
+function AppContent() {
+  const location = useLocation();
+  const hideSideBarRoutes = ["/"];
+
+  const shouldShowSideBar = !hideSideBarRoutes.includes(location.pathname);
+
   return (
     <div>
       <ThemeProvider theme={theme}>
         <AuthProvider>
-          <BrowserRouter>
-            <div className="container">
-              <SideBar />
-              <div className="routes">
-                <Routes />
-              </div>
+          <div className="container">
+            {shouldShowSideBar && <SideBar />}
+            <div className="routes">
+              <Routes />
             </div>
-          </BrowserRouter>
+          </div>
+          <Footer />
         </AuthProvider>
       </ThemeProvider>
     </div>
+  );
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <AppContent />
+    </BrowserRouter>
   );
 }
 

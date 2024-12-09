@@ -9,7 +9,7 @@ export default function FieldText({
   disabled,
   onBlur,
   erro,
-  type
+  type,
 }) {
   return (
     <TextField

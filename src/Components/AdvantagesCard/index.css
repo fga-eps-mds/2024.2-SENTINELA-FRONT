@@ -1,0 +1,36 @@
+.containerCard {
+  width: 291px;
+  height: 196px;
+  background-color: #3d160d;
+  border-radius: 40px;
+  gap: 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #ebdec9;
+  font-family: "Noto Sans";
+  text-align: center;
+}
+
+.text {
+  color: #ebdec9;
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: 2px;
+}
+
+.link {
+  color: #e5d8c1;
+  text-decoration: underline;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 2px;
+}
+.link:hover {
+  cursor: pointer;
+}

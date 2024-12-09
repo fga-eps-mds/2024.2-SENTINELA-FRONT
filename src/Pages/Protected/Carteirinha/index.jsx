@@ -1,4 +1,5 @@
-import React, { useRef, useState, useEffect } from "react";
+import { useRef } from "react";
+import QRCode from "react-qr-code";
 import "./index.css";
 
 import { jsPDF } from "jspdf";
@@ -6,15 +7,16 @@ import html2canvas from "html2canvas";
 
 import badgeLogo from "../../../assets/sindpol-logo.png";
 import penalLogo from "../../../assets/penal_df-min.png.png";
-import qrCode from "../../../assets/qr-code.png";
-import { FaFacebook, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
+//import qrCode from "../../../assets/qr-code.png";
+import { FaFacebook, FaInstagram, FaYoutube } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 
 const Carteirinha = () => {
   const cardRef = useRef(null);
-  const [membershipData, setMembershipData] = useState(null);
+  //const [membershipData, setMembershipData] = useState(null);
 
   // Fetch Membership data
-  useEffect(() => {
+  /* useEffect(() => {
     const fetchMembership = async () => {
       try {
         const response = await fetch("http://localhost:3001/membership");
@@ -28,6 +30,7 @@ const Carteirinha = () => {
 
     fetchMembership();
   }, []);
+  */
 
   const downloadPDF = async () => {
     const element = cardRef.current;
@@ -64,6 +67,8 @@ const Carteirinha = () => {
     button.style.display = ""; // Mostra o botão novamente
   };
 
+  /*
+
   // Render loading state
   if (!membershipData) {
     return <div>Carregando dados...</div>;
@@ -76,6 +81,16 @@ const Carteirinha = () => {
     expeditionDate,
     hiringDate
   } = membershipData;
+
+  */
+
+  const list = {
+    titular: "Dannyeclisson",
+    dataDeNascimento: "24/11/2001",
+    dataExpedicao: "21/06/2019",
+    CPF: "074.885.581-54",
+    validade: "30/11/2024",
+  };
 
   return (
     <div className="carteirinha-container" ref={cardRef}>
@@ -90,35 +105,59 @@ const Carteirinha = () => {
           <div className="carteirinha-info">
             <div className="info-line">
               <div className="info-block">
-                <strong>TITULAR:</strong><br />
-                <p className="info-color-titular"><span>{name}</span></p>
+                <strong>TITULAR:</strong>
+                <br />
+                <p className="info-color-titular">
+                  <span>{list.titular}</span>
+                </p>
+                {/*<p className="info-color-titular"><span>{name}</span></p>*/}
               </div>
             </div>
             <div className="info-line">
               <div className="info-block">
-                <strong>DATA DE NASCIMENTO:</strong><br />
-                <p className="info-color"><span>{new Date(birthDate).toLocaleDateString()}</span></p>
+                <strong>DATA DE NASCIMENTO:</strong>
+                <br />
+                <p className="info-color">
+                  <span>{list.dataDeNascimento}</span>
+                </p>
+                {/*<p className="info-color"><span>{new Date(birthDate).toLocaleDateString()}</span></p>*/}
               </div>
               <div className="info-block">
-                <strong>DATA DE EXPEDIÇÃO:</strong><br />
-                <p className="info-color"><span>{new Date(expeditionDate).toLocaleDateString()}</span></p>
+                <strong>DATA DE EXPEDIÇÃO:</strong>
+                <br />
+                <p className="info-color">
+                  <span>{list.dataExpedicao}</span>
+                </p>
+                {/*<p className="info-color"><span>{new Date(expeditionDate).toLocaleDateString()}</span></p>*/}
               </div>
             </div>
             <div className="info-line">
               <div className="info-block">
-                <strong>CPF:</strong><br />
-                <p className="info-color"><span>{cpf}</span></p>
+                <strong>CPF:</strong>
+                <br />
+                <p className="info-color">
+                  <span>{list.CPF}</span>
+                </p>
+                {/*<p className="info-color"><span>{cpf}</span></p>*/}
               </div>
               <div className="info-block">
-                <strong>CONTRATAÇÃO:</strong><br />
-                <p className="info-color"><span>{new Date(hiringDate).toLocaleDateString()}</span></p>
+                <strong>CONTRATAÇÃO:</strong>
+                <br />
+                <p className="info-color">
+                  <span>{list.validade}</span>
+                </p>
+                {/*<p className="info-color"><span>{new Date(hiringDate).toLocaleDateString()}</span></p>*/}
               </div>
             </div>
           </div>
 
           {/* Badge Section */}
           <div className="badge-section">
-            <img src={badgeLogo} alt="Sindicalizado Badge" className="badge-logo" />
+            <img
+              src={badgeLogo}
+              alt="Sindicalizado Badge"
+              className="badge-logo"
+            />
             <p className="Sind">SINDICALIZADO</p>
           </div>
         </div>
@@ -128,12 +167,15 @@ const Carteirinha = () => {
       <div className="carteirinha">
         <footer className="carteirinha-footer">
           <p>
-            Setor de Diversões Sul (SDS), Conjunto Baracat, Bloco F, 27, Salas 313/315,
-            Asa Sul, Brasília/DF, CEP 70392-900
+            Setor de Diversões Sul (SDS), Conjunto Baracat, Bloco F, 27, Salas
+            313/315, Asa Sul, Brasília/DF, CEP 70392-900
           </p>
         </footer>
         <div className="qr-section">
-          <img src={qrCode} alt="QR Code" className="qr-code" />
+          <div className="qr-code">
+            <QRCode value="http://localhost:5173/verificar-membro" size={170} />{" "}
+            {/* endereço que será passado no qrCode */}
+          </div>
           <p className="qr-code-numero">(61) 3321-1949</p>
         </div>
 
@@ -143,7 +185,7 @@ const Carteirinha = () => {
             <FaInstagram className="social-icon" />
             <FaYoutube className="social-icon" />
             <FaFacebook className="social-icon" />
-            <FaTwitter className="social-icon" />
+            <FaXTwitter className="social-icon" />
           </div>
           <span>@sindpoldf</span>
           <div className="footer-logos">
@@ -154,7 +196,9 @@ const Carteirinha = () => {
       </div>
 
       {/* Botão */}
-      <button onClick={downloadPDF} className="download-button">BAIXAR CARTEIRINHA</button>
+      <button onClick={downloadPDF} className="download-button">
+        BAIXAR CARTEIRINHA
+      </button>
     </div>
   );
 };

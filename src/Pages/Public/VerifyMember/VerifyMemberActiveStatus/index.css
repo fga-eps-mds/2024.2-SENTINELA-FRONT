@@ -1,0 +1,119 @@
+.block-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #fff;
+  min-height: 100vh;
+  gap: 15px;
+}
+
+.block {
+  background: #eae3d7;
+  height: 420px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 650px;
+  padding: 20px 30px;
+  text-align: center;
+  font-family: Arial, sans-serif, "Noto Sans";
+  margin-top: 200px;
+}
+
+.block-header {
+  color: #341f14;
+  font-size: 15px;
+  margin-top: 3px;
+  margin-bottom: 20px;
+  margin-left: -10px;
+  font-weight: bold !important;
+  font-weight: 500;
+}
+
+.block h1 {
+  font-family: "Noto Sans";
+  font-weight: 900;
+  letter-spacing: -2.5px;
+  line-height: 123.5%;
+  font-size: 70px;
+  color: #ae883c !important;
+  margin: -12px;
+  margin-top: 10px;
+  text-shadow: 0px 100px 80px rgba(226, 183, 61, 0.25);
+}
+
+.block-header p {
+  color: #341f14;
+  font-size: 15px;
+  margin-top: 3px;
+  margin-left: -10px;
+  font-weight: 800 !important;
+  margin-bottom: 5px;
+}
+
+.inf-line {
+  display: flex;
+  gap: 25px;
+  margin-bottom: 10px;
+  margin-top: 5px;
+  margin-left: 20px;
+}
+
+.inf-block {
+  margin-left: 5px;
+  font-size: 13px;
+  margin-top: 20px;
+  text-align: left;
+}
+
+.inf-block strong {
+  font-weight: 900;
+  color: #341f14;
+  margin-left: -5px;
+  font-weight: 900 !important;
+}
+
+.inf-block span {
+  font-size: 20px;
+  margin: 2px;
+}
+
+.inf-color {
+  background-color: white;
+  border-radius: 6px;
+  padding: 5px 28px;
+  padding-left: 5px;
+  padding-top: 10px;
+  width: 185px;
+  height: 40px;
+  margin-top: 5px;
+  margin-left: -5px;
+}
+
+.inf-color-titular {
+  background-color: white;
+  border-radius: 6px;
+  padding: 5px 28px;
+  padding-left: 5px;
+  padding-top: 10px;
+  width: 550px;
+  height: 40px;
+  margin-top: 5px;
+  margin-left: -5px;
+}
+
+.foot-logo {
+  width: 130px;
+  height: auto;
+  margin-top: -3px;
+  margin-left: -10px;
+}
+
+.Sindicalizado {
+  font-family: "Noto Sans" !important;
+  color: #ae883c !important;
+  font-size: 20px !important;
+  font-weight: 900 !important;
+  text-shadow: 0px 4px 4px rgba(226, 183, 61, 0.25);
+  margin-top: -5px;
+}
