@@ -9,7 +9,8 @@ import {
   deleteUserById,
   getRoles,
   getLoggedUser,
-  updateLogged
+  updateLogged,
+  changePasswordInProfile,
 } from "../../../../Services/userService";
 import { checkAction, usePermissions } from "../../../../Utils/permission";
 import "./index.css";
@@ -29,13 +30,18 @@ export default function UserUpdatePage() {
   const [celular, setCelular] = useState("");
   const [login, setLogin] = useState("Ativo");
   const [email, setEmail] = useState("");
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmNewPassword] = useState("");
+  
   const [perfilSelecionado, setPerfilSelecionado] = useState("");
   const [roles, setRoles] = useState([]);
   const [showSaveModal, setShowSaveModal] = useState(false);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [showDeletedModal, setShowDeletedModal] = useState(false);
+  const [showPasswordSaveModal, setShowPasswordSaveModal] = useState(false);
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [isCelularValid, setIsCelularValid] = useState(true);
+  const [isUserVisible, setIsUserVisible] = useState(true);
+  const [isNewPasswordValid, setIsNewPasswordValid] = useState(true);
 
   useEffect(() => {
     const loadRoles = async () => {
@@ -68,17 +74,7 @@ export default function UserUpdatePage() {
     fetchUser();
   }, [userId]);
 
-  const handleDelete = async () => {
-    setShowDeleteModal(false);
-    if (userId) {
-      try {
-        await deleteUserById(userId);
-        setShowDeletedModal(true);
-      } catch (error) {
-        console.error("Erro ao deletar usuário:", error);
-      }
-    }
-  };
+  console.log(userId);
 
   const handleSave = async () => {
     const trimmedCelular = celular.replace(/\D/g, "");
@@ -115,95 +111,147 @@ export default function UserUpdatePage() {
     }
   };
 
+  const handleSavePassword = async () => {
+    // validar tamanho senha
+    // 
+    /*
+      const { isValid: isValidPassword, message: celularMessage } =
+      isValidPassword(trimmedCelular);
+
+
+      if (!isValidEmailAddress) {
+        console.error(emailMessage);
+      }
+      return;
+    */
+   
+    const updatedUserPassword = {
+      old_password: oldPassword,
+      new_password: newPassword,
+    };
+    try {
+      await changePasswordInProfile(updatedUserPassword);
+      handleSavePasswordModal();
+    } catch (error) {
+      console.error(`Erro ao atualizar senha do usuário com ID ${userId}:`, error);
+    }
+  };
+
   const handleChangeLogin = (event) => setLogin(event.target.value);
   const handlePerfilChange = (event) =>
     setPerfilSelecionado(event.target.value);
 
   const handleSaveModal = () => setShowSaveModal(true);
+  const handleSavePasswordModal = () => setShowPasswordSaveModal(true);
+
   const handleSaveCloseDialog = () => {
     setShowSaveModal(false);
+    setShowPasswordSaveModal(false);
     navigate("/user");
   };
-  const handleDeleteCloseDialog = () => setShowDeleteModal(false);
-  const handleDeletedCloseDialog = () => {
-    setShowDeletedModal(false);
-    navigate("/usuarios");
-  };
+
+  const showUserDiv = () => setIsUserVisible(true);
+  const showPasswordDiv = () => setIsUserVisible(false);
 
   return (
     <section className="container">
       <div className="forms-container-user">
-        <h1>Visualização de usuário</h1>
-        <h3>Dados Pessoais</h3>
-        <FieldText
-          label="Nome Completo"
-          value={nomeCompleto}
-          onChange={(e) =>
-            setNomeCompleto(e.target.value.replace(/[^a-zA-ZÀ-ÿ\s]/g, ""))
-          }
-        />
-        <div className="double-box-user">
-          <FieldText
-            label="Celular"
-            value={celular}
-            onChange={(e) => setCelular(mascaraTelefone(e.target.value))}
-          />
-          <FieldSelect
-            label="Status"
-            value={login}
-            onChange={handleChangeLogin}
-            options={["Ativo", "Inativo"]}
-          />
-        </div>
-        {!isCelularValid && (
-          <label className="isValid">
-            *Verifique se o número de celular inserido está completo
-          </label>
-        )}
-        <FieldText
-          label="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        {!isEmailValid && (
-          <label className="isValid">*Insira um email válido</label>
-        )}
-    
         <div className="double-buttons-user">
-          <PrimaryButton text="Salvar" onClick={handleSave} />
+          <PrimaryButton text="Editar usuário" onClick={showUserDiv} />  
+          <PrimaryButton text="Editar senha" onClick={showPasswordDiv}/>
         </div>
+        
+        {isUserVisible && (
+        <div>
+          <h3>Dados Pessoais</h3>
+          <div className="double-box-user">
+            <FieldText
+              label="Nome Completo"
+              value={nomeCompleto}
+              onChange={(e) =>
+                setNomeCompleto(e.target.value.replace(/[^a-zA-ZÀ-ÿ\s]/g, ""))
+              }
+            />
+            <FieldText
+              label="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            {!isEmailValid && (
+              <label className="isValid">*Insira um email válido</label>
+            )}
+          </div>
+          <div className="double-box-user">
+            <FieldText
+              label="Celular"
+              value={celular}
+              onChange={(e) => setCelular(mascaraTelefone(e.target.value))}
+            />
+            <FieldSelect
+              label="Status"
+              value={login}
+              onChange={handleChangeLogin}
+              options={["Ativo", "Inativo"]}
+            />
+          </div>
+          {!isCelularValid && (
+            <label className="isValid">
+              *Verifique se o número de celular inserido está completo
+            </label>
+          )}
+          
+          
+          <PrimaryButton text="Salvar" onClick={handleSave} />
+          
+          <Modal alertTitle="Alterações Salvas" show={showSaveModal}>
+            <SecondaryButton
+              text="OK"
+              onClick={handleSaveCloseDialog}
+              width="338px"
+            />
+          </Modal>
 
-        <Modal alertTitle="Alterações Salvas" show={showSaveModal}>
-          <SecondaryButton
-            text="OK"
-            onClick={handleSaveCloseDialog}
-            width="338px"
-          />
-        </Modal>
-        <Modal
-          alertTitle="Deseja deletar o usuário do sistema?"
-          show={showDeleteModal}
-        >
-          <SecondaryButton
-            text="EXCLUIR USUÁRIO"
-            onClick={handleDelete}
-            width="338px"
-          />
-          <SecondaryButton
-            key={"modalButtons"}
-            text="CANCELAR E MANTER O CADASTRO"
-            onClick={handleDeleteCloseDialog}
-            width="338px"
-          />
-        </Modal>
-        <Modal alertTitle="Usuário Deletado" show={showDeletedModal}>
-          <SecondaryButton
-            key={"okButtons"}
-            text="OK"
-            onClick={handleDeletedCloseDialog}
-            width="338px"
-          />
-        </Modal>
+        </div>
+        )}
+        
+        {!isUserVisible && (
+          <div>
+            <h3>Alterar Senha</h3>
+            <FieldText
+              label="Senha atual"
+              //type = "password"
+              value={oldPassword}
+              onChange={(e) => setOldPassword(e.target.value)}
+            />
+                  
+            <FieldText
+              label="Nova senha"
+              value={newPassword}
+              //type = "password"
+              onChange={(e) => setNewPassword(e.target.value)}
+            />
+              {!isNewPasswordValid && (
+                <label className="isValid">*Insira uma senha válida</label>
+              )}
+
+            <FieldText
+              label="Repetir nova senha"
+              //type = "password"
+              onChange={(e) => setConfirmNewPassword(e.target.value)}
+            />
+
+            <PrimaryButton text="Alterar senha" onClick={handleSavePassword} />
+
+            <Modal alertTitle="Alterações Salvas" show={showPasswordSaveModal}>
+            <SecondaryButton
+              text="OK"
+              onClick={handleSaveCloseDialog}
+              width="338px"
+            />
+            </Modal>
+
+          </div>
+        )}
       </div>
     </section>
   );
