@@ -39,7 +39,7 @@ export default function SideBar({ fullHeight = true }) {
         state: { userId: user._id },
       });
     } else {
-      navigate("/perfil");
+      navigate("/user");
     }
   };
 

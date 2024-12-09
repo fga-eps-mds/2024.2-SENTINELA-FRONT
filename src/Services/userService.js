@@ -32,6 +32,21 @@ export const getUsers = async () => {
   }
 };
 
+export const getLoggedUser = async () => {
+  try {
+    const token = getToken();
+    const response = await APIUsers.get(`/user`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error(`Erro ao buscar usuário com ID ${id}:`, error);
+  }
+};
+
+
 export const getUserById = async (id) => {
   try {
     const token = getToken();
@@ -124,6 +139,30 @@ export const patchUserById = async (id, updatedUser) => {
   }
 };
 
+export const updateLogged = async (updatedUser) => {
+  try {
+    const token = getToken();
+    const response = await APIUsers.put(
+      `/user`,
+      { updatedUser },
+      {
+        params: {
+          moduleName: "users",
+          action: "update",
+        },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error(`Erro ao atualizar usuário`, error);
+    throw error;
+  }
+};
+
 export const sendRecoveryPassword = async (email) => {
   try {
     const message = APIUsers.post(`/users/recover-password`, {
@@ -171,6 +210,19 @@ export const changePasswordById = async (newPassword, id) => {
     return error;
   }
 };
+
+export const changePasswordInProfile = async (oldPassword, newPassword, id) => {
+  try {
+    await APIUsers.patch(`/users/renew-password/${id}`, {
+      oldPassword,
+      newPassword,
+    });
+  } catch (error) {
+    return error;
+  }
+};
+
+
 
 export const verifyToken = async (token) => {
   try {
