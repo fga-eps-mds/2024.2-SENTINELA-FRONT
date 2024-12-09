@@ -20,14 +20,14 @@
     padding: 20px; /* Um pouco de padding para dar espaço interno */
   }
 
-  .forms-container-user{
+  .forms-container-user {
     width: 100%;
     max-width: 500px; /* Limite máximo da largura do formulário */
     padding: 10px;
     border-radius: 10px;
   }
 
-  .password-edit{
+  .password-edit {
     display: flex;
     flex-direction: column;
     align-items: center;

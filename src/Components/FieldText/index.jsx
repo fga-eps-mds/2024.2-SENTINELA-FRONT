@@ -63,4 +63,3 @@ FieldText.propTypes = {
   erro: PropTypes.bool, // Added prop type for erro
   type: PropTypes.string,
 };
-

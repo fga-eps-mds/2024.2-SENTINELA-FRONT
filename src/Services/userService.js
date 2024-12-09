@@ -46,7 +46,6 @@ export const getLoggedUser = async () => {
   }
 };
 
-
 export const getUserById = async (id) => {
   try {
     const token = getToken();
@@ -211,8 +210,6 @@ export const changePasswordById = async (newPassword, id) => {
   }
 };
 
-
-
 // const response = await APIUsers.patch(
 //   `/users/patch/${id}`,
 //   { updatedUser },
@@ -228,22 +225,20 @@ export const changePasswordById = async (newPassword, id) => {
 //   }
 // );
 export const changePasswordInProfile = async (passwords) => {
-  
   try {
-    await APIUsers.patch(`/users/renew-password`,
-      {...passwords},
+    await APIUsers.patch(
+      `/users/renew-password`,
+      { ...passwords },
       {
-      headers: {
-        Authorization: `Bearer ${getToken()}`,
-      },
-    }
-  );
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      }
+    );
   } catch (error) {
     return error;
   }
 };
-
-
 
 export const verifyToken = async (token) => {
   try {

@@ -34,7 +34,7 @@ export default function UserUpdatePage() {
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmNewPassword] = useState("");
-  
+
   const [perfilSelecionado, setPerfilSelecionado] = useState("");
   const [roles, setRoles] = useState([]);
   const [showSaveModal, setShowSaveModal] = useState(false);
@@ -62,18 +62,18 @@ export default function UserUpdatePage() {
 
   useEffect(() => {
     const fetchUser = async () => {
-        try {
-          const user = await getLoggedUser();
-          if (user) {
-            setNomeCompleto(user.name || "");
-            setCelular(mascaraTelefone(user.phone || ""));
-            setLogin(user.status ? "Ativo" : "Inativo");
-            setEmail(user.email || "");
-            setPerfilSelecionado(user.role._id || "");
-          }
-        } catch (error) {
-          console.error("Erro ao buscar usuário:", error);
+      try {
+        const user = await getLoggedUser();
+        if (user) {
+          setNomeCompleto(user.name || "");
+          setCelular(mascaraTelefone(user.phone || ""));
+          setLogin(user.status ? "Ativo" : "Inativo");
+          setEmail(user.email || "");
+          setPerfilSelecionado(user.role._id || "");
         }
+      } catch (error) {
+        console.error("Erro ao buscar usuário:", error);
+      }
     };
 
     fetchUser();
@@ -117,24 +117,23 @@ export default function UserUpdatePage() {
   };
 
   const handleSavePassword = async () => {
-   
     const updatedUserPassword = {
       old_password: oldPassword,
       new_password: newPassword,
     };
     try {
-      await changePasswordInProfile(updatedUserPassword).then(
-        (data) => {
-          console.log('caraleo', data)
-          if(data && data.response.status != 200){
-            alert(data.response.data.mensagem)
-          }
-          
+      await changePasswordInProfile(updatedUserPassword).then((data) => {
+        console.log("caraleo", data);
+        if (data && data.response.status != 200) {
+          alert(data.response.data.mensagem);
         }
-      )  
+      });
       handleSavePasswordModal();
     } catch (error) {
-      console.error(`Erro ao atualizar senha do usuário com ID ${userId}:`, error);
+      console.error(
+        `Erro ao atualizar senha do usuário com ID ${userId}:`,
+        error
+      );
     }
   };
 
@@ -158,63 +157,61 @@ export default function UserUpdatePage() {
     <section className="container">
       <div className="forms-container-user">
         <div className="double-buttons-user">
-          <PrimaryButton text="Editar usuário" onClick={showUserDiv} />  
-          <PrimaryButton text="Editar senha" onClick={showPasswordDiv}/>
+          <PrimaryButton text="Editar usuário" onClick={showUserDiv} />
+          <PrimaryButton text="Editar senha" onClick={showPasswordDiv} />
         </div>
-        
-        {isUserVisible && (
-        <div>
-          <h3>Dados Pessoais</h3>
-          <div className="double-box-user">
-            <FieldText
-              label="Nome Completo"
-              value={nomeCompleto}
-              onChange={(e) =>
-                setNomeCompleto(e.target.value.replace(/[^a-zA-ZÀ-ÿ\s]/g, ""))
-              }
-            />
-            <FieldText
-              label="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            {!isEmailValid && (
-              <label className="isValid">*Insira um email válido</label>
-            )}
-          </div>
-          <div className="double-box-user">
-            <FieldText
-              label="Celular"
-              value={celular}
-              onChange={(e) => setCelular(mascaraTelefone(e.target.value))}
-            />
-            <FieldSelect
-              label="Status"
-              value={login}
-              onChange={handleChangeLogin}
-              options={["Ativo", "Inativo"]}
-            />
-          </div>
-          {!isCelularValid && (
-            <label className="isValid">
-              *Verifique se o número de celular inserido está completo
-            </label>
-          )}
-          
-          
-          <PrimaryButton text="Salvar" onClick={handleSave} />
-          
-          <Modal alertTitle="Alterações Salvas" show={showSaveModal}>
-            <SecondaryButton
-              text="OK"
-              onClick={handleSaveCloseDialog}
-              width="338px"
-            />
-          </Modal>
 
-        </div>
+        {isUserVisible && (
+          <div>
+            <h3>Dados Pessoais</h3>
+            <div className="double-box-user">
+              <FieldText
+                label="Nome Completo"
+                value={nomeCompleto}
+                onChange={(e) =>
+                  setNomeCompleto(e.target.value.replace(/[^a-zA-ZÀ-ÿ\s]/g, ""))
+                }
+              />
+              <FieldText
+                label="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              {!isEmailValid && (
+                <label className="isValid">*Insira um email válido</label>
+              )}
+            </div>
+            <div className="double-box-user">
+              <FieldText
+                label="Celular"
+                value={celular}
+                onChange={(e) => setCelular(mascaraTelefone(e.target.value))}
+              />
+              <FieldSelect
+                label="Status"
+                value={login}
+                onChange={handleChangeLogin}
+                options={["Ativo", "Inativo"]}
+              />
+            </div>
+            {!isCelularValid && (
+              <label className="isValid">
+                *Verifique se o número de celular inserido está completo
+              </label>
+            )}
+
+            <PrimaryButton text="Salvar" onClick={handleSave} />
+
+            <Modal alertTitle="Alterações Salvas" show={showSaveModal}>
+              <SecondaryButton
+                text="OK"
+                onClick={handleSaveCloseDialog}
+                width="338px"
+              />
+            </Modal>
+          </div>
         )}
-        
+
         {!isUserVisible && (
           <div>
             <h3>Alterar Senha</h3>
@@ -224,16 +221,16 @@ export default function UserUpdatePage() {
               value={oldPassword}
               onChange={(e) => setOldPassword(e.target.value)}
             />
-                  
+
             <FieldText
               label="Nova senha"
               value={newPassword}
               type={showPasswords ? "text" : "password"}
               onChange={(e) => setNewPassword(e.target.value)}
             />
-              {!isNewPasswordValid && (
-                <label className="isValid">*Insira uma senha válida</label>
-              )}
+            {!isNewPasswordValid && (
+              <label className="isValid">*Insira uma senha válida</label>
+            )}
 
             <FieldText
               label="Repetir nova senha"
@@ -244,20 +241,18 @@ export default function UserUpdatePage() {
             <br />
             {!passwordsMatch && confirmPassword && (
               <span style={{ color: "red" }}>As senhas não coincidem</span>
-            )}           
+            )}
             <br />
-
 
             <PrimaryButton text="Alterar senha" onClick={handleSavePassword} />
 
             <Modal alertTitle="Alterações Salvas" show={showPasswordSaveModal}>
-            <SecondaryButton
-              text="OK"
-              onClick={handleSaveCloseDialog}
-              width="338px"
-            />
+              <SecondaryButton
+                text="OK"
+                onClick={handleSaveCloseDialog}
+                width="338px"
+              />
             </Modal>
-
           </div>
         )}
       </div>

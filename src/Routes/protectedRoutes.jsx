@@ -80,7 +80,7 @@ const ProtectedRoutes = () => {
           />
         }
       />
-      
+
       <Route path="/user" element={<UserUpdate />} />
 
       <Route path="/usuarios/editar/:nome" element={<UserUpdatePage />} />
