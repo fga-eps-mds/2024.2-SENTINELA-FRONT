@@ -1,0 +1,281 @@
+.navBar {
+  background-color: #eae3d7;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 60px;
+}
+
+.navRight {
+  display: flex;
+  justify-content: flex-start;
+  height: 90px;
+  width: auto;
+  padding-left: 46px;
+}
+
+.navLeft {
+  display: flex;
+  justify-content: flex-end;
+  gap: 64px;
+  padding-right: 83px;
+}
+
+.navLink1,
+.navLink2 {
+  text-decoration: none;
+  color: #3d160d;
+}
+
+.navLink1 {
+  padding-top: 8px;
+}
+
+.navLink2 {
+  background-color: #ebdec9;
+  width: 100px;
+  height: 34px;
+  display: flex;
+  justify-content: center;
+  padding-top: 5px;
+  border-radius: 50px;
+  border: 1px solid #000000;
+}
+
+.sideText {
+  display: inline-block;
+  justify-content: space-between;
+  flex-direction: column;
+  width: 478px;
+  margin-top: 7rem;
+  margin-left: 2rem;
+  text-align: left;
+}
+
+.tittle {
+  padding-left: 1rem;
+  font-size: 45px;
+  margin-bottom: 37px;
+}
+
+.subTittle {
+  font-size: 20px;
+  margin-top: 0;
+  margin-bottom: 10px;
+  margin-left: 15px;
+}
+
+.lead {
+  font-size: 18px;
+  margin-left: 15px;
+}
+
+.links {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  gap: 29px;
+  margin-left: 15px;
+}
+
+.links-link {
+  text-decoration: none;
+  font-size: 16px;
+  color: #7f5539;
+  border: 1px solid #7f5539;
+  width: 200px;
+  height: 34px;
+  display: flex;
+  justify-content: center;
+  padding-top: 5px;
+  border-radius: 50px;
+}
+
+.sideLogin {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  float: right;
+  width: 714px;
+  height: 394px;
+  border: 1px solid #7f5539;
+  border-radius: 20px;
+  margin-top: 122px;
+  margin-right: 46px;
+  background-color: #ebdec9;
+  padding: 43px;
+}
+
+.sideLoginImage img {
+  max-width: 250px;
+  height: auto;
+}
+
+.sideLoginElements {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 0;
+}
+
+.sideLoginElements h2 {
+  font-size: 24px;
+}
+
+/* ----------------Vantagens---------------- */
+.advantages {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  margin-top: 12rem;
+  padding: 8rem 0 0 4rem 0;
+  margin-left: 3rem;
+}
+
+.advantages-titles {
+  max-width: 750px;
+}
+.advantages-title {
+  font-size: 3rem;
+}
+.advantages-subtitle {
+  font-size: 1.875rem;
+}
+
+.button-botton {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding-bottom: 2rem;
+}
+
+.containerCards {
+  display: flex; /* Define flexbox */
+  justify-content: center; /* Centraliza os cards horizontalmente */
+  flex-wrap: wrap; /* Permite que os elementos quebrem linha */
+  justify-content: space-evenly;
+  gap: 1rem; /* Espaçamento entre os cards */
+  padding: 3rem 1rem 5rem 1rem; /* Aumenta o espaçamento superior e lateral */
+  margin-top: 2rem; /* Adiciona margem acima do container */
+}
+
+.tittle-mobile,
+.login-image {
+  display: none;
+}
+
+@media (max-width: 1270px) {
+  .login-container {
+    display: flex;
+    width: 100%;
+    flex-direction: column-reverse;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .sideLogin {
+    float: none;
+  }
+  .sideText {
+    width: 70%;
+    margin-left: 0;
+  }
+}
+@media (max-width: 840px) {
+  .sideLoginImage,
+  .tittle,
+  .subTittle,
+  .lead {
+    display: none;
+  }
+  .tittle-mobile {
+    display: block;
+    margin-top: 6rem;
+  }
+  .sideLogin {
+    width: auto;
+    height: auto;
+    margin: 0;
+  }
+  .links {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin: 0;
+  }
+  .login-image img {
+    padding-top: 2.5rem;
+  }
+  .links-link {
+    width: 100%;
+  }
+  .sideText {
+    margin: 0;
+    margin-top: 2rem;
+    padding: 0;
+    width: 100%;
+  }
+  .login-container {
+    padding: 0 2.5rem;
+  }
+}
+@media (max-width: 570px) {
+  .tittle-mobile {
+    display: block;
+    margin-top: 6rem;
+  }
+  .sideLogin {
+    width: 100%;
+    padding: 1.5rem 0;
+  }
+  .sideLoginElements {
+    padding-left: 1.5rem;
+    width: 100%;
+    gap: 0.5rem;
+  }
+  .sideLoginElements h2 {
+    font-size: 1rem;
+  }
+  .sideLoginElements .MuiTextField-root {
+    margin-top: 0.5rem;
+  }
+
+  .advantages {
+    margin: 1.5rem;
+    margin-top: 12rem;
+  }
+
+  .navBar {
+    flex-direction: column;
+    height: auto;
+    padding: 0.625rem; /* 10px */
+  }
+
+  .navRight,
+  .navLeft,
+  .navBar {
+    padding: 0;
+  }
+
+  .navRight img {
+    max-height: 6.875rem; /* 110px */
+    max-width: auto;
+    object-fit: contain;
+  }
+
+  .navLeft {
+    justify-content: center;
+    gap: 1.25rem; /* 20px */
+    flex-direction: column;
+    padding-bottom: 1.5rem;
+  }
+
+  .navLink1,
+  .navLink2 {
+    font-size: 0.875rem; /* 14px */
+    text-align: center;
+  }
+}

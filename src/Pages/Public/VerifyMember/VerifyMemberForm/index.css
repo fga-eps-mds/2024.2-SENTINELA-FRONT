@@ -1,73 +1,70 @@
-.content{
-    text-align: center;
-    margin-top: 300px;
+.content {
+  text-align: center;
+  margin-top: 300px;
 }
 
-.content-form input{
-    background-color: #eae3d7;
-    width: 450px;  
-    height: 50px; 
-    font-size: 16px;
-    border-top: #eae3d7;
-    border-left: #eae3d7;
-    border-right: #eae3d7;
+.content-form input {
+  background-color: #eae3d7;
+  width: 450px;
+  height: 50px;
+  font-size: 16px;
+  border-top: #eae3d7;
+  border-left: #eae3d7;
+  border-right: #eae3d7;
 }
 
-.form{
-    margin-outside: 10px;
-    font-family: "Noto Sans";
-    display: inline-block;
-    margin: 50px;
-    margin-top: 8px;
+.form {
+  margin-outside: 10px;
+  font-family: "Noto Sans";
+  display: inline-block;
+  margin: 50px;
+  margin-top: 8px;
 }
 
-.content-form p{
-    color: #341F14;
-    font-weight: 800;
-    margin-bottom: 10px;
-    text-align: left;
-    font-size: 20px;
-    font-family: "Noto Sans";
-
+.content-form p {
+  color: #341f14;
+  font-weight: 800;
+  margin-bottom: 10px;
+  text-align: left;
+  font-size: 20px;
+  font-family: "Noto Sans";
 }
 
 .botao {
-    color: #F9F6F3;
-    background-color: #AE883C;
-    width: 750px;  
-    height: 44px;
-    border: 1px solid #eae3d7;
-    margin-top: 50px;
-    border-radius: 4px;
-    font-size: 16px;
-    font-family: "Noto Sans";
+  color: #f9f6f3;
+  background-color: #ae883c;
+  width: 750px;
+  height: 44px;
+  border: 1px solid #eae3d7;
+  margin-top: 50px;
+  border-radius: 4px;
+  font-size: 16px;
+  font-family: "Noto Sans";
 }
 
 .botao2 {
-    color: #AE883C;
-    background-color: #eae3d7;
-    width: 269px;  
-    height: 44px;
-    border: 3px solid #AE883C;
-    margin-top: 20px;
-    border-radius: 4px;
-    font-size: 16px;
-    font-family: "Noto Sans";
+  color: #ae883c;
+  background-color: #eae3d7;
+  width: 269px;
+  height: 44px;
+  border: 3px solid #ae883c;
+  margin-top: 20px;
+  border-radius: 4px;
+  font-size: 16px;
+  font-family: "Noto Sans";
 }
 
 .botao3 {
-    color: #F9F6F3; 
-    background-color: #AE883C;
-    width: 269px;  
-    height: 52px;
-    border: 1px solid #eae3d7;
-    border-radius: 4px;
-    font-size: 10px;
-    font-family: "Noto Sans";
+  color: #f9f6f3;
+  background-color: #ae883c;
+  width: 269px;
+  height: 52px;
+  border: 1px solid #eae3d7;
+  border-radius: 4px;
+  font-size: 10px;
+  font-family: "Noto Sans";
 }
 
 .botao3 h2 {
-    margin-top: 12px;
-
+  margin-top: 12px;
 }
-

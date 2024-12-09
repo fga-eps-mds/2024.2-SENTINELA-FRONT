@@ -1,5 +1,5 @@
 import "./index.css";
-import PropTypes from "prop-types";
+//import PropTypes from "prop-types";
 import { AiOutlineMenu } from "react-icons/ai";
 import sindpol_logo from "../../assets/sindpol-logo.png";
 import sentinela_logo from "../../assets/sentinela-logo.png";
@@ -13,7 +13,7 @@ import AuthContext, { useAuth } from "../../Context/auth";
 import { usePermissions, checkModule } from "../../Utils/permission";
 import { getRoleById } from "../../Services/RoleService/roleService";
 
-export default function SideBar({ fullHeight = true }) {
+export default function SideBar() {
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
   const handleSideBar = () => setIsSideBarOpen(!isSideBarOpen);
   const navigate = useNavigate();
@@ -105,25 +105,25 @@ export default function SideBar({ fullHeight = true }) {
         navigate("/carteirinha");
         setIsSideBarOpen(false);
       }}
-    />, 
+    />,
     <SideButton
-    hidden={user ? "none" : "flex"}
-    key="Verificarsindicalizado"
-    text="VERIFICAR SINDICALIZADO"
-    onClick={() => {
-      navigate("/verificar-membro");
-      setIsSideBarOpen(false);
-    }}
-    />, 
+      hidden={user ? "none" : "flex"}
+      key="Verificarsindicalizado"
+      text="VERIFICAR SINDICALIZADO"
+      onClick={() => {
+        navigate("/verificar-membro");
+        setIsSideBarOpen(false);
+      }}
+    />,
     <SideButton
-    hidden={checkModule(permissions, "users") ? "flex" : "none"}
-    key="Verificarsindicalizado"
-    text="VERIFICAR SINDICALIZADO"
-    onClick={() => {
-      navigate("/verificar-membro");
-      setIsSideBarOpen(false);
-    }}
-  />
+      hidden={checkModule(permissions, "users") ? "flex" : "none"}
+      key="Verificarsindicalizado"
+      text="VERIFICAR SINDICALIZADO"
+      onClick={() => {
+        navigate("/verificar-membro");
+        setIsSideBarOpen(false);
+      }}
+    />,
   ];
 
   return (
@@ -133,9 +133,11 @@ export default function SideBar({ fullHeight = true }) {
       </div>
       <div
         className={`side-bar ${isSideBarOpen ? "open" : ""}`}
-        style={{
-          height: fullHeight ? "100vh" : "100%",
-        }}
+        style={
+          {
+            //height: fullHeight ? "100vh" : "100%",
+          }
+        }
       >
         <img className="logo" src={sindpol_logo} alt="Sindpol Logo" />
         <img className="sentinela" src={sentinela_logo} alt="Sentinela Logo" />
@@ -193,6 +195,9 @@ export default function SideBar({ fullHeight = true }) {
                 navigate("/");
                 window.location.reload();
               }}
+              style={{
+                cursor: "pointer",
+              }}
             >
               LOGOUT <RiLogoutCircleRLine className="logout-icon" />
             </button>
@@ -202,7 +207,8 @@ export default function SideBar({ fullHeight = true }) {
     </>
   );
 }
-
+/*
 SideBar.propTypes = {
   fullHeight: PropTypes.bool,
 };
+*/

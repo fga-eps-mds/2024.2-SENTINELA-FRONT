@@ -70,15 +70,20 @@ export default function Login() {
             onClick={() => handlePasswordRecovery()}
           />
         </div>
+        <PrimaryButton
+          text="Entrar"
+          onClick={() => handleLogin()}
+          maxWidth="400px"
+        />
         <SecondaryButton
           text="Filiar-me ao sindicato"
           maxWidth="400px"
           onClick={() => navigate("/filiacao")}
         />
-        <PrimaryButton
-          text="Entrar"
-          onClick={() => handleLogin()}
+        <SecondaryButton
+          text="VANTAGENS DE ME FILIAR"
           maxWidth="400px"
+          onClick={() => navigate("/vantagens")}
         />
       </Card>
     </div>
