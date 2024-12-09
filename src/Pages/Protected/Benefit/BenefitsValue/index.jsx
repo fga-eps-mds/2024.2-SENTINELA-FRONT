@@ -82,7 +82,7 @@ export default function BenefitsValue() {
 
                     <Divider
                       style={{
-                        padding: "1rem 0 0 0"
+                        padding: "1rem 0 0 0",
                       }}
                     />
                   </div>
