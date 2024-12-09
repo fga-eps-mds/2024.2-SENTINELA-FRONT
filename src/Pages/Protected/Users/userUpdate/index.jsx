@@ -22,7 +22,7 @@ export default function UserUpdatePage() {
   const { state } = useLocation();
   const navigate = useNavigate();
   const userId = state?.userId;
-  const [showPasswords, ] = useState(false);
+  const [showPasswords] = useState(false);
 
   const [nomeCompleto, setNomeCompleto] = useState("");
   const [celular, setCelular] = useState("");
@@ -39,7 +39,7 @@ export default function UserUpdatePage() {
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [isCelularValid, setIsCelularValid] = useState(true);
   const [isUserVisible, setIsUserVisible] = useState(true);
-  const [isNewPasswordValid, ] = useState(true);
+  const [isNewPasswordValid] = useState(true);
 
   const passwordsMatch = newPassword === confirmPassword;
 
@@ -133,7 +133,6 @@ export default function UserUpdatePage() {
   };
 
   const handleChangeLogin = (event) => setLogin(event.target.value);
-
 
   const handleSaveModal = () => setShowSaveModal(true);
   const handleSavePasswordModal = () => setShowPasswordSaveModal(true);
