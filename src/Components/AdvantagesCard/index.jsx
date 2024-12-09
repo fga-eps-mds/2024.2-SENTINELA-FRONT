@@ -1,15 +1,16 @@
-import PropTypes from "prop-types"
-import './index.css';  
+import PropTypes from "prop-types";
+import "./index.css";
 
-export default function AdvantagesCard({title, onClick}) {
-
+export default function AdvantagesCard({ title, onClick }) {
   return (
     <>
-    <div className="containerCard">
-      <p className="text">{title}</p>
-        <a className="link" onClick = {onClick}>Saber mais</a>
-    </div>
-  </>    
+      <div className="containerCard">
+        <p className="text">{title}</p>
+        <a className="link" onClick={onClick}>
+          Saber mais
+        </a>
+      </div>
+    </>
   );
 }
 

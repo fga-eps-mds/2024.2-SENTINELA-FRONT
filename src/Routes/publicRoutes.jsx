@@ -13,11 +13,14 @@ const PublicRoutes = () => {
     <Routes>
       <Route path="/" element={<LoginNovo />} />
       <Route path="/filiacao" element={<MemberShip />} />
-      <Route path="/vantagens" element={<Advantages />}/>
+      <Route path="/vantagens" element={<Advantages />} />
       <Route path="/recuperar-senha" element={<PasswordRecovery />} />
       <Route path="/trocar-senha/:token" element={<ChangePasswordPage />} />
       <Route path="/verificar-membro" element={<VerifyMemberForm />} />
-      <Route path="/verificar-membro/ativo" element={<VerifyMemberActiveStatus />} />
+      <Route
+        path="/verificar-membro/ativo"
+        element={<VerifyMemberActiveStatus />}
+      />
     </Routes>
   );
 };
