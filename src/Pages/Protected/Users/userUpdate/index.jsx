@@ -6,13 +6,11 @@ import Modal from "../../../../Components/Modal";
 import PrimaryButton from "../../../../Components/PrimaryButton";
 import SecondaryButton from "../../../../Components/SecondaryButton";
 import {
-  deleteUserById,
   getRoles,
   getLoggedUser,
   updateLogged,
   changePasswordInProfile,
 } from "../../../../Services/userService";
-import { checkAction, usePermissions } from "../../../../Utils/permission";
 import "./index.css";
 import {
   isValidCelular,
@@ -21,11 +19,10 @@ import {
 } from "../../../../Utils/validators";
 
 export default function UserUpdatePage() {
-  const permissions = usePermissions();
   const { state } = useLocation();
   const navigate = useNavigate();
   const userId = state?.userId;
-  const [showPasswords, setShowPasswords] = useState(false);
+  const [showPasswords, ] = useState(false);
 
   const [nomeCompleto, setNomeCompleto] = useState("");
   const [celular, setCelular] = useState("");
@@ -36,16 +33,14 @@ export default function UserUpdatePage() {
   const [confirmPassword, setConfirmNewPassword] = useState("");
 
   const [perfilSelecionado, setPerfilSelecionado] = useState("");
-  const [roles, setRoles] = useState([]);
+  const [, setRoles] = useState([]);
   const [showSaveModal, setShowSaveModal] = useState(false);
   const [showPasswordSaveModal, setShowPasswordSaveModal] = useState(false);
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [isCelularValid, setIsCelularValid] = useState(true);
   const [isUserVisible, setIsUserVisible] = useState(true);
-  const [isNewPasswordValid, setIsNewPasswordValid] = useState(true);
+  const [isNewPasswordValid, ] = useState(true);
 
-  const storagedUserString = localStorage.getItem("@App:user");
-  const storagedUser = JSON.parse(storagedUserString);
   const passwordsMatch = newPassword === confirmPassword;
 
   useEffect(() => {
@@ -138,8 +133,7 @@ export default function UserUpdatePage() {
   };
 
   const handleChangeLogin = (event) => setLogin(event.target.value);
-  const handlePerfilChange = (event) =>
-    setPerfilSelecionado(event.target.value);
+
 
   const handleSaveModal = () => setShowSaveModal(true);
   const handleSavePasswordModal = () => setShowPasswordSaveModal(true);
