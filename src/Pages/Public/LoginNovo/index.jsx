@@ -56,7 +56,7 @@ export default function loginNovo() {
         </div>
 
         <div className="navLeft">
-          <Link href="" className="navLink1">Vantagens</Link>
+          <a href="#vantagens" className="navLink1">Vantagens</a>
           <Link to="/filiacao" className="navLink2">Filiar</Link>
         </div>
       </div>
@@ -78,7 +78,7 @@ export default function loginNovo() {
         <div className="links">
 
           <Link to="/filiacao" className="links-link">Filiar-me ao sindicato</Link>
-          <a href="#cards" className="links-link">Ver vantagens</a>
+          <a href="#vantagens" className="links-link">Ver vantagens</a>
 
         </div>
       </div>
@@ -122,13 +122,13 @@ export default function loginNovo() {
         </div>
       </div >
       <div className="advantages">
-        <div className="advantages-titile">
+        <div className="advantages-title" >
           <h1>Porque se filiar?</h1>
         </div>
-        <div className="advantages-subtitile">
+        <div className="advantages-subtitile" id="vantagens">
           <h2>Venha conhecer os benefícios que os filiados ao SINDPOL-DF possuem</h2>
         </div>
-        <div className="containerCards" id="cards">
+        <div className="containerCards" >
           {<AdvantagesCard />}
           {<AdvantagesCard />}
           {<AdvantagesCard />}
