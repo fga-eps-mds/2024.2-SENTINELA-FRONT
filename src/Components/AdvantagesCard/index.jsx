@@ -1,6 +1,4 @@
-import React from 'react';
 import PropTypes from "prop-types"
-import AdvantagesModal from "../AdvantagesModal";
 import './index.css';  
 
 export default function AdvantagesCard({title, onClick}) {
@@ -9,7 +7,7 @@ export default function AdvantagesCard({title, onClick}) {
     <>
     <div className="containerCard">
       <p className="text">{title}</p>
-        <button className="link" onClick = {onClick}>Saber mais</button>
+        <a className="link" onClick = {onClick}>Saber mais</a>
     </div>
   </>    
   );
