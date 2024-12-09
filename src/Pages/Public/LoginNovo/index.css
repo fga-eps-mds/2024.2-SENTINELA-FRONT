@@ -46,15 +46,16 @@
     justify-content: space-between; 
     flex-direction: column;
     width: 478px;
-    margin-top: 55px;
-    margin-left: 10px;
+    margin-top: 7rem;
+    margin-left: 2rem;
     text-align: left;
 }
 
 .tittle {
+    padding-left: 1rem;
     font-size: 45px;
     margin-bottom: 37px; 
-    margin-left: -50px;
+
 }
 
 .subTittle {
@@ -79,7 +80,6 @@
 
 .links-link{
     text-decoration: none;
-    background-color: #EBDEC9;
     font-size: 16px;
     color: #7F5539;
     border: 1px solid #7F5539;
@@ -121,4 +121,28 @@
 
 .sideLoginElements h2 {
     font-size: 24px;
+}
+
+/* ----------------Vantagens---------------- */
+.advantages{
+    padding-top: 8rem;
+    margin-left: 3rem;
+
+}
+
+.advantages-title{
+    font-size: 3rem;
+}
+
+.advantages-subtitle{
+    font-size: 2rem;
+}
+
+.containerCards {
+    display: flex;                /* Define flexbox */
+    justify-content: center;      /* Centraliza os cards horizontalmente */
+    flex-wrap: wrap;              /* Permite que os elementos quebrem linha */
+    gap: 1rem;                    /* Espaçamento entre os cards */
+    padding: 2rem 1rem;           /* Aumenta o espaçamento superior e lateral */
+    margin-top: 2rem;             /* Adiciona margem acima do container */
 }

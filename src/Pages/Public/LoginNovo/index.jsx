@@ -10,10 +10,10 @@ import UnderlinedTextButton from "../../../Components/UnderlinedTextButton";
 import { useState, useContext, useEffect } from "react";
 import AuthContext, { useAuth } from "../../../Context/auth";
 import { useNavigate } from "react-router-dom";
-
+import AdvantagesModal from "../../../Components/AdvantagesModal";
+import { getBenefitsForm } from "../../../Services/benefitsService";
 
 export default function loginNovo() {
-
   const context = useContext(AuthContext);
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -42,12 +42,41 @@ export default function loginNovo() {
     navigate("/recuperar-senha");
   };
 
+  /* ------------Funções de Vantagens------------ */
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalTitle, setModalTitle] = useState("");
+  const [modalDescription, setModalDescription] = useState("");
+  const [advantages, setAdvantages] = useState([]);
+
+  const handleOpenModal = (title, description) => {
+    setModalTitle(title);
+    setModalDescription(description);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => setIsModalOpen(false);
+
+  useEffect(() => {
+    const getAdvantages = async () => {
+      const response = await getBenefitsForm();
+      setAdvantages(response);
+    };
+
+    getAdvantages();
+  }, []);
+
   useEffect(() => {
     if (user) {
       navigate("/home");
       window.location.reload();
     }
   }, [user, navigate]);
+
+  useEffect(() => {
+    console.log("Modal Title:", modalTitle);
+    console.log("Modal Description:", modalDescription);
+  }, [modalTitle, modalDescription]);
   return (
     <>
       <div className="navBar">
@@ -56,35 +85,39 @@ export default function loginNovo() {
         </div>
 
         <div className="navLeft">
-          <Link href="" className="navLink1">Vantagens</Link>
-          <Link to="/filiacao" className="navLink2">Filiar</Link>
+          <Link href="" className="navLink1">
+            Vantagens
+          </Link>
+          <Link to="/filiacao" className="navLink2">
+            Filiar
+          </Link>
         </div>
       </div>
 
       <div className="sideText">
-        <h1 className="tittle">
-          Bem-vindo ao SINDPOL-DF
-        </h1>
+        <h1 className="tittle">BEM-VINDO AO SINDPOL-DF</h1>
 
         <h5 className="subTittle">
           O Sindicato da Polícia Penal do Distrito Federal
         </h5>
 
         <p className="lead">
-          Defendemos seus direitos, fortalecemos sua voz e construímos uma categoria unida e respeitada.
-          Faça parte dessa força e contribua para um futuro melhor para todos os policiais penais do Distrito Federal.
+          Defendemos seus direitos, fortalecemos sua voz e construímos uma
+          categoria unida e respeitada. Faça parte dessa força e contribua para
+          um futuro melhor para todos os policiais penais do Distrito Federal.
         </p>
 
         <div className="links">
-
-          <Link to="/filiacao" className="links-link">Filiar-me ao sindicato</Link>
-          <Link href="#" className="links-link">Ver vantagens</Link>
-
+          <Link to="/filiacao" className="links-link">
+            Filiar-me ao sindicato
+          </Link>
+          <Link href="#" className="links-link">
+            Ver vantagens
+          </Link>
         </div>
       </div>
 
       <div className="sideLogin">
-
         <div className="sideLoginImage">
           <img src={sindpol_logo} alt="Logo SindPol" />
         </div>
@@ -121,7 +154,7 @@ export default function loginNovo() {
           </div>
         </div>
       </div >
-        
+
         
     </>
   );

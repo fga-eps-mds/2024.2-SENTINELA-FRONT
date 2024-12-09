@@ -10,7 +10,6 @@ import Footer from "./Components/Footer";
 import { BrowserRouter, useLocation } from "react-router-dom";
 
 function AppContent() {
-  
   const location = useLocation();
   const hideSideBarRoutes = ["/"];
 
