@@ -1,21 +1,20 @@
-import React from 'react';
-import AdvantagesModal from "../AdvantagesModal";
-import { FaBalanceScale } from 'react-icons/fa';
-import { HiAcademicCap } from "react-icons/hi2";
-import { TbDental } from "react-icons/tb";
-import './index.css';  
+import PropTypes from "prop-types";
+import "./index.css";
 
-export default function AdvantagesCard() {
+export default function AdvantagesCard({ title, onClick }) {
   return (
     <>
-    <div className="containerCards">
-
-    <div className="containerCard">
-      <FaBalanceScale className="icon" />
-      <p className="text">Auxílio Jurírico</p>
-        <a href={<AdvantagesModal />} className="link">Saber mais</a>
-    </div>
-    </div>
-</>    
+      <div className="containerCard">
+        <p className="text">{title}</p>
+        <a className="link" onClick={onClick}>
+          Saber mais
+        </a>
+      </div>
+    </>
   );
 }
+
+AdvantagesCard.propTypes = {
+  title: PropTypes.string,
+  onClick: PropTypes.func,
+};

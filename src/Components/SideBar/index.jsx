@@ -1,5 +1,5 @@
 import "./index.css";
-import PropTypes from "prop-types";
+//import PropTypes from "prop-types";
 import { AiOutlineMenu } from "react-icons/ai";
 import sindpol_logo from "../../assets/sindpol-logo.png";
 import sentinela_logo from "../../assets/sentinela-logo.png";
@@ -13,7 +13,7 @@ import AuthContext, { useAuth } from "../../Context/auth";
 import { usePermissions, checkModule } from "../../Utils/permission";
 import { getRoleById } from "../../Services/RoleService/roleService";
 
-export default function SideBar({ fullHeight = true }) {
+export default function SideBar() {
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
   const handleSideBar = () => setIsSideBarOpen(!isSideBarOpen);
   const navigate = useNavigate();
@@ -97,6 +97,33 @@ export default function SideBar({ fullHeight = true }) {
         setIsSideBarOpen(false);
       }}
     />,
+    <SideButton
+      hidden={checkModule(permissions, "users") ? "flex" : "none"}
+      key="carteirinha"
+      text="CARTEIRINHA"
+      onClick={() => {
+        navigate("/carteirinha");
+        setIsSideBarOpen(false);
+      }}
+    />,
+    <SideButton
+      hidden={user ? "none" : "flex"}
+      key="Verificarsindicalizado"
+      text="VERIFICAR SINDICALIZADO"
+      onClick={() => {
+        navigate("/verificar-membro");
+        setIsSideBarOpen(false);
+      }}
+    />,
+    <SideButton
+      hidden={checkModule(permissions, "users") ? "flex" : "none"}
+      key="Verificarsindicalizado"
+      text="VERIFICAR SINDICALIZADO"
+      onClick={() => {
+        navigate("/verificar-membro");
+        setIsSideBarOpen(false);
+      }}
+    />,
   ];
 
   return (
@@ -158,7 +185,7 @@ export default function SideBar({ fullHeight = true }) {
             }}
           >
             Você está logado como {user?.name}
-          </h2> 
+          </h2>
           <ButtonGroup>
             <button
               key="logout"
@@ -180,7 +207,8 @@ export default function SideBar({ fullHeight = true }) {
     </>
   );
 }
-
+/*
 SideBar.propTypes = {
   fullHeight: PropTypes.bool,
 };
+*/

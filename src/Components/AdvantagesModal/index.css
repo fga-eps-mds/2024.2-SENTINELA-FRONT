@@ -1,64 +1,64 @@
 .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    
-  }
-  
-  /* Caixa principal do modal */
-  .modal-box {
-    background-color: #3D160D; /* Cor marrom */
-    color: #fff; /* Texto branco */
-    padding: 20px;
-    border-radius: 10px;
-    width: 90%;
-    max-width: 500px;
-    text-align: left;
-    position: relative;
-    font-family: Noto Sans;
-    padding: 2rem;
-  }
-  
-  /* Botão de fechar */
-  .close-button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    border: none;
-    background: none;
-    color: #fff;
-    font-size: 24px;
-    cursor: pointer;
-    padding: 0.5rem;
-  }
-  
-  /* Cabeçalho do modal */
-  .modal-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 15px;
-    padding: 1rem;
-    line-height: 1.6; /* Espaçamento entre linhas */
-    margin-top: 10px;
-    font-size: 3.125rem;
-    letter-spacing: 0.5px; /* Espaçamento entre letras */
-  }
-  
-  /* Ícone do cabeçalho */
-  .modal-icon {
-    color: #fff;
-  }
-  .modal-description {
-    line-height: 1.6; /* Espaçamento entre linhas */
-    margin-top: 10px;
-    font-size: 1.188rem;
-    letter-spacing: 0.5px; /* Espaçamento entre letras */
-  }
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Caixa principal do modal */
+.modal-box {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  align-items: center;
+  gap: 3rem;
+  border-radius: 10px;
+  padding: 3rem;
+  width: 100%;
+  max-width: 800px;
+  max-height: fit-content;
+  font-family: Noto Sans;
+  background-color: #3d160d; /* Cor marrom */
+  color: #ebdec9; /* Texto branco */
+}
+
+/* Botão de fechar */
+.close-button {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  border: none;
+  background: none;
+  color: #ebdec9;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+/* Cabeçalho do modal */
+.modal-header {
+  padding-bottom: 1rem;
+  line-height: 1.6; /* Espaç    display: flex;amento entre linhas */
+  margin-top: 10px;
+  font-size: 3.125rem;
+  letter-spacing: 0.1rem; /* Espaçamento entre letras */
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 2px;
+  overflow-wrap: anywhere;
+}
+
+.modal-main-info {
+  display: flex;
+  flex-direction: column;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 2px;
+  gap: 1.5rem;
+  overflow-wrap: anywhere;
+}
