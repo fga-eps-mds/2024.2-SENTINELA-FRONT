@@ -25,6 +25,7 @@ export default function UserUpdatePage() {
   const { state } = useLocation();
   const navigate = useNavigate();
   const userId = state?.userId;
+  const [showPasswords, setShowPasswords] = useState(false);
 
   const [nomeCompleto, setNomeCompleto] = useState("");
   const [celular, setCelular] = useState("");
@@ -42,6 +43,10 @@ export default function UserUpdatePage() {
   const [isCelularValid, setIsCelularValid] = useState(true);
   const [isUserVisible, setIsUserVisible] = useState(true);
   const [isNewPasswordValid, setIsNewPasswordValid] = useState(true);
+
+  const storagedUserString = localStorage.getItem("@App:user");
+  const storagedUser = JSON.parse(storagedUserString);
+  const passwordsMatch = newPassword === confirmPassword;
 
   useEffect(() => {
     const loadRoles = async () => {
@@ -112,25 +117,21 @@ export default function UserUpdatePage() {
   };
 
   const handleSavePassword = async () => {
-    // validar tamanho senha
-    // 
-    /*
-      const { isValid: isValidPassword, message: celularMessage } =
-      isValidPassword(trimmedCelular);
-
-
-      if (!isValidEmailAddress) {
-        console.error(emailMessage);
-      }
-      return;
-    */
    
     const updatedUserPassword = {
       old_password: oldPassword,
       new_password: newPassword,
     };
     try {
-      await changePasswordInProfile(updatedUserPassword);
+      await changePasswordInProfile(updatedUserPassword).then(
+        (data) => {
+          console.log('caraleo', data)
+          if(data && data.response.status != 200){
+            alert(data.response.data.mensagem)
+          }
+          
+        }
+      )  
       handleSavePasswordModal();
     } catch (error) {
       console.error(`Erro ao atualizar senha do usuário com ID ${userId}:`, error);
@@ -219,7 +220,7 @@ export default function UserUpdatePage() {
             <h3>Alterar Senha</h3>
             <FieldText
               label="Senha atual"
-              //type = "password"
+              type={showPasswords ? "text" : "password"}
               value={oldPassword}
               onChange={(e) => setOldPassword(e.target.value)}
             />
@@ -227,7 +228,7 @@ export default function UserUpdatePage() {
             <FieldText
               label="Nova senha"
               value={newPassword}
-              //type = "password"
+              type={showPasswords ? "text" : "password"}
               onChange={(e) => setNewPassword(e.target.value)}
             />
               {!isNewPasswordValid && (
@@ -236,9 +237,16 @@ export default function UserUpdatePage() {
 
             <FieldText
               label="Repetir nova senha"
-              //type = "password"
+              type={showPasswords ? "text" : "password"}
               onChange={(e) => setConfirmNewPassword(e.target.value)}
             />
+
+            <br />
+            {!passwordsMatch && confirmPassword && (
+              <span style={{ color: "red" }}>As senhas não coincidem</span>
+            )}           
+            <br />
+
 
             <PrimaryButton text="Alterar senha" onClick={handleSavePassword} />
 

@@ -42,7 +42,7 @@ export const getLoggedUser = async () => {
     });
     return response.data;
   } catch (error) {
-    console.error(`Erro ao buscar usuário com ID ${id}:`, error);
+    console.error(`Erro ao buscar usuário:`, error);
   }
 };
 
@@ -211,12 +211,33 @@ export const changePasswordById = async (newPassword, id) => {
   }
 };
 
-export const changePasswordInProfile = async (oldPassword, newPassword, id) => {
+
+
+// const response = await APIUsers.patch(
+//   `/users/patch/${id}`,
+//   { updatedUser },
+//   {
+//     params: {
+//       userId: `${user._id}`,
+//       moduleName: "users",
+//       action: "update",
+//     },
+//     headers: {
+//       Authorization: `Bearer ${token}`,
+//     },
+//   }
+// );
+export const changePasswordInProfile = async (passwords) => {
+  
   try {
-    await APIUsers.patch(`/users/renew-password/${id}`, {
-      oldPassword,
-      newPassword,
-    });
+    await APIUsers.patch(`/users/renew-password`,
+      {...passwords},
+      {
+      headers: {
+        Authorization: `Bearer ${getToken()}`,
+      },
+    }
+  );
   } catch (error) {
     return error;
   }
