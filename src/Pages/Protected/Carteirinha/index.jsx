@@ -13,10 +13,10 @@ import { FaXTwitter } from "react-icons/fa6";
 
 const Carteirinha = () => {
   const cardRef = useRef(null);
-  //const [membershipData, setMembershipData] = useState(null);
+  const [membershipData, setMembershipData] = useState(null);
 
   // Fetch Membership data
-  /* useEffect(() => {
+  useEffect(() => {
     const fetchMembership = async () => {
       try {
         const response = await fetch("http://localhost:3001/membership");
@@ -30,7 +30,7 @@ const Carteirinha = () => {
 
     fetchMembership();
   }, []);
-  */
+  
 
   const downloadPDF = async () => {
     const element = cardRef.current;
@@ -67,7 +67,6 @@ const Carteirinha = () => {
     button.style.display = ""; // Mostra o botão novamente
   };
 
-  /*
 
   // Render loading state
   if (!membershipData) {
@@ -82,15 +81,7 @@ const Carteirinha = () => {
     hiringDate
   } = membershipData;
 
-  */
-
-  const list = {
-    titular: "Dannyeclisson",
-    dataDeNascimento: "24/11/2001",
-    dataExpedicao: "21/06/2019",
-    CPF: "074.885.581-54",
-    validade: "30/11/2024",
-  };
+  
 
   return (
     <div className="carteirinha-container" ref={cardRef}>
@@ -108,45 +99,37 @@ const Carteirinha = () => {
                 <strong>TITULAR:</strong>
                 <br />
                 <p className="info-color-titular">
-                  <span>{list.titular}</span>
                 </p>
-                {/*<p className="info-color-titular"><span>{name}</span></p>*/}
+                <p className="info-color-titular"><span>{name}</span></p>
               </div>
             </div>
             <div className="info-line">
               <div className="info-block">
                 <strong>DATA DE NASCIMENTO:</strong>
                 <br />
-                <p className="info-color">
-                  <span>{list.dataDeNascimento}</span>
-                </p>
-                {/*<p className="info-color"><span>{new Date(birthDate).toLocaleDateString()}</span></p>*/}
+                <p className="info-color"/>
+                  
+                <p className="info-color"><span>{new Date(birthDate).toLocaleDateString()}</span></p>
               </div>
               <div className="info-block">
                 <strong>DATA DE EXPEDIÇÃO:</strong>
                 <br />
-                <p className="info-color">
-                  <span>{list.dataExpedicao}</span>
-                </p>
-                {/*<p className="info-color"><span>{new Date(expeditionDate).toLocaleDateString()}</span></p>*/}
+                <p className="info-color"/>
+                <p className="info-color"><span>{new Date(expeditionDate).toLocaleDateString()}</span></p>
               </div>
             </div>
             <div className="info-line">
               <div className="info-block">
                 <strong>CPF:</strong>
                 <br />
-                <p className="info-color">
-                  <span>{list.CPF}</span>
-                </p>
-                {/*<p className="info-color"><span>{cpf}</span></p>*/}
+                <p className="info-color"/>
+                <p className="info-color"><span>{cpf}</span></p>
               </div>
               <div className="info-block">
                 <strong>CONTRATAÇÃO:</strong>
                 <br />
-                <p className="info-color">
-                  <span>{list.validade}</span>
-                </p>
-                {/*<p className="info-color"><span>{new Date(hiringDate).toLocaleDateString()}</span></p>*/}
+                <p className="info-color"/>
+                <p className="info-color"><span>{new Date(hiringDate).toLocaleDateString()}</span></p>
               </div>
             </div>
           </div>
