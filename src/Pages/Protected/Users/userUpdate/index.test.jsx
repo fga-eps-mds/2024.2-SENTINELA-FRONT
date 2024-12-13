@@ -53,9 +53,11 @@ describe("UserUpdatePage", () => {
       expect(screen.getByText("Editar usuário")).toBeInTheDocument();
       expect(screen.getByText("Editar senha")).toBeInTheDocument();
       expect(screen.getByLabelText("Nome Completo")).toHaveValue("John Doe");
-      expect(screen.getByLabelText("Email")).toHaveValue("john.doe@example.com");
+      expect(screen.getByLabelText("Email")).toHaveValue(
+        "john.doe@example.com"
+      );
       expect(screen.getByLabelText("Celular")).toHaveValue("(12) 3456-7890");
-    });    
+    });
   });
 
   it("validates email input", async () => {

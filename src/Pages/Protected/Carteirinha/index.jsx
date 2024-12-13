@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import QRCode from "react-qr-code";
 import "./index.css";
 
@@ -22,7 +22,7 @@ const Carteirinha = () => {
         const response = await fetch("http://localhost:3001/membership");
         const data = await response.json();
         setMembershipData(data[0]);
-        console.log('alohaa', data)
+        console.log("alohaa", data);
       } catch (error) {
         console.error("Erro ao buscar os dados do membership:", error);
       }
@@ -30,7 +30,6 @@ const Carteirinha = () => {
 
     fetchMembership();
   }, []);
-  
 
   const downloadPDF = async () => {
     const element = cardRef.current;
@@ -67,21 +66,12 @@ const Carteirinha = () => {
     button.style.display = ""; // Mostra o botão novamente
   };
 
-
   // Render loading state
   if (!membershipData) {
     return <div>Carregando dados...</div>;
   }
 
-  const {
-    name,
-    birthDate,
-    cpf,
-    expeditionDate,
-    hiringDate
-  } = membershipData;
-
-  
+  const { name, birthDate, cpf, expeditionDate, hiringDate } = membershipData;
 
   return (
     <div className="carteirinha-container" ref={cardRef}>
@@ -98,38 +88,47 @@ const Carteirinha = () => {
               <div className="info-block">
                 <strong>TITULAR:</strong>
                 <br />
+                <p className="info-color-titular"></p>
                 <p className="info-color-titular">
+                  <span>{name}</span>
                 </p>
-                <p className="info-color-titular"><span>{name}</span></p>
               </div>
             </div>
             <div className="info-line">
               <div className="info-block">
                 <strong>DATA DE NASCIMENTO:</strong>
                 <br />
-                <p className="info-color"/>
-                  
-                <p className="info-color"><span>{new Date(birthDate).toLocaleDateString()}</span></p>
+                <p className="info-color" />
+
+                <p className="info-color">
+                  <span>{new Date(birthDate).toLocaleDateString()}</span>
+                </p>
               </div>
               <div className="info-block">
                 <strong>DATA DE EXPEDIÇÃO:</strong>
                 <br />
-                <p className="info-color"/>
-                <p className="info-color"><span>{new Date(expeditionDate).toLocaleDateString()}</span></p>
+                <p className="info-color" />
+                <p className="info-color">
+                  <span>{new Date(expeditionDate).toLocaleDateString()}</span>
+                </p>
               </div>
             </div>
             <div className="info-line">
               <div className="info-block">
                 <strong>CPF:</strong>
                 <br />
-                <p className="info-color"/>
-                <p className="info-color"><span>{cpf}</span></p>
+                <p className="info-color" />
+                <p className="info-color">
+                  <span>{cpf}</span>
+                </p>
               </div>
               <div className="info-block">
                 <strong>CONTRATAÇÃO:</strong>
                 <br />
-                <p className="info-color"/>
-                <p className="info-color"><span>{new Date(hiringDate).toLocaleDateString()}</span></p>
+                <p className="info-color" />
+                <p className="info-color">
+                  <span>{new Date(hiringDate).toLocaleDateString()}</span>
+                </p>
               </div>
             </div>
           </div>
