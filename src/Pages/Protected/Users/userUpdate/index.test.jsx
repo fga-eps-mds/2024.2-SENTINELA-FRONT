@@ -1,43 +1,24 @@
-import { describe, it, expect, beforeEach, vi, afterEach } from "vitest";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import { BrowserRouter as Router, useNavigate } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
+import { describe, it, expect, beforeEach, vi, afterEach } from "vitest";
 import UserUpdatePage from "./index";
 import {
   getRoles,
-  getUserById,
-  patchUserById,
+  getLoggedUser,
+  updateLogged,
 } from "../../../../Services/userService";
 import "@testing-library/jest-dom";
 
 vi.mock("../../../../Services/userService", () => ({
   getRoles: vi.fn(),
-  getUserById: vi.fn(),
-  deleteUserById: vi.fn(),
-  patchUserById: vi.fn(),
+  getLoggedUser: vi.fn(),
+  updateLogged: vi.fn(),
+  changePasswordInProfile: vi.fn(),
 }));
 
-vi.mock("react-router-dom", async (importOriginal) => {
-  const actual = await importOriginal();
-  return {
-    ...actual,
-    useLocation: () => ({
-      state: { userId: "123" },
-    }),
-    useNavigate: vi.fn(), // Mocks useNavigate
-  };
-});
-
-vi.mock("../../../../Utils/permission", () => ({
-  usePermissions: () => ({
-    somePermission: true,
-  }),
-  checkAction: () => true,
-}));
-
-describe("UserUpdatePage", () => {
+describe("UserUpdate", () => {
   const setup = () => {
     localStorage.setItem("@App:user", JSON.stringify({ token: "mock-token" }));
-
     return render(
       <Router>
         <UserUpdatePage />
@@ -46,38 +27,41 @@ describe("UserUpdatePage", () => {
   };
 
   beforeEach(() => {
+    vi.clearAllMocks();
+    localStorage.clear();
     localStorage.setItem("@App:user", JSON.stringify({ token: "mock-token" }));
   });
 
   afterEach(() => {
-    vi.clearAllMocks();
     localStorage.clear();
   });
 
-  it("renders correctly", async () => {
-    getRoles.mockResolvedValueOnce([]);
-    getUserById.mockResolvedValueOnce({
-      name: "",
-      phone: "",
+  it("renders correctly with initial data", async () => {
+    getRoles.mockResolvedValueOnce([{ _id: "1", name: "Admin" }]);
+    getLoggedUser.mockResolvedValueOnce({
+      name: "John Doe",
+      phone: "1234567890",
       status: true,
-      email: "",
-      role: "",
+      email: "john.doe@example.com",
+      role: { _id: "1" },
     });
 
     setup();
 
-    expect(screen.getByText("Visualização de usuário")).toBeInTheDocument();
-    expect(screen.getByText("Dados Pessoais")).toBeInTheDocument();
-    expect(screen.getByLabelText("Nome Completo")).toBeInTheDocument();
-    expect(screen.getByLabelText("Celular")).toBeInTheDocument();
-    expect(screen.getByLabelText("Status")).toBeInTheDocument();
-    expect(screen.getByLabelText("Email")).toBeInTheDocument();
-    expect(screen.getByText("Perfil")).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText("Editar usuário")).toBeInTheDocument();
+      expect(screen.getByText("Editar senha")).toBeInTheDocument();
+      expect(screen.getByLabelText("Nome Completo")).toHaveValue("John Doe");
+      expect(screen.getByLabelText("Email")).toHaveValue(
+        "john.doe@example.com"
+      );
+      expect(screen.getByLabelText("Celular")).toHaveValue("(12) 3456-7890");
+    });
   });
 
   it("validates email input", async () => {
     getRoles.mockResolvedValueOnce([]);
-    getUserById.mockResolvedValueOnce({
+    getLoggedUser.mockResolvedValueOnce({
       name: "",
       phone: "",
       status: true,
@@ -99,7 +83,7 @@ describe("UserUpdatePage", () => {
 
   it("validates phone number input", async () => {
     getRoles.mockResolvedValueOnce([]);
-    getUserById.mockResolvedValueOnce({
+    getLoggedUser.mockResolvedValueOnce({
       name: "",
       phone: "",
       status: true,
@@ -123,9 +107,9 @@ describe("UserUpdatePage", () => {
     });
   });
 
-  it("saves user data correctly", () => {
+  it("saves user data correctly", async () => {
     getRoles.mockResolvedValueOnce([{ _id: "1", name: "Admin" }]);
-    getUserById.mockResolvedValueOnce({
+    getLoggedUser.mockResolvedValueOnce({
       name: "John Doe",
       phone: "1234567890",
       status: true,
@@ -147,46 +131,15 @@ describe("UserUpdatePage", () => {
 
     fireEvent.click(screen.getByText("Salvar"));
 
-    waitFor(() => {
-      expect(patchUserById).toHaveBeenCalledTimes(1);
-      expect(patchUserById).toHaveBeenCalledWith(
-        "123",
-        {
-          name: "Jane Doe",
-          email: "jane.doe@example.com",
-          phone: "0987654321",
-          status: true,
-          role: { _id: "1" },
-        },
-        "mock-token"
-      );
+    await waitFor(() => {
+      expect(updateLogged).toHaveBeenCalledWith({
+        name: "Jane Doe",
+        email: "jane.doe@example.com",
+        phone: "0987654321",
+        status: true,
+        role: "",
+      });
       expect(screen.getByText("Alterações Salvas")).toBeInTheDocument();
     });
-  });
-
-  it("navigates to the contributions page when the button is clicked", async () => {
-    const mockNavigate = vi.fn();
-    vi.mocked(useNavigate).mockReturnValue(mockNavigate);
-
-    const user = {
-      name: "John Doe",
-      phone: "1234567890",
-      status: true,
-      email: "john.doe@example.com",
-      role: "1",
-    };
-
-    getRoles.mockResolvedValue([{ _id: "1", name: "Admin" }]);
-    getUserById.mockResolvedValue(user);
-
-    setup();
-
-    await waitFor(() => {
-      expect(screen.getByLabelText("Nome Completo")).toHaveValue("John Doe");
-    });
-
-    await fireEvent.click(screen.getByText("Histórico de Contribuições"));
-
-    expect(mockNavigate).toHaveBeenCalledTimes(1);
   });
 });
