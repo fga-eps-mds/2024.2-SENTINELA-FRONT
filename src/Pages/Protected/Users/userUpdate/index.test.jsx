@@ -17,7 +17,7 @@ vi.mock("../../../../Services/userService", () => ({
   changePasswordInProfile: vi.fn(),
 }));
 
-describe("UserUpdatePage", () => {
+describe("UserUpdate", () => {
   const setup = () => {
     localStorage.setItem("@App:user", JSON.stringify({ token: "mock-token" }));
     return render(
@@ -138,7 +138,7 @@ describe("UserUpdatePage", () => {
         email: "jane.doe@example.com",
         phone: "0987654321",
         status: true,
-        role: "1",
+        role: "",
       });
       expect(screen.getByText("Alterações Salvas")).toBeInTheDocument();
     });
