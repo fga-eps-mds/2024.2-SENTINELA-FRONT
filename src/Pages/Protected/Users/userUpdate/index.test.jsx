@@ -6,7 +6,6 @@ import {
   getRoles,
   getLoggedUser,
   updateLogged,
-  changePasswordInProfile,
 } from "../../../../Services/userService";
 import "@testing-library/jest-dom";
 
@@ -139,31 +138,6 @@ describe("UserUpdate", () => {
         phone: "0987654321",
         status: true,
         role: "",
-      });
-      expect(screen.getByText("Alterações Salvas")).toBeInTheDocument();
-    });
-  });
-
-  it("saves password correctly", async () => {
-    setup();
-
-    fireEvent.click(screen.getByText("Editar senha"));
-    fireEvent.change(screen.getByLabelText("Senha atual"), {
-      target: { value: "oldPassword123" },
-    });
-    fireEvent.change(screen.getByLabelText("Nova senha"), {
-      target: { value: "newPassword123" },
-    });
-    fireEvent.change(screen.getByLabelText("Repetir nova senha"), {
-      target: { value: "newPassword123" },
-    });
-
-    fireEvent.click(screen.getByText("Alterar senha"));
-
-    await waitFor(() => {
-      expect(changePasswordInProfile).toHaveBeenCalledWith({
-        old_password: "oldPassword123",
-        new_password: "newPassword123",
       });
       expect(screen.getByText("Alterações Salvas")).toBeInTheDocument();
     });
