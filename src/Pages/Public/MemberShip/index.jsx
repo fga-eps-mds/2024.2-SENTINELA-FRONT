@@ -14,9 +14,12 @@ import SecondaryButton from "../../../Components/SecondaryButton";
 import Modal from "../../../Components/Modal";
 import { useNavigate } from "react-router-dom";
 import { listOrgans } from "../../../Services/organService";
-import { isValidEmail } from "../../../Utils/validators";
-import { mascaraTelefone } from "../../../Utils/validators";
-import { mascaraCEP } from "../../../Utils/validators";
+import { 
+  isValidEmail,
+  mascaraTelefone,
+  mascaraCEP,
+  validarCPF
+ } from "../../../Utils/validators";
 
 const MemberShip = () => {
   const [email, setEmail] = useState("");
@@ -336,7 +339,8 @@ const MemberShip = () => {
 
     //VALIDAÇÕES
     if (isValidEmail(email) === false) erros.email = 1;
-    if (cpf.length < 14) erros.cpf = 1;
+    //if (cpf.length < 14) erros.cpf = 1;
+    if (!validarCPF(cpf)) erros.cpf = 1;
     if (rg.length < 7) erros.rg = 1;
     //if (cep.length < 9) erros.cep = 1;
     //if (telefone.length < 14) erros.telefone = 1;
