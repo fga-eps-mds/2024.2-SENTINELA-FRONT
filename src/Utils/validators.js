@@ -122,3 +122,43 @@ export const mascaraCelular = (celular) => {
     .replace(/^(\d{2})(\d)/g, "($1) $2")
     .replace(/(\d{5})(\d{4})$/, "$1-$2");
 };
+
+export const validaSenha = (novaSenha) => {
+  const comprimentoMinimo = 8;
+  const temMaiuscula = /[A-Z]/.test(novaSenha);
+  const temMinuscula = /[a-z]/.test(novaSenha);
+  const temNumero = /\d/.test(novaSenha);
+
+  if (novaSenha.length < comprimentoMinimo) {
+      return {
+          status: false,
+          message: `A senha deve ter pelo menos ${comprimentoMinimo} caracteres`,
+      };
+  }
+
+  if (!temMaiuscula) {
+      return {
+        status: false,
+        message: "A senha deve ter pelo menos uma letra maiuscula",
+      };
+  }
+
+  if (!temMinuscula) {
+    return{
+      status: false,
+      message: "A senha deve ter pelo menos uma letra minuscula",
+    };
+  }
+
+  if (!temNumero) {
+    return{
+      status: false,
+      message: "A senha deve ter pelo menos um numero",
+    };
+  }
+
+  return{
+    status: true,
+    message: "Senha válida",
+  };
+};

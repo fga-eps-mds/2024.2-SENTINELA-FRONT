@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { Button } from "@mui/material";
 import FieldSelect from "../../../../Components/FieldSelect";
 import FieldText from "../../../../Components/FieldText";
 import Modal from "../../../../Components/Modal";
@@ -16,6 +17,7 @@ import {
   isValidCelular,
   isValidEmail,
   mascaraTelefone,
+  validaSenha,
 } from "../../../../Utils/validators";
 
 export default function UserUpdatePage() {
@@ -39,7 +41,8 @@ export default function UserUpdatePage() {
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [isCelularValid, setIsCelularValid] = useState(true);
   const [isUserVisible, setIsUserVisible] = useState(true);
-  const [isNewPasswordValid] = useState(true);
+  const [isNewPasswordValid, setNewPasswordValid] = useState(true);
+  const [passwordMessage, setPasswordMessage] = useState(" ");
 
   const passwordsMatch = newPassword === confirmPassword;
 
@@ -73,8 +76,6 @@ export default function UserUpdatePage() {
 
     fetchUser();
   }, [userId]);
-
-  console.log(userId);
 
   const handleSave = async () => {
     const trimmedCelular = celular.replace(/\D/g, "");
@@ -110,20 +111,27 @@ export default function UserUpdatePage() {
       console.error(`Erro ao atualizar usuário com ID ${userId}:`, error);
     }
   };
-
+  
   const handleSavePassword = async () => {
+    if(!passwordsMatch || !isNewPasswordValid){
+      return;
+    }
+
     const updatedUserPassword = {
       old_password: oldPassword,
       new_password: newPassword,
     };
+    
     try {
       await changePasswordInProfile(updatedUserPassword).then((data) => {
-        console.log("caraleo", data);
-        if (data && data.response.status != 200) {
+        if (data && data.status != 200) {
           alert(data.response.data.mensagem);
-        }
+        }        
+        else if(data && data.status == 200) {
+          handleSavePasswordModal(); 
+        } 
       });
-      handleSavePasswordModal();
+
     } catch (error) {
       console.error(
         `Erro ao atualizar senha do usuário com ID ${userId}:`,
@@ -135,6 +143,7 @@ export default function UserUpdatePage() {
   const handleChangeLogin = (event) => setLogin(event.target.value);
 
   const handleSaveModal = () => setShowSaveModal(true);
+  
   const handleSavePasswordModal = () => setShowPasswordSaveModal(true);
 
   const handleSaveCloseDialog = () => {
@@ -145,6 +154,19 @@ export default function UserUpdatePage() {
 
   const showUserDiv = () => setIsUserVisible(true);
   const showPasswordDiv = () => setIsUserVisible(false);
+
+  const handleNavigateToContributions = () => {
+    navigate(`/movimentacoes/contribuicoes/${nomeCompleto}`, {
+      state: {
+        userId,
+        nomeCompleto,
+        celular,
+        email,
+        login,
+        perfilSelecionado,
+      },
+    });
+  };
 
   return (
     <section className="container">
@@ -193,6 +215,13 @@ export default function UserUpdatePage() {
               </label>
             )}
 
+            <Button
+              className="contribution-btn"
+              onClick={handleNavigateToContributions}
+            >
+              Histórico de Contribuições
+            </Button>
+
             <PrimaryButton text="Salvar" onClick={handleSave} />
 
             <Modal alertTitle="Alterações Salvas" show={showSaveModal}>
@@ -219,20 +248,26 @@ export default function UserUpdatePage() {
               label="Nova senha"
               value={newPassword}
               type={showPasswords ? "text" : "password"}
-              onChange={(e) => setNewPassword(e.target.value)}
+              onChange={(e) => {  setNewPassword(e.target.value);
+                                  const isValidPassword = validaSenha(e.target.value);
+                                  setNewPasswordValid(isValidPassword.status);
+                                  setPasswordMessage(isValidPassword.message);
+              }
+              }
             />
-            {!isNewPasswordValid && (
-              <label className="isValid">*Insira uma senha válida</label>
-            )}
 
             <FieldText
               label="Repetir nova senha"
               type={showPasswords ? "text" : "password"}
               onChange={(e) => setConfirmNewPassword(e.target.value)}
             />
-
+            
             <br />
-            {!passwordsMatch && confirmPassword && (
+            {!isNewPasswordValid && (
+              <span style={{ color: "red" }}>{passwordMessage}</span>
+            )}
+           
+            {isNewPasswordValid && !passwordsMatch && confirmPassword && (
               <span style={{ color: "red" }}>As senhas não coincidem</span>
             )}
             <br />

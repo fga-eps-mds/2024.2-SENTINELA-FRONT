@@ -226,7 +226,7 @@ export const changePasswordById = async (newPassword, id) => {
 // );
 export const changePasswordInProfile = async (passwords) => {
   try {
-    await APIUsers.patch(
+    const response = await APIUsers.patch(
       `/users/renew-password`,
       { ...passwords },
       {
@@ -235,6 +235,7 @@ export const changePasswordInProfile = async (passwords) => {
         },
       }
     );
+    return response;
   } catch (error) {
     return error;
   }
