@@ -304,15 +304,15 @@ const MemberShip = () => {
     const erros = {};
 
     //CAMPOS OBRIGATÓRIOS
-    // if (!nomeCompleto) erros.nomeCompleto = 1;
-    // if (!matricula) erros.matricula = 1;
-    // if (!sexo) erros.sexo = 1;
-    // if (!rg) erros.rg = 1;
-    // if (!cpf) erros.cpf = 1;
-    // if (!email) erros.email = 1;
-    // if (!celular) erros.celular = 1;
-    // if (!orgao) erros.orgao = 1;
-    // if (!lotacao) erros.lotacao = 1;
+    if (!nomeCompleto) erros.nomeCompleto = 1;
+    if (!matricula) erros.matricula = 1;
+    if (!sexo) erros.sexo = 1;
+    if (!rg) erros.rg = 1;
+    if (!cpf) erros.cpf = 1;
+    if (!email) erros.email = 1;
+    if (!celular) erros.celular = 1;
+    if (!orgao) erros.orgao = 1;
+    if (!lotacao) erros.lotacao = 1;
 
     //CAMPOS OPCIONAIS
     //if (!estadoCivil) erros.estadoCivil = 1;
