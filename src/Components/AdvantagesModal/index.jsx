@@ -7,7 +7,7 @@ export default function AdvantagesModal({ title, description, onClose }) {
       <div className="modal-overlay">
         <div className="modal-box">
           <button className="close-button" onClick={onClose}>
-            &times;
+            x
           </button>
 
           <h2 className="modal-header">{title}</h2>
