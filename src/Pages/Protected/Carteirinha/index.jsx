@@ -88,7 +88,6 @@ const Carteirinha = () => {
               <div className="info-block">
                 <strong>TITULAR:</strong>
                 <br />
-                <p className="info-color-titular"></p>
                 <p className="info-color-titular">
                   <span>{name}</span>
                 </p>
@@ -98,8 +97,6 @@ const Carteirinha = () => {
               <div className="info-block">
                 <strong>DATA DE NASCIMENTO:</strong>
                 <br />
-                <p className="info-color" />
-
                 <p className="info-color">
                   <span>{new Date(birthDate).toLocaleDateString()}</span>
                 </p>
@@ -107,7 +104,6 @@ const Carteirinha = () => {
               <div className="info-block">
                 <strong>DATA DE EXPEDIÇÃO:</strong>
                 <br />
-                <p className="info-color" />
                 <p className="info-color">
                   <span>{new Date(expeditionDate).toLocaleDateString()}</span>
                 </p>
@@ -117,7 +113,6 @@ const Carteirinha = () => {
               <div className="info-block">
                 <strong>CPF:</strong>
                 <br />
-                <p className="info-color" />
                 <p className="info-color">
                   <span>{cpf}</span>
                 </p>
@@ -125,7 +120,6 @@ const Carteirinha = () => {
               <div className="info-block">
                 <strong>CONTRATAÇÃO:</strong>
                 <br />
-                <p className="info-color" />
                 <p className="info-color">
                   <span>{new Date(hiringDate).toLocaleDateString()}</span>
                 </p>
