@@ -31,7 +31,7 @@ export default function BenefitsValue() {
     <section className="benefits-container">
       <div className="benefits-list">
         <div className="benefits-header">
-          <h1> Valores dos benefícios</h1>
+          <h1>Valores dos benefícios</h1>
           <p>Benefícios disponíveis</p>
         </div>
         <div className="box-benefits">
