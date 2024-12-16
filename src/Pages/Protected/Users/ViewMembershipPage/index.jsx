@@ -25,6 +25,7 @@ import {
 // import { mascaraCPF, mascaraRg, mascaraTelefone, mascaraCEP, validateField } from "../../../../Utils/mask";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import SecondaryButton from "../../../../Components/SecondaryButton";
+import { validarCPF } from "../../../../Utils/validators";
 
 const ViewMembershipPage = () => {
   const { state } = useLocation();
@@ -215,16 +216,22 @@ const ViewMembershipPage = () => {
         throw new Error("missing fields");
       }
 
-      const message = await updateMembership(membershipId, formData);
-      if (message) {
-        throw new Error(message);
+      const response = await updateMembership(membershipId, formData);
+      console.log("resposta: ", response);
+      if(response.status === 200){
+        alert("Usuário atualizado com sucesso!");    
+      } else {
+        alert(response.data.mensagem);
       }
 
       setOpenSuccessDialog(false);
-      alert("usuário atualizado com sucesso!");
     } catch (error) {
       setOpenSuccessDialog(false);
       alert("Erro ao atualizar usuário");
+      console.error(
+        "Erro ao atualizar usuário",
+        error
+      );
     }
   };
 
@@ -261,6 +268,7 @@ const ViewMembershipPage = () => {
     if (!sex) missingFields.push("Sexo");
     if (!rg) missingFields.push("RG");
     if (!cpf) missingFields.push("CPF");
+    if (!validarCPF(cpf)) missingFields.push("CPF");
     if (!email) missingFields.push("Email");
     if (!phone) missingFields.push("Celular");
     if (!ufAddress) missingFields.push("UF do Endereço");

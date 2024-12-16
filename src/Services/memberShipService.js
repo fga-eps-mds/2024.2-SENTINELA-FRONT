@@ -51,13 +51,12 @@ export const updateMemberStatus = async (memberId, formData) => {
 
 export const updateMembership = async (memberId, formData) => {
   try {
-    await APIUsers.patch(`membership/update/${memberId}`, {
+    const response = await APIUsers.patch(`/membership/update/${memberId}`, {
       formData,
     });
-
-    return false;
+    return response;
   } catch (error) {
-    return error.response.data.erro;
+    return error.response;
   }
 };
 
