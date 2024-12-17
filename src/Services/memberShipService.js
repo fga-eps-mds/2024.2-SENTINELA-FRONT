@@ -1,4 +1,5 @@
 import { APIUsers } from "./BaseService";
+import { getToken } from "./Functions/loader";
 
 // const storagedToken = localStorage.getItem("@App:token");
 // const token = JSON.parse(storagedToken);
@@ -18,6 +19,21 @@ export async function getMemberShip(status) {
   try {
     const response = await APIUsers.get("membership", {
       params: { status: status },
+    });
+    return response.data;
+  } catch (error) {
+    return error.response.data.erro;
+  }
+}
+
+export async function getLoggedMemberShip() {
+  
+  try {
+    const token = getToken();
+    const response = await APIUsers.get("logged-membership", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
     return response.data;
   } catch (error) {

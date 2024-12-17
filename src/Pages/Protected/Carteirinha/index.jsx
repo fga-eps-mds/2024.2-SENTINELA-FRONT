@@ -10,6 +10,9 @@ import penalLogo from "../../../assets/penal_df-min.png.png";
 //import qrCode from "../../../assets/qr-code.png";
 import { FaFacebook, FaInstagram, FaYoutube } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
+import {
+  getLoggedMemberShip,
+} from "../../../Services/memberShipService";
 
 const Carteirinha = () => {
   const cardRef = useRef(null);
@@ -19,10 +22,12 @@ const Carteirinha = () => {
   useEffect(() => {
     const fetchMembership = async () => {
       try {
-        const response = await fetch("http://localhost:3001/membership");
-        const data = await response.json();
-        setMembershipData(data[0]);
-        console.log("alohaa", data);
+        const user = await getLoggedMemberShip();
+
+        // const response = await fetch("http://localhost:3001/logged-membership");
+        // const data = await response.json();
+        setMembershipData(user);
+        console.log('noooo', user)
       } catch (error) {
         console.error("Erro ao buscar os dados do membership:", error);
       }
@@ -88,7 +93,6 @@ const Carteirinha = () => {
               <div className="info-block">
                 <strong>TITULAR:</strong>
                 <br />
-                <p className="info-color-titular"></p>
                 <p className="info-color-titular">
                   <span>{name}</span>
                 </p>
@@ -98,7 +102,6 @@ const Carteirinha = () => {
               <div className="info-block">
                 <strong>DATA DE NASCIMENTO:</strong>
                 <br />
-                <p className="info-color" />
 
                 <p className="info-color">
                   <span>{new Date(birthDate).toLocaleDateString()}</span>
@@ -107,7 +110,6 @@ const Carteirinha = () => {
               <div className="info-block">
                 <strong>DATA DE EXPEDIÇÃO:</strong>
                 <br />
-                <p className="info-color" />
                 <p className="info-color">
                   <span>{new Date(expeditionDate).toLocaleDateString()}</span>
                 </p>
@@ -117,7 +119,6 @@ const Carteirinha = () => {
               <div className="info-block">
                 <strong>CPF:</strong>
                 <br />
-                <p className="info-color" />
                 <p className="info-color">
                   <span>{cpf}</span>
                 </p>
@@ -125,7 +126,6 @@ const Carteirinha = () => {
               <div className="info-block">
                 <strong>CONTRATAÇÃO:</strong>
                 <br />
-                <p className="info-color" />
                 <p className="info-color">
                   <span>{new Date(hiringDate).toLocaleDateString()}</span>
                 </p>

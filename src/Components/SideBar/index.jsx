@@ -98,7 +98,7 @@ export default function SideBar() {
       }}
     />,
     <SideButton
-      hidden={checkModule(permissions, "users") ? "flex" : "none"}
+      hidden={user ? "flex" : "none"}
       key="carteirinha"
       text="CARTEIRINHA"
       onClick={() => {
