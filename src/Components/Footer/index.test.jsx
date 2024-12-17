@@ -16,11 +16,15 @@ describe("Footer Component", () => {
     render(<Footer />);
 
     expect(
-      screen.getByText("Copyright © 2024 • Sindpol-DF • CNPJ 11.236.674/0001-06")
+      screen.getByText(
+        "Copyright © 2024 • Sindpol-DF • CNPJ 11.236.674/0001-06"
+      )
     ).toBeInTheDocument();
 
     expect(
-      screen.getByText("Setor de Diversões Sul (SDS), Conjunto Baracat Bloco F 27, Salas 313/315 • Asa Sul")
+      screen.getByText(
+        "Setor de Diversões Sul (SDS), Conjunto Baracat Bloco F 27, Salas 313/315 • Asa Sul"
+      )
     ).toBeInTheDocument();
 
     expect(screen.getByText("Brasília/DF • CEP 70392-900")).toBeInTheDocument();
@@ -40,7 +44,9 @@ describe("Footer Component", () => {
     const links = screen.getAllByRole("link");
 
     expectedLinks.forEach((expectedHref) => {
-      const link = links.find((link) => link.getAttribute("href") === expectedHref);
+      const link = links.find(
+        (link) => link.getAttribute("href") === expectedHref
+      );
       expect(link).toBeInTheDocument();
     });
 

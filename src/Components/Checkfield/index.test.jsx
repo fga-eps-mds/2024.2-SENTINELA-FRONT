@@ -56,7 +56,9 @@ describe("CheckField Component", () => {
   });
 
   it("should update the state when 'checked' prop changes", () => {
-    const { rerender } = render(<CheckField label="Test Label" checked={false} />);
+    const { rerender } = render(
+      <CheckField label="Test Label" checked={false} />
+    );
 
     const checkbox = screen.getByRole("checkbox");
     expect(checkbox).not.toBeChecked();

@@ -70,7 +70,9 @@ describe("SideBar Component", () => {
     const mockUser = { name: "John Doe", role: "admin" };
     renderSideBar(mockUser);
 
-    expect(screen.getByText("Você está logado como John Doe")).toBeInTheDocument();
+    expect(
+      screen.getByText("Você está logado como John Doe")
+    ).toBeInTheDocument();
   });
 
   it("should call Logout and navigate to '/' on logout", () => {
@@ -98,16 +100,16 @@ describe("SideBar Component", () => {
 
   it("should hide restricted buttons if user has no permissions", () => {
     usePermissions.mockReturnValue([]);
-  
+
     renderSideBar();
-  
+
     const menuIcon = screen.getAllByRole("button")[0];
     fireEvent.click(menuIcon);
-  
+
     const cadastrosButton = screen.getByText("CADASTROS");
     expect(cadastrosButton).toBeInTheDocument();
-  
+
     const beneficiosButton = screen.getByText("BENEFÍCIOS");
     expect(beneficiosButton).toBeInTheDocument();
-  });  
+  });
 });

@@ -1,5 +1,11 @@
 import "@testing-library/jest-dom";
-import { render, screen, fireEvent, waitFor, within } from "@testing-library/react";
+import {
+  render,
+  screen,
+  fireEvent,
+  waitFor,
+  within,
+} from "@testing-library/react";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import CheckList from "./index";
 
@@ -65,7 +71,9 @@ describe("CheckList Component", () => {
   });
 
   it("should render the list of items correctly", () => {
-    render(<CheckList items={items} value={selectedValues} onChange={mockOnChange} />);
+    render(
+      <CheckList items={items} value={selectedValues} onChange={mockOnChange} />
+    );
 
     expect(screen.getByText("John Doe")).toBeInTheDocument();
     expect(screen.getByText("Jane Doe")).toBeInTheDocument();
@@ -77,7 +85,9 @@ describe("CheckList Component", () => {
   });
 
   it("should call onChange with updated values when a checkbox is clicked", () => {
-    render(<CheckList items={items} value={selectedValues} onChange={mockOnChange} />);
+    render(
+      <CheckList items={items} value={selectedValues} onChange={mockOnChange} />
+    );
 
     const secondCheckbox = screen.getAllByRole("checkbox")[1];
     fireEvent.click(secondCheckbox);
@@ -86,15 +96,17 @@ describe("CheckList Component", () => {
   });
 
   it("should open the modal and display user details when an item is clicked", async () => {
-    render(<CheckList items={items} value={selectedValues} onChange={mockOnChange} />);
-  
+    render(
+      <CheckList items={items} value={selectedValues} onChange={mockOnChange} />
+    );
+
     fireEvent.click(screen.getByText("John Doe"));
-  
+
     const modal = screen.getByTestId("big-modal");
     expect(modal).toBeVisible();
-  
+
     const modalContent = within(modal);
-  
+
     expect(modalContent.getByText("Nome:")).toBeInTheDocument();
     expect(modalContent.getByText("John Doe")).toBeInTheDocument();
     expect(modalContent.getByText("Email:")).toBeInTheDocument();
@@ -103,10 +115,12 @@ describe("CheckList Component", () => {
     expect(modalContent.getByText("Christian")).toBeInTheDocument();
     expect(modalContent.getByText("Dependentes:")).toBeInTheDocument();
     expect(modalContent.getByText("2")).toBeInTheDocument();
-  });  
+  });
 
   it("should close the modal when the close button is clicked", async () => {
-    render(<CheckList items={items} value={selectedValues} onChange={mockOnChange} />);
+    render(
+      <CheckList items={items} value={selectedValues} onChange={mockOnChange} />
+    );
 
     fireEvent.click(screen.getByText("John Doe"));
     const modal = screen.getByTestId("big-modal");

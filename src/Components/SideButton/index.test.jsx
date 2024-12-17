@@ -22,14 +22,18 @@ describe("SideButton Component", () => {
   });
 
   it("should hide the button when 'hidden' prop is set to 'none'", () => {
-    render(<SideButton text="Hidden Button" hidden="none" onClick={() => {}} />);
+    render(
+      <SideButton text="Hidden Button" hidden="none" onClick={() => {}} />
+    );
 
     const button = screen.queryByRole("button", { name: "Hidden Button" });
     expect(button).not.toBeInTheDocument();
   });
 
   it("should show the button when 'hidden' prop is set to 'flex'", () => {
-    render(<SideButton text="Visible Button" hidden="flex" onClick={() => {}} />);
+    render(
+      <SideButton text="Visible Button" hidden="flex" onClick={() => {}} />
+    );
 
     const button = screen.getByRole("button", { name: "Visible Button" });
     expect(button).toBeInTheDocument();

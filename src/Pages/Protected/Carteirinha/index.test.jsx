@@ -6,7 +6,6 @@ import Carteirinha from "./index";
 import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";
 
-
 vi.mock("html2canvas", () => ({
   default: vi.fn().mockResolvedValue({
     toDataURL: () => "data:image/png;base64,mockImage",
@@ -53,7 +52,7 @@ describe("Carteirinha Component", () => {
 
   it("should render membership data correctly", async () => {
     render(<Carteirinha />);
-  
+
     await waitFor(() => {
       expect(screen.getByText("John Doe")).toBeInTheDocument();
       expect(screen.getByText("12/31/1989")).toBeInTheDocument(); // Data de nascimento
@@ -61,7 +60,7 @@ describe("Carteirinha Component", () => {
       expect(screen.getByText("6/14/2022")).toBeInTheDocument(); // Data de contratação
       expect(screen.getByText("123.456.789-00")).toBeInTheDocument(); // CPF
     });
-  });  
+  });
 
   it("should call downloadPDF when clicking on 'BAIXAR CARTEIRINHA' button", async () => {
     const mockSave = vi.fn();
