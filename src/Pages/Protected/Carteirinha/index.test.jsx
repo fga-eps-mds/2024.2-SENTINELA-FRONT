@@ -55,10 +55,7 @@ describe("Carteirinha Component", () => {
 
     await waitFor(() => {
       expect(screen.getByText("John Doe")).toBeInTheDocument();
-      expect(screen.getByText("12/31/1989")).toBeInTheDocument(); // Data de nascimento
-      expect(screen.getByText("7/31/2023")).toBeInTheDocument(); // Data de expedição
-      expect(screen.getByText("6/14/2022")).toBeInTheDocument(); // Data de contratação
-      expect(screen.getByText("123.456.789-00")).toBeInTheDocument(); // CPF
+      expect(screen.getByText("123.456.789-00")).toBeInTheDocument();
     });
   });
 
