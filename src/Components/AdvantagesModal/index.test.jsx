@@ -57,15 +57,16 @@ describe("AdvantagesModal", () => {
         onClose={mockOnClose}
       />
     );
-  
+
     const contactInfo = screen.getByText((content) =>
-      content.includes("Para mais informações, entre em contato com o Sindicato pelo número")
+      content.includes(
+        "Para mais informações, entre em contato com o Sindicato pelo número"
+      )
     );
-  
+
     const phoneNumber = screen.getByText("(61) 3321-1949");
-  
+
     expect(contactInfo).toBeInTheDocument();
     expect(phoneNumber).toBeInTheDocument();
   });
-  
 });

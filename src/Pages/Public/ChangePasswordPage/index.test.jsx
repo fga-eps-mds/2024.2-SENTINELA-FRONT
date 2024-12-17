@@ -12,12 +12,14 @@ vi.mock("../../../Services/userService", () => ({
 }));
 
 describe("ChangePasswordPage", () => {
-
   const renderComponent = (token) => {
     render(
       <MemoryRouter initialEntries={[`/change-password/${token}`]}>
         <Routes>
-          <Route path="/change-password/:token" element={<ChangePasswordPage />} />
+          <Route
+            path="/change-password/:token"
+            element={<ChangePasswordPage />}
+          />
         </Routes>
       </MemoryRouter>
     );

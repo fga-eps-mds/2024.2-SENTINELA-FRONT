@@ -83,7 +83,9 @@ describe("PublicRoutes Component", () => {
     renderPublicRoutes("/verificar-membro/ativo");
 
     await waitFor(() => {
-      expect(screen.getByText("Verify Member Active Status")).toBeInTheDocument();
+      expect(
+        screen.getByText("Verify Member Active Status")
+      ).toBeInTheDocument();
     });
   });
 });
