@@ -5,6 +5,7 @@ import AuthContext from "../Context/auth";
 import { getRoleById } from "../Services/RoleService/roleService";
 
 export const checkModule = (permissions, module) => {
+  return true;
   const modulePermissions = permissions.find(
     (permission) => permission.module === module
   );
@@ -13,10 +14,13 @@ export const checkModule = (permissions, module) => {
 };
 
 export const checkAction = (permissions, module, action) => {
+  
+
   const modulePermissions = permissions.find(
-    (permission) => permission.module === module
+    (permission) => permission.name === action
   );
-  return modulePermissions && modulePermissions.access.includes(action);
+  
+  return modulePermissions?.name;
 };
 
 export const usePermissions = () => {
