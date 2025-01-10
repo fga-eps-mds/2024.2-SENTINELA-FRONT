@@ -18,7 +18,7 @@ export default function ListBankAccount() {
   const { user } = useAuth();
   const [bankAccounts, setBankAccounts] = useState([]);
   const permissions = usePermissions();
-  const canCreate = checkAction(permissions, "finance", "create");
+  const canCreate = checkAction(permissions, "create");
 
   useEffect(() => {
     const fetchBankAccounts = async () => {

@@ -38,8 +38,8 @@ export default function UserUpdatePage() {
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [isCelularValid, setIsCelularValid] = useState(true);
 
-  const canDelete = checkAction(permissions, "users", "delete");
-  const canUpdate = checkAction(permissions, "users", "update");
+  const canDelete = checkAction(permissions, "delete");
+  const canUpdate = checkAction(permissions, "update");
 
   useEffect(() => {
     const loadRoles = async () => {

@@ -38,30 +38,30 @@ describe("checkModule", () => {
 
 describe("checkAction", () => {
   it('should return true for action "read" in module "users"', () => {
-    expect(checkAction(permissions, "users", "read")).toBe(true);
+    expect(checkAction(permissions, "read")).toBe(true);
   });
 
   it('should return true for action "write" in module "users"', () => {
-    expect(checkAction(permissions, "users", "write")).toBe(true);
+    expect(checkAction(permissions, "write")).toBe(true);
   });
 
   it('should return true for action "read" in module "settings"', () => {
-    expect(checkAction(permissions, "settings", "read")).toBe(true);
+    expect(checkAction(permissions, "read")).toBe(true);
   });
 
   it('should return false for action "write" in module "settings"', () => {
-    expect(checkAction(permissions, "settings", "write")).toBe(false);
+    expect(checkAction(permissions, "write")).toBe(false);
   });
 
   it('should return true for action "view" in module "dashboard"', () => {
-    expect(checkAction(permissions, "dashboard", "view")).toBe(true);
+    expect(checkAction(permissions, "view")).toBe(true);
   });
 
   it('should return true for action "edit" in module "dashboard"', () => {
-    expect(checkAction(permissions, "dashboard", "edit")).toBe(true);
+    expect(checkAction(permissions, "edit")).toBe(true);
   });
 
   it('should return false for action "delete" in module "dashboard"', () => {
-    expect(checkAction(permissions, "dashboard", "delete")).toBe(false);
+    expect(checkAction(permissions, "delete")).toBe(false);
   });
 });

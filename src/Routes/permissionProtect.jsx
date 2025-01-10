@@ -37,7 +37,7 @@ const PermissionProtect = ({ element, moduleName, actions }) => {
   return element;
   // Verifica se o usuário possui pelo menos uma das ações necessárias
   const hasPermission = actions.some((action) =>
-    checkAction(userPermissions, moduleName, action)
+    checkAction(userPermissions, action)
   );
 
   if (hasPermission) {

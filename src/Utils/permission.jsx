@@ -13,14 +13,15 @@ export const checkModule = (permissions, module) => {
   return modulePermissions ? modulePermissions.access.length > 0 : false;
 };
 
-export const checkAction = (permissions, module, action) => {
-  
+export const checkAction = (permissions, action) => {
+  console.log(permissions, action)
 
   const modulePermissions = permissions.find(
     (permission) => permission.name === action
   );
+  console.log('arribaa', modulePermissions ? true : false)
   
-  return modulePermissions?.name;
+  return modulePermissions ? true : false ;
 };
 
 export const usePermissions = () => {

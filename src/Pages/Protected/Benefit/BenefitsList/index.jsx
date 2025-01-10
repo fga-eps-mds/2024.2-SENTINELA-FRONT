@@ -16,7 +16,7 @@ export default function BenefitsList() {
   const [benefits, setBenefits] = useState([]);
   const navigate = useNavigate();
   const permissions = usePermissions();
-  const canCreate = checkAction(permissions, "benefits", "create");
+  const canCreate = checkAction(permissions, "create");
 
   const handleSubmit = () => {
     navigate("/beneficios/criar");

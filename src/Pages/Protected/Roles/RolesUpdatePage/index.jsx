@@ -29,8 +29,8 @@ export default function RolesUpdatePage() {
   const location = useLocation();
   const { roleId } = location.state;
 
-  const canDelete = checkAction(permissions, "users", "delete");
-  const canUpdate = checkAction(permissions, "users", "update");
+  const canDelete = checkAction(permissions, "delete");
+  const canUpdate = checkAction(permissions, "update");
 
   useEffect(() => {
     const fetchRole = async () => {
