@@ -34,6 +34,7 @@ import FinancialUpdate from "../Pages/Protected/FinancialMovements/FinancialUpda
 import ContributionHistoric from "../Pages/Protected/FinancialMovements/ContributionHistoric";
 import Unauthorized from "../Pages/Protected/Unauthorized";
 import GenerateFinancialReport from "../Pages/Protected/FinancialMovements/GenerateFinancialReport";
+import PermissionCRUD from "../Pages/Protected/Permissions/permissionsHandler.jsx";
 
 const ProtectedRoutes = () => {
   return (
@@ -81,6 +82,17 @@ const ProtectedRoutes = () => {
         }
       />
 
+      <Route
+        path="/permissions"
+        element={
+          <PermissionProtect
+            element={<PermissionCRUD />}
+            moduleName="users"
+          actions={["create", "update", "read", "delete"]
+            }
+          />
+        }
+      />
       <Route path="/user" element={<UserUpdate />} />
 
       <Route path="/usuarios/editar/:nome" element={<UserUpdatePage />} />
