@@ -22,7 +22,7 @@ export default function SideBar() {
   const permissions = usePermissions();
   const [role, setRole] = useState("");
 
-  useEffect(() => {}, [navigate]);
+  useEffect(() => { }, [navigate]);
 
   const handleItemClick = async (user) => {
     if (user) {
@@ -77,6 +77,15 @@ export default function SideBar() {
       text="BENEFÍCIOS"
       onClick={() => {
         navigate("/beneficios");
+        setIsSideBarOpen(false);
+      }}
+    />,
+    <SideButton
+      // hidden={checkModule(permissions, "benefits") ? "flex" : "none"}
+      key="permissions"
+      text="PERMISSIONS"
+      onClick={() => {
+        navigate("/permissions");
         setIsSideBarOpen(false);
       }}
     />,
