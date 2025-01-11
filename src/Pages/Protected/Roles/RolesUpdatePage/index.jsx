@@ -65,9 +65,10 @@ export default function RolesUpdatePage() {
         const roleData = await getRoleById(roleId);
         setProfileName(roleData.name);
 
-        // Configurar permissões selecionadas com base nos dados do perfil
-        const rolePermissions = roleData.permissions.map((perm) => perm.module);
+        
+        const rolePermissions = roleData.permissions.map((perm) => perm._id);
         setSelectedPermissions(rolePermissions);
+        console.log('cu', )
       } catch (error) {
         console.error("Erro ao buscar o perfil:", error);
       }
@@ -88,7 +89,7 @@ export default function RolesUpdatePage() {
       };
 
      // await updateRole(roleId, updatedRole);
-      await assignPermissionsToRole(roleId, selectedPermissions);
+      await assignPermissionsToRole(roleId, selectedPermissions.filter((item) => item !== undefined));
       setShowSuccessModal(true);
     } catch (error) {
       console.error("Erro ao atualizar o perfil:", error);
@@ -111,7 +112,7 @@ export default function RolesUpdatePage() {
   };
 
   const handleSelectAll = () => {
-    setSelectedPermissions(permissionsList.map((perm) => perm.name)); // Seleciona todas as permissões da lista
+    setSelectedPermissions(permissionsList.map((perm) => perm._id)); // Seleciona todas as permissões da lista
   };
 
   const handleDeselectAll = () => {
@@ -119,11 +120,12 @@ export default function RolesUpdatePage() {
   };
 
   const handleTogglePermission = (permission) => {
-    console.log("deu certo", permission);
-    setSelectedPermissions((prev) =>
-      prev.includes(permission)
-        ? prev.filter((p) => p !== permission)
+    setSelectedPermissions((prev) => {
+      return prev.includes(permission)
+        ? prev.filter((p) => p !== permission && p != undefined)
         : [...prev, permission]
+
+    }
     );
   };
 
@@ -158,15 +160,16 @@ export default function RolesUpdatePage() {
           <h3>Lista de Permissões</h3>
           <div className="permissions-list">
             {permissionsList.map((permission) => (
-              <div key={permission.name} className="permission-item">
+              <div key={permission._id} className="permission-item">
                 <label className="permission-label">
                   <input
                     type="checkbox"
                     className="permission-checkbox"
-                    checked={selectedPermissions.includes(permission.name)}
+                    checked={selectedPermissions.includes(permission._id)}
                     onChange={() => handleTogglePermission(permission._id)}
                   />
                   {permission.name}
+                  {selectedPermissions.name}
                 </label>
               </div>
             ))}
