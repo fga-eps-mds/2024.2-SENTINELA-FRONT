@@ -55,8 +55,8 @@ export default function BenefitsUpdate() {
   const [showDeletedModal, setShowDeletedModal] = useState(false);
   const [openError, setOpenError] = useState(false);
   const permissions = usePermissions();
-  const canUpdate = checkAction(permissions, "benefits", "update");
-  const canDelete = checkAction(permissions, "benefits", "delete");
+  const canUpdate = checkAction(permissions,"update");
+  const canDelete = checkAction(permissions, "delete");
 
   const tipoPessoaList = ["Jurídica", "Física"];
   const categoriaList = [

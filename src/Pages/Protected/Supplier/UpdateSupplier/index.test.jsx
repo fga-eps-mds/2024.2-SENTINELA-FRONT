@@ -20,7 +20,7 @@ import {
 vi.mock("../../../../Utils/permission", () => {
   return {
     ...vi.importActual("../../../../Utils/permission"), // Importa o módulo real
-    checkAction: vi.fn((permissions, module, action) => {
+    checkAction: vi.fn((permissions, action) => {
       if (
         module === "finance" &&
         (action === "update" || action === "delete")

@@ -10,7 +10,7 @@ const Benefits = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const permissions = usePermissions();
-  const canCreate = checkAction(permissions, "benefits", "create");
+  const canCreate = checkAction(permissions, "create");
 
   const handleBenefitsList = () => {
     navigate("/beneficios/lista");

@@ -27,8 +27,8 @@ const BankAccountId = () => {
   const [agency, setAgency] = useState("");
   const [openError, setOpenError] = useState(false);
   const permissions = usePermissions();
-  const canUpdate = checkAction(permissions, "finance", "update");
-  const canDelete = checkAction(permissions, "finance", "delete");
+  const canUpdate = checkAction(permissions, "update");
+  const canDelete = checkAction(permissions, "delete");
 
   const { user } = useAuth();
   const { id } = useParams(); // Pega o ID da URL

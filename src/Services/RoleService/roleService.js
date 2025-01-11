@@ -73,7 +73,27 @@ export const getRoleById = async (id) => {
     throw error;
   }
 };
+export const assignPermissionsToRole = async (roleId, permissions) => {
+  try {
+    const token = localStorage.getItem("@App:token");
+    if (!token) {
+      throw new Error("No token found");
+    }
 
+    const response = await APIUsers.put(`/roles/${roleId}/permissions`, {
+      permissions,
+    }, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return response.data; 
+  } catch (error) {
+    console.error("Erro ao vincular permissões à role:", error);
+    throw error;
+  }
+};
 export const updateRole = async (id, roleData) => {
   try {
     const token = localStorage.getItem("@App:token");

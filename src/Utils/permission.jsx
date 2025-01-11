@@ -5,6 +5,7 @@ import AuthContext from "../Context/auth";
 import { getRoleById } from "../Services/RoleService/roleService";
 
 export const checkModule = (permissions, module) => {
+  return true;
   const modulePermissions = permissions.find(
     (permission) => permission.module === module
   );
@@ -12,11 +13,15 @@ export const checkModule = (permissions, module) => {
   return modulePermissions ? modulePermissions.access.length > 0 : false;
 };
 
-export const checkAction = (permissions, module, action) => {
+export const checkAction = (permissions, action) => {
+  console.log(permissions, action)
+
   const modulePermissions = permissions.find(
-    (permission) => permission.module === module
+    (permission) => permission.name === action
   );
-  return modulePermissions && modulePermissions.access.includes(action);
+  console.log('arribaa', modulePermissions ? true : false)
+  
+  return modulePermissions ? true : false ;
 };
 
 export const usePermissions = () => {

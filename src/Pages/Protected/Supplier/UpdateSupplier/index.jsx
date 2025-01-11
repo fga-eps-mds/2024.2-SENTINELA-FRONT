@@ -17,8 +17,8 @@ import { checkAction, usePermissions } from "../../../../Utils/permission";
 
 export default function UpdateSupplier() {
   const permissions = usePermissions();
-  const canUpdate = checkAction(permissions, "finance", "update");
-  const canDelete = checkAction(permissions, "finance", "delete");
+  const canUpdate = checkAction(permissions, "update");
+  const canDelete = checkAction(permissions, "delete");
   const [nome, setNome] = useState("");
   const [tipoPessoa, setTipoPessoa] = useState("");
   const [cpfCnpj, setCpfCnpj] = useState("");

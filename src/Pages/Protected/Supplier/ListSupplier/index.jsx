@@ -16,7 +16,7 @@ export default function ListSupplier() {
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
   const permissions = usePermissions();
-  const canCreate = checkAction(permissions, "finance", "create");
+  const canCreate = checkAction(permissions, "create");
   useEffect(() => {
     const fetchSupplierForm = async () => {
       const response = await getSupplierForm();

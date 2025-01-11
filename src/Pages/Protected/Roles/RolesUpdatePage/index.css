@@ -1,0 +1,51 @@
+.permission-filter-box {
+  margin-top: 20px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.permission-actions {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+
+.permissions-list {
+  max-height: 300px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 4px;
+  background: white;
+}
+
+.permission-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.permission-label {
+  font-size: 14px;
+  margin-left: 8px;
+}
+
+.permission-checkbox {
+  transform: scale(1.2);
+}
+
+.search-box {
+  margin-bottom: 15px;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+}
