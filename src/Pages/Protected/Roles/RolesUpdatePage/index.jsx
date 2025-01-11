@@ -145,7 +145,7 @@ export default function RolesUpdatePage() {
         )}
 
         {/* Campo de pesquisa para permissões */}
-        <div className="permission-search-box">
+        {/* <div className="permission-search-box">
           <h3>Pesquisar Permissões</h3>
           <FieldText
             label="Pesquisar Permissão"
@@ -153,7 +153,7 @@ export default function RolesUpdatePage() {
             onChange={(e) => handleSearch(e.target.value)}
             placeholder="Digite o nome da permissão"
           />
-        </div>
+        </div> */}
 
         {/* Lista de permissões */}
         <div className="permission-list-box">
