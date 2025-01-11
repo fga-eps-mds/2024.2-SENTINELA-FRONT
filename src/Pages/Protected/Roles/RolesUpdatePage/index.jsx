@@ -9,6 +9,7 @@ import {
   getRoleById,
   updateRole,
   deleteRole,
+  assignPermissionsToRole,
 } from "../../../../Services/RoleService/roleService";
 import {
   getAllPermissions,
@@ -25,8 +26,8 @@ export default function RolesUpdatePage() {
   
   const [selectedPermissions, setSelectedPermissions] = useState([]);
   const [permissionsList, setPermissionsList] = useState([]);
-  const [searchQuery, setSearchQuery] = useState(""); // Estado para armazenar o valor da pesquisa
-  const [allPermissions, setAllPermissions] = useState([]); // Estado para armazenar todas as permissões
+  const [searchQuery, setSearchQuery] = useState(""); 
+  const [allPermissions, setAllPermissions] = useState([]); 
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -82,11 +83,12 @@ export default function RolesUpdatePage() {
         name: profileName,
         permissions: selectedPermissions.map((perm) => ({
           module: perm,
-          access: ["create", "read", "update", "delete"], // Exemplo: Todos os acessos selecionados
+          access: ["create", "read", "update", "delete"],
         })),
       };
 
-      await updateRole(roleId, updatedRole);
+     // await updateRole(roleId, updatedRole);
+      await assignPermissionsToRole(roleId, selectedPermissions);
       setShowSuccessModal(true);
     } catch (error) {
       console.error("Erro ao atualizar o perfil:", error);
@@ -117,6 +119,7 @@ export default function RolesUpdatePage() {
   };
 
   const handleTogglePermission = (permission) => {
+    console.log("deu certo", permission);
     setSelectedPermissions((prev) =>
       prev.includes(permission)
         ? prev.filter((p) => p !== permission)
@@ -153,20 +156,6 @@ export default function RolesUpdatePage() {
         {/* Lista de permissões */}
         <div className="permission-list-box">
           <h3>Lista de Permissões</h3>
-          <div className="permission-actions">
-            <PrimaryButton
-              text="Selecionar Todos"
-              onClick={handleSelectAll}
-              maxWidth="150px"
-              marginTop="10px"
-            />
-            <SecondaryButton
-              text="Desmarcar Todos"
-              onClick={handleDeselectAll}
-              maxWidth="150px"
-              marginTop="10px"
-            />
-          </div>
           <div className="permissions-list">
             {permissionsList.map((permission) => (
               <div key={permission.name} className="permission-item">
@@ -175,7 +164,7 @@ export default function RolesUpdatePage() {
                     type="checkbox"
                     className="permission-checkbox"
                     checked={selectedPermissions.includes(permission.name)}
-                    onChange={() => handleTogglePermission(permission.name)}
+                    onChange={() => handleTogglePermission(permission._id)}
                   />
                   {permission.name}
                 </label>
@@ -193,6 +182,8 @@ export default function RolesUpdatePage() {
             text="SALVAR"
             onClick={() => setShowSaveModal(true)}
           />
+        
+
 
           {/* Modais */}
           <Modal
