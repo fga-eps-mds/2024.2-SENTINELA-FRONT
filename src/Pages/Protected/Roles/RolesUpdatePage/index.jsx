@@ -10,103 +10,80 @@ import {
   updateRole,
   deleteRole,
 } from "../../../../Services/RoleService/roleService";
-import CheckboxRow from "../../../../Components/CheckboxRow";
-import { checkAction, usePermissions } from "../../../../Utils/permission";
+import {
+  getAllPermissions,
+  searchPermissionByName,
+} from "../../../../Services/Permissions/permissionsService"; 
+import './index.css';
 
 export default function RolesUpdatePage() {
-  const permissions = usePermissions();
   const [showSaveModal, setShowSaveModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showSuccessDelModal, setShowSuccessDelModal] = useState(false);
   const [profileName, setProfileName] = useState("");
-
-  const [financeiro, setFinanceiro] = useState([false, false, false, false]);
-  const [beneficios, setBeneficios] = useState([false, false, false, false]);
-  const [usuarios, setUsuarios] = useState([false, false, false, false]);
+  
+  const [selectedPermissions, setSelectedPermissions] = useState([]);
+  const [permissionsList, setPermissionsList] = useState([]);
+  const [searchQuery, setSearchQuery] = useState(""); // Estado para armazenar o valor da pesquisa
+  const [allPermissions, setAllPermissions] = useState([]); // Estado para armazenar todas as permissões
 
   const navigate = useNavigate();
   const location = useLocation();
   const { roleId } = location.state;
 
-  const canDelete = checkAction(permissions, "delete");
-  const canUpdate = checkAction(permissions, "update");
+  // Função para buscar todas as permissões
+  const fetchAllPermissions = async () => {
+    try {
+      const permissions = await getAllPermissions();
+      setAllPermissions(permissions);
+      setPermissionsList(permissions); // Inicializa a lista de permissões com todas
+    } catch (error) {
+      console.error("Erro ao buscar permissões:", error);
+    }
+  };
+
+  // Função para realizar a pesquisa de permissões
+  const handleSearch = async (query) => {
+    setSearchQuery(query);
+    try {
+      if (query) {
+        const permissions = await searchPermissionByName(query);
+        setPermissionsList(permissions);
+      } else {
+        setPermissionsList(allPermissions); // Se a pesquisa estiver vazia, mostra todas as permissões
+      }
+    } catch (error) {
+      console.error("Erro ao buscar permissões:", error);
+    }
+  };
 
   useEffect(() => {
     const fetchRole = async () => {
       try {
         const roleData = await getRoleById(roleId);
-
         setProfileName(roleData.name);
 
-        const permissionsMap = {
-          finance: [false, false, false, false],
-          benefits: [false, false, false, false],
-          users: [false, false, false, false],
-        };
-
-        const moduleNameMap = {
-          financeiro: "finance",
-          beneficios: "benefits",
-          usuarios: "users",
-        };
-
-        const accessIndexMap = {
-          create: 0,
-          read: 1,
-          update: 2,
-          delete: 3,
-        };
-
-        roleData.permissions.forEach((permission) => {
-          const moduleName =
-            moduleNameMap[permission.module.toLowerCase()] ||
-            permission.module.toLowerCase();
-
-          if (permissionsMap[moduleName]) {
-            permission.access.forEach((access) => {
-              const index = accessIndexMap[access];
-              if (index !== undefined) {
-                permissionsMap[moduleName][index] = true;
-              }
-            });
-          } else {
-            console.warn(
-              `Módulo desconhecido encontrado: ${permission.module}`
-            );
-          }
-        });
-
-        setFinanceiro(permissionsMap.finance);
-        setBeneficios(permissionsMap.benefits);
-        setUsuarios(permissionsMap.users);
+        // Configurar permissões selecionadas com base nos dados do perfil
+        const rolePermissions = roleData.permissions.map((perm) => perm.module);
+        setSelectedPermissions(rolePermissions);
       } catch (error) {
         console.error("Erro ao buscar o perfil:", error);
       }
     };
 
     fetchRole();
+    fetchAllPermissions(); // Chama a função para buscar todas as permissões
   }, [roleId]);
-
-  const mapPermissions = (moduleName, accessArray) => {
-    const actions = ["create", "read", "update", "delete"];
-    return {
-      module: moduleName,
-      access: actions.filter((_, index) => accessArray[index]),
-    };
-  };
 
   const handleSubmit = async () => {
     try {
-      const permissions = [
-        mapPermissions("finance", financeiro),
-        mapPermissions("benefits", beneficios),
-        mapPermissions("users", usuarios),
-      ];
-
       const updatedRole = {
         name: profileName,
-        permissions: permissions,
+        permissions: selectedPermissions.map((perm) => ({
+          module: perm,
+          access: ["create", "read", "update", "delete"], // Exemplo: Todos os acessos selecionados
+        })),
       };
 
       await updateRole(roleId, updatedRole);
@@ -131,6 +108,22 @@ export default function RolesUpdatePage() {
     navigate("/perfis");
   };
 
+  const handleSelectAll = () => {
+    setSelectedPermissions(permissionsList.map((perm) => perm.name)); // Seleciona todas as permissões da lista
+  };
+
+  const handleDeselectAll = () => {
+    setSelectedPermissions([]);
+  };
+
+  const handleTogglePermission = (permission) => {
+    setSelectedPermissions((prev) =>
+      prev.includes(permission)
+        ? prev.filter((p) => p !== permission)
+        : [...prev, permission]
+    );
+  };
+
   return (
     <section className="container">
       <div className="forms-container">
@@ -145,39 +138,63 @@ export default function RolesUpdatePage() {
         {!(profileName.length > 0) && (
           <label className="invalid">Nome é um campo obrigatório!</label>
         )}
-        <div className="select-profile">
-          <div className="row-labels">
-            <label></label>
-            <label>Criar</label>
-            <label>Visualizar</label>
-            <label>Editar</label>
-            <label>Deletar</label>
-          </div>
 
-          <CheckboxRow
-            label="Financeiro"
-            state={financeiro}
-            setState={setFinanceiro}
-          />
-          <CheckboxRow
-            label="Benefícios"
-            state={beneficios}
-            setState={setBeneficios}
-          />
-          <CheckboxRow
-            label="Usuários"
-            state={usuarios}
-            setState={setUsuarios}
+        {/* Campo de pesquisa para permissões */}
+        <div className="permission-search-box">
+          <h3>Pesquisar Permissões</h3>
+          <FieldText
+            label="Pesquisar Permissão"
+            value={searchQuery}
+            onChange={(e) => handleSearch(e.target.value)}
+            placeholder="Digite o nome da permissão"
           />
         </div>
 
-        <div className="double-buttons-roles">
-          {canDelete && (
-            <SecondaryButton
-              text="DELETAR"
-              onClick={() => setShowDeleteModal(true)}
+        {/* Lista de permissões */}
+        <div className="permission-list-box">
+          <h3>Lista de Permissões</h3>
+          <div className="permission-actions">
+            <PrimaryButton
+              text="Selecionar Todos"
+              onClick={handleSelectAll}
+              maxWidth="150px"
+              marginTop="10px"
             />
-          )}
+            <SecondaryButton
+              text="Desmarcar Todos"
+              onClick={handleDeselectAll}
+              maxWidth="150px"
+              marginTop="10px"
+            />
+          </div>
+          <div className="permissions-list">
+            {permissionsList.map((permission) => (
+              <div key={permission.name} className="permission-item">
+                <label className="permission-label">
+                  <input
+                    type="checkbox"
+                    className="permission-checkbox"
+                    checked={selectedPermissions.includes(permission.name)}
+                    onChange={() => handleTogglePermission(permission.name)}
+                  />
+                  {permission.name}
+                </label>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="double-buttons-roles">
+          <SecondaryButton
+            text="DELETAR"
+            onClick={() => setShowDeleteModal(true)}
+          />
+          <PrimaryButton
+            text="SALVAR"
+            onClick={() => setShowSaveModal(true)}
+          />
+
+          {/* Modais */}
           <Modal
             alertTitle="Confirmação de exclusão"
             width="338px"
@@ -198,16 +215,10 @@ export default function RolesUpdatePage() {
             />
           </Modal>
 
-          {canUpdate && (
-            <PrimaryButton
-              text="SALVAR"
-              onClick={() => setShowSaveModal(true)}
-            />
-          )}
           <Modal
-            alertTitle=""
+            alertTitle="Confirmação"
             width="338px"
-            alert="DESEJA CONTINUAR COM AS ALTERAÇÕES FEITAS NO PERFIL?"
+            alert="Deseja continuar com as alterações feitas no perfil?"
             show={showSaveModal}
           >
             <SecondaryButton
@@ -223,10 +234,11 @@ export default function RolesUpdatePage() {
               width="338px"
             />
           </Modal>
+
           <Modal
-            alertTitle=""
+            alertTitle="Sucesso"
             width="338px"
-            alert="PERFIL ALTERADO COM SUCESSO"
+            alert="Perfil atualizado com sucesso!"
             show={showSuccessModal}
           >
             <SecondaryButton
@@ -236,10 +248,11 @@ export default function RolesUpdatePage() {
               width="338px"
             />
           </Modal>
+
           <Modal
-            alertTitle=""
+            alertTitle="Sucesso"
             width="338px"
-            alert="PERFIL DELETADO COM SUCESSO"
+            alert="Perfil deletado com sucesso!"
             show={showSuccessDelModal}
           >
             <SecondaryButton
