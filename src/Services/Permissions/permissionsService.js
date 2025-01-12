@@ -1,4 +1,5 @@
 import { APIUsers } from "../BaseService";
+import { getToken } from "../Functions/loader";
 
 // Create a new permission
 export const createPermission = async (permissionData) => {
@@ -9,7 +10,7 @@ export const createPermission = async (permissionData) => {
     }
     const response = await APIUsers.post("/permission", permissionData, {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${getToken()}`,
       },
     });
     return response.data;
@@ -27,7 +28,13 @@ export const getAllPermissions = async () => {
     if (!token) {
       throw new Error("No token found");
     }
-    const response = await APIUsers.get("/permission");
+    const response = await APIUsers.get("/permission",
+      {
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        }
+      }
+    );
     return response.data;
   } catch (error) {
     console.error("Erro ao buscar permissões:", error.response?.data || error);
@@ -45,7 +52,7 @@ export const getPermissionById = async (id) => {
     }
     const response = await APIUsers.get(`/permission/${id}`, {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${getToken()}`,
       },
     });
     return response.data;
@@ -64,7 +71,7 @@ export const updatePermissionById = async (id, permissionData) => {
     }
     const response = await APIUsers.put(`/permission/${id}`, permissionData, {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${getToken()}`,
       },
     });
     return response.data;
@@ -83,7 +90,7 @@ export const deletePermissionById = async (id) => {
     }
     await APIUsers.delete(`/permission/${id}`, {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${getToken()}`,
       },
     });
   } catch (error) {
@@ -104,7 +111,7 @@ export const searchPermissionByName = async (name) => {
       { name },
       {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${getToken()}`,
         },
       }
     );

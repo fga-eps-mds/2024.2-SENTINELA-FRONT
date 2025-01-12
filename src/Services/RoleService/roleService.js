@@ -1,4 +1,5 @@
 import { APIUsers } from "../BaseService";
+import { getToken } from "../Functions/loader";
 
 export const createRole = async (roleData) => {
   try {
@@ -27,7 +28,10 @@ export const createRole = async (roleData) => {
         moduleName: "users",
         action: "create",
       },
-      
+      headers: {
+        Authorization: `Bearer ${getToken()}`,
+      },
+
     });
     return response.data;
   } catch (error) {
@@ -43,7 +47,9 @@ export const getAllRoles = async () => {
       throw new Error("No token found");
     }
     const response = await APIUsers.get("/role", {
-      
+      headers: {
+        Authorization: `Bearer ${getToken()}`,
+      },
     });
     return response.data;
   } catch (error) {
@@ -58,7 +64,11 @@ export const getRoleById = async (id) => {
     if (!token) {
       throw new Error("No token found");
     }
-    const response = await APIUsers.get(`/role/${id}`, );
+    const response = await APIUsers.get(`/role/${id}`, {
+      headers: {
+        Authorization: `Bearer ${getToken()}`,
+      },
+    });
     return response.data;
   } catch (error) {
     console.error("Erro ao buscar role:", error);
@@ -75,10 +85,12 @@ export const assignPermissionsToRole = async (roleId, permissions) => {
     const response = await APIUsers.put(`/roles/${roleId}/permissions`, {
       permissions,
     }, {
-      
+      headers: {
+        Authorization: `Bearer ${getToken()}`,
+      },
     });
 
-    return response.data; 
+    return response.data;
   } catch (error) {
     console.error("Erro ao vincular permissões à role:", error);
     throw error;
@@ -111,7 +123,11 @@ export const updateRole = async (id, roleData) => {
         moduleName: "users",
         action: "update",
       },
-      
+
+      headers: {
+        Authorization: `Bearer ${getToken()}`,
+      },
+
     });
     return response.data;
   } catch (error) {
@@ -146,7 +162,11 @@ export const deleteRole = async (id) => {
         moduleName: "users",
         action: "delete",
       },
-      
+
+      headers: {
+        Authorization: `Bearer ${getToken()}`,
+      },
+
     });
     return response.data;
   } catch (error) {

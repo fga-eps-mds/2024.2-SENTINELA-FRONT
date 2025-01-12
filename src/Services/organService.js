@@ -1,4 +1,5 @@
 import { APIUsers } from "./BaseService";
+import { getToken } from "./Functions/loader";
 
 export async function createOrgan(orgao, lotacao) {
   try {
@@ -26,6 +27,10 @@ export async function createOrgan(orgao, lotacao) {
           moduleName: "users",
           action: "create",
         },
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+
       }
     );
     return response.status;
@@ -37,7 +42,13 @@ export async function createOrgan(orgao, lotacao) {
 
 export async function listOrgans() {
   try {
-    const response = await APIUsers.get("organ/list");
+    const response = await APIUsers.get("organ/list",
+      {
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      }
+    );
     return response.data;
   } catch (error) {
     return error.response.data.error;
@@ -68,6 +79,10 @@ export async function updateOrgan(id, updatedData) {
           moduleName: "users",
           action: "update",
         },
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+
       }
     );
     return response.status;
@@ -81,7 +96,13 @@ export async function updateOrgan(id, updatedData) {
 
 export async function getOrganById(id) {
   try {
-    const response = await APIUsers.get(`organ/get/${id}`);
+    const response = await APIUsers.get(`organ/get/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      }
+    );
     return response.data;
   } catch (error) {
     return error.response.data.error;
@@ -110,6 +131,11 @@ export async function deleteOrganById(id) {
         moduleName: "users",
         action: "delete",
       },
+
+      headers: {
+        Authorization: `Bearer ${getToken()}`,
+      },
+
     });
     return response.status;
   } catch (error) {
