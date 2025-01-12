@@ -1,4 +1,6 @@
 import axios from "axios";
+import { getToken } from "../Functions/loader";
+
 
 const baseBenefitsURL =
   import.meta.env.VITE_BENEFIT_DB_URL || "http://localhost:3003/";
@@ -9,14 +11,23 @@ const baseUserURL =
 
 const APIUsers = axios.create({
   baseURL: baseUserURL,
+  headers: {
+    Authorization: `Bearer ${getToken()}`,
+  },
 });
 
 const APIBank = axios.create({
   baseURL: baseBankURL,
+  headers: {
+    Authorization: `Bearer ${getToken()}`,
+  },
 });
 
 const APIBenefits = axios.create({
   baseURL: baseBenefitsURL,
+  headers: {
+    Authorization: `Bearer ${getToken()}`,
+  },
 });
 
 export { APIUsers, APIBank, APIBenefits };

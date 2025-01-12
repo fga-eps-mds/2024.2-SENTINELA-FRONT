@@ -23,8 +23,8 @@ export const OrganId = () => {
   const organsId = state?.organsId;
   const navigate = useNavigate();
   const permissions = usePermissions();
-  const canUpdate = checkAction(permissions, "update");
-  const canDelete = checkAction(permissions, "delete");
+  const canUpdate = checkAction(permissions, "orgaos_editar");
+  const canDelete = checkAction(permissions, "orgaos_deletar");
 
   const [openSave, setOpenSave] = useState(false);
   const [openDeleteOrgan, setOpenDeleteOrgan] = useState(false);

@@ -24,11 +24,7 @@ export default function RolesListPage() {
         const storagedUserString = localStorage.getItem("@App:user");
         const storagedUser = JSON.parse(storagedUserString);
 
-        const response = await APIUsers.get("role", {
-          headers: {
-            Authorization: `Bearer ${storagedUser.token}`,
-          },
-        });
+        const response = await APIUsers.get("role");
 
         const data = response.data;
         if (Array.isArray(data)) {
@@ -44,7 +40,7 @@ export default function RolesListPage() {
     fetchRoleForm();
   }, []);
 
-  const hasPermission = checkAction(permissions, "create");
+  const hasPermission = checkAction(permissions, "perfis_criar");
 
   const handleSubmit = () => {
     navigate("/perfis/criar");

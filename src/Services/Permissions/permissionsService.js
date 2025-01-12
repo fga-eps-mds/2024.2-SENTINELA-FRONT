@@ -27,11 +27,7 @@ export const getAllPermissions = async () => {
     if (!token) {
       throw new Error("No token found");
     }
-    const response = await APIUsers.get("/permission", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await APIUsers.get("/permission");
     return response.data;
   } catch (error) {
     console.error("Erro ao buscar permissões:", error.response?.data || error);

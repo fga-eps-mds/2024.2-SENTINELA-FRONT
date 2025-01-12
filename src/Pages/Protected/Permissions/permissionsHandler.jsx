@@ -4,6 +4,7 @@ import { Box, Button, TextField, Typography, Table, TableBody, TableCell, TableC
 import { Delete, Edit, Search } from '@mui/icons-material';
 import { APIUsers } from "./../../../Services/BaseService/index";
 import { getToken, getUser } from "./../../../Services/Functions/loader";
+import { checkAction } from '../../../Utils/permission';
 
 
 const PermissionCRUD = () => {
@@ -13,13 +14,23 @@ const PermissionCRUD = () => {
   const [search, setSearch] = useState("");
   const [editId, setEditId] = useState(null);
 
+  const canCreate = checkAction(permissions, "permissoes_criar");
+  const canUpdate = checkAction(permissions, "permissoes_editar");
+  const canDelete = checkAction(permissions, "permissoes_deletar");
+  const canView = checkAction(permissions, "permissoes_visualizar");
+
   useEffect(() => {
     fetchPermissions();
   }, []);
 
   const fetchPermissions = async () => {
     try {
-      const response = await APIUsers.get('permission');
+      const response = await APIUsers.get('permission',
+        {
+          headers: {
+            Authorization: `Bearer ${getToken()}`,
+          }
+        });
       setPermissions(response.data);
     } catch (error) {
       console.error('Error fetching permissions:', error);
@@ -30,7 +41,12 @@ const PermissionCRUD = () => {
     e.preventDefault();
     try {
       if (editId) {
-        await APIUsers.patch(`permission/patch/${editId}`, form);
+        await APIUsers.patch(`permission/patch/${editId}`, form,
+          {
+            headers: {
+              Authorization: `Bearer ${getToken()}`,
+            }
+          });
       } else {
         await APIUsers.post('permission/create/', form);
       }
@@ -49,7 +65,12 @@ const PermissionCRUD = () => {
 
   const handleDelete = async (id) => {
     try {
-      await APIUsers.delete(`permission/delete/${id}`);
+      await APIUsers.delete(`permission/delete/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${getToken()}`,
+          }
+        });
       fetchPermissions();
     } catch (error) {
       console.error('Error deleting permission:', error);
@@ -58,11 +79,13 @@ const PermissionCRUD = () => {
 
   const handleSearch = async () => {
     try {
-      const response = await APIUsers.get(`permissions/search`, 
-        { name: searchQuery }, 
-        {headers: {
-            Authorization: `Bearer ${getToken()}`,          
-        }}
+      const response = await APIUsers.get(`permissions/search`,
+        { name: searchQuery },
+        {
+          headers: {
+            Authorization: `Bearer ${getToken()}`,
+          }
+        }
       );
       setPermissions(response.data);
     } catch (error) {
@@ -79,27 +102,30 @@ const PermissionCRUD = () => {
       <Typography variant="h4" gutterBottom>
         Permission Management
       </Typography>
+      {canCreate && (
 
-      <Box component="form" onSubmit={handleSubmit} sx={{ marginBottom: 4 }}>
-        <TextField
-          label="Permission Name"
-          value={form.name}
-          onChange={(e) => setForm({ ...form, name: e.target.value })}
-          required
-          fullWidth
-          margin="normal"
-        />
-        <Button  sx={{ backgroundColor: '#ae883c', '&:hover': { backgroundColor: '#936d30' }}} type="submit" variant="contained" color="primary">
-          {editId ? 'Atualizar Permissão' : 'Criar Permissão'}
-        </Button>
-      </Box>
-
+        <Box component="form" onSubmit={handleSubmit} sx={{ marginBottom: 4 }}>
+          <TextField
+            label="Permission Name"
+            value={form.name}
+            onChange={(e) => setForm({ ...form, name: e.target.value })}
+            required
+            fullWidth
+            margin="normal"
+          />
+          <Button sx={{ backgroundColor: '#ae883c', '&:hover': { backgroundColor: '#936d30' } }} type="submit" variant="contained" color="primary">
+            {editId ? 'Atualizar Permissão' : 'Criar Permissão'}
+          </Button>
+        </Box>
+      )}
       <TableContainer component={Paper}>
-        <Table sx={{ backgroundColor: '#eae3d7', '&:hover': { backgroundColor: '#eae3d7' }}}>
+        <Table sx={{ backgroundColor: '#eae3d7', '&:hover': { backgroundColor: '#eae3d7' } }}>
           <TableHead>
             <TableRow>
               <TableCell>Name</TableCell>
-              <TableCell>Actions</TableCell>
+              {(canUpdate || canDelete) && (
+                <TableCell>Actions</TableCell>
+              )}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -107,12 +133,16 @@ const PermissionCRUD = () => {
               <TableRow key={permission._id}>
                 <TableCell>{permission.name}</TableCell>
                 <TableCell>
-                  <IconButton color="primary" onClick={() => handleEdit(permission)}>
-                    <Edit />
-                  </IconButton>
-                  <IconButton color="error" onClick={() => handleDelete(permission._id)}>
-                    <Delete />
-                  </IconButton>
+                  {canUpdate && (
+                    <IconButton color="primary" onClick={() => handleEdit(permission)}>
+                      <Edit />
+                    </IconButton>
+                  )}
+                  {canDelete && (
+                    <IconButton color="error" onClick={() => handleDelete(permission._id)}>
+                      <Delete />
+                    </IconButton>
+                  )}
                 </TableCell>
               </TableRow>
             ))}

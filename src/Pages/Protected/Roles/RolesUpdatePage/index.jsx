@@ -154,7 +154,7 @@ export default function RolesUpdatePage() {
             placeholder="Digite o nome da permissão"
           />
         </div> */}
-
+        
         {/* Lista de permissões */}
         <div className="permission-list-box">
           <h3>Lista de Permissões</h3>
