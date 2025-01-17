@@ -16,7 +16,7 @@ export default function BenefitsList() {
   const [benefits, setBenefits] = useState([]);
   const navigate = useNavigate();
   const permissions = usePermissions();
-  const canCreate = checkAction(permissions, "create");
+  // const canCreate = checkAction( "beneficios_criar");
 
   const handleSubmit = () => {
     navigate("/beneficios/criar");
@@ -46,7 +46,7 @@ export default function BenefitsList() {
       <div className="forms-container-list-benefits">
         <div className="double-box-list-benefits">
           <h1> Lista de benefícios</h1>
-          {canCreate && (
+          {checkAction( "beneficios_criar") && (
             <PrimaryButton text="Cadastrar benefício" onClick={handleSubmit} />
           )}
         </div>

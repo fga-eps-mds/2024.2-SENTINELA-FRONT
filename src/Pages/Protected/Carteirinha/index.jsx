@@ -74,7 +74,9 @@ const Carteirinha = () => {
   const { name, birthDate, cpf, expeditionDate, hiringDate } = membershipData;
 
   return (
+    checkAction( "beneficios_criar") && (
     <div className="carteirinha-container" ref={cardRef}>
+      
       <div className="carteirinha">
         <header className="carteirinha-header">
           <h1>SINDPOL-DF</h1>
@@ -182,6 +184,7 @@ const Carteirinha = () => {
         BAIXAR CARTEIRINHA
       </button>
     </div>
+  )
   );
 };
 

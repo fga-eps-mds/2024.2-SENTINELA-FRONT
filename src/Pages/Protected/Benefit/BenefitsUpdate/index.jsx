@@ -55,8 +55,8 @@ export default function BenefitsUpdate() {
   const [showDeletedModal, setShowDeletedModal] = useState(false);
   const [openError, setOpenError] = useState(false);
   const permissions = usePermissions();
-  const canUpdate = checkAction(permissions,"update");
-  const canDelete = checkAction(permissions, "delete");
+  const canUpdate = checkAction(permissions,"beneficios_editar");
+  const canDelete = checkAction( "beneficios_deletar");
 
   const tipoPessoaList = ["Jurídica", "Física"];
   const categoriaList = [
@@ -248,7 +248,9 @@ export default function BenefitsUpdate() {
   };
 
   return (
+    checkAction( "beneficios_visualizar") && (
     <div className="container-benefits">
+
       <div className="forms-container-benefits">
         <h1>Visualização de benefícios</h1>
 
@@ -454,5 +456,6 @@ export default function BenefitsUpdate() {
         </Modal>
       </div>
     </div>
+    )
   );
 }

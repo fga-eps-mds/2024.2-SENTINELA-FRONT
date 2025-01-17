@@ -19,7 +19,7 @@ export default function FinancialList() {
   const [dataInicio, setDataInicio] = useState(null);
   const [dataFinal, setDataFinal] = useState(null);
   const permissions = usePermissions();
-  const canCreate = checkAction(permissions, "create");
+  const canCreate = checkAction( "create");
 
   const storagedUser = JSON.parse(localStorage.getItem("@App:user"));
 

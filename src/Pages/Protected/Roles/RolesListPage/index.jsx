@@ -40,7 +40,7 @@ export default function RolesListPage() {
     fetchRoleForm();
   }, []);
 
-  const hasPermission = checkAction(permissions, "perfis_criar");
+  const hasPermission = checkAction( "perfis_criar");
 
   const handleSubmit = () => {
     navigate("/perfis/criar");

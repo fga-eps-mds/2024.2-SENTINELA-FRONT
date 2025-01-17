@@ -17,6 +17,7 @@ import {
   isValidCelular,
   isValidSite,
 } from "../../../../Utils/validators";
+import { checkAction, usePermissions } from "../../../../Utils/permission";
 
 export default function BenefitsCreate() {
   const navigate = useNavigate();
@@ -44,6 +45,7 @@ export default function BenefitsCreate() {
   const [isChecked, setIsChecked] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [openError, setOpenError] = useState(false);
+  const permissions = usePermissions();
 
   const tipoPessoaList = ["Jurídica", "Física"];
   const categoriaList = [
@@ -194,8 +196,10 @@ export default function BenefitsCreate() {
       console.error("Erro ao criar benefício:", error);
     }
   };
+  
 
   return (
+    checkAction( "beneficios_criar") && (
     <div className="container-benefits">
       <div className="forms-container-benefits">
         <h1>Cadastro de benefícios</h1>
@@ -361,5 +365,6 @@ export default function BenefitsCreate() {
         </Modal>
       </div>
     </div>
+    )
   );
 }

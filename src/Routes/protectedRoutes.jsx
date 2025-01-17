@@ -190,6 +190,7 @@ const ProtectedRoutes = () => {
           />
         }
       />
+      
       <Route
         path="/beneficios/criar"
         element={

@@ -14,10 +14,10 @@ const PermissionCRUD = () => {
   const [search, setSearch] = useState("");
   const [editId, setEditId] = useState(null);
 
-  const canCreate = checkAction(permissions, "permissoes_criar");
-  const canUpdate = checkAction(permissions, "permissoes_editar");
-  const canDelete = checkAction(permissions, "permissoes_deletar");
-  const canView = checkAction(permissions, "permissoes_visualizar");
+  const canCreate = checkAction( "permissoes_criar");
+  const canUpdate = checkAction( "permissoes_editar");
+  const canDelete = checkAction( "permissoes_deletar");
+  const canView = checkAction( "permissoes_visualizar");
 
   useEffect(() => {
     fetchPermissions();

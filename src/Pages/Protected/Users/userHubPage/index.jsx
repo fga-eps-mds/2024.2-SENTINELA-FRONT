@@ -10,7 +10,7 @@ import { usePermissions, checkAction } from "../../../../Utils/permission";
 export default function UserHubPage() {
   const navigate = useNavigate();
   const permissions = usePermissions();
-  const canAprove = checkAction(permissions, "create");
+  const canAprove = checkAction( "create");
 
   const handleListaClick = () => {
     navigate("/usuarios");
