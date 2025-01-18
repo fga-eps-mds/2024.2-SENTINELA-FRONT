@@ -74,32 +74,35 @@ export default function RolesListPage() {
           />
         </div>
 
-        <List>
-          {filteredRoles.map((role, index) => (
-            <div key={role._id}>
-              <ListItem>
-                <ListItemButton
-                  className="list-item-roles"
-                  style={{
-                    transition: "background-color 0.3s ease",
-                  }}
-                  onMouseEnter={(e) =>
-                    (e.currentTarget.style.backgroundColor =
-                      "rgba(0, 0, 0, 0.1)")
-                  }
-                  onMouseLeave={(e) =>
-                    (e.currentTarget.style.backgroundColor = "transparent")
-                  }
-                  onClick={() => handleItemClick(role)}
-                >
-                  <ListItemText primary={role.name} />
-                </ListItemButton>
-              </ListItem>
+        {checkAction( "perfis_visualizar") && (
+          <List>
+            {filteredRoles.map((role, index) => (
+              <div key={role._id}>
+                <ListItem>
+                  <ListItemButton
+                    className="list-item-roles"
+                    style={{
+                      transition: "background-color 0.3s ease",
+                    }}
+                    onMouseEnter={(e) =>
+                      (e.currentTarget.style.backgroundColor =
+                        "rgba(0, 0, 0, 0.1)")
+                    }
+                    onMouseLeave={(e) =>
+                      (e.currentTarget.style.backgroundColor = "transparent")
+                    }
+                    onClick={() => handleItemClick(role)}
+                  >
+                    <ListItemText primary={role.name} />
+                  </ListItemButton>
+                </ListItem>
 
-              {index < filteredRoles.length - 1 && <Divider />}
-            </div>
-          ))}
-        </List>
+                {index < filteredRoles.length - 1 && <Divider />}
+              </div>
+            ))}
+          </List>
+        )}
+
       </div>
     </section>
   );
