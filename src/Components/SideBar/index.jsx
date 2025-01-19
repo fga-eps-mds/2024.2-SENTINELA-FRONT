@@ -10,7 +10,7 @@ import { AiOutlineUser } from "react-icons/ai";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import AuthContext, { useAuth } from "../../Context/auth";
-import { usePermissions, checkModule, checkAction } from "../../Utils/permission";
+import { checkAction } from "../../Utils/permission";
 import { getRoleById } from "../../Services/RoleService/roleService";
 
 export default function SideBar() {
@@ -19,7 +19,6 @@ export default function SideBar() {
   const navigate = useNavigate();
   const context = useContext(AuthContext);
   const { user } = useAuth();
-  const permissions = usePermissions();
   const [role, setRole] = useState("");
 
   useEffect(() => { }, [navigate]);

@@ -17,7 +17,7 @@ import {
   isValidCelular,
   isValidSite,
 } from "../../../../Utils/validators";
-import { checkAction, usePermissions } from "../../../../Utils/permission";
+import { checkAction } from "../../../../Utils/permission";
 
 export default function BenefitsCreate() {
   const navigate = useNavigate();
@@ -45,7 +45,7 @@ export default function BenefitsCreate() {
   const [isChecked, setIsChecked] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [openError, setOpenError] = useState(false);
-  const permissions = usePermissions();
+  // const permissions = usePermissions();
 
   const tipoPessoaList = ["Jurídica", "Física"];
   const categoriaList = [

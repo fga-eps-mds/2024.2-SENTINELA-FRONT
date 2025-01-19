@@ -10,14 +10,13 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import FieldText from "../../../../Components/FieldText";
 import { getAll } from "../../../../../src/Services/bankAccountService";
-import { checkAction, usePermissions } from "../../../../Utils/permission";
+import { checkAction } from "../../../../Utils/permission";
 
 export default function ListBankAccount() {
   const [busca, setBusca] = useState("");
   const navigate = useNavigate();
   const { user } = useAuth();
   const [bankAccounts, setBankAccounts] = useState([]);
-  const permissions = usePermissions();
   const canCreate = checkAction( "create");
 
   useEffect(() => {

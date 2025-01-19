@@ -14,7 +14,7 @@ import {
   updateBankAccount,
 } from "../../../../Services/bankAccountService";
 import Modal from "../../../../Components/Modal";
-import { checkAction, usePermissions } from "../../../../Utils/permission";
+import { checkAction } from "../../../../Utils/permission";
 
 const BankAccountId = () => {
   const [name, setName] = useState("");
@@ -26,7 +26,7 @@ const BankAccountId = () => {
   const [status, setStatus] = useState("");
   const [agency, setAgency] = useState("");
   const [openError, setOpenError] = useState(false);
-  const permissions = usePermissions();
+  // const permissions = usePermissions();
   const canUpdate = checkAction("update");
   const canDelete = checkAction("delete");
 

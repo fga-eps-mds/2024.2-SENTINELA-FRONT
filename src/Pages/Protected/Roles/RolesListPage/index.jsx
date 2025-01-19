@@ -10,20 +10,20 @@ import Divider from "@mui/material/Divider";
 import ListItemText from "@mui/material/ListItemText";
 import FieldText from "../../../../Components/FieldText";
 import { APIUsers } from "../../../../Services/BaseService";
-import { checkAction, usePermissions } from "../../../../Utils/permission";
+import { checkAction } from "../../../../Utils/permission";
 import { getToken } from "../../../../Services/Functions/loader";
 
 export default function RolesListPage() {
   const [roles, setRoles] = useState([]);
   const [search, setSearch] = useState("");
-  const permissions = usePermissions();
+  // const permissions = usePermissions();
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchRoleForm = async () => {
       try {
-        const storagedUserString = localStorage.getItem("@App:user");
-        const storagedUser = JSON.parse(storagedUserString);
+        // const storagedUserString = localStorage.getItem("@App:user");
+        // const storagedUser = JSON.parse(storagedUserString);
 
         const response = await APIUsers.get("role",
           {

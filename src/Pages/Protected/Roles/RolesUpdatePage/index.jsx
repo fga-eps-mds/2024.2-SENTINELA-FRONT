@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
 import "../RolesCreatePage/index.css";
 import FieldText from "../../../../Components/FieldText";

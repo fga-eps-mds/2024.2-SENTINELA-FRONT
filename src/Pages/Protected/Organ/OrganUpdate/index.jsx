@@ -7,7 +7,7 @@ import "./index.css";
 import { Snackbar } from "@mui/material";
 import Alert from "@mui/material/Alert";
 import Modal from "../../../../Components/Modal";
-import { checkAction, usePermissions } from "../../../../Utils/permission";
+import { checkAction } from "../../../../Utils/permission";
 import {
   getOrganById,
   deleteOrganById,
@@ -22,7 +22,7 @@ export const OrganId = () => {
   const { state } = useLocation();
   const organsId = state?.organsId;
   const navigate = useNavigate();
-  const permissions = usePermissions();
+  // const permissions = usePermissions();
   const canUpdate = checkAction( "orgaos_editar");
   const canDelete = checkAction( "orgaos_deletar");
 

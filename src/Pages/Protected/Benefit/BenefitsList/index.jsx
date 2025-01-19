@@ -9,13 +9,13 @@ import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 import "./index.css";
 import { getBenefitsForm } from "../../../../Services/benefitsService";
-import { checkAction, usePermissions } from "../../../../Utils/permission";
+import { checkAction } from "../../../../Utils/permission";
 
 export default function BenefitsList() {
   const [search, setSearch] = useState("");
   const [benefits, setBenefits] = useState([]);
   const navigate = useNavigate();
-  const permissions = usePermissions();
+  // const permissions = usePermissions();
   // const canCreate = checkAction( "beneficios_criar");
 
   const handleSubmit = () => {
