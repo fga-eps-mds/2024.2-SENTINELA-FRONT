@@ -50,6 +50,7 @@ BASE_URL_SONAR = "https://sonarcloud.io/api/measures/component_tree?component=fg
 # api_url_deployments = f"https://api.github.com/repos/{owner}/{repo}/deployments"
 api_url_runs = f"https://api.github.com/repos/{OWNER}/{REPO}/actions/runs"
 api_url_issues = f"https://api.github.com/repos/{OWNER}/{REPO_ISSUES}/issues"
+print(api_url_issues)
 
 ###################
 # FUNÇÕES RELEASE #
@@ -162,7 +163,6 @@ def save_github_metrics_runs():
     return
 
 def save_github_metrics_issues():
-    print(api_url_issues)
     issues = []
     page = 1
 
