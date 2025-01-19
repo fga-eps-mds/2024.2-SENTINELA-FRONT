@@ -162,6 +162,7 @@ def save_github_metrics_runs():
     return
 
 def save_github_metrics_issues():
+    print(api_url_issues)
     issues = []
     page = 1
 
