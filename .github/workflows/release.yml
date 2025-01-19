@@ -10,7 +10,6 @@ on:
       - master
       - devel
     types: [closed]
-   
 
 jobs:
   generate-release:
