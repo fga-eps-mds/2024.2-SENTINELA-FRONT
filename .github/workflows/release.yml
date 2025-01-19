@@ -36,6 +36,7 @@ jobs:
           echo RELEASE_FIX=${{ contains(github.event.pull_request.labels.*.name, 'FIX RELEASE') }} >> ./metrics/.env
           echo DEVELOP=${{ contains(github.event.pull_request.labels.*.name, 'DEVELOP') }} >> ./metrics/.env
           echo REPO=${{ github.event.repository.name }} >> ./metrics/.env
+          echo REPO_DOC=${{ secrets.GIT_DOC_REPO }} >> ./metrics/.env
 
       - name: Criar diretório
         run: mkdir -p analytics-raw-data
