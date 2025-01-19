@@ -16,7 +16,7 @@ import { getUsers } from "../../../../Services/userService";
 import { getSupplierForm } from "../../../../Services/supplierService";
 import dayjs from "dayjs";
 import { handleCpfCnpjInput } from "../../../../Utils/validators";
-import { checkAction, usePermissions } from "../../../../Utils/permission";
+import { checkAction } from "../../../../Utils/permission";
 
 export default function FinancialUpdate() {
   const [contaOrigem, setContaOrigem] = useState("");
@@ -39,9 +39,8 @@ export default function FinancialUpdate() {
   const [nomesOrigem, setNomesOrigem] = useState([]);
   const [nomesDestino, setNomesDestino] = useState([]);
   const maxDescricaoLength = 130;
-  const permissions = usePermissions();
-  const canUpdate = checkAction( "update");
-  const canDelete = checkAction( "delete");
+  const canUpdate = checkAction("update");
+  const canDelete = checkAction("delete");
 
   const navigate = useNavigate();
   const location = useLocation();

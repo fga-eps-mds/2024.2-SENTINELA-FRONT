@@ -55,8 +55,8 @@ export default function BenefitsUpdate() {
   const [showDeletedModal, setShowDeletedModal] = useState(false);
   const [openError, setOpenError] = useState(false);
   const permissions = usePermissions();
-  const canUpdate = checkAction(permissions,"beneficios_editar");
-  const canDelete = checkAction( "beneficios_deletar");
+  const canUpdate = checkAction(permissions, "beneficios_editar");
+  const canDelete = checkAction("beneficios_deletar");
 
   const tipoPessoaList = ["Jurídica", "Física"];
   const categoriaList = [
@@ -248,215 +248,213 @@ export default function BenefitsUpdate() {
   };
 
   return (
-    
-    checkAction( "beneficios_visualizar") && (
-    <div className="container-benefits">
+    checkAction("beneficios_visualizar") && (
+      <div className="container-benefits">
+        <div className="forms-container-benefits">
+          <h1>Visualização de benefícios</h1>
 
-      <div className="forms-container-benefits">
-        <h1>Visualização de benefícios</h1>
+          <h3>Dados do benefício</h3>
 
-        <h3>Dados do benefício</h3>
+          <div className="section-form-benefits">
+            <FieldText
+              label="Nome fantasia *"
+              value={nome}
+              onChange={(e) => setNome(e.target.value)}
+              required
+            />
 
-        <div className="section-form-benefits">
+            <FieldText
+              label="Razão social *"
+              value={razaoSocial}
+              onChange={(e) => setRazaoSocial(e.target.value)}
+              disabled={true}
+            />
+          </div>
+
           <FieldText
-            label="Nome fantasia *"
-            value={nome}
-            onChange={(e) => setNome(e.target.value)}
-            required
+            label="Descrição"
+            value={descricao}
+            onChange={(e) => setDescricao(e.target.value)}
           />
 
-          <FieldText
-            label="Razão social *"
-            value={razaoSocial}
-            onChange={(e) => setRazaoSocial(e.target.value)}
+          <div className="section-form-benefits">
+            <FieldSelect
+              label="Classificação de pessoa"
+              value={tipoPessoa}
+              onChange={handleChangeTipoPessoa}
+              options={tipoPessoaList}
+            />
+
+            <FieldText
+              label="CPF/CNPJ"
+              value={cpfCnpj}
+              onChange={(e) => setCpfCnpj(mascaraCpfCnpj(e.target.value))}
+            />
+
+            <FieldText
+              label="ANS"
+              value={ans}
+              onChange={(e) => setAns(e.target.value)}
+            />
+
+            <FieldSelect
+              label="Categoria"
+              value={categoria}
+              onChange={handleChangeCategoria}
+              options={categoriaList}
+            />
+
+            <FieldSelect
+              label="Status *"
+              value={statusConvenio}
+              onChange={handleChangeStatusConvenio}
+              options={statusConvenioList}
+            />
+
+            <DataSelect
+              label="Data de cadastro"
+              value={dataCadastro}
+              onChange={(newValue) => setDataCadastro(newValue)}
+            />
+
+            <FieldSelect
+              label="Considerado no IR *"
+              value={considerarIr}
+              onChange={handleChangeConsiderarIr}
+              options={considerarIrList}
+            />
+
+            <FieldSelect
+              label="Desconto automático *"
+              value={descontoAut}
+              onChange={handleChangeDescontoAut}
+              options={descontoAutList}
+            />
+
+            <FieldFile
+              label="Logotipo"
+              value={logotipo}
+              onChange={handleFileChange}
+            />
+
+            <FieldText
+              label="Site"
+              value={site}
+              onChange={(e) => setSite(e.target.value)}
+            />
+
+            <FieldText
+              label="E-mail"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+
+            <FieldText
+              label="Telefone/Celular"
+              value={telefCelular}
+              onChange={(e) =>
+                setTelefCelular(mascaraTelefCelular(e.target.value))
+              }
+            />
+          </div>
+
+          <h3>Dados do contrato de benefício</h3>
+
+          <div className="section-form-benefits">
+            <DataSelect
+              label="Data de assinatura"
+              value={dataAssinatura}
+              onChange={(newValue) => setDataAssinatura(newValue)}
+            />
+
+            <DataSelect
+              label="Data de início"
+              value={dataInicio}
+              onChange={(newValue) => setDataInicio(newValue)}
+            />
+
+            <FieldSelect
+              label="Situação"
+              value={sitContrato}
+              onChange={handleChangeSitContrato}
+              options={sitContratoList}
+            />
+
+            <DataSelect
+              label="Data final"
+              value={dataFinal}
+              onChange={(newValue) => setDataFinal(newValue)}
+            />
+          </div>
+
+          <FieldTextCheckbox
+            label="Contrato entregue"
+            value={contratoSit}
+            onChange={(e) => setContratoSit(e.target.value)}
+            checked={isChecked}
+            onCheckboxChange={(e) => setIsChecked(e.target.checked)}
             disabled={true}
           />
-        </div>
 
-        <FieldText
-          label="Descrição"
-          value={descricao}
-          onChange={(e) => setDescricao(e.target.value)}
-        />
+          <div className="double-buttons">
+            {canDelete && (
+              <SecondaryButton text="Deletar" onClick={handleDeleteModal} />
+            )}
 
-        <div className="section-form-benefits">
-          <FieldSelect
-            label="Classificação de pessoa"
-            value={tipoPessoa}
-            onChange={handleChangeTipoPessoa}
-            options={tipoPessoaList}
-          />
+            {canUpdate && (
+              <PrimaryButton
+                text="Salvar"
+                onClick={() => handleUpdateBenefitsButton()}
+              />
+            )}
+          </div>
 
-          <FieldText
-            label="CPF/CNPJ"
-            value={cpfCnpj}
-            onChange={(e) => setCpfCnpj(mascaraCpfCnpj(e.target.value))}
-          />
+          <Snackbar
+            open={openError}
+            autoHideDuration={6000}
+            onClose={() => setOpenError(false)}
+          >
+            <Alert onClose={() => setOpenError("")} severity="error">
+              {openError}
+            </Alert>
+          </Snackbar>
 
-          <FieldText
-            label="ANS"
-            value={ans}
-            onChange={(e) => setAns(e.target.value)}
-          />
-
-          <FieldSelect
-            label="Categoria"
-            value={categoria}
-            onChange={handleChangeCategoria}
-            options={categoriaList}
-          />
-
-          <FieldSelect
-            label="Status *"
-            value={statusConvenio}
-            onChange={handleChangeStatusConvenio}
-            options={statusConvenioList}
-          />
-
-          <DataSelect
-            label="Data de cadastro"
-            value={dataCadastro}
-            onChange={(newValue) => setDataCadastro(newValue)}
-          />
-
-          <FieldSelect
-            label="Considerado no IR *"
-            value={considerarIr}
-            onChange={handleChangeConsiderarIr}
-            options={considerarIrList}
-          />
-
-          <FieldSelect
-            label="Desconto automático *"
-            value={descontoAut}
-            onChange={handleChangeDescontoAut}
-            options={descontoAutList}
-          />
-
-          <FieldFile
-            label="Logotipo"
-            value={logotipo}
-            onChange={handleFileChange}
-          />
-
-          <FieldText
-            label="Site"
-            value={site}
-            onChange={(e) => setSite(e.target.value)}
-          />
-
-          <FieldText
-            label="E-mail"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-
-          <FieldText
-            label="Telefone/Celular"
-            value={telefCelular}
-            onChange={(e) =>
-              setTelefCelular(mascaraTelefCelular(e.target.value))
-            }
-          />
-        </div>
-
-        <h3>Dados do contrato de benefício</h3>
-
-        <div className="section-form-benefits">
-          <DataSelect
-            label="Data de assinatura"
-            value={dataAssinatura}
-            onChange={(newValue) => setDataAssinatura(newValue)}
-          />
-
-          <DataSelect
-            label="Data de início"
-            value={dataInicio}
-            onChange={(newValue) => setDataInicio(newValue)}
-          />
-
-          <FieldSelect
-            label="Situação"
-            value={sitContrato}
-            onChange={handleChangeSitContrato}
-            options={sitContratoList}
-          />
-
-          <DataSelect
-            label="Data final"
-            value={dataFinal}
-            onChange={(newValue) => setDataFinal(newValue)}
-          />
-        </div>
-
-        <FieldTextCheckbox
-          label="Contrato entregue"
-          value={contratoSit}
-          onChange={(e) => setContratoSit(e.target.value)}
-          checked={isChecked}
-          onCheckboxChange={(e) => setIsChecked(e.target.checked)}
-          disabled={true}
-        />
-
-        <div className="double-buttons">
-          {canDelete && (
-            <SecondaryButton text="Deletar" onClick={handleDeleteModal} />
-          )}
-
-          {canUpdate && (
-            <PrimaryButton
-              text="Salvar"
-              onClick={() => handleUpdateBenefitsButton()}
+          <Modal alertTitle="Alterações Salvas" show={showSaveModal}>
+            <SecondaryButton
+              key={"saveButtons"}
+              text="OK"
+              onClick={() => handleSaveModal()}
             />
-          )}
+          </Modal>
+
+          <Modal
+            alertTitle="Deseja deletar o benefício do sistema?"
+            show={showDeleteModal}
+          >
+            <SecondaryButton
+              key={"deleteButtons"}
+              text="EXCLUIR benefício"
+              onClick={() => handleDeleteBenefitsButton()}
+              width="338px"
+            />
+            <SecondaryButton
+              key={"modalButtons"}
+              text="CANCELAR E MANTER O CADASTRO"
+              onClick={() => handleDeleteCloseDialog()}
+              width="338px"
+            />
+          </Modal>
+
+          <Modal alertTitle="benefício deletado" show={showDeletedModal}>
+            <SecondaryButton
+              key={"modalButtons"}
+              text="OK"
+              onClick={() => handleDeletedCloseDialog()}
+              width="338px"
+            />
+          </Modal>
         </div>
-
-        <Snackbar
-          open={openError}
-          autoHideDuration={6000}
-          onClose={() => setOpenError(false)}
-        >
-          <Alert onClose={() => setOpenError("")} severity="error">
-            {openError}
-          </Alert>
-        </Snackbar>
-
-        <Modal alertTitle="Alterações Salvas" show={showSaveModal}>
-          <SecondaryButton
-            key={"saveButtons"}
-            text="OK"
-            onClick={() => handleSaveModal()}
-          />
-        </Modal>
-
-        <Modal
-          alertTitle="Deseja deletar o benefício do sistema?"
-          show={showDeleteModal}
-        >
-          <SecondaryButton
-            key={"deleteButtons"}
-            text="EXCLUIR benefício"
-            onClick={() => handleDeleteBenefitsButton()}
-            width="338px"
-          />
-          <SecondaryButton
-            key={"modalButtons"}
-            text="CANCELAR E MANTER O CADASTRO"
-            onClick={() => handleDeleteCloseDialog()}
-            width="338px"
-          />
-        </Modal>
-
-        <Modal alertTitle="benefício deletado" show={showDeletedModal}>
-          <SecondaryButton
-            key={"modalButtons"}
-            text="OK"
-            onClick={() => handleDeletedCloseDialog()}
-            width="338px"
-          />
-        </Modal>
       </div>
-    </div>
     )
   );
 }

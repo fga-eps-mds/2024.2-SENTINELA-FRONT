@@ -10,7 +10,7 @@ import ListItemText from "@mui/material/ListItemText";
 import DataSelect from "../../../../Components/DataSelect";
 import FieldText from "../../../../Components/FieldText";
 import { APIBank } from "../../../../Services/BaseService";
-import { checkAction, usePermissions } from "../../../../Utils/permission";
+import { checkAction } from "../../../../Utils/permission";
 
 export default function FinancialList() {
   const [movements, setMovements] = useState([]);
@@ -18,8 +18,8 @@ export default function FinancialList() {
   const navigate = useNavigate();
   const [dataInicio, setDataInicio] = useState(null);
   const [dataFinal, setDataFinal] = useState(null);
-  const permissions = usePermissions();
-  const canCreate = checkAction( "create");
+  // const permissions = usePermissions();
+  const canCreate = checkAction("create");
 
   const storagedUser = JSON.parse(localStorage.getItem("@App:user"));
 

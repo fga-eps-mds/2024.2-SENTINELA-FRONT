@@ -13,12 +13,12 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Modal from "../../../../Components/Modal";
 import { Alert, Snackbar } from "@mui/material";
 import { isValidEmail } from "../../../../Utils/validators";
-import { checkAction, usePermissions } from "../../../../Utils/permission";
+import { checkAction } from "../../../../Utils/permission";
 
 export default function UpdateSupplier() {
-  const permissions = usePermissions();
-  const canUpdate = checkAction( "update");
-  const canDelete = checkAction( "delete");
+  // const permissions = usePermissions();
+  const canUpdate = checkAction("update");
+  const canDelete = checkAction("delete");
   const [nome, setNome] = useState("");
   const [tipoPessoa, setTipoPessoa] = useState("");
   const [cpfCnpj, setCpfCnpj] = useState("");

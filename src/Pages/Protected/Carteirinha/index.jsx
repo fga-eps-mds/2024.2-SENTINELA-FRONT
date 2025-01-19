@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import QRCode from "react-qr-code";
 import "./index.css";
+import { checkAction } from "../../../Utils/permission";
 
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
@@ -20,13 +21,11 @@ const Carteirinha = () => {
   useEffect(() => {
     const fetchMembership = async () => {
       try {
-        const response = await fetch("http://localhost:3001/membership", 
-          {
-            headers: {
-              Authorization: `Bearer ${getToken()}`,
-            },
-          }
-        );
+        const response = await fetch("http://localhost:3001/membership", {
+          headers: {
+            Authorization: `Bearer ${getToken()}`,
+          },
+        });
         const data = await response.json();
         setMembershipData(data[0]);
         console.log("alohaa", data);
@@ -81,117 +80,119 @@ const Carteirinha = () => {
   const { name, birthDate, cpf, expeditionDate, hiringDate } = membershipData;
 
   return (
-    checkAction( "beneficios_criar") && (
-    <div className="carteirinha-container" ref={cardRef}>
-      
-      <div className="carteirinha">
-        <header className="carteirinha-header">
-          <h1>SINDPOL-DF</h1>
-          <p>SINDICATO DOS POLICIAIS PENAIS DO DISTRITO FEDERAL</p>
-        </header>
+    checkAction("beneficios_criar") && (
+      <div className="carteirinha-container" ref={cardRef}>
+        <div className="carteirinha">
+          <header className="carteirinha-header">
+            <h1>SINDPOL-DF</h1>
+            <p>SINDICATO DOS POLICIAIS PENAIS DO DISTRITO FEDERAL</p>
+          </header>
 
-        {/* Informações e Badge */}
-        <div className="info-and-badge">
-          <div className="carteirinha-info">
-            <div className="info-line">
-              <div className="info-block">
-                <strong>TITULAR:</strong>
-                <br />
-                <p className="info-color-titular"></p>
-                <p className="info-color-titular">
-                  <span>{name}</span>
-                </p>
+          {/* Informações e Badge */}
+          <div className="info-and-badge">
+            <div className="carteirinha-info">
+              <div className="info-line">
+                <div className="info-block">
+                  <strong>TITULAR:</strong>
+                  <br />
+                  <p className="info-color-titular"></p>
+                  <p className="info-color-titular">
+                    <span>{name}</span>
+                  </p>
+                </div>
+              </div>
+              <div className="info-line">
+                <div className="info-block">
+                  <strong>DATA DE NASCIMENTO:</strong>
+                  <br />
+                  <p className="info-color" />
+
+                  <p className="info-color">
+                    <span>{new Date(birthDate).toLocaleDateString()}</span>
+                  </p>
+                </div>
+                <div className="info-block">
+                  <strong>DATA DE EXPEDIÇÃO:</strong>
+                  <br />
+                  <p className="info-color" />
+                  <p className="info-color">
+                    <span>{new Date(expeditionDate).toLocaleDateString()}</span>
+                  </p>
+                </div>
+              </div>
+              <div className="info-line">
+                <div className="info-block">
+                  <strong>CPF:</strong>
+                  <br />
+                  <p className="info-color" />
+                  <p className="info-color">
+                    <span>{cpf}</span>
+                  </p>
+                </div>
+                <div className="info-block">
+                  <strong>CONTRATAÇÃO:</strong>
+                  <br />
+                  <p className="info-color" />
+                  <p className="info-color">
+                    <span>{new Date(hiringDate).toLocaleDateString()}</span>
+                  </p>
+                </div>
               </div>
             </div>
-            <div className="info-line">
-              <div className="info-block">
-                <strong>DATA DE NASCIMENTO:</strong>
-                <br />
-                <p className="info-color" />
 
-                <p className="info-color">
-                  <span>{new Date(birthDate).toLocaleDateString()}</span>
-                </p>
-              </div>
-              <div className="info-block">
-                <strong>DATA DE EXPEDIÇÃO:</strong>
-                <br />
-                <p className="info-color" />
-                <p className="info-color">
-                  <span>{new Date(expeditionDate).toLocaleDateString()}</span>
-                </p>
-              </div>
+            {/* Badge Section */}
+            <div className="badge-section">
+              <img
+                src={badgeLogo}
+                alt="Sindicalizado Badge"
+                className="badge-logo"
+              />
+              <p className="Sind">SINDICALIZADO</p>
             </div>
-            <div className="info-line">
-              <div className="info-block">
-                <strong>CPF:</strong>
-                <br />
-                <p className="info-color" />
-                <p className="info-color">
-                  <span>{cpf}</span>
-                </p>
-              </div>
-              <div className="info-block">
-                <strong>CONTRATAÇÃO:</strong>
-                <br />
-                <p className="info-color" />
-                <p className="info-color">
-                  <span>{new Date(hiringDate).toLocaleDateString()}</span>
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Badge Section */}
-          <div className="badge-section">
-            <img
-              src={badgeLogo}
-              alt="Sindicalizado Badge"
-              className="badge-logo"
-            />
-            <p className="Sind">SINDICALIZADO</p>
           </div>
         </div>
-      </div>
 
-      {/* Segunda Parte da Carteirinha */}
-      <div className="carteirinha">
-        <footer className="carteirinha-footer">
-          <p>
-            Setor de Diversões Sul (SDS), Conjunto Baracat, Bloco F, 27, Salas
-            313/315, Asa Sul, Brasília/DF, CEP 70392-900
-          </p>
-        </footer>
-        <div className="qr-section">
-          <div className="qr-code">
-            <QRCode value="http://localhost:5173/verificar-membro" size={170} />{" "}
-            {/* endereço que será passado no qrCode */}
+        {/* Segunda Parte da Carteirinha */}
+        <div className="carteirinha">
+          <footer className="carteirinha-footer">
+            <p>
+              Setor de Diversões Sul (SDS), Conjunto Baracat, Bloco F, 27, Salas
+              313/315, Asa Sul, Brasília/DF, CEP 70392-900
+            </p>
+          </footer>
+          <div className="qr-section">
+            <div className="qr-code">
+              <QRCode
+                value="http://localhost:5173/verificar-membro"
+                size={170}
+              />{" "}
+              {/* endereço que será passado no qrCode */}
+            </div>
+            <p className="qr-code-numero">(61) 3321-1949</p>
           </div>
-          <p className="qr-code-numero">(61) 3321-1949</p>
+
+          <footer className="carteirinha-footer">
+            <p>sindpol.org.br / contato@sindpol.org.br</p>
+            <div className="social-media">
+              <FaInstagram className="social-icon" />
+              <FaYoutube className="social-icon" />
+              <FaFacebook className="social-icon" />
+              <FaXTwitter className="social-icon" />
+            </div>
+            <span>@sindpoldf</span>
+            <div className="footer-logos">
+              <img src={badgeLogo} alt="Logo 1" className="footer-logo" />
+              <img src={penalLogo} alt="Logo 2" className="footer-logo" />
+            </div>
+          </footer>
         </div>
 
-        <footer className="carteirinha-footer">
-          <p>sindpol.org.br / contato@sindpol.org.br</p>
-          <div className="social-media">
-            <FaInstagram className="social-icon" />
-            <FaYoutube className="social-icon" />
-            <FaFacebook className="social-icon" />
-            <FaXTwitter className="social-icon" />
-          </div>
-          <span>@sindpoldf</span>
-          <div className="footer-logos">
-            <img src={badgeLogo} alt="Logo 1" className="footer-logo" />
-            <img src={penalLogo} alt="Logo 2" className="footer-logo" />
-          </div>
-        </footer>
+        {/* Botão */}
+        <button onClick={downloadPDF} className="download-button">
+          BAIXAR CARTEIRINHA
+        </button>
       </div>
-
-      {/* Botão */}
-      <button onClick={downloadPDF} className="download-button">
-        BAIXAR CARTEIRINHA
-      </button>
-    </div>
-  )
+    )
   );
 };
 

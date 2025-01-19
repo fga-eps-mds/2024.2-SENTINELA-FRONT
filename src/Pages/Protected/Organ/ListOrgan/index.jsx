@@ -17,7 +17,7 @@ export default function OrganList() {
   const [organs, setOrgans] = useState([]);
   const navigate = useNavigate();
 
-  const canCreate = checkAction(permissions,"orgaos_criar");
+  const canCreate = checkAction(permissions, "orgaos_criar");
   useEffect(() => {
     const getOrgansInfo = async () => {
       const response = await listOrgans();

@@ -10,15 +10,14 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import FieldText from "../../../../Components/FieldText";
 import { getAll } from "../../../../../src/Services/bankAccountService";
-import { checkAction, usePermissions } from "../../../../Utils/permission";
+import { checkAction } from "../../../../Utils/permission";
 
 export default function ListBankAccount() {
   const [busca, setBusca] = useState("");
   const navigate = useNavigate();
   const { user } = useAuth();
   const [bankAccounts, setBankAccounts] = useState([]);
-  const permissions = usePermissions();
-  const canCreate = checkAction( "create");
+  const canCreate = checkAction("create");
 
   useEffect(() => {
     const fetchBankAccounts = async () => {
@@ -46,54 +45,53 @@ export default function ListBankAccount() {
   );
 
   return (
-    checkAction( "contas_bancarias_visualizar") && (
-      user && (
-        <section className="container-list-bankAccount">
-          <div className="forms-container-list-bankAccount">
-            <div className="double-box-list-bankAccount">
-              <h1>Lista de Contas Bancárias</h1>
-              {canCreate && (
-                <PrimaryButtom
-                  text="Cadastrar contas bancárias"
-                  onClick={handleRegisterClick}
-                />
-              )}
-            </div>
-            <div className="search-box-bankAccount">
-              <FieldText
-                label="Pesquisar conta bancária"
-                value={busca}
-                onChange={(e) => setBusca(e.target.value)}
+    checkAction("contas_bancarias_visualizar") &&
+    user && (
+      <section className="container-list-bankAccount">
+        <div className="forms-container-list-bankAccount">
+          <div className="double-box-list-bankAccount">
+            <h1>Lista de Contas Bancárias</h1>
+            {canCreate && (
+              <PrimaryButtom
+                text="Cadastrar contas bancárias"
+                onClick={handleRegisterClick}
               />
-              <List>
-                {filteredBankAccounts.map((bankAccount, index) => (
-                  <div key={bankAccount._id}>
-                    <ListItem>
-                      <ListItemButton
-                        className="list-item-bankAccount"
-                        style={{
-                          transition: "background-color 0.3s ease",
-                        }}
-                        onMouseEnter={(e) =>
+            )}
+          </div>
+          <div className="search-box-bankAccount">
+            <FieldText
+              label="Pesquisar conta bancária"
+              value={busca}
+              onChange={(e) => setBusca(e.target.value)}
+            />
+            <List>
+              {filteredBankAccounts.map((bankAccount, index) => (
+                <div key={bankAccount._id}>
+                  <ListItem>
+                    <ListItemButton
+                      className="list-item-bankAccount"
+                      style={{
+                        transition: "background-color 0.3s ease",
+                      }}
+                      onMouseEnter={(e) =>
                         (e.currentTarget.style.backgroundColor =
                           "rgba(0, 0, 0, 0.1)")
-                        }
-                        onMouseLeave={(e) =>
-                          (e.currentTarget.style.backgroundColor = "transparent")
-                        }
-                        onClick={() => handleItemClick(bankAccount)}
-                      >
-                        <ListItemText primary={bankAccount.name} />
-                      </ListItemButton>
-                    </ListItem>
-                    {index < filteredBankAccounts.length - 1 && <Divider />}
-                  </div>
-                ))}
-              </List>
-            </div>
+                      }
+                      onMouseLeave={(e) =>
+                        (e.currentTarget.style.backgroundColor = "transparent")
+                      }
+                      onClick={() => handleItemClick(bankAccount)}
+                    >
+                      <ListItemText primary={bankAccount.name} />
+                    </ListItemButton>
+                  </ListItem>
+                  {index < filteredBankAccounts.length - 1 && <Divider />}
+                </div>
+              ))}
+            </List>
           </div>
-        </section>
-      )
+        </div>
+      </section>
     )
   );
 }

@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const storagedUser = localStorage.getItem("@App:user");
     const storagedToken = localStorage.getItem("@App:token");
-    const storagedPermissions = localStorage.getItem("@App:permissions");
+    // const storagedPermissions = localStorage.getItem("@App:permissions");
 
     if (storagedToken && storagedUser) {
       setUser(JSON.parse(storagedUser));
@@ -23,7 +23,10 @@ export const AuthProvider = ({ children }) => {
       setUser(response.data);
       localStorage.setItem("@App:user", JSON.stringify(response.data.user));
       localStorage.setItem("@App:token", JSON.stringify(response.data.token));
-      localStorage.setItem("@App:permissions", JSON.stringify(response.data.permissions));
+      localStorage.setItem(
+        "@App:permissions",
+        JSON.stringify(response.data.permissions)
+      );
       setFlag(!flag);
       return false;
     } catch (err) {
