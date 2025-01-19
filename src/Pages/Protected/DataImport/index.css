@@ -1,0 +1,61 @@
+/* tabela */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.data-table th,
+.data-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.data-table th {
+    color: black;
+}
+
+.data-table tr:nth-child(even) {
+    background-color: #EAE3D7;
+}
+
+.data-table tr:hover {
+    background-color: #EAE3D7;
+}
+
+/* mensagem quando não houver dados */
+.data-table td[colspan="3"] {
+    text-align: center;
+    font-style: italic;
+    color: #888;
+}
+
+/*botão de upload */
+input[type="file"] {
+    margin: 20px 0;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+input[type="file"]:hover {
+    background-color: #f1f1f1;
+    color: #AE883C;
+}
+
+/* Estilizando o título */
+h1 {
+    color: #333;
+    font-size: 24px;
+    text-align: center;
+}
+
+/* container principal */
+.data-import {
+    max-width: 800px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+}
