@@ -119,7 +119,7 @@ jobs:
         run: npm i 
 
       - name: 🧪 Roda suíte de testes
-        run: npm test
+        run: npx vitest run --reporter=dot
 
   sonarcloud:
     # TO DO: adicionar variaveis de ambiente conforme necessario
