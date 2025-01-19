@@ -190,4 +190,4 @@ if __name__ == "__main__":
 
     save_sonar_metrics(tag)
     save_github_metrics_runs()
-    save_github_metrics_issues()
+    # save_github_metrics_issues()
