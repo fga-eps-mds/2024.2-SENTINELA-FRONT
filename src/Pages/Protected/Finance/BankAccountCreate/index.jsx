@@ -9,7 +9,7 @@ import { Snackbar } from "@mui/material";
 import Alert from "@mui/material/Alert";
 import { createBankAccount } from "../../../../Services/bankAccountService";
 import Modal from "../../../../Components/Modal";
-import { checkAction } from "../../Utils/permission";
+import { checkAction } from "../../../../Utils/permission";
 
 const BankAccount = () => {
   const [name, setName] = useState("");

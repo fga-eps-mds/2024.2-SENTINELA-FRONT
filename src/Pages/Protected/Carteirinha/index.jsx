@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import QRCode from "react-qr-code";
 import "./index.css";
-import { checkAction } from "../../Utils/permission";
+import { checkAction } from "../../../Utils/permission";
 
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
