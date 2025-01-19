@@ -10,7 +10,6 @@ const Benefits = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const permissions = usePermissions();
-  const canCreate = checkAction( "beneficios_criar");
 
   const handleBenefitsList = () => {
     navigate("/beneficios/lista");
@@ -32,7 +31,7 @@ const Benefits = () => {
               alt="Sentinela Logo"
             />
             <div className="hub-btn">
-              {canCreate && (
+              {checkAction( "beneficios_criar") && (
                 <SecondaryButton
                   text="CADASTRO DE BENEFÍCIOS"
                   onClick={handleBenefitsCreate}

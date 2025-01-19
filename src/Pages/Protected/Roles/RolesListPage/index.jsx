@@ -11,6 +11,7 @@ import ListItemText from "@mui/material/ListItemText";
 import FieldText from "../../../../Components/FieldText";
 import { APIUsers } from "../../../../Services/BaseService";
 import { checkAction, usePermissions } from "../../../../Utils/permission";
+import { getToken } from "../../../../Services/Functions/loader";
 
 export default function RolesListPage() {
   const [roles, setRoles] = useState([]);
@@ -24,7 +25,13 @@ export default function RolesListPage() {
         const storagedUserString = localStorage.getItem("@App:user");
         const storagedUser = JSON.parse(storagedUserString);
 
-        const response = await APIUsers.get("role");
+        const response = await APIUsers.get("role",
+          {
+            headers: {
+              Authorization: `Bearer ${getToken()}`,
+            },
+          }
+        );
 
         const data = response.data;
         if (Array.isArray(data)) {

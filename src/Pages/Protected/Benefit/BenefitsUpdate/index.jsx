@@ -248,6 +248,7 @@ export default function BenefitsUpdate() {
   };
 
   return (
+    
     checkAction( "beneficios_visualizar") && (
     <div className="container-benefits">
 

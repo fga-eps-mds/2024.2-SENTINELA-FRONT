@@ -68,7 +68,6 @@ export default function RolesUpdatePage() {
         
         const rolePermissions = roleData.permissions.map((perm) => perm._id);
         setSelectedPermissions(rolePermissions);
-        console.log('cu', )
       } catch (error) {
         console.error("Erro ao buscar o perfil:", error);
       }

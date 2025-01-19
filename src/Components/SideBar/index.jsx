@@ -10,7 +10,7 @@ import { AiOutlineUser } from "react-icons/ai";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import AuthContext, { useAuth } from "../../Context/auth";
-import { usePermissions, checkModule } from "../../Utils/permission";
+import { usePermissions, checkModule, checkAction } from "../../Utils/permission";
 import { getRoleById } from "../../Services/RoleService/roleService";
 
 export default function SideBar() {
@@ -43,97 +43,6 @@ export default function SideBar() {
     }
   };
 
-  const buttons = [
-    <SideButton
-      hidden={user ? "flex" : "none"}
-      key="home"
-      text="PÁGINA INICIAL"
-      onClick={() => {
-        navigate("/home");
-        setIsSideBarOpen(false);
-      }}
-    />,
-    <SideButton
-      // hidden={checkModule(permissions, "users") ? "flex" : "none"}
-      key="filiacao"
-      text="CADASTROS"
-      onClick={() => {
-        navigate("/usuarios/hub");
-        setIsSideBarOpen(false);
-      }}
-    />,
-    <SideButton
-      // hidden={checkModule(permissions, "finance") ? "flex" : "none"}
-      key="financeiro"
-      text="FINANCEIRO"
-      onClick={() => {
-        navigate("/finance/hub");
-        setIsSideBarOpen(false);
-      }}
-    />,
-    <SideButton
-      // hidden={checkModule(permissions, "benefits") ? "flex" : "none"}
-      key="beneficios"
-      text="BENEFÍCIOS"
-      onClick={() => {
-        navigate("/beneficios");
-        setIsSideBarOpen(false);
-      }}
-    />,
-    <SideButton
-      // hidden={checkModule(permissions, "benefits") ? "flex" : "none"}
-      key="permissions"
-      text="PERMISSIONS"
-      onClick={() => {
-        navigate("/permissions");
-        setIsSideBarOpen(false);
-      }}
-    />,
-    <SideButton
-      hidden={user ? "none" : "flex"}
-      key="login"
-      text="LOGIN"
-      onClick={() => {
-        navigate("/");
-        setIsSideBarOpen(false);
-      }}
-    />,
-    <SideButton
-      key="filiacão"
-      text="FILIAÇÃO"
-      onClick={() => {
-        navigate("/filiacao");
-        setIsSideBarOpen(false);
-      }}
-    />,
-    <SideButton
-      // hidden={checkModule(permissions, "users") ? "flex" : "none"}
-      key="carteirinha"
-      text="CARTEIRINHA"
-      onClick={() => {
-        navigate("/carteirinha");
-        setIsSideBarOpen(false);
-      }}
-    />,
-    <SideButton
-      hidden={user ? "none" : "flex"}
-      key="Verificarsindicalizado"
-      text="VERIFICAR SINDICALIZADO"
-      onClick={() => {
-        navigate("/verificar-membro");
-        setIsSideBarOpen(false);
-      }}
-    />,
-    <SideButton
-      // hidden={checkModule(permissions, "users") ? "flex" : "none"}
-      key="Verificarsindicalizado"
-      text="VERIFICAR SINDICALIZADO"
-      onClick={() => {
-        navigate("/verificar-membro");
-        setIsSideBarOpen(false);
-      }}
-    />,
-  ];
 
   return (
     <>
@@ -163,7 +72,92 @@ export default function SideBar() {
               },
             }}
           >
-            {buttons}
+            <SideButton
+              hidden={user ? "flex" : "none"}
+              key="home"
+              text="PÁGINA INICIAL"
+              onClick={() => {
+                navigate("/home");
+                setIsSideBarOpen(false);
+              }}
+            />
+            <SideButton
+              // hidden={checkModule(permissions, "users") ? "flex" : "none"}
+              key="filiacao"
+              text="CADASTROS"
+              onClick={() => {
+                navigate("/usuarios/hub");
+                setIsSideBarOpen(false);
+              }}
+            />
+            <SideButton
+              // hidden={checkModule(permissions, "finance") ? "flex" : "none"}
+              key="financeiro"
+              text="FINANCEIRO"
+              onClick={() => {
+                navigate("/finance/hub");
+                setIsSideBarOpen(false);
+              }}
+            />
+            <SideButton
+              // hidden={checkModule(permissions, "benefits") ? "flex" : "none"}
+              key="beneficios"
+              text="BENEFÍCIOS"
+              onClick={() => {
+                navigate("/beneficios");
+                setIsSideBarOpen(false);
+              }}
+            />
+            <SideButton
+              hidden={user ? "none" : "flex"}
+              key="login"
+              text="LOGIN"
+              onClick={() => {
+                navigate("/");
+                setIsSideBarOpen(false);
+              }}
+            />
+            {(checkAction("filiados_cadastrar")  && 
+              <SideButton
+                key="filiacão"
+                text="FILIAÇÃO"
+                onClick={() => {
+                  navigate("/filiacao");
+                  setIsSideBarOpen(false);
+                }}
+              />
+            )}
+            {(checkAction("filiado_visualizar_carteirinha")  && 
+            <SideButton
+              // hidden={checkModule(permissions, "users") ? "flex" : "none"}
+              key="carteirinha"
+              text="CARTEIRINHA"
+              onClick={() => {
+                navigate("/carteirinha");
+                setIsSideBarOpen(false);
+              }}
+            />
+            )}
+            <SideButton
+              hidden={user ? "none" : "flex"}
+              key="Verificarsindicalizado"
+              text="VERIFICAR SINDICALIZADO"
+              onClick={() => {
+                navigate("/verificar-membro");
+                setIsSideBarOpen(false);
+              }}
+            />
+            {(checkAction("sindicalizado_visualizar_status")  && 
+            <SideButton
+              // hidden={checkModule(permissions, "users") ? "flex" : "none"}
+              key="Verificarsindicalizado"
+              text="VERIFICAR SINDICALIZADO"
+              onClick={() => {
+                navigate("/verificar-membro");
+                setIsSideBarOpen(false);
+              }}
+            />
+            )}
           </ButtonGroup>
         </div>
         <div

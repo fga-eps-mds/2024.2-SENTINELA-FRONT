@@ -106,6 +106,7 @@ const PermissionCRUD = () => {
 
         <Box component="form" onSubmit={handleSubmit} sx={{ marginBottom: 4 }}>
           <TextField
+            sx={{margin:22}}
             label="Permission Name"
             value={form.name}
             onChange={(e) => setForm({ ...form, name: e.target.value })}
