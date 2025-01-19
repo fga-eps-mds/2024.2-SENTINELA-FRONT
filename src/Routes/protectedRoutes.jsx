@@ -89,8 +89,7 @@ const ProtectedRoutes = () => {
           <PermissionProtect
             element={<PermissionCRUD />}
             moduleName="users"
-          actions={["create", "update", "read", "delete"]
-            }
+            actions={["create", "update", "read", "delete"]}
           />
         }
       />
@@ -191,7 +190,7 @@ const ProtectedRoutes = () => {
           />
         }
       />
-      
+
       <Route
         path="/beneficios/criar"
         element={
@@ -202,17 +201,17 @@ const ProtectedRoutes = () => {
           />
         }
       />
-      {(checkAction("filiado_visualizar_carteirinha")   && 
-      <Route
-        path="/carteirinha"
-        element={
-          <PermissionProtect
-            element={<CarteirinhaPage />}
-            moduleName="users"
-            actions={["read", "create"]}
-          />
-        }
-      />
+      {checkAction("filiado_visualizar_carteirinha") && (
+        <Route
+          path="/carteirinha"
+          element={
+            <PermissionProtect
+              element={<CarteirinhaPage />}
+              moduleName="users"
+              actions={["read", "create"]}
+            />
+          }
+        />
       )}
       <Route
         path="/beneficios/editar/:id"

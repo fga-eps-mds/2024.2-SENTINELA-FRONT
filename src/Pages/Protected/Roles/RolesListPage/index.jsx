@@ -10,28 +10,26 @@ import Divider from "@mui/material/Divider";
 import ListItemText from "@mui/material/ListItemText";
 import FieldText from "../../../../Components/FieldText";
 import { APIUsers } from "../../../../Services/BaseService";
-import { checkAction, usePermissions } from "../../../../Utils/permission";
+import { checkAction } from "../../../../Utils/permission";
 import { getToken } from "../../../../Services/Functions/loader";
 
 export default function RolesListPage() {
   const [roles, setRoles] = useState([]);
   const [search, setSearch] = useState("");
-  const permissions = usePermissions();
+  // const permissions = usePermissions();
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchRoleForm = async () => {
       try {
-        const storagedUserString = localStorage.getItem("@App:user");
-        const storagedUser = JSON.parse(storagedUserString);
+        // const storagedUserString = localStorage.getItem("@App:user");
+        // const storagedUser = JSON.parse(storagedUserString);
 
-        const response = await APIUsers.get("role",
-          {
-            headers: {
-              Authorization: `Bearer ${getToken()}`,
-            },
-          }
-        );
+        const response = await APIUsers.get("role", {
+          headers: {
+            Authorization: `Bearer ${getToken()}`,
+          },
+        });
 
         const data = response.data;
         if (Array.isArray(data)) {
@@ -47,7 +45,7 @@ export default function RolesListPage() {
     fetchRoleForm();
   }, []);
 
-  const hasPermission = checkAction( "perfis_criar");
+  const hasPermission = checkAction("perfis_criar");
 
   const handleSubmit = () => {
     navigate("/perfis/criar");
@@ -81,7 +79,7 @@ export default function RolesListPage() {
           />
         </div>
 
-        {checkAction( "perfis_visualizar") && (
+        {checkAction("perfis_visualizar") && (
           <List>
             {filteredRoles.map((role, index) => (
               <div key={role._id}>
@@ -109,7 +107,6 @@ export default function RolesListPage() {
             ))}
           </List>
         )}
-
       </div>
     </section>
   );

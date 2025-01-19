@@ -10,7 +10,7 @@ import { AiOutlineUser } from "react-icons/ai";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import AuthContext, { useAuth } from "../../Context/auth";
-import { usePermissions, checkModule, checkAction } from "../../Utils/permission";
+import { checkAction } from "../../Utils/permission";
 import { getRoleById } from "../../Services/RoleService/roleService";
 
 export default function SideBar() {
@@ -19,10 +19,9 @@ export default function SideBar() {
   const navigate = useNavigate();
   const context = useContext(AuthContext);
   const { user } = useAuth();
-  const permissions = usePermissions();
   const [role, setRole] = useState("");
 
-  useEffect(() => { }, [navigate]);
+  useEffect(() => {}, [navigate]);
 
   const handleItemClick = async (user) => {
     if (user) {
@@ -42,7 +41,6 @@ export default function SideBar() {
       navigate("/user");
     }
   };
-
 
   return (
     <>
@@ -117,7 +115,7 @@ export default function SideBar() {
                 setIsSideBarOpen(false);
               }}
             />
-            {(checkAction("filiados_cadastrar")  && 
+            {checkAction("filiados_cadastrar") && (
               <SideButton
                 key="filiacão"
                 text="FILIAÇÃO"
@@ -127,16 +125,16 @@ export default function SideBar() {
                 }}
               />
             )}
-            {(checkAction("filiado_visualizar_carteirinha")  && 
-            <SideButton
-              // hidden={checkModule(permissions, "users") ? "flex" : "none"}
-              key="carteirinha"
-              text="CARTEIRINHA"
-              onClick={() => {
-                navigate("/carteirinha");
-                setIsSideBarOpen(false);
-              }}
-            />
+            {checkAction("filiado_visualizar_carteirinha") && (
+              <SideButton
+                // hidden={checkModule(permissions, "users") ? "flex" : "none"}
+                key="carteirinha"
+                text="CARTEIRINHA"
+                onClick={() => {
+                  navigate("/carteirinha");
+                  setIsSideBarOpen(false);
+                }}
+              />
             )}
             <SideButton
               hidden={user ? "none" : "flex"}
@@ -147,16 +145,16 @@ export default function SideBar() {
                 setIsSideBarOpen(false);
               }}
             />
-            {(checkAction("sindicalizado_visualizar_status")  && 
-            <SideButton
-              // hidden={checkModule(permissions, "users") ? "flex" : "none"}
-              key="Verificarsindicalizado"
-              text="VERIFICAR SINDICALIZADO"
-              onClick={() => {
-                navigate("/verificar-membro");
-                setIsSideBarOpen(false);
-              }}
-            />
+            {checkAction("sindicalizado_visualizar_status") && (
+              <SideButton
+                // hidden={checkModule(permissions, "users") ? "flex" : "none"}
+                key="Verificarsindicalizado"
+                text="VERIFICAR SINDICALIZADO"
+                onClick={() => {
+                  navigate("/verificar-membro");
+                  setIsSideBarOpen(false);
+                }}
+              />
             )}
           </ButtonGroup>
         </div>

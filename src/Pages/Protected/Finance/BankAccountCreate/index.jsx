@@ -9,6 +9,7 @@ import { Snackbar } from "@mui/material";
 import Alert from "@mui/material/Alert";
 import { createBankAccount } from "../../../../Services/bankAccountService";
 import Modal from "../../../../Components/Modal";
+import { checkAction } from "../../../../Utils/permission";
 
 const BankAccount = () => {
   const [name, setName] = useState("");
@@ -101,93 +102,94 @@ const BankAccount = () => {
   };
 
   return (
-    checkAction( "contas_bancarias_criar") && (
-    <div className="container-benefits">
-      <div className="forms-container-benefits">
-        <h1>Cadastro de Conta Bancária</h1>
-        <h3>Dados da Conta Bancária </h3>
-        <div className="section-form-benefits">
-          <FieldText
-            label="Nome *"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <FieldSelect
-            label="Tipo de conta*"
-            value={accountType}
-            onChange={handleChangeAccountType}
-            options={listAccountType}
-          />
-          <FieldText
-            label="Banco *"
-            value={bank}
-            onChange={(e) => setBank(e.target.value)}
-          />
-          <FieldText
-            label="Agência"
-            value={agency}
-            onChange={(e) => setAgency(agencia(e.target.value))}
-          />
-          <FieldText
-            label="Número da conta"
-            value={accountNumber}
-            onChange={(e) => setAccountNumber(numeroConta(e.target.value))}
-          />
-          <FieldText
-            label="DV"
-            value={dv}
-            onChange={(e) => setDv(digitverificator(e.target.value))}
-          />
-          <FieldText
-            label="Pix"
-            value={pix}
-            onChange={(e) => setPix(e.target.value)}
-          />
-          <FieldSelect
-            label="Status *"
-            value={status}
-            onChange={(e) => setStatus(e.target.value)}
-            options={listStatus}
-          />
-        </div>
+    checkAction("contas_bancarias_criar") && (
+      <div className="container-benefits">
+        <div className="forms-container-benefits">
+          <h1>Cadastro de Conta Bancária</h1>
+          <h3>Dados da Conta Bancária </h3>
+          <div className="section-form-benefits">
+            <FieldText
+              label="Nome *"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+            <FieldSelect
+              label="Tipo de conta*"
+              value={accountType}
+              onChange={handleChangeAccountType}
+              options={listAccountType}
+            />
+            <FieldText
+              label="Banco *"
+              value={bank}
+              onChange={(e) => setBank(e.target.value)}
+            />
+            <FieldText
+              label="Agência"
+              value={agency}
+              onChange={(e) => setAgency(agencia(e.target.value))}
+            />
+            <FieldText
+              label="Número da conta"
+              value={accountNumber}
+              onChange={(e) => setAccountNumber(numeroConta(e.target.value))}
+            />
+            <FieldText
+              label="DV"
+              value={dv}
+              onChange={(e) => setDv(digitverificator(e.target.value))}
+            />
+            <FieldText
+              label="Pix"
+              value={pix}
+              onChange={(e) => setPix(e.target.value)}
+            />
+            <FieldSelect
+              label="Status *"
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
+              options={listStatus}
+            />
+          </div>
 
-        <div id="envio">
-          <PrimaryButton text="CADASTRAR" onClick={handleCheck} />
-        </div>
+          <div id="envio">
+            <PrimaryButton text="CADASTRAR" onClick={handleCheck} />
+          </div>
 
-        <Snackbar
-          open={openError}
-          autoHideDuration={6000}
-          onClose={() => setOpenError(false)}
-        >
-          <Alert onClose={() => setOpenError(false)} severity="error">
-            Certifique-se de que todos os campos obrigatórios estão preenchidos
-          </Alert>
-        </Snackbar>
-        <Snackbar
-          open={openErrorUnique}
-          autoHideDuration={6000}
-          onClose={() => setOpenErrorUnique(false)}
-        >
-          <Alert onClose={() => setOpenErrorUnique(false)} severity="error">
-            Nome já cadastrado
-          </Alert>
-        </Snackbar>
+          <Snackbar
+            open={openError}
+            autoHideDuration={6000}
+            onClose={() => setOpenError(false)}
+          >
+            <Alert onClose={() => setOpenError(false)} severity="error">
+              Certifique-se de que todos os campos obrigatórios estão
+              preenchidos
+            </Alert>
+          </Snackbar>
+          <Snackbar
+            open={openErrorUnique}
+            autoHideDuration={6000}
+            onClose={() => setOpenErrorUnique(false)}
+          >
+            <Alert onClose={() => setOpenErrorUnique(false)} severity="error">
+              Nome já cadastrado
+            </Alert>
+          </Snackbar>
 
-        <Modal
-          width="338px"
-          alertTitle="Cadastro concluído"
-          show={successCreate}
-        >
-          <SecondaryButton
-            key={"modalButtons"}
-            text="OK"
-            onClick={() => navigate("/finance/list")}
+          <Modal
             width="338px"
-          />
-        </Modal>
+            alertTitle="Cadastro concluído"
+            show={successCreate}
+          >
+            <SecondaryButton
+              key={"modalButtons"}
+              text="OK"
+              onClick={() => navigate("/finance/list")}
+              width="338px"
+            />
+          </Modal>
+        </div>
       </div>
-    </div>
     )
   );
 };

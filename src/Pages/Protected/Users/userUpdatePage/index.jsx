@@ -12,7 +12,7 @@ import {
   getUserById,
   patchUserById,
 } from "../../../../Services/userService";
-import { checkAction, usePermissions } from "../../../../Utils/permission";
+import { checkAction } from "../../../../Utils/permission";
 import "./index.css";
 import {
   isValidCelular,
@@ -21,7 +21,7 @@ import {
 } from "../../../../Utils/validators";
 
 export default function UserUpdatePage() {
-  const permissions = usePermissions();
+  // const permissions = usePermissions();
   const { state } = useLocation();
   const navigate = useNavigate();
   const userId = state?.userId;
@@ -38,8 +38,8 @@ export default function UserUpdatePage() {
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [isCelularValid, setIsCelularValid] = useState(true);
 
-  const canDelete = checkAction( "usuarios_deletar");
-  const canUpdate = checkAction( "usuarios_editar");
+  const canDelete = checkAction("usuarios_deletar");
+  const canUpdate = checkAction("usuarios_editar");
 
   useEffect(() => {
     const loadRoles = async () => {

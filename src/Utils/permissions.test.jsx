@@ -38,30 +38,30 @@ describe("checkModule", () => {
 
 describe("checkAction", () => {
   it('should return true for action "read" in module "users"', () => {
-    expect(checkAction( "read")).toBe(true);
+    expect(checkAction("read")).toBe(true);
   });
 
   it('should return true for action "write" in module "users"', () => {
-    expect(checkAction( "write")).toBe(true);
+    expect(checkAction("write")).toBe(true);
   });
 
   it('should return true for action "read" in module "settings"', () => {
-    expect(checkAction( "read")).toBe(true);
+    expect(checkAction("read")).toBe(true);
   });
 
   it('should return false for action "write" in module "settings"', () => {
-    expect(checkAction( "write")).toBe(false);
+    expect(checkAction("write")).toBe(false);
   });
 
   it('should return true for action "view" in module "dashboard"', () => {
-    expect(checkAction( "view")).toBe(true);
+    expect(checkAction("view")).toBe(true);
   });
 
   it('should return true for action "edit" in module "dashboard"', () => {
-    expect(checkAction( "edit")).toBe(true);
+    expect(checkAction("edit")).toBe(true);
   });
 
   it('should return false for action "delete" in module "dashboard"', () => {
-    expect(checkAction( "delete")).toBe(false);
+    expect(checkAction("delete")).toBe(false);
   });
 });

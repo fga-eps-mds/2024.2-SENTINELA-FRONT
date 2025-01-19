@@ -1,3 +1,4 @@
+/* eslint-disable no-unreachable */
 // src/hooks/usePermissions.js
 
 import { useContext, useState, useEffect } from "react";
@@ -13,15 +14,15 @@ export const checkModule = (permissions, module) => {
   return modulePermissions ? modulePermissions.access.length > 0 : false;
 };
 
-export const checkAction = (action) => { 
+export const checkAction = (action) => {
   const permissionsString = localStorage.getItem("@App:permissions");
   const permissions = JSON.parse(permissionsString);
 
   const modulePermissions = permissions.find(
     (permission) => permission === action
   );
-    
-  return (modulePermissions) ? true : false ;
+
+  return modulePermissions ? true : false;
 };
 
 export const usePermissions = () => {

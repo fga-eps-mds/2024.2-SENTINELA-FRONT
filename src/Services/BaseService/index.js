@@ -1,7 +1,6 @@
 import axios from "axios";
 import { getToken } from "../Functions/loader";
 
-
 const baseBenefitsURL =
   import.meta.env.VITE_BENEFIT_DB_URL || "http://localhost:3003/";
 const baseBankURL =
