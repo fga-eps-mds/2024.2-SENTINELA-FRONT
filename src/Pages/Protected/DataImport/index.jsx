@@ -56,15 +56,15 @@ const DataImport = () => {
 
     return (
         <div className="data-import">
-            <h1>Importar OFX</h1>
+            <div className = "titulo-extrato">Importar Extrato Bancário</div>
             <input type="file" accept=".ofx" onChange={handleFileUpload}/>
             <table className="data-table">
                 <thead>
                 <tr>
-                    <th>Data</th>
                     <th>Descrição</th>
+                    <th>Valor (R$)</th>
+                    <th>Data</th>
                     <th>Nome</th>
-                    <th>Valor</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -75,10 +75,10 @@ const DataImport = () => {
                 ) : (
                     transactions.map((transaction, index) => (
                         <tr key={index}>
-                            <td>{transaction.date}</td>
                             <td>{transaction.memo}</td>
+                            <td>{transaction.amount.toFixed(2)}</td> 
+                            <td>{transaction.date}</td>
                             <td>{transaction.name}</td>
-                            <td>{transaction.amount.toFixed(2)}</td>
                         </tr>
                     ))
                 )}
