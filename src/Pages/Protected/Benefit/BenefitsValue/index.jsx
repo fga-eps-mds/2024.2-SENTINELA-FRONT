@@ -28,7 +28,9 @@ export default function BenefitsValue() {
   }, []);
 
   return (
+    checkAction( "beneficios_visualizar") && (
     <section className="benefits-container">
+      
       <div className="benefits-list">
         <div className="benefits-header">
           <h1>Valores dos benefícios</h1>
@@ -93,5 +95,6 @@ export default function BenefitsValue() {
         </div>
       </div>
     </section>
+    )
   );
 }

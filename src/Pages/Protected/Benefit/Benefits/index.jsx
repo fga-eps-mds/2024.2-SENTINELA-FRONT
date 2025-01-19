@@ -10,7 +10,7 @@ const Benefits = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const permissions = usePermissions();
-  const canCreate = checkAction(permissions, "create");
+  const canCreate = checkAction( "beneficios_criar");
 
   const handleBenefitsList = () => {
     navigate("/beneficios/lista");
@@ -38,10 +38,12 @@ const Benefits = () => {
                   onClick={handleBenefitsCreate}
                 />
               )}
-              <SecondaryButton
-                text="LISTA DE BENEFÍCIOS"
-                onClick={handleBenefitsList}
-              />
+              { checkAction( "beneficios_visualizar") && (
+                <SecondaryButton
+                  text="LISTA DE BENEFÍCIOS"
+                  onClick={handleBenefitsList}
+                />
+              )}
             </div>
           </div>
         </div>

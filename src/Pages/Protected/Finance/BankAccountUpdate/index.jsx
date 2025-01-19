@@ -27,8 +27,8 @@ const BankAccountId = () => {
   const [agency, setAgency] = useState("");
   const [openError, setOpenError] = useState(false);
   const permissions = usePermissions();
-  const canUpdate = checkAction(permissions, "update");
-  const canDelete = checkAction(permissions, "delete");
+  const canUpdate = checkAction("update");
+  const canDelete = checkAction("delete");
 
   const { user } = useAuth();
   const { id } = useParams(); // Pega o ID da URL
@@ -131,6 +131,8 @@ const BankAccountId = () => {
   };
 
   return user ? (
+    checkAction( "contas_bancarias_visualizar") && (
+    
     <div className="container-benefits">
       <div className="forms-container-benefits">
         <h1>Visualização de Conta Bancária</h1>
@@ -256,7 +258,9 @@ const BankAccountId = () => {
         />
       </Modal>
     </div>
+    )  
   ) : null;
+  
 };
 
 export default BankAccountId;

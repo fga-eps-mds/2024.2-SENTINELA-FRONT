@@ -47,7 +47,7 @@ export default function UserListPage() {
     return <div>Carregando...</div>;
   }
 
-  const hasPermission = checkAction(permissions, "create");
+  const hasPermission = checkAction("usuarios_criar");
 
   const handleRegisterClick = () => {
     navigate("/usuarios/criar");

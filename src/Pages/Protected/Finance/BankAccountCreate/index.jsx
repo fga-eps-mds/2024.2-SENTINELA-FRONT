@@ -101,6 +101,7 @@ const BankAccount = () => {
   };
 
   return (
+    checkAction( "contas_bancarias_criar") && (
     <div className="container-benefits">
       <div className="forms-container-benefits">
         <h1>Cadastro de Conta Bancária</h1>
@@ -187,6 +188,7 @@ const BankAccount = () => {
         </Modal>
       </div>
     </div>
+    )
   );
 };
 
