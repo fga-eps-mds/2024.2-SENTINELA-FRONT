@@ -35,6 +35,7 @@ import ContributionHistoric from "../Pages/Protected/FinancialMovements/Contribu
 import Unauthorized from "../Pages/Protected/Unauthorized";
 import GenerateFinancialReport from "../Pages/Protected/FinancialMovements/GenerateFinancialReport";
 import PermissionCRUD from "../Pages/Protected/Permissions/permissionsHandler.jsx";
+import DataImport from "../Pages/Protected/DataImport/index.jsx";
 
 const ProtectedRoutes = () => {
   return (
@@ -333,6 +334,16 @@ const ProtectedRoutes = () => {
             actions={["read", "create", "update"]}
           />
         }
+      />
+      <Route
+          path="/dataimport"
+          element={
+              <PermissionProtect
+                  element={<CarteirinhaPage />}
+                  moduleName="finance"
+                  actions={["read", "create"]}
+              />
+          }
       />
     </Routes>
   );
