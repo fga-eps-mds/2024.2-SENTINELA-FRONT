@@ -52,5 +52,5 @@ jobs:
           cp -R fga-eps-mds*.json doc/analytics-raw-data
           cd doc
           git add .
-          git commit -m "Adicionando métricas do repositório ${{ github.event.repository.name }} ${{ github.ref_name }}"
+          git commit -m "Métricas SonarCloud - ${{ github.event.repository.name }} ${{ github.ref_name }}"
           git push
