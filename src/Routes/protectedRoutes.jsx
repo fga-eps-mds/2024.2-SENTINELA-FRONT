@@ -35,6 +35,7 @@ import ContributionHistoric from "../Pages/Protected/FinancialMovements/Contribu
 import Unauthorized from "../Pages/Protected/Unauthorized";
 import GenerateFinancialReport from "../Pages/Protected/FinancialMovements/GenerateFinancialReport";
 import PermissionCRUD from "../Pages/Protected/Permissions/permissionsHandler.jsx";
+import { checkAction } from "../Utils/permission.jsx";
 
 const ProtectedRoutes = () => {
   return (
@@ -201,6 +202,7 @@ const ProtectedRoutes = () => {
           />
         }
       />
+      {(checkAction("filiado_visualizar_carteirinha")   && 
       <Route
         path="/carteirinha"
         element={
@@ -211,6 +213,7 @@ const ProtectedRoutes = () => {
           />
         }
       />
+      )}
       <Route
         path="/beneficios/editar/:id"
         element={

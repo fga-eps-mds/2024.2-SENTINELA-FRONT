@@ -11,6 +11,7 @@ import ListItemText from "@mui/material/ListItemText";
 import FieldText from "../../../../Components/FieldText";
 import { APIUsers } from "../../../../Services/BaseService";
 import { checkAction, usePermissions } from "../../../../Utils/permission";
+import { getToken } from "../../../../Services/Functions/loader";
 
 export default function RolesListPage() {
   const [roles, setRoles] = useState([]);
@@ -24,7 +25,13 @@ export default function RolesListPage() {
         const storagedUserString = localStorage.getItem("@App:user");
         const storagedUser = JSON.parse(storagedUserString);
 
-        const response = await APIUsers.get("role");
+        const response = await APIUsers.get("role",
+          {
+            headers: {
+              Authorization: `Bearer ${getToken()}`,
+            },
+          }
+        );
 
         const data = response.data;
         if (Array.isArray(data)) {
@@ -74,32 +81,35 @@ export default function RolesListPage() {
           />
         </div>
 
-        <List>
-          {filteredRoles.map((role, index) => (
-            <div key={role._id}>
-              <ListItem>
-                <ListItemButton
-                  className="list-item-roles"
-                  style={{
-                    transition: "background-color 0.3s ease",
-                  }}
-                  onMouseEnter={(e) =>
-                    (e.currentTarget.style.backgroundColor =
-                      "rgba(0, 0, 0, 0.1)")
-                  }
-                  onMouseLeave={(e) =>
-                    (e.currentTarget.style.backgroundColor = "transparent")
-                  }
-                  onClick={() => handleItemClick(role)}
-                >
-                  <ListItemText primary={role.name} />
-                </ListItemButton>
-              </ListItem>
+        {checkAction( "perfis_visualizar") && (
+          <List>
+            {filteredRoles.map((role, index) => (
+              <div key={role._id}>
+                <ListItem>
+                  <ListItemButton
+                    className="list-item-roles"
+                    style={{
+                      transition: "background-color 0.3s ease",
+                    }}
+                    onMouseEnter={(e) =>
+                      (e.currentTarget.style.backgroundColor =
+                        "rgba(0, 0, 0, 0.1)")
+                    }
+                    onMouseLeave={(e) =>
+                      (e.currentTarget.style.backgroundColor = "transparent")
+                    }
+                    onClick={() => handleItemClick(role)}
+                  >
+                    <ListItemText primary={role.name} />
+                  </ListItemButton>
+                </ListItem>
 
-              {index < filteredRoles.length - 1 && <Divider />}
-            </div>
-          ))}
-        </List>
+                {index < filteredRoles.length - 1 && <Divider />}
+              </div>
+            ))}
+          </List>
+        )}
+
       </div>
     </section>
   );

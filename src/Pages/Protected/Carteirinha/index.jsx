@@ -10,6 +10,7 @@ import penalLogo from "../../../assets/penal_df-min.png.png";
 //import qrCode from "../../../assets/qr-code.png";
 import { FaFacebook, FaInstagram, FaYoutube } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
+import { getToken } from "../../../Services/Functions/loader";
 
 const Carteirinha = () => {
   const cardRef = useRef(null);
@@ -19,7 +20,13 @@ const Carteirinha = () => {
   useEffect(() => {
     const fetchMembership = async () => {
       try {
-        const response = await fetch("http://localhost:3001/membership");
+        const response = await fetch("http://localhost:3001/membership", 
+          {
+            headers: {
+              Authorization: `Bearer ${getToken()}`,
+            },
+          }
+        );
         const data = await response.json();
         setMembershipData(data[0]);
         console.log("alohaa", data);
