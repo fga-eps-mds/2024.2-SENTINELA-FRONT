@@ -46,7 +46,7 @@ export default function BenefitsList() {
       <div className="forms-container-list-benefits">
         <div className="double-box-list-benefits">
           <h1> Lista de benefícios</h1>
-          {checkAction( "beneficios_criar") && (
+          {checkAction("beneficios_criar") && (
             <PrimaryButton text="Cadastrar benefício" onClick={handleSubmit} />
           )}
         </div>

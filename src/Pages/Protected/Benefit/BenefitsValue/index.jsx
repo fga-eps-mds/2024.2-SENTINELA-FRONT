@@ -29,73 +29,72 @@ export default function BenefitsValue() {
   }, []);
 
   return (
-    checkAction( "beneficios_visualizar") && (
-    <section className="benefits-container">
-      
-      <div className="benefits-list">
-        <div className="benefits-header">
-          <h1>Valores dos benefícios</h1>
-          <p>Benefícios disponíveis</p>
-        </div>
-        <div className="box-benefits">
-          <List>
-            {benefits?.map(
-              (benefit, index) => (
-                console.log(benefit),
-                (
-                  <div key={benefit._id}>
-                    <ListItem className="benefit-item">
-                      <ListItemText primary={benefit.nome} />
-                      <ListItemText
-                        className="benefit-datails"
-                        style={{
-                          textDecoration: "underline",
-                          cursor: "pointer",
-                        }}
-                        primary="Mais Detalhes"
-                        onClick={() => handleExpand(benefit._id)}
-                      />
-                      <div className="benefit-value">
+    checkAction("beneficios_visualizar") && (
+      <section className="benefits-container">
+        <div className="benefits-list">
+          <div className="benefits-header">
+            <h1>Valores dos benefícios</h1>
+            <p>Benefícios disponíveis</p>
+          </div>
+          <div className="box-benefits">
+            <List>
+              {benefits?.map(
+                (benefit, index) => (
+                  console.log(benefit),
+                  (
+                    <div key={benefit._id}>
+                      <ListItem className="benefit-item">
+                        <ListItemText primary={benefit.nome} />
                         <ListItemText
-                          primary="Valor"
-                          secondary={
-                            index % 2
-                              ? "Incluso na filiação"
-                              : "Disconto de 15%"
-                          }
-                        />
-                      </div>
-                    </ListItem>
-
-                    {expandedBenefit === benefit._id && (
-                      <div className="benefit-details-expanded">
-                        <ListItemText primary={benefit.descricao} />
-                        <a
-                          href="https://api.whatsapp.com/send/?phone=556133211949"
+                          className="benefit-datails"
                           style={{
-                            fontSize: "2rem",
-                            textDecoration: "none",
-                            color: "#3D160D",
+                            textDecoration: "underline",
+                            cursor: "pointer",
                           }}
-                        >
-                          <FaWhatsapp />
-                        </a>
-                      </div>
-                    )}
+                          primary="Mais Detalhes"
+                          onClick={() => handleExpand(benefit._id)}
+                        />
+                        <div className="benefit-value">
+                          <ListItemText
+                            primary="Valor"
+                            secondary={
+                              index % 2
+                                ? "Incluso na filiação"
+                                : "Disconto de 15%"
+                            }
+                          />
+                        </div>
+                      </ListItem>
 
-                    <Divider
-                      style={{
-                        padding: "1rem 0 0 0",
-                      }}
-                    />
-                  </div>
+                      {expandedBenefit === benefit._id && (
+                        <div className="benefit-details-expanded">
+                          <ListItemText primary={benefit.descricao} />
+                          <a
+                            href="https://api.whatsapp.com/send/?phone=556133211949"
+                            style={{
+                              fontSize: "2rem",
+                              textDecoration: "none",
+                              color: "#3D160D",
+                            }}
+                          >
+                            <FaWhatsapp />
+                          </a>
+                        </div>
+                      )}
+
+                      <Divider
+                        style={{
+                          padding: "1rem 0 0 0",
+                        }}
+                      />
+                    </div>
+                  )
                 )
-              )
-            )}
-          </List>
+              )}
+            </List>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
     )
   );
 }

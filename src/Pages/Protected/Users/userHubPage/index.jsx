@@ -35,38 +35,51 @@ export default function UserHubPage() {
             src={sentinela_logo}
             alt="Sentinela Logo"
           />
-          {(checkAction("usuarios_visualizar") || checkAction("usuarios_editar")) && (
+          {(checkAction("usuarios_visualizar") ||
+            checkAction("usuarios_editar")) && (
             <SecondaryButton
               text="Filiações pendentes"
               onClick={() => navigate("filiacoes-pendentes/")}
             />
           )}
           <>
-          {(checkAction("usuarios_criar") || checkAction("usuarios_visualizar") || checkAction("usuarios_editar") || checkAction("usuarios_deletar"))  && (
-            <SecondaryButton
-              text="LISTA DE USUÁRIOS"
-              onClick={handleListaClick}
-            />
-          )}
-          {((checkAction("perfis_criar") || checkAction("perfis_visualizar") || checkAction("perfis_editar") || checkAction("perfis_deletar"))  && 
-            <SecondaryButton
-              text="LISTA DE PERFIL"
-              onClick={handleListaPerfilClick}
-            />
-          )}
-          {((checkAction("perfis_criar") || checkAction("perfis_visualizar") || checkAction("perfis_editar") || checkAction("perfis_deletar"))  && 
-            <SecondaryButton
-              text="PERMISSÕES"
-              onClick={handleListaPermissiosnClick}
-            />
-          )}
-          
-          {((checkAction("orgaos_criar") || checkAction("orgaos_visualizar") || checkAction("orgaos_editar") || checkAction("orgaos_deletar")) &&
-            <SecondaryButton
-              text="LISTA DE ÓRGÃOS"
-              onClick={handleListaOrgaosClick}
-            />
-          )} 
+            {(checkAction("usuarios_criar") ||
+              checkAction("usuarios_visualizar") ||
+              checkAction("usuarios_editar") ||
+              checkAction("usuarios_deletar")) && (
+              <SecondaryButton
+                text="LISTA DE USUÁRIOS"
+                onClick={handleListaClick}
+              />
+            )}
+            {(checkAction("perfis_criar") ||
+              checkAction("perfis_visualizar") ||
+              checkAction("perfis_editar") ||
+              checkAction("perfis_deletar")) && (
+              <SecondaryButton
+                text="LISTA DE PERFIL"
+                onClick={handleListaPerfilClick}
+              />
+            )}
+            {(checkAction("perfis_criar") ||
+              checkAction("perfis_visualizar") ||
+              checkAction("perfis_editar") ||
+              checkAction("perfis_deletar")) && (
+              <SecondaryButton
+                text="PERMISSÕES"
+                onClick={handleListaPermissiosnClick}
+              />
+            )}
+
+            {(checkAction("orgaos_criar") ||
+              checkAction("orgaos_visualizar") ||
+              checkAction("orgaos_editar") ||
+              checkAction("orgaos_deletar")) && (
+              <SecondaryButton
+                text="LISTA DE ÓRGÃOS"
+                onClick={handleListaOrgaosClick}
+              />
+            )}
           </>
         </div>
       </div>

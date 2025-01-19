@@ -39,8 +39,8 @@ export default function FinancialUpdate() {
   const [nomesOrigem, setNomesOrigem] = useState([]);
   const [nomesDestino, setNomesDestino] = useState([]);
   const maxDescricaoLength = 130;
-  const canUpdate = checkAction( "update");
-  const canDelete = checkAction( "delete");
+  const canUpdate = checkAction("update");
+  const canDelete = checkAction("delete");
 
   const navigate = useNavigate();
   const location = useLocation();

@@ -31,7 +31,6 @@ export const createRole = async (roleData) => {
       headers: {
         Authorization: `Bearer ${getToken()}`,
       },
-
     });
     return response.data;
   } catch (error) {
@@ -82,13 +81,17 @@ export const assignPermissionsToRole = async (roleId, permissions) => {
       throw new Error("No token found");
     }
 
-    const response = await APIUsers.put(`/roles/${roleId}/permissions`, {
-      permissions,
-    }, {
-      headers: {
-        Authorization: `Bearer ${getToken()}`,
+    const response = await APIUsers.put(
+      `/roles/${roleId}/permissions`,
+      {
+        permissions,
       },
-    });
+      {
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      }
+    );
 
     return response.data;
   } catch (error) {
@@ -127,7 +130,6 @@ export const updateRole = async (id, roleData) => {
       headers: {
         Authorization: `Bearer ${getToken()}`,
       },
-
     });
     return response.data;
   } catch (error) {
@@ -166,7 +168,6 @@ export const deleteRole = async (id) => {
       headers: {
         Authorization: `Bearer ${getToken()}`,
       },
-
     });
     return response.data;
   } catch (error) {

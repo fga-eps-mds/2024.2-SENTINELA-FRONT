@@ -38,25 +38,34 @@ export default function Finance() {
               alt="Sentinela Logo"
             />
 
-            {(checkAction("fornecedores_criar") || checkAction("fornecedores_editar") || checkAction("fornecedores_deletar") || checkAction("fornecedores_visualizar"))&& (
+            {(checkAction("fornecedores_criar") ||
+              checkAction("fornecedores_editar") ||
+              checkAction("fornecedores_deletar") ||
+              checkAction("fornecedores_visualizar")) && (
               <SecondaryButton
                 text="Lista de Fornecedores"
                 onClick={handleFornecedoresListaClick}
               />
             )}
-            {(checkAction("contas_bancarias_criar") || checkAction("contas_bancarias_editar") || checkAction("contas_bancarias_deletar") || checkAction("contas_bancarias_visualizar")) && (
+            {(checkAction("contas_bancarias_criar") ||
+              checkAction("contas_bancarias_editar") ||
+              checkAction("contas_bancarias_deletar") ||
+              checkAction("contas_bancarias_visualizar")) && (
               <SecondaryButton
                 text="Lista de Contas Bancárias"
                 onClick={handleListaClick}
               />
             )}
-            {(checkAction("movimentacao_financeira_criar") || checkAction("movimentacao_financeira_editar") || checkAction("movimentacao_financeira_deletar") || checkAction("movimentacao_financeira_visualizar")) && (
+            {(checkAction("movimentacao_financeira_criar") ||
+              checkAction("movimentacao_financeira_editar") ||
+              checkAction("movimentacao_financeira_deletar") ||
+              checkAction("movimentacao_financeira_visualizar")) && (
               <SecondaryButton
                 text="Lista de Movimentações Financeiras"
                 onClick={handleMovimentacoesClick}
               />
             )}
-            {checkAction( "movimentacao_financeira_visualizar") && (
+            {checkAction("movimentacao_financeira_visualizar") && (
               <SecondaryButton
                 text="Gerar relatório"
                 onClick={handleGeradorRelatorio}

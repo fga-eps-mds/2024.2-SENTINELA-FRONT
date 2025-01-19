@@ -30,7 +30,6 @@ export async function createOrgan(orgao, lotacao) {
         headers: {
           Authorization: `Bearer ${getToken()}`,
         },
-
       }
     );
     return response.status;
@@ -42,13 +41,11 @@ export async function createOrgan(orgao, lotacao) {
 
 export async function listOrgans() {
   try {
-    const response = await APIUsers.get("organ/list",
-      {
-        headers: {
-          Authorization: `Bearer ${getToken()}`,
-        },
-      }
-    );
+    const response = await APIUsers.get("organ/list", {
+      headers: {
+        Authorization: `Bearer ${getToken()}`,
+      },
+    });
     return response.data;
   } catch (error) {
     return error.response.data.error;
@@ -82,7 +79,6 @@ export async function updateOrgan(id, updatedData) {
         headers: {
           Authorization: `Bearer ${getToken()}`,
         },
-
       }
     );
     return response.status;
@@ -96,13 +92,11 @@ export async function updateOrgan(id, updatedData) {
 
 export async function getOrganById(id) {
   try {
-    const response = await APIUsers.get(`organ/get/${id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${getToken()}`,
-        },
-      }
-    );
+    const response = await APIUsers.get(`organ/get/${id}`, {
+      headers: {
+        Authorization: `Bearer ${getToken()}`,
+      },
+    });
     return response.data;
   } catch (error) {
     return error.response.data.error;
@@ -135,7 +129,6 @@ export async function deleteOrganById(id) {
       headers: {
         Authorization: `Bearer ${getToken()}`,
       },
-
     });
     return response.status;
   } catch (error) {

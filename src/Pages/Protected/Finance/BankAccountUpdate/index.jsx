@@ -130,137 +130,136 @@ const BankAccountId = () => {
     }
   };
 
-  return user ? (
-    checkAction( "contas_bancarias_visualizar") && (
-    
-    <div className="container-benefits">
-      <div className="forms-container-benefits">
-        <h1>Visualização de Conta Bancária</h1>
+  return user
+    ? checkAction("contas_bancarias_visualizar") && (
+        <div className="container-benefits">
+          <div className="forms-container-benefits">
+            <h1>Visualização de Conta Bancária</h1>
 
-        <h3>Dados do benefício</h3>
+            <h3>Dados do benefício</h3>
 
-        <div className="section-form-benefits">
-          <FieldText
-            label="Nome *"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <FieldSelect
-            label="Tipo de conta*"
-            value={accountType}
-            onChange={handleChangeAccountType}
-            options={listAccountType}
-          />
-          <FieldText
-            label="Banco *"
-            value={bank}
-            onChange={(e) => setBank(e.target.value)}
-          />
-          <FieldText
-            label="Agência"
-            value={agency}
-            onChange={(e) => setAgency(agencia(e.target.value))}
-          />
-          <FieldText
-            label="Número da conta"
-            value={accountNumber}
-            onChange={(e) => setAccountNumber(numeroConta(e.target.value))}
-          />
-          <FieldText
-            label="DV"
-            value={dv}
-            onChange={(e) => setDv(digitverificator(e.target.value))}
-          />
-          <FieldText
-            label="Pix"
-            value={pix}
-            onChange={(e) => setPix(e.target.value)}
-          />
-          <FieldSelect
-            label="Status *"
-            value={status}
-            onChange={(e) => setStatus(e.target.value)}
-            options={listStatus}
-          />
-        </div>
+            <div className="section-form-benefits">
+              <FieldText
+                label="Nome *"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+              <FieldSelect
+                label="Tipo de conta*"
+                value={accountType}
+                onChange={handleChangeAccountType}
+                options={listAccountType}
+              />
+              <FieldText
+                label="Banco *"
+                value={bank}
+                onChange={(e) => setBank(e.target.value)}
+              />
+              <FieldText
+                label="Agência"
+                value={agency}
+                onChange={(e) => setAgency(agencia(e.target.value))}
+              />
+              <FieldText
+                label="Número da conta"
+                value={accountNumber}
+                onChange={(e) => setAccountNumber(numeroConta(e.target.value))}
+              />
+              <FieldText
+                label="DV"
+                value={dv}
+                onChange={(e) => setDv(digitverificator(e.target.value))}
+              />
+              <FieldText
+                label="Pix"
+                value={pix}
+                onChange={(e) => setPix(e.target.value)}
+              />
+              <FieldSelect
+                label="Status *"
+                value={status}
+                onChange={(e) => setStatus(e.target.value)}
+                options={listStatus}
+              />
+            </div>
 
-        <div className="edit-buttons">
-          {canDelete && (
+            <div className="edit-buttons">
+              {canDelete && (
+                <SecondaryButton
+                  text="Deletar"
+                  onClick={() => {
+                    setOpenVerificationDelete(true);
+                  }}
+                  marginTop="1rem"
+                />
+              )}
+              {canUpdate && (
+                <PrimaryButton
+                  text="Salvar"
+                  onClick={saveUpdate}
+                  marginTop="1rem"
+                />
+              )}
+            </div>
+          </div>
+
+          <Snackbar
+            open={openError}
+            autoHideDuration={6000}
+            onClose={() => setOpenError(false)}
+          >
+            <Alert onClose={() => setOpenError(false)} severity="error">
+              Certifique-se de que todos os campos obrigatórios estão
+              preenchidos
+            </Alert>
+          </Snackbar>
+
+          <Modal
+            show={openDeleteBankAccount}
+            width="400px"
+            alertTitle="Conta bancária excluída"
+            alert=""
+          >
             <SecondaryButton
-              text="Deletar"
-              onClick={() => {
-                setOpenVerificationDelete(true);
-              }}
-              marginTop="1rem"
+              text="ok"
+              onClick={() => navigate("/finance/list")}
+              style={{ width: "250px", marginTop: "10px" }}
             />
-          )}
-          {canUpdate && (
-            <PrimaryButton
-              text="Salvar"
-              onClick={saveUpdate}
-              marginTop="1rem"
+          </Modal>
+
+          <Modal
+            show={openVerificationDelete}
+            width="400px"
+            alertTitle="Deseja deletar conta bancária do sistema?"
+            alert=""
+          >
+            <SecondaryButton
+              text="Excluir Conta bancária"
+              onClick={handleDeleteBank}
+              style={{ width: "250px", marginTop: "10px" }}
             />
-          )}
+            <SecondaryButton
+              text="Cancelar e manter cadastro"
+              onClick={() => setOpenVerificationDelete(false)}
+              style={{ width: "250px", marginTop: "10px" }}
+            />
+          </Modal>
+
+          <Modal
+            show={openSave}
+            width="400px"
+            alertTitle="Alterações salvas"
+            alert=""
+          >
+            <SecondaryButton
+              text="ok"
+              onClick={() => navigate("/finance/list")}
+              style={{ width: "250px", marginTop: "10px" }}
+            />
+          </Modal>
         </div>
-      </div>
-
-      <Snackbar
-        open={openError}
-        autoHideDuration={6000}
-        onClose={() => setOpenError(false)}
-      >
-        <Alert onClose={() => setOpenError(false)} severity="error">
-          Certifique-se de que todos os campos obrigatórios estão preenchidos
-        </Alert>
-      </Snackbar>
-
-      <Modal
-        show={openDeleteBankAccount}
-        width="400px"
-        alertTitle="Conta bancária excluída"
-        alert=""
-      >
-        <SecondaryButton
-          text="ok"
-          onClick={() => navigate("/finance/list")}
-          style={{ width: "250px", marginTop: "10px" }}
-        />
-      </Modal>
-
-      <Modal
-        show={openVerificationDelete}
-        width="400px"
-        alertTitle="Deseja deletar conta bancária do sistema?"
-        alert=""
-      >
-        <SecondaryButton
-          text="Excluir Conta bancária"
-          onClick={handleDeleteBank}
-          style={{ width: "250px", marginTop: "10px" }}
-        />
-        <SecondaryButton
-          text="Cancelar e manter cadastro"
-          onClick={() => setOpenVerificationDelete(false)}
-          style={{ width: "250px", marginTop: "10px" }}
-        />
-      </Modal>
-
-      <Modal
-        show={openSave}
-        width="400px"
-        alertTitle="Alterações salvas"
-        alert=""
-      >
-        <SecondaryButton
-          text="ok"
-          onClick={() => navigate("/finance/list")}
-          style={{ width: "250px", marginTop: "10px" }}
-        />
-      </Modal>
-    </div>
-    )  
-  ) : null;
-  
+      )
+    : null;
 };
 
 export default BankAccountId;

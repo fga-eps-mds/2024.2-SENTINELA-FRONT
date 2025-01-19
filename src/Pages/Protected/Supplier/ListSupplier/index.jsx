@@ -15,7 +15,7 @@ export default function ListSupplier() {
   const [suppliers, setSuppliers] = useState([]);
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
-  const canCreate = checkAction( "create");
+  const canCreate = checkAction("create");
   useEffect(() => {
     const fetchSupplierForm = async () => {
       const response = await getSupplierForm();

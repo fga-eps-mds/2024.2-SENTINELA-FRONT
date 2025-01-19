@@ -25,13 +25,11 @@ export default function RolesListPage() {
         // const storagedUserString = localStorage.getItem("@App:user");
         // const storagedUser = JSON.parse(storagedUserString);
 
-        const response = await APIUsers.get("role",
-          {
-            headers: {
-              Authorization: `Bearer ${getToken()}`,
-            },
-          }
-        );
+        const response = await APIUsers.get("role", {
+          headers: {
+            Authorization: `Bearer ${getToken()}`,
+          },
+        });
 
         const data = response.data;
         if (Array.isArray(data)) {
@@ -47,7 +45,7 @@ export default function RolesListPage() {
     fetchRoleForm();
   }, []);
 
-  const hasPermission = checkAction( "perfis_criar");
+  const hasPermission = checkAction("perfis_criar");
 
   const handleSubmit = () => {
     navigate("/perfis/criar");
@@ -81,7 +79,7 @@ export default function RolesListPage() {
           />
         </div>
 
-        {checkAction( "perfis_visualizar") && (
+        {checkAction("perfis_visualizar") && (
           <List>
             {filteredRoles.map((role, index) => (
               <div key={role._id}>
@@ -109,7 +107,6 @@ export default function RolesListPage() {
             ))}
           </List>
         )}
-
       </div>
     </section>
   );

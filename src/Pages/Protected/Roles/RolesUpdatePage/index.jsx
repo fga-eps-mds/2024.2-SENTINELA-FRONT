@@ -15,8 +15,8 @@ import {
 import {
   getAllPermissions,
   searchPermissionByName,
-} from "../../../../Services/Permissions/permissionsService"; 
-import './index.css';
+} from "../../../../Services/Permissions/permissionsService";
+import "./index.css";
 
 export default function RolesUpdatePage() {
   const [showSaveModal, setShowSaveModal] = useState(false);
@@ -24,11 +24,11 @@ export default function RolesUpdatePage() {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showSuccessDelModal, setShowSuccessDelModal] = useState(false);
   const [profileName, setProfileName] = useState("");
-  
+
   const [selectedPermissions, setSelectedPermissions] = useState([]);
   const [permissionsList, setPermissionsList] = useState([]);
-  const [searchQuery, setSearchQuery] = useState(""); 
-  const [allPermissions, setAllPermissions] = useState([]); 
+  const [searchQuery, setSearchQuery] = useState("");
+  const [allPermissions, setAllPermissions] = useState([]);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -66,7 +66,6 @@ export default function RolesUpdatePage() {
         const roleData = await getRoleById(roleId);
         setProfileName(roleData.name);
 
-        
         const rolePermissions = roleData.permissions.map((perm) => perm._id);
         setSelectedPermissions(rolePermissions);
       } catch (error) {
@@ -88,8 +87,11 @@ export default function RolesUpdatePage() {
         })),
       };
 
-     // await updateRole(roleId, updatedRole);
-      await assignPermissionsToRole(roleId, selectedPermissions.filter((item) => item !== undefined));
+      // await updateRole(roleId, updatedRole);
+      await assignPermissionsToRole(
+        roleId,
+        selectedPermissions.filter((item) => item !== undefined)
+      );
       setShowSuccessModal(true);
     } catch (error) {
       console.error("Erro ao atualizar o perfil:", error);
@@ -123,10 +125,8 @@ export default function RolesUpdatePage() {
     setSelectedPermissions((prev) => {
       return prev.includes(permission)
         ? prev.filter((p) => p !== permission && p != undefined)
-        : [...prev, permission]
-
-    }
-    );
+        : [...prev, permission];
+    });
   };
 
   return (
@@ -154,7 +154,7 @@ export default function RolesUpdatePage() {
             placeholder="Digite o nome da permissão"
           />
         </div> */}
-        
+
         {/* Lista de permissões */}
         <div className="permission-list-box">
           <h3>Lista de Permissões</h3>
@@ -181,12 +181,7 @@ export default function RolesUpdatePage() {
             text="DELETAR"
             onClick={() => setShowDeleteModal(true)}
           />
-          <PrimaryButton
-            text="SALVAR"
-            onClick={() => setShowSaveModal(true)}
-          />
-        
-
+          <PrimaryButton text="SALVAR" onClick={() => setShowSaveModal(true)} />
 
           {/* Modais */}
           <Modal

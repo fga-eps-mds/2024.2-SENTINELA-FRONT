@@ -31,13 +31,13 @@ const Benefits = () => {
               alt="Sentinela Logo"
             />
             <div className="hub-btn">
-              {checkAction( "beneficios_criar") && (
+              {checkAction("beneficios_criar") && (
                 <SecondaryButton
                   text="CADASTRO DE BENEFÍCIOS"
                   onClick={handleBenefitsCreate}
                 />
               )}
-              { checkAction( "beneficios_visualizar") && (
+              {checkAction("beneficios_visualizar") && (
                 <SecondaryButton
                   text="LISTA DE BENEFÍCIOS"
                   onClick={handleBenefitsList}

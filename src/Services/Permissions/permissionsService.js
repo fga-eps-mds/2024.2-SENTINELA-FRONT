@@ -28,20 +28,17 @@ export const getAllPermissions = async () => {
     if (!token) {
       throw new Error("No token found");
     }
-    const response = await APIUsers.get("/permission",
-      {
-        headers: {
-          Authorization: `Bearer ${getToken()}`,
-        }
-      }
-    );
+    const response = await APIUsers.get("/permission", {
+      headers: {
+        Authorization: `Bearer ${getToken()}`,
+      },
+    });
     return response.data;
   } catch (error) {
     console.error("Erro ao buscar permissões:", error.response?.data || error);
     throw error;
   }
 };
-
 
 // Get a permission by ID
 export const getPermissionById = async (id) => {
@@ -121,5 +118,3 @@ export const searchPermissionByName = async (name) => {
     throw error;
   }
 };
-
-
