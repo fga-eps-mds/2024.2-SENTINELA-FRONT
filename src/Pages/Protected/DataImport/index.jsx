@@ -11,29 +11,24 @@ const DataImport = () => {
             return;
         }
 
-        console.log("Arquivo selecionado:", file);
-
         const reader = new FileReader();
         reader.onload = () => {
             const content = reader.result;
 
-            console.log("Conteúdo do arquivo:", content);
-
             try {
                 const parsedTransactions = [];
-                const transactionRegex = /<STMTTRN>[\s\S]*?<TRNTYPE>(.*?)<\/TRNTYPE>[\s\S]*?<DTPOSTED>([\d]+)<\/DTPOSTED>[\s\S]*?<TRNAMT>([-\d.]+)<\/TRNAMT>[\s\S]*?<NAME>(.*?)<\/NAME>[\s\S]*?<MEMO>(.*?)<\/MEMO>/g;
+                const transactionRegex = /<STMTTRN>[\s\S]*?<DTPOSTED>([\d]+)[\s\S]*?<TRNAMT>([-\d.]+)[\s\S]*?(?:<NAME>(.*?)<\/NAME>[\s\S]*?)?(?:<MEMO>(.*?)<\/MEMO>)?/g;
                 let match;
 
                 while ((match = transactionRegex.exec(content)) !== null) {
-                    const rawDate = match[2];
+                    const rawDate = match[1];
                     const formattedDate = formatDate(rawDate);
 
                     parsedTransactions.push({
-                        trnType: match[1],
                         date: formattedDate,
-                        amount: parseFloat(match[3]),
-                        name: match[4],
-                        memo: match[5],
+                        amount: parseFloat(match[2]),
+                        name: match[3] || "N/A", // Valor padrão se NAME não existir
+                        memo: match[4] || "N/A", // Valor padrão se MEMO não existir
                     });
                 }
 
@@ -58,33 +53,32 @@ const DataImport = () => {
         return `${day}/${month}/${year}`;
     };
 
+
     return (
         <div className="data-import">
             <h1>Importar OFX</h1>
-            <input type="file" accept=".ofx" onChange={handleFileUpload} />
+            <input type="file" accept=".ofx" onChange={handleFileUpload}/>
             <table className="data-table">
                 <thead>
                 <tr>
-                    <th>Tipo</th>
                     <th>Data</th>
-                    <th>Valor</th>
-                    <th>Nome</th>
                     <th>Descrição</th>
+                    <th>Nome</th>
+                    <th>Valor</th>
                 </tr>
                 </thead>
                 <tbody>
                 {transactions.length === 0 ? (
                     <tr>
-                        <td colSpan="5">Nenhuma transação encontrada.</td>
+                        <td colSpan="4">Nenhuma transação encontrada.</td>
                     </tr>
                 ) : (
                     transactions.map((transaction, index) => (
                         <tr key={index}>
-                            <td>{transaction.trnType}</td>
                             <td>{transaction.date}</td>
-                            <td>{transaction.amount.toFixed(2)}</td>
-                            <td>{transaction.name}</td>
                             <td>{transaction.memo}</td>
+                            <td>{transaction.name}</td>
+                            <td>{transaction.amount.toFixed(2)}</td>
                         </tr>
                     ))
                 )}
