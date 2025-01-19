@@ -2,7 +2,7 @@
 .data-table {
     width: 100%;
     border-collapse: separate; /* Mude para 'separate' para ativar o border-spacing */
-    border-spacing: 0.4rem;
+    border-spacing: 0.313rem;
     margin-top: 20px;
 }
 .data-table th{
@@ -11,12 +11,16 @@
     font-size: 1.5rem;
     font-family: inter;
     font-size: 1.25rem;
+    color: black;
 }
 .data-table td {
-    padding: 1.5rem 1rem;
+    padding: 0.938rem 1rem;
     text-align: left;
     background-color: #EAE3D7;
     border-radius: 10px;
+    font-family: inter;
+    font-size: 1rem;
+    
 }
 
 /*botão de upload */
@@ -39,6 +43,7 @@
 .titulo-extrato{
     font-size: 2rem;
     padding-top: 2rem;
+    color: #341F14;
     font-family: Noto Sans;
     font-weight: bold;
 }
