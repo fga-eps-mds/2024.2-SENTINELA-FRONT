@@ -25,12 +25,23 @@
 
 /*botão de upload */
 .data-import input[type="file"] {
-    margin: 20px 0;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    cursor: pointer;
+    padding: 0.938rem 1rem;
+    text-align: left;
+    background-color: #EAE3D7;
+    border-radius: 10px;
+    font-family: inter;
+    font-size: 1rem;
+}
+
+/*botão de download CSV */
+button.export-button{
+    padding: 0.938rem 1rem;
+    text-align: left;
+    background-color: #EAE3D7;
+    border-radius: 10px;
+    font-family: inter;
+    font-size: 1rem;
+    margin-left: 1rem;
 }
 
 /* container principal */
