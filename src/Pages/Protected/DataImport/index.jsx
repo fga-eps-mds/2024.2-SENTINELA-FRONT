@@ -17,11 +17,8 @@ const DataImport = () => {
 
             try {
                 const parsedTransactions = [];
-                const transactionRegex = /<STMTTRN>[\s\S]*?<DTPOSTED>([\d]+)[\s\S]*?<TRNAMT>([-\d.]+)[\s\S]*?(?:<NAME>(.*?)<\/NAME>)?[\s\S]*?(?:<MEMO>(.*?)<\/MEMO>)?/g;
-                const accountInfoRegex = /<BANKACCTFROM>[\s\S]*?<BANKID>(.*?)<\/BANKID>[\s\S]*?<ACCTID>(.*?)<\/ACCTID>[\s\S]*?<ACCTTYPE>(.*?)<\/ACCTTYPE>/;
-                const includeTransactionRegex = /<INCTRAN>[\s\S]*?<INCLUDE>(.*?)<\/INCLUDE>/;
+                const transactionRegex = /<STMTTRN>[\s\S]*?<DTPOSTED>([\d]+)[\s\S]*?<TRNAMT>([-\d.]+)[\s\S]*?<NAME>(.*?)<\/NAME>[\s\S]*?<MEMO>(.*?)<\/MEMO>/g;
 
-                // Captura informações de transações
                 let match;
                 while ((match = transactionRegex.exec(content)) !== null) {
                     const rawDate = match[1];
@@ -30,24 +27,10 @@ const DataImport = () => {
                     parsedTransactions.push({
                         date: formattedDate,
                         amount: parseFloat(match[2]),
-                        name: match[3] || "N/A", // Valor padrão se NAME não existir
-                        memo: match[4] || "N/A", // Valor padrão se MEMO não existir
+                        name: match[3] ? match[3].trim() : "N/A",
+                        memo: match[4] ? match[4].trim() : "N/A",
+                        isFixed: false, // define as checkbox da coluna "Fixo" como falsa por padrao
                     });
-                }
-
-                // Captura informações da conta bancária (se disponível)
-                const accountMatch = accountInfoRegex.exec(content);
-                if (accountMatch) {
-                    console.log("Informações da conta bancária:");
-                    console.log("Banco ID:", accountMatch[1]);
-                    console.log("Conta ID:", accountMatch[2]);
-                    console.log("Tipo de conta:", accountMatch[3]);
-                }
-
-                // Verifica se as transações devem ser incluídas (se disponível)
-                const includeMatch = includeTransactionRegex.exec(content);
-                if (includeMatch) {
-                    console.log("Incluir transações:", includeMatch[1] === "Y" ? "Sim" : "Não");
                 }
 
                 console.log("Transações extraídas:", parsedTransactions);
@@ -77,12 +60,13 @@ const DataImport = () => {
             return;
         }
 
-        const headers = ["Descrição", "Valor (R$)", "Data", "Nome"];
+        const headers = ["Descrição", "Valor (R$)", "Data", "Nome", "Fixo"];
         const rows = transactions.map((transaction) => [
             transaction.memo,
             transaction.amount.toFixed(2),
             transaction.date,
             transaction.name,
+            transaction.isFixed ? "Sim" : "Não", // adiciona a coluna fixo ao csv
         ]);
 
         const csvContent = [headers, ...rows]
@@ -98,6 +82,13 @@ const DataImport = () => {
         link.click();
 
         URL.revokeObjectURL(url);
+    };
+
+    // alterna o estado da checkbox "Fixo"
+    const handleCheckboxChange = (index) => {
+        const newTransactions = [...transactions];
+        newTransactions[index].isFixed = !newTransactions[index].isFixed;
+        setTransactions(newTransactions);
     };
 
     return (
@@ -116,12 +107,13 @@ const DataImport = () => {
                     <th>Valor (R$)</th>
                     <th>Data</th>
                     <th>Nome</th>
+                    <th>Fixo</th>
                 </tr>
                 </thead>
                 <tbody>
                 {transactions.length === 0 ? (
                     <tr>
-                        <td colSpan="4">Nenhuma transação encontrada.</td>
+                        <td colSpan="5">Nenhuma transação encontrada.</td>
                     </tr>
                 ) : (
                     transactions.map((transaction, index) => (
@@ -130,12 +122,18 @@ const DataImport = () => {
                             <td>{transaction.amount.toFixed(2)}</td>
                             <td>{transaction.date}</td>
                             <td>{transaction.name}</td>
+                            <td>
+                                <input
+                                    type="checkbox"
+                                    checked={transaction.isFixed}
+                                    onChange={() => handleCheckboxChange(index)} // Alterna o valor da checkbox
+                                />
+                            </td>
                         </tr>
                     ))
                 )}
                 </tbody>
             </table>
-
         </div>
     );
 };
