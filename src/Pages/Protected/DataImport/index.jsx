@@ -94,12 +94,17 @@ const DataImport = () => {
     return (
         <div className="data-import">
             <div className="titulo-extrato">Importar Extrato Bancário</div>
-            <input type="file" accept=".ofx" onChange={handleFileUpload} />
-            {transactions.length > 0 && (
-                <button className="export-button" onClick={exportToCSV}>
-                    Exportar para CSV
-                </button>
-            )}
+            <div className="botoes">
+                <div className="upload-arquivo">
+                    <label className="input-ofx" for="file-upload">SELECIONE UM ARQUIVO</label>
+                    <input id="file-upload" type="file" accept=".ofx" onChange={handleFileUpload} />
+                </div>
+                {transactions.length > 0 && (
+                    <button className="export-button" onClick={exportToCSV}>
+                        Exportar para CSV
+                    </button>
+                )}
+            </div>
             <table className="data-table">
                 <thead>
                 <tr>
