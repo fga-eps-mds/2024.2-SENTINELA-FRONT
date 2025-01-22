@@ -1,0 +1,46 @@
+.alertaExclusao {
+    margin-left: 37%;
+    margin-top: 12%;
+    display: flex;
+    flex-direction: column;
+    background-color: #EBDEC9;
+    width: 340px;
+    height: 220px;
+    border-radius: 20px;
+    border: 2px solid #AE883C;
+  }
+  
+  
+  .caixaTextoMensagem {
+    background-color: #AE883C;
+    margin-left: 34px;
+    width: 270px;
+    height: 52px;
+    border-radius: 4px;
+    margin-top: 46px;
+  }
+  
+  
+  .textoMensagem {
+    text-align: center;
+    margin-top: 15px;
+    color: white;
+  }
+  
+  
+  .botaoFechar {
+    margin-top: 32px;
+    width: 270px;
+    height: 52px;
+    background-color: #EAE3D7;
+    color: #AE883C;
+    border: none;
+    border: 2px solid #AE883C;
+    border-radius: 8px;
+  }
+
+  .botaoFechar:hover {
+    background-color: #bdb2a2; 
+     
+  }
+  
