@@ -15,7 +15,7 @@ import { getBenefitsForm } from "../../../Services/benefitsService";
 import ClientInformationModal from "../../../Components/ClientInformationModal";
 
 export default function loginNovo() {
-   /* 
+    
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const context = useContext(AuthContext);
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -51,7 +51,7 @@ export default function loginNovo() {
   };
 
   /* ------------Funções de Vantagens------------ */
-/*
+
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [isModalOpen, setIsModalOpen] = useState(false);
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -258,11 +258,6 @@ export default function loginNovo() {
       </div>
     </>
   );
-  */
-  return(
-    <>
-    <ClientInformationModal/>
-    </>
-  );
+ 
 
 }
