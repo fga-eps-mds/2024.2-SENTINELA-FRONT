@@ -37,6 +37,8 @@ import GenerateFinancialReport from "../Pages/Protected/FinancialMovements/Gener
 import PermissionCRUD from "../Pages/Protected/Permissions/permissionsHandler.jsx";
 import { checkAction } from "../Utils/permission.jsx";
 
+import DataImport from "../Pages/Protected/DataImport/index.jsx";
+
 const ProtectedRoutes = () => {
   return (
     <Routes>
@@ -336,6 +338,16 @@ const ProtectedRoutes = () => {
             actions={["read", "create", "update"]}
           />
         }
+      />
+      <Route
+          path="/dataimport"
+          element={
+              <PermissionProtect
+                  element={<DataImport />}
+                  moduleName="finance"
+                  actions={["read", "create"]}
+              />
+          }
       />
     </Routes>
   );
