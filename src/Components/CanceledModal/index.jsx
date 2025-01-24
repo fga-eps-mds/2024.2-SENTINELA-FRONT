@@ -1,7 +1,7 @@
 import React from 'react';
 import "./index.css";
 
-export default function CanceledModal() {
+export default function CanceledModal({ onClose }) {
     return (
         <>
             <div className="alertaExclusao">
@@ -9,12 +9,11 @@ export default function CanceledModal() {
                     <p className="textoMensagem">
                         Mensalidade Cancelada
                     </p>
-                    <button className="botaoFechar">
+                    <button className="botaoFechar" onClick={onClose}>
                         OK
                     </button>
                 </div>
             </div>
-
         </>
     );
 }

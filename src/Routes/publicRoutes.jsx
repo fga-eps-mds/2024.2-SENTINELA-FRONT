@@ -17,7 +17,6 @@ const PublicRoutes = () => {
       <Route path="/recuperar-senha" element={<PasswordRecovery />} />
       <Route path="/trocar-senha/:token" element={<ChangePasswordPage />} />
       <Route path="/verificar-membro" element={<VerifyMemberForm />} />
-      <Route path="/mensalidade" element={<Mensalidade />} /> 
       <Route
         path="/verificar-membro/ativo"
         element={<VerifyMemberActiveStatus />}

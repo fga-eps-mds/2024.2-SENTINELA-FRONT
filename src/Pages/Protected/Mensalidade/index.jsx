@@ -1,4 +1,8 @@
 import React, { useState } from "react";
+import PrimaryButton from "../../../Components/PrimaryButton";
+import ClientInformationModal from "../../../Components/ClientInformationModal";
+import CancelInformationModal from "../../../Components/CancelInformationModal";
+import CanceledModal from "../../../Components/CanceledModal";
 import "./index.css";
 
 const DataTable = ({ transactions, openModal }) => {
@@ -53,23 +57,43 @@ const DataTable = ({ transactions, openModal }) => {
 
 const DataImport = () => {
     const [transactions, setTransactions] = useState([
-        { name: "John Doe", previousStatus: "Desfiliado", currentStatus: "Quitado" },
-        { name: "Jane Smith", previousStatus: "Quitado", currentStatus: "Desfiliado" },
-        { name: "Alice Johnson", previousStatus: "Pendente", currentStatus: "Quitado" },
-        { name: "Bob Brown", previousStatus: "Quitado", currentStatus: "Pendente" },
+        { name: "joao", previousStatus: "Desfiliado", currentStatus: "Quitado", cpf: "123.456.789-00" },
+        { name: "gabriel flores", previousStatus: "Quitado", currentStatus: "Desfiliado", cpf: "987.654.321-00" },
+        { name: "tiago e ana casal do ano", previousStatus: "Pendente", currentStatus: "Quitado", cpf: "456.789.123-00" },
+        { name: "yza", previousStatus: "Quitado", currentStatus: "Pendente", cpf: "321.654.987-00" },
     ]);
 
-    const [modalVisible, setModalVisible] = useState(false);
+    const [clientModalVisible, setClientModalVisible] = useState(false);
+    const [cancelModalVisible, setCancelModalVisible] = useState(false);
+    const [canceledModalVisible, setCanceledModalVisible] = useState(false);
     const [selectedTransaction, setSelectedTransaction] = useState(null);
 
-    const openModal = (transaction) => {
+    const openClientModal = (transaction) => {
         setSelectedTransaction(transaction);
-        setModalVisible(true);
+        setClientModalVisible(true);
     };
 
-    const closeModal = () => {
-        setModalVisible(false);
+    const closeClientModal = () => {
+        setClientModalVisible(false);
         setSelectedTransaction(null);
+    };
+
+    const openCancelModal = () => {
+        setClientModalVisible(false);
+        setCancelModalVisible(true);
+    };
+
+    const closeCancelModal = () => {
+        setCancelModalVisible(false);
+    };
+
+    const openCanceledModal = () => {
+        setCancelModalVisible(false);
+        setCanceledModalVisible(true);
+    };
+
+    const closeCanceledModal = () => {
+        setCanceledModalVisible(false);
     };
 
     const pendingTransactions = transactions.filter(transaction => transaction.currentStatus === "Pendente");
@@ -78,27 +102,32 @@ const DataImport = () => {
     return (
         <div className="data-import">
             <h1>Relatório de Atualizações</h1>
-            <DataTable transactions={pendingTransactions} openModal={openModal} />
-            <DataTable transactions={otherTransactions} openModal={openModal} />
+            <DataTable transactions={pendingTransactions} openModal={openClientModal} />
+            <DataTable transactions={otherTransactions} openModal={openClientModal} />
 
-            {modalVisible && (
-                <div className="modal">
-                    <div className="modal-content">
-                        <span className="close" onClick={closeModal}>&times;</span>
-                        <h2>Detalhes da Transação</h2>
-                        {selectedTransaction && (
-                            <div>
-                                <p><strong>Nome:</strong> {selectedTransaction.name}</p>
-                                <p><strong>Status Anterior:</strong> {selectedTransaction.previousStatus}</p>
-                                <p><strong>Status Atual:</strong> {selectedTransaction.currentStatus}</p>
-                            </div>
-                        )}
-                    </div>
-                </div>
+            {clientModalVisible && (
+                <ClientInformationModal
+                    transaction={selectedTransaction}
+                    onClose={closeClientModal}
+                    onDesfiliar={openCancelModal}
+                />
+            )}
+
+            {cancelModalVisible && (
+                <CancelInformationModal
+                    onClose={closeCancelModal}
+                    onConfirm={openCanceledModal}
+                />
+            )}
+
+            {canceledModalVisible && (
+                <CanceledModal
+                    onClose={closeCanceledModal}
+                />
             )}
 
             <div className="button-container">
-                <button className="central-button">IMPORTAR ARQUIVOS CSV</button>
+                <PrimaryButton text="IMPORTAR ARQUIVO" className="central-button" />   
             </div>
         </div>
     );

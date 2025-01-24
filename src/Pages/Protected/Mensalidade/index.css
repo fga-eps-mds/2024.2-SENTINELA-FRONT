@@ -73,7 +73,9 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
-  }
+    width: 200px; /* Ajuste a largura conforme necessário */
+}
+
   .central-button:hover {
-    background-color: #8C6A2E;
+      background-color: #8C6A2E;
   }

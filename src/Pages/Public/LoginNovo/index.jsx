@@ -12,7 +12,7 @@ import AuthContext, { useAuth } from "../../../Context/auth";
 import { useNavigate } from "react-router-dom";
 import AdvantagesModal from "../../../Components/AdvantagesModal";
 import { getBenefitsForm } from "../../../Services/benefitsService";
-import ClientInformationModal from "../../../Components/ClientInformationModal";
+
 
 export default function loginNovo() {
     
