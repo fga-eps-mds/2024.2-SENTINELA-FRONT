@@ -91,35 +91,6 @@ const DataImport = () => {
         return `${day}/${month}/${year}`;
     };
 
-    const exportToCSV = () => {
-        if (transactions.length === 0) {
-            alert("Nenhuma transação para exportar.");
-            return;
-        }
-
-        const headers = ["Descrição", "Valor (R$)", "Data", "Nome", "Fixo"];
-        const rows = transactions.map((transaction) => [
-            transaction.memo,
-            transaction.amount.toFixed(2),
-            transaction.date,
-            transaction.name,
-            transaction.isFixed ? "Sim" : "Não", // adiciona a coluna fixo ao csv
-        ]);
-
-        const csvContent = [headers, ...rows]
-            .map((row) => row.join(","))
-            .join("\n");
-
-        const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
-        const url = URL.createObjectURL(blob);
-
-        const link = document.createElement("a");
-        link.href = url;
-        link.download = "transacoes.csv";
-        link.click();
-
-        URL.revokeObjectURL(url);
-    };
     function formatDateBanco(str) {
         let date = new Date(str);
         let day = String(date.getDate()).padStart(2, '0');
@@ -143,11 +114,12 @@ const DataImport = () => {
                     <label className="input-ofx" for="file-upload">SELECIONE UM ARQUIVO</label>
                     <input id="file-upload" type="file" accept=".ofx" onChange={handleFileUpload} />
                 </div>
-                {transactions.length > 0 && (
-                    <button className="export-button" onClick={exportToCSV}>
-                        Exportar para CSV
-                    </button>
-                )}
+                <div className="save-button">
+                    <PrimaryButton 
+                        text="SALVAR"
+                        //onClick={handleSave}...
+                    />
+                </div>
             </div>
             <table className="data-table">
                 <thead>
