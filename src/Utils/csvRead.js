@@ -23,19 +23,13 @@ export const readcsv = async (file, delimiter = "") => {
         delimiter: delimiter,
         header: true,
         complete: async (result) => {
-          console.log(
-            "Usuários antes: " +
-              result.data[0].nome +
-              ", " +
-              result.data[0].status_atual_parc +
-              ", " +
-              result.data[0].status_parc_holerite
-          );
           try {
             // Iterar sobre os dados do CSV e verificar os usuários
             for (const userCsv of result.data) {
               for (const user of users) {
-                if (user.situation === userCsv.status_parc_holerite) {
+                if (user.role.name !== "sindicalizado") {
+                  console.log("Usuário não sindicalizado");
+                } else if (user.situation === userCsv.status_parc_holerite) {
                   console.log("Usuário na mesma situação");
                 } else if (
                   userCsv.nome === user.name &&
@@ -102,16 +96,6 @@ export const readcsv = async (file, delimiter = "") => {
                 }
               }
             }
-
-            console.log(
-              "Usuários antes: " +
-                result.data[0].nome +
-                ", " +
-                result.data[0].status_atual_parc +
-                ", " +
-                result.data[0].status_parc_holerite
-            );
-
             resolve(result.data); // Resolva os dados analisados após o loop
           } catch (error) {
             console.error("Erro ao processar os dados do CSV:", error);
