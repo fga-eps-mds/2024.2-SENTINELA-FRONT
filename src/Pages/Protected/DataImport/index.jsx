@@ -1,8 +1,45 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { APIBank } from "../../../Services/BaseService";
+import PrimaryButton from "../../../Components/PrimaryButton";
 import "./index.css";
 
 const DataImport = () => {
     const [transactions, setTransactions] = useState([]);
+
+    const storagedUser = JSON.parse(localStorage.getItem("@App:user"));
+
+    useEffect(() => {
+        const fetchTransactions = async () => {
+          try {
+            const response = await APIBank.get(`/financialMovements`, {
+              headers: {
+                Authorization: `Bearer ${storagedUser.token}`,
+              },
+            });
+    
+            const data = response.data;
+            const fetchedTransactions = [];
+           
+            for (let i = 0; i < data.length; i++) {
+                if(data[i].tipoDocumento == ""){
+                    fetchedTransactions.push({
+                        date: formatDateBanco(data[i].datadePagamento),
+                        amount: data[i].valorBruto,
+                        name: data[i].tipoDocumento,
+                        memo: data[i].descricao,
+                        isFixed: false,
+                    });
+                }
+            }
+            
+            setTransactions(fetchedTransactions);
+          } catch (error) {
+            console.error("Erro ao buscar movimentos financeiros:", error);
+          }
+        };
+    
+        fetchTransactions();
+      }, []);
 
     const handleFileUpload = (event) => {
         const file = event.target.files[0];
@@ -34,7 +71,7 @@ const DataImport = () => {
                 }
 
                 console.log("Transações extraídas:", parsedTransactions);
-                setTransactions(parsedTransactions);
+                setTransactions((prevTransactions) => [...prevTransactions, ...parsedTransactions]);
             } catch (error) {
                 console.error("Erro ao processar o arquivo:", error);
             }
@@ -83,6 +120,13 @@ const DataImport = () => {
 
         URL.revokeObjectURL(url);
     };
+    function formatDateBanco(str) {
+        let date = new Date(str);
+        let day = String(date.getDate()).padStart(2, '0');
+        let month = String(date.getMonth() + 1).padStart(2, '0');
+        let year = date.getFullYear();
+        return `${day}/${month}/${year}`;
+      }
 
     // alterna o estado da checkbox "Fixo"
     const handleCheckboxChange = (index) => {
