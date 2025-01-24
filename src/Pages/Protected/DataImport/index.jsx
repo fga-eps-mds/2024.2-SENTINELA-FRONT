@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { APIBank } from "../../../Services/BaseService";
 import PrimaryButton from "../../../Components/PrimaryButton";
+import FieldSelect from "../../../Components/FieldSelect";
 import "./index.css";
 
 const DataImport = () => {
     const [transactions, setTransactions] = useState([]);
 
     const storagedUser = JSON.parse(localStorage.getItem("@App:user"));
+    const [tipoDocumento, setTipoDocumento] = useState("");
 
     useEffect(() => {
         const fetchTransactions = async () => {
@@ -28,6 +30,7 @@ const DataImport = () => {
                         name: data[i].tipoDocumento,
                         memo: data[i].descricao,
                         isFixed: false,
+                        tipoDocumento: data[i].tipoDocumento || "",
                     });
                 }
             }
@@ -133,7 +136,7 @@ const DataImport = () => {
                 <div className="save-button">
                     <PrimaryButton 
                         text="SALVAR"
-                        //onClick={handleSave}...
+                        onClick={handleChangeTipoDocumento}/*alterar quando a função handleSave tiver funcionando*/
                     />
                 </div>
             </div>
@@ -158,12 +161,57 @@ const DataImport = () => {
                             <td>{<input className="text-input" type="text" value={transaction.memo} onChange={(e) => handleDescriptionChange(index, e.target.value)}/>}</td>
                             <td>{transaction.amount.toFixed(2)}</td>
                             <td>{transaction.date}</td>
-                            <td><select
-                                    className="tipo-documento"
-                                    onChange={(e) => handleChangeTipoDocumento(index, e.target.value)}
-                                    >
-                                        <option></option>
-                                    </select>
+                            <td>
+                                <FieldSelect
+                                  label= ""
+                                  onChange={(option) => handleChangeTipoDocumento(index, option)}
+                                  value={transaction.tipoDocumento || ""}
+                                  options={[
+                                    "",
+                                    "AÇÃO JUDICIAL",
+                                    "ACORDO EXTRAJUDICIAL",
+                                    "ADVOGADO",
+                                    "ALUGUEL",
+                                    "APLICAÇÃO FINANCEIRA",
+                                    "ASSEMBLEIA",
+                                    "ASSESSORIA COMUNICAÇÃO",
+                                    "CARTÓRIO",
+                                    "CELULAR",
+                                    "COMBUSTÍVEL",
+                                    "CONDOMÍNO",
+                                    "CONTABILIDADE",
+                                    "CONVÊNIO",
+                                    "CUSTAS JUDICIAIS",
+                                    "DARF",
+                                    "DAR-GDF",
+                                    "DIVERSOS",
+                                    "DOAÇÕES",
+                                    "DPVAT",
+                                    "ENERGIA",
+                                    "ESTÁGIO",
+                                    "EVENTOS",
+                                    "EXPEDIENTE",
+                                    "FGTS",
+                                    "FIXO/INTERNET",
+                                    "FUNCIONÁRIO",
+                                    "GPS (INSS)",
+                                    "IMÓVEL - SEDE SINDPEN",
+                                    "INDENIZAÇÃO",
+                                    "IPTU",
+                                    "IPVA",
+                                    "LAZER",
+                                    "LICENCIAMENTO",
+                                    "MULTA",
+                                    "PAPELARIA",
+                                    "PATROCÍNIO",
+                                    "REEMBOLSO",
+                                    "RESCISÃO CONTRATO TRAB.",
+                                    "RESTAURANTE",
+                                    "SEGURO VIDA",
+                                    "TARIFAS BANCÁRIAS",
+                                    "PUBLICIDADE",
+                                  ]}
+                                />
                             </td>
                             <td>
                                 <input
