@@ -106,6 +106,22 @@ const DataImport = () => {
         setTransactions(newTransactions);
     };
 
+    const handleDescriptionChange = (index, value) => {
+        setTransactions((prevTransactions) => {
+            const newTransactions = [...prevTransactions];
+            newTransactions[index].memo = value;
+            return newTransactions;
+        });
+    };
+    
+    const handleChangeTipoDocumento = (index, option) => {
+        setTransactions((prevTransactions) => {
+            const newTransactions = [...prevTransactions];
+            newTransactions[index].tipoDocumento = option;
+            return newTransactions;
+        });
+      };
+
     return (
         <div className="data-import">
             <div className="titulo-extrato">Importar Extrato Bancário</div>
@@ -127,7 +143,7 @@ const DataImport = () => {
                     <th>Descrição</th>
                     <th>Valor (R$)</th>
                     <th>Data</th>
-                    <th>Nome</th>
+                    <th>Tipo de documento</th>
                     <th>Fixo</th>
                 </tr>
                 </thead>
@@ -139,10 +155,16 @@ const DataImport = () => {
                 ) : (
                     transactions.map((transaction, index) => (
                         <tr key={index}>
-                            <td>{transaction.memo}</td>
+                            <td>{<input className="text-input" type="text" value={transaction.memo} onChange={(e) => handleDescriptionChange(index, e.target.value)}/>}</td>
                             <td>{transaction.amount.toFixed(2)}</td>
                             <td>{transaction.date}</td>
-                            <td>{transaction.name}</td>
+                            <td><select
+                                    className="tipo-documento"
+                                    onChange={(e) => handleChangeTipoDocumento(index, e.target.value)}
+                                    >
+                                        <option></option>
+                                    </select>
+                            </td>
                             <td>
                                 <input
                                     type="checkbox"
