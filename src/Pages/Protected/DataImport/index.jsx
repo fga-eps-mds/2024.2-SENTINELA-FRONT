@@ -23,14 +23,14 @@ const DataImport = () => {
             const fetchedTransactions = [];
            
             for (let i = 0; i < data.length; i++) {
-                if(data[i].tipoDocumento == ""){
+                if(data[i].tipoDocumento){ /*alterar*/
                     fetchedTransactions.push({
                         date: formatDateBanco(data[i].datadePagamento),
                         amount: data[i].valorBruto,
                         name: data[i].tipoDocumento,
                         memo: data[i].descricao,
                         isFixed: false,
-                        tipoDocumento: data[i].tipoDocumento || "",
+                        tipoDocumento: data[i].tipoDocumento,
                     });
                 }
             }
@@ -164,8 +164,8 @@ const DataImport = () => {
                             <td>
                                 <FieldSelect
                                   label= ""
-                                  onChange={(option) => handleChangeTipoDocumento(index, option)}
-                                  value={transaction.tipoDocumento || ""}
+                                  onChange={(e) => handleChangeTipoDocumento(index, e.target.value)}           
+                                  value={transaction.tipoDocumento}
                                   options={[
                                     "",
                                     "AÇÃO JUDICIAL",
