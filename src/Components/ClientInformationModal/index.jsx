@@ -1,7 +1,7 @@
 import React from 'react';
 import "./index.css";
 
-export default function ClientInformationModal({ transaction, onClose, onDesfiliar }) {
+export default function ClientInformationModal({ transaction, onClose, onQuitado,onDesfiliar }) {
     return (
         <>
             <div className="containerInformacao">
@@ -20,7 +20,7 @@ export default function ClientInformationModal({ transaction, onClose, onDesfili
                 <button className="botaoParaVoltar" onClick={onClose}>
                     VOLTAR
                 </button>
-                <button className="botaoQuitar">
+                <button className="botaoQuitar" onClick={onQuitado}>
                     QUITAR
                 </button>
             </div>

@@ -26,6 +26,10 @@ export default function Finance() {
     navigate("/movimentacoes/relatorio");
   };
 
+  const handleRelatorioAtualizacoes = () => {
+    navigate("/relatorio/mensalidade");
+  };
+
   return (
     user && (
       <section className="containerFinance">
@@ -69,6 +73,12 @@ export default function Finance() {
               <SecondaryButton
                 text="Gerar relatório"
                 onClick={handleGeradorRelatorio}
+              />
+            )}
+            {checkAction("movimentacao_financeira_visualizar") && (
+              <SecondaryButton
+                text="Relatório de Atualizações"
+                onClick={handleRelatorioAtualizacoes}
               />
             )}
           </div>

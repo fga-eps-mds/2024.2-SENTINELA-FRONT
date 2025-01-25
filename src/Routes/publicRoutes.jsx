@@ -6,7 +6,7 @@ import ChangePasswordPage from "../Pages/Public/ChangePasswordPage";
 import LoginNovo from "../Pages/Public/LoginNovo";
 import VerifyMemberForm from "../Pages/Public/VerifyMember/VerifyMemberForm";
 import VerifyMemberActiveStatus from "../Pages/Public/VerifyMember/VerifyMemberActiveStatus";
-import Mensalidade from "../Pages/Protected/Mensalidade";
+
 
 
 const PublicRoutes = () => {
