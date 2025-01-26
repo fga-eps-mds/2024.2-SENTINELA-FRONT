@@ -2,8 +2,10 @@
   
   /* Estilo para a caixa de alerta */
   .alertaExclusao {
-    margin-left: 37%;
-    margin-top: 12%;
+    position: fixed;
+    top: 40%;
+    left: 60%;
+    transform: translate(-50%, -50%);
     display: flex;
     flex-direction: column;
     background-color: #EBDEC9;
@@ -11,6 +13,7 @@
     height: 220px;
     border-radius: 20px;
     border: 2px solid #AE883C;
+    z-index: 2;
   }
   
   /* Estilo para a caixa de texto dentro da alerta */

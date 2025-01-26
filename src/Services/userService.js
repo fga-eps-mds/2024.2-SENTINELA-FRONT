@@ -133,7 +133,7 @@ export const patchUserById = async (id, updatedUser) => {
 
     return response.data;
   } catch (error) {
-    console.error(`Erro ao atualizar usuário com ID ${id}:`, error);
+    console.error(` FOI AQUI Erro ao atualizar usuário com ID ${id}:`, error);
     throw error;
   }
 };
