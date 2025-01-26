@@ -2,13 +2,16 @@ import React, { useState, useEffect } from "react";
 import { APIBank } from "../../../Services/BaseService";
 import PrimaryButton from "../../../Components/PrimaryButton";
 import FieldSelect from "../../../Components/FieldSelect";
+import { createFinancialMovements, updateFinancialMovementsById } from "../../../Services/FinancialMovementsService";
+import Modal from "../../../Components/Modal";
+import SecondaryButton from "../../../Components/SecondaryButton";
 import "./index.css";
 
 const DataImport = () => {
     const [transactions, setTransactions] = useState([]);
+    const [showSaveModal, setShowSaveModal] = useState(false);
 
     const storagedUser = JSON.parse(localStorage.getItem("@App:user"));
-    const [tipoDocumento, setTipoDocumento] = useState("");
 
     useEffect(() => {
         const fetchTransactions = async () => {
@@ -21,16 +24,18 @@ const DataImport = () => {
     
             const data = response.data;
             const fetchedTransactions = [];
-           
+
             for (let i = 0; i < data.length; i++) {
-                if(data[i].tipoDocumento){ /*alterar*/
+                if(data[i].tipoDocumento == " "){
                     fetchedTransactions.push({
                         date: formatDateBanco(data[i].datadePagamento),
                         amount: data[i].valorBruto,
                         name: data[i].tipoDocumento,
                         memo: data[i].descricao,
-                        isFixed: false,
+                        isFixed: data[i].gastoFixo,
                         tipoDocumento: data[i].tipoDocumento,
+                        id: data[i]._id,
+                        flagUpdated: false,
                     });
                 }
             }
@@ -70,6 +75,7 @@ const DataImport = () => {
                         name: match[3] ? match[3].trim() : "N/A",
                         memo: match[4] ? match[4].trim() : "N/A",
                         isFixed: false, // define as checkbox da coluna "Fixo" como falsa por padrao
+                        flagUpdated: true,
                     });
                 }
 
@@ -106,6 +112,7 @@ const DataImport = () => {
     const handleCheckboxChange = (index) => {
         const newTransactions = [...transactions];
         newTransactions[index].isFixed = !newTransactions[index].isFixed;
+        newTransactions[index].flagUpdated = !newTransactions[index].flagUpdated;
         setTransactions(newTransactions);
     };
 
@@ -113,6 +120,7 @@ const DataImport = () => {
         setTransactions((prevTransactions) => {
             const newTransactions = [...prevTransactions];
             newTransactions[index].memo = value;
+            newTransactions[index].flagUpdated = true
             return newTransactions;
         });
     };
@@ -121,9 +129,74 @@ const DataImport = () => {
         setTransactions((prevTransactions) => {
             const newTransactions = [...prevTransactions];
             newTransactions[index].tipoDocumento = option;
+            newTransactions[index].flagUpdated = true
             return newTransactions;
         });
       };
+      
+      const handleSave = async () => {
+          
+        if (!transactions || transactions.length === 0) {
+            console.log("No transactions to save.");
+            return;
+        }
+          
+        const updatedTransactions = [...transactions];
+        let changesMade = false;
+
+        for (let i = 0; i < updatedTransactions.length; i++) {
+            let updatedData;
+            if(updatedTransactions[i].amount < 0){
+                updatedData = {
+                    contaDestino: "Sindicato",
+                    nomeDestino: "Conta BRB",
+                    contaOrigem: " ",
+                    nomeOrigem: " ",
+                    tipoDocumento: updatedTransactions[i].tipoDocumento,
+                    valorBruto: updatedTransactions[i].amount,
+                    datadePagamento: new Date(updatedTransactions[i].date.split("/").reverse().join("-")),
+                    descricao: updatedTransactions[i].memo,
+                    gastoFixo: updatedTransactions[i].isFixed,
+                }
+            } else {
+                updatedData = {
+                    contaOrigem: "Sindicato",
+                    nomeOrigem: "Conta BRB",
+                    contaDestino: " ",
+                    nomeDestino: " ",
+                    tipoDocumento: updatedTransactions[i].tipoDocumento,
+                    valorBruto: updatedTransactions[i].amount,
+                    datadePagamento: new Date(updatedTransactions[i].date.split("/").reverse().join("-")),
+                    descricao: updatedTransactions[i].memo,
+                    gastoFixo: updatedTransactions[i].isFixed,
+                }
+            }
+
+            if(updatedTransactions[i].flagUpdated){
+                updatedTransactions[i].flagUpdated = false;
+                changesMade = true
+                try {
+                    if (!updatedTransactions[i].id) {
+                        await createFinancialMovements(updatedData);
+                    } else {
+                        await updateFinancialMovementsById(updatedTransactions[i].id, updatedData);
+                    }
+                    if(updatedData.tipoDocumento !== ""){
+                        updatedTransactions.splice(i, 1);
+                        i--;
+                    }
+                } catch(error){
+                    changesMade = false;
+                    console.error("Erro ao salvar alterações:", error);
+                }
+            }
+        }
+         
+        if(changesMade){
+            setShowSaveModal(true);
+            setTransactions(updatedTransactions);
+        }
+    }
 
     return (
         <div className="data-import">
@@ -136,7 +209,7 @@ const DataImport = () => {
                 <div className="save-button">
                     <PrimaryButton 
                         text="SALVAR"
-                        onClick={handleChangeTipoDocumento}/*alterar quando a função handleSave tiver funcionando*/
+                        onClick={handleSave}
                     />
                 </div>
             </div>
@@ -167,7 +240,7 @@ const DataImport = () => {
                                   onChange={(e) => handleChangeTipoDocumento(index, e.target.value)}           
                                   value={transaction.tipoDocumento}
                                   options={[
-                                    "",
+                                    " ",
                                     "AÇÃO JUDICIAL",
                                     "ACORDO EXTRAJUDICIAL",
                                     "ADVOGADO",
@@ -225,6 +298,16 @@ const DataImport = () => {
                 )}
                 </tbody>
             </table>
+            <Modal alertTitle="Alterações Salvas" show={showSaveModal}>
+                <SecondaryButton
+                  key={"saveButtons"}
+                  text="OK"
+                  onClick={() => {
+                    setShowSaveModal(false);
+                  }}
+                  width="338px"
+                />
+            </Modal>
         </div>
     );
 };
