@@ -146,7 +146,7 @@ const DataImport = () => {
 
         for (let i = 0; i < updatedTransactions.length; i++) {
             let updatedData;
-            if(updatedTransactions[i].amount < 0){
+            if(updatedTransactions[i].amount > 0){
                 updatedData = {
                     contaDestino: "Sindicato",
                     nomeDestino: "Conta BRB",
@@ -181,7 +181,7 @@ const DataImport = () => {
                     } else {
                         await updateFinancialMovementsById(updatedTransactions[i].id, updatedData);
                     }
-                    if(updatedData.tipoDocumento !== ""){
+                    if(updatedData.tipoDocumento !== " "){
                         updatedTransactions.splice(i, 1);
                         i--;
                     }
