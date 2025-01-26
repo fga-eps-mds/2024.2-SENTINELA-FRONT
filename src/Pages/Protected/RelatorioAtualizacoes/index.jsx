@@ -33,14 +33,14 @@ const TransactionTable = ({ transactions, openModal }) => {
                         <th></th> {/* Nova coluna para o ícone */}
                     </tr>
                 </thead>
-                <tbody>
+                    <tbody>
                     {transactions.length === 0 ? (
                         <tr>
                             <td colSpan="4">Nenhum dado encontrado.</td>
                         </tr>
                     ) : (
                         transactions.map((item, index) => (
-                            <tr key={index} className={getSituation(item.situation)}>
+                            <tr key={index} className={getSituation(item.currentStatus)}>
                                 <td className="name-column">{item.name}</td>
                                 <td>{item.previousStatus}</td>
                                 <td>{item.currentStatus}</td>
@@ -95,23 +95,51 @@ const DataImport = () => {
 
     const handleFileUpload = async (event) => {
         const file = event.target.files[0];
-        
+    
         if (file) {
             try {
-                const result = await readcsv(file);
+                // Passar o delimitador correto (ponto e vírgula)
+                const result = await readcsv(file, ';'); // Passa o delimitador como ponto e vírgula
                 console.log("Dados do CSV processados:", result);
-                
-                setTransactions(result.map(row => ({
-                    name: row.nome,
-                    previousStatus: row.status_anterior,
-                    currentStatus: row.status_parc_holerite,
-                    cpf: row.cpf,
-                })));
+    
+                // Limpeza do cabeçalho (remover a parte com '***' e renomear as colunas)
+                const cleanedResult = result.map(row => {
+                    // Limpeza das chaves para garantir que estamos acessando os dados corretamente
+                    const cleanRow = {};
+    
+                    // Exemplo de como você pode limpar as colunas
+                    for (const [key, value] of Object.entries(row)) {
+                        // Limpeza do nome da chave
+                        const cleanedKey = key.replace(/\*\*\*|;/g, "").trim(); // Remove "***" e ponto e vírgula
+                        cleanRow[cleanedKey] = value ? value.trim() : ""; // Garantir que o valor esteja limpo
+                    }
+    
+                    return cleanRow;
+                });
+    
+                // Agora podemos mapear os dados de forma mais limpa
+                const mappedTransactions = cleanedResult.map(row => {
+                    // Acesso às propriedades do CSV já limpas
+                    const transaction = {
+                        name: row["servidor(nome)"] || "", // Nome do servidor
+                        cpf: row["cpf_servidor"] || "", // CPF do servidor
+                        previousStatus: row["status_parc_holerite"] || "", // Status anterior
+                        currentStatus: row["status_atual_parc"] || "", // Status atual
+                    };
+    
+                    console.log("Transação mapeada:", transaction);
+                    return transaction;
+                }).filter(item => item.name && item.cpf); // Filtra transações válidas
+    
+                console.log("Transações finais mapeadas:", mappedTransactions);
+                setTransactions(mappedTransactions); // Atualiza o estado com as transações mapeadas
             } catch (error) {
                 console.error("Erro ao processar o arquivo CSV:", error);
             }
         }
     };
+    
+    
 
 
     const handleQuitado = async () => {
@@ -138,6 +166,8 @@ const DataImport = () => {
 
             const updatedUser = {
                 situation: "Quitado",
+                cancelDate: "",
+                justification: "",
             };
 
             await patchUserById(user._id, updatedUser); // Usando o _id do usuário
