@@ -26,6 +26,10 @@ export default function Finance() {
     navigate("/movimentacoes/relatorio");
   };
 
+  const handleImportarExtrato = () => {
+    navigate("/dataimport");
+  };
+
   return (
     user && (
       <section className="containerFinance">
@@ -69,6 +73,15 @@ export default function Finance() {
               <SecondaryButton
                 text="Gerar relatório"
                 onClick={handleGeradorRelatorio}
+              />
+            )}
+            {(checkAction("movimentacao_financeira_criar") ||
+              checkAction("movimentacao_financeira_editar") ||
+              checkAction("movimentacao_financeira_deletar") ||
+              checkAction("movimentacao_financeira_visualizar")) && (
+              <SecondaryButton
+                text="Extrato Bancário"
+                onClick={handleImportarExtrato}
               />
             )}
           </div>
