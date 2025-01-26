@@ -69,21 +69,26 @@ export const createUser = async (userData) => {
       throw new Error("Usuário não encontrado ou sem ID.");
     }
 
-    await APIUsers.post("/signup", {
-      name: userData.name,
-      email: userData.email,
-      phone: userData.phone,
-      status: userData.status,
-      role: userData.role,
-      params: {
-        userId: `${storagedUser._id}`,
-        moduleName: "users",
-        action: "create",
+    await APIUsers.post(
+      "/signup",
+      {
+        name: userData.name,
+        email: userData.email,
+        phone: userData.phone,
+        status: userData.status,
+        role: userData.role,
+        params: {
+          userId: `${storagedUser._id}`,
+          moduleName: "users",
+          action: "create",
+        },
       },
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
   } catch (error) {
     console.error("Erro ao criar usuário:", error);
   }
