@@ -112,7 +112,7 @@ const DataImport = () => {
     const handleCheckboxChange = (index) => {
         const newTransactions = [...transactions];
         newTransactions[index].isFixed = !newTransactions[index].isFixed;
-        newTransactions[index].flagUpdated = !newTransactions[index].flagUpdated;
+        newTransactions[index].flagUpdated = true;
         setTransactions(newTransactions);
     };
 
