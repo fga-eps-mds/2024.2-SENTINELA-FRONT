@@ -6,6 +6,7 @@ import ChangePasswordPage from "../Pages/Public/ChangePasswordPage";
 import LoginNovo from "../Pages/Public/LoginNovo";
 import VerifyMemberForm from "../Pages/Public/VerifyMember/VerifyMemberForm";
 import VerifyMemberActiveStatus from "../Pages/Public/VerifyMember/VerifyMemberActiveStatus";
+import DataImport from "../Pages/Protected/DataImport/index.jsx";
 
 
 
@@ -17,6 +18,7 @@ const PublicRoutes = () => {
       <Route path="/recuperar-senha" element={<PasswordRecovery />} />
       <Route path="/trocar-senha/:token" element={<ChangePasswordPage />} />
       <Route path="/verificar-membro" element={<VerifyMemberForm />} />
+      <Route path="/importar-dados" element={<DataImport />} />
       <Route
         path="/verificar-membro/ativo"
         element={<VerifyMemberActiveStatus />}

@@ -38,6 +38,8 @@ import PermissionCRUD from "../Pages/Protected/Permissions/permissionsHandler.js
 import RelatorioAtualizacoes from "../Pages/Protected/RelatorioAtualizacoes";
 import { checkAction } from "../Utils/permission.jsx";
 
+import DataImport from "../Pages/Protected/DataImport/index.jsx";
+
 const ProtectedRoutes = () => {
   return (
     <Routes>
@@ -338,7 +340,6 @@ const ProtectedRoutes = () => {
           />
         }
       />
-
       <Route
         path="/relatorio/mensalidade"
         element={
@@ -349,7 +350,16 @@ const ProtectedRoutes = () => {
           />
         }
       />
-
+      <Route
+          path="/dataimport"
+          element={
+              <PermissionProtect
+                  element={<DataImport />}
+                  moduleName="finance"
+                  actions={["read", "create"]}
+              />
+          }
+      />
     </Routes>
   );
 };

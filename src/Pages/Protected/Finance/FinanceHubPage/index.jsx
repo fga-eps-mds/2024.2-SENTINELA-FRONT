@@ -28,6 +28,9 @@ export default function Finance() {
 
   const handleRelatorioAtualizacoes = () => {
     navigate("/relatorio/mensalidade");
+    
+  const handleImportarExtrato = () => {
+    navigate("/dataimport");
   };
 
   return (
@@ -79,6 +82,15 @@ export default function Finance() {
               <SecondaryButton
                 text="Relatório de Atualizações"
                 onClick={handleRelatorioAtualizacoes}
+              />
+            )}
+            {(checkAction("movimentacao_financeira_criar") ||
+              checkAction("movimentacao_financeira_editar") ||
+              checkAction("movimentacao_financeira_deletar") ||
+              checkAction("movimentacao_financeira_visualizar")) && (
+              <SecondaryButton
+                text="Extrato Bancário"
+                onClick={handleImportarExtrato}
               />
             )}
           </div>
