@@ -35,6 +35,7 @@ import ContributionHistoric from "../Pages/Protected/FinancialMovements/Contribu
 import Unauthorized from "../Pages/Protected/Unauthorized";
 import GenerateFinancialReport from "../Pages/Protected/FinancialMovements/GenerateFinancialReport";
 import PermissionCRUD from "../Pages/Protected/Permissions/permissionsHandler.jsx";
+import RelatorioAtualizacoes from "../Pages/Protected/RelatorioAtualizacoes";
 import { checkAction } from "../Utils/permission.jsx";
 
 import DataImport from "../Pages/Protected/DataImport/index.jsx";
@@ -336,6 +337,16 @@ const ProtectedRoutes = () => {
             element={<GenerateFinancialReport />}
             moduleName="finance"
             actions={["read", "create", "update"]}
+          />
+        }
+      />
+      <Route
+        path="/relatorio/mensalidade"
+        element={
+          <PermissionProtect
+            element={<RelatorioAtualizacoes />}
+            moduleName="finance"
+            actions={["read", "create", "update", "delete"]}
           />
         }
       />

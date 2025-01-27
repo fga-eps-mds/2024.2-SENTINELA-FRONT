@@ -26,6 +26,10 @@ export default function Finance() {
     navigate("/movimentacoes/relatorio");
   };
 
+  const handleRelatorioAtualizacoes = () => {
+    navigate("/relatorio/mensalidade");
+  }; 
+
   const handleImportarExtrato = () => {
     navigate("/dataimport");
   };
@@ -73,6 +77,12 @@ export default function Finance() {
               <SecondaryButton
                 text="Gerar relatório"
                 onClick={handleGeradorRelatorio}
+              />
+            )}
+            {checkAction("movimentacao_financeira_visualizar") && (
+              <SecondaryButton
+                text="Relatório de Atualizações"
+                onClick={handleRelatorioAtualizacoes}
               />
             )}
             {(checkAction("movimentacao_financeira_criar") ||
