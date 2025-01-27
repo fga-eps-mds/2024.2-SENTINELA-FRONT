@@ -39,3 +39,80 @@ describe("DataImport Component", () => {
   });
 
 });
+
+it("handles file upload and processes transactions", async () => {
+    render(<DataImport />);
+
+    const fileInput = screen.getByLabelText("SELECIONE UM ARQUIVO");
+    const file = new Blob([`
+        <OFX>
+            <STMTTRN>
+                <DTPOSTED>20240101</DTPOSTED>
+                <TRNAMT>100.00</TRNAMT>
+                <NAME>Test Transaction</NAME>
+                <MEMO>Test Memo</MEMO>
+            </STMTTRN>
+        </OFX>
+    `], { type: 'application/ofx' });
+
+    fireEvent.change(fileInput, { target: { files: [file] } });
+
+    await waitFor(() => {
+        const transactionInput = screen.getByDisplayValue("Test Transaction");
+        const amountInput = screen.getByDisplayValue("100.00");
+        const dateInput = screen.getByDisplayValue("01/01/2024");
+
+        console.log(transactionInput);
+        console.log(amountInput);
+        console.log(dateInput);
+
+        expect(transactionInput).toBeInTheDocument();
+        expect(amountInput).toBeInTheDocument();
+        expect(dateInput).toBeInTheDocument();
+    });
+});
+
+
+it("fetches transactions from API on mount", async () => {
+    APIBank.get.mockResolvedValueOnce({
+        data: [
+            {
+                datadePagamento: "2024-01-01T00:00:00Z",
+                valorBruto: 100,
+                tipoDocumento: " ",
+                descricao: "Mock Transaction",
+                gastoFixo: false,
+                _id: "123",
+            },
+        ],
+    });
+
+    render(<DataImport />);
+
+    await waitFor(() => {
+        expect(screen.getByText("100.00")).toBeInTheDocument();
+        expect(screen.getByText("Mock Transaction")).toBeInTheDocument();
+    });
+});
+
+it("fetches transactions from API on mount", async () => {
+    APIBank.get.mockResolvedValueOnce({
+        data: [
+            {
+                datadePagamento: "2024-01-01T00:00:00Z",
+                valorBruto: 100,
+                tipoDocumento: " ",
+                descricao: "Mock Transaction",
+                gastoFixo: false,
+                _id: "123",
+            },
+        ],
+    });
+
+    render(<DataImport />);
+
+    await waitFor(() => {
+        expect(screen.getByText("100.00")).toBeInTheDocument();
+        expect(screen.getByText("Mock Transaction")).toBeInTheDocument();
+    });
+});

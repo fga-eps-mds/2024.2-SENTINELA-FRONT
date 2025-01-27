@@ -24,6 +24,7 @@ package-lock.json
 *.njsproj
 *.sln
 *.sw?
+.vs/
 .env
 
 # Tests coverage report
