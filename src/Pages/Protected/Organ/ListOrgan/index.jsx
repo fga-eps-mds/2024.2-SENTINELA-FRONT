@@ -17,7 +17,6 @@ export default function OrganList() {
   const [organs, setOrgans] = useState([]);
   const navigate = useNavigate();
 
-  const canCreate = checkAction(permissions, "orgaos_criar");
   useEffect(() => {
     const getOrgansInfo = async () => {
       const response = await listOrgans();
@@ -46,9 +45,9 @@ export default function OrganList() {
       <div className="forms-container-list-organs">
         <div className="double-box-list-organs">
           <h1 className="title-center"> Lista de órgãos</h1>
-          {canCreate && (
+          {checkAction("orgaos_criar") && (
             <PrimaryButton text="Cadastrar órgão" onClick={handleSubmit} />
-          )}
+          )} 
         </div>
         <div className="search-box-organs">
           <FieldText
