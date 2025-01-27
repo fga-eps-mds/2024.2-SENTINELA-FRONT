@@ -28,7 +28,8 @@ export default function Finance() {
 
   const handleRelatorioAtualizacoes = () => {
     navigate("/relatorio/mensalidade");
-    
+  }; 
+
   const handleImportarExtrato = () => {
     navigate("/dataimport");
   };

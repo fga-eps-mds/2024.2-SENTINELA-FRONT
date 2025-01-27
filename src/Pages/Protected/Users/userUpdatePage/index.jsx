@@ -28,6 +28,7 @@ export default function UserUpdatePage() {
 
   const [nomeCompleto, setNomeCompleto] = useState("");
   const [celular, setCelular] = useState("");
+  const [situation, setSituation] = useState("");
   const [login, setLogin] = useState("Ativo");
   const [email, setEmail] = useState("");
   const [perfilSelecionado, setPerfilSelecionado] = useState("");
@@ -61,6 +62,7 @@ export default function UserUpdatePage() {
           if (user) {
             setNomeCompleto(user.name || "");
             setCelular(mascaraTelefone(user.phone || ""));
+            setSituation(user.situation || "Pendente");
             setLogin(user.status ? "Ativo" : "Inativo");
             setEmail(user.email || "");
             setPerfilSelecionado(user.role._id || "");
@@ -110,6 +112,7 @@ export default function UserUpdatePage() {
         name: nomeCompleto,
         email: email,
         phone: trimmedCelular,
+        situation: situation,
         status: login === "Ativo",
         role: perfilSelecionado,
       };
@@ -145,6 +148,7 @@ export default function UserUpdatePage() {
         nomeCompleto,
         celular,
         email,
+        situation,
         login,
         perfilSelecionado,
       },
@@ -171,10 +175,16 @@ export default function UserUpdatePage() {
           />
           <FieldSelect
             label="Status"
+            value={situation}
+            onChange={(e) => setSituation(e.target.value)}
+            options={["Quitado", "Pendente", "Desfiliado"]}
+          />
+          {/* <FieldSelect
+            label="Sttus"
             value={login}
             onChange={handleChangeLogin}
-            options={["Ativo", "Inativo"]}
-          />
+            options={["Ativo", "Inativo", "Solteira"]}
+          /> */}
         </div>
         {!isCelularValid && (
           <label className="isValid">
