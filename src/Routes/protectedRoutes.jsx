@@ -204,18 +204,21 @@ const ProtectedRoutes = () => {
           />
         }
       />
-      {checkAction("filiado_visualizar_carteirinha") && (
         <Route
           path="/carteirinha"
           element={
+            // <PermissionProtect
+            //   element={<CarteirinhaPage />}
+            //   moduleName="users"
+            //   actions={["read", "create"]}
+            // />
             <PermissionProtect
-              element={<CarteirinhaPage />}
-              moduleName="users"
-              actions={["read", "create"]}
-            />
+            element={<CarteirinhaPage />}
+            moduleName="benefits"
+            actions={["read", "create", "update", "delete"]}
+          />
           }
         />
-      )}
       <Route
         path="/beneficios/editar/:id"
         element={

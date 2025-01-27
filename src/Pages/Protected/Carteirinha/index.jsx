@@ -28,7 +28,6 @@ const Carteirinha = () => {
         });
         const data = await response.json();
         setMembershipData(data[0]);
-        console.log("alohaa", data);
       } catch (error) {
         console.error("Erro ao buscar os dados do membership:", error);
       }
@@ -80,7 +79,6 @@ const Carteirinha = () => {
   const { name, birthDate, cpf, expeditionDate, hiringDate } = membershipData;
 
   return (
-    checkAction("beneficios_criar") && (
       <div className="carteirinha-container" ref={cardRef}>
         <div className="carteirinha">
           <header className="carteirinha-header">
@@ -95,7 +93,6 @@ const Carteirinha = () => {
                 <div className="info-block">
                   <strong>TITULAR:</strong>
                   <br />
-                  <p className="info-color-titular"></p>
                   <p className="info-color-titular">
                     <span>{name}</span>
                   </p>
@@ -105,7 +102,6 @@ const Carteirinha = () => {
                 <div className="info-block">
                   <strong>DATA DE NASCIMENTO:</strong>
                   <br />
-                  <p className="info-color" />
 
                   <p className="info-color">
                     <span>{new Date(birthDate).toLocaleDateString()}</span>
@@ -114,7 +110,6 @@ const Carteirinha = () => {
                 <div className="info-block">
                   <strong>DATA DE EXPEDIÇÃO:</strong>
                   <br />
-                  <p className="info-color" />
                   <p className="info-color">
                     <span>{new Date(expeditionDate).toLocaleDateString()}</span>
                   </p>
@@ -124,7 +119,6 @@ const Carteirinha = () => {
                 <div className="info-block">
                   <strong>CPF:</strong>
                   <br />
-                  <p className="info-color" />
                   <p className="info-color">
                     <span>{cpf}</span>
                   </p>
@@ -132,7 +126,6 @@ const Carteirinha = () => {
                 <div className="info-block">
                   <strong>CONTRATAÇÃO:</strong>
                   <br />
-                  <p className="info-color" />
                   <p className="info-color">
                     <span>{new Date(hiringDate).toLocaleDateString()}</span>
                   </p>
@@ -192,7 +185,6 @@ const Carteirinha = () => {
           BAIXAR CARTEIRINHA
         </button>
       </div>
-    )
   );
 };
 
