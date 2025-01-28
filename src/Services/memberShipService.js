@@ -1,4 +1,5 @@
 import { APIUsers } from "./BaseService";
+import { getToken } from "./Functions/loader";
 
 // const storagedToken = localStorage.getItem("@App:token");
 // const token = JSON.parse(storagedToken);
@@ -7,7 +8,12 @@ export async function createMemberShip(formData) {
   try {
     const response = await APIUsers.post("membership/create", {
       formData,
-    });
+      headers: {
+        Authorization: `Bearer ${getToken()}`,
+      },
+    }
+  
+  );
     return response.status;
   } catch (error) {
     return error.response.data.erro;
@@ -18,6 +24,9 @@ export async function getMemberShip(status) {
   try {
     const response = await APIUsers.get("membership", {
       params: { status: status },
+      headers: {
+        Authorization: `Bearer ${getToken()}`,
+      },
     });
     return response.data;
   } catch (error) {
@@ -27,7 +36,10 @@ export async function getMemberShip(status) {
 
 export async function getMemberShipById(id) {
   try {
-    const response = await APIUsers.get(`membership/${id}`);
+    const response = await APIUsers.get(`membership/${id}`,{
+      headers: {
+        Authorization: `Bearer ${getToken()}`,
+      }});
     return response.data;
   } catch (error) {
     console.error(error);
@@ -41,6 +53,11 @@ export const updateMemberStatus = async (memberId, formData) => {
       `membership/updateStatus/${memberId}`,
       {
         formData,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        }
       }
     );
     return response.data;
@@ -53,6 +70,11 @@ export const updateMembership = async (memberId, formData) => {
   try {
     await APIUsers.patch(`membership/update/${memberId}`, {
       formData,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${getToken()}`,
+      }
     });
 
     return false;
@@ -63,7 +85,12 @@ export const updateMembership = async (memberId, formData) => {
 
 export async function deleteMember(memberId) {
   try {
-    await APIUsers.delete(`membership/delete/${memberId}`);
+    await APIUsers.delete(`membership/delete/${memberId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        }
+      });
     return false;
   } catch (error) {
     return error.response.data.erro;

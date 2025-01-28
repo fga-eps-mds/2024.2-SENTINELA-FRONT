@@ -156,7 +156,7 @@ const Carteirinha = () => {
           <div className="qr-section">
             <div className="qr-code">
               <QRCode
-                value="http://localhost:5173/verificar-membro"
+                value="http://localhost/verificar-membro"
                 size={170}
               />{" "}
               {/* endereço que será passado no qrCode */}
