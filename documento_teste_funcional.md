@@ -1,154 +1,156 @@
 # Documento de Teste Funcional
 
 ## Projeto SENTINELA
-## Vers„o: 0.0.1
+## Vers√£o: 0.0.1
 ## Atualizado em: 28/01/2025
 
-### Sum·rio
-1. [IntroduÁ„o](#1-introduÁ„o)
+### Sum√°rio
+1. [Introdu√ß√£o](#1-introdu√ß√£o)
 2. [Casos de Teste](#2-casos-de-teste)
-   2.1. [Caso de Teste CT-01](#21-ct-01)
-   2.2. [Caso de Teste CT-02](#22-ct-02)
+   1. [Caso de Teste CT-01](#21-ct-01-criar-usuario)
+   2. [Caso de Teste CT-02](#22-ct-02-realizar-login)
 3. [Ambiente de Teste](#3-ambiente-de-teste)
-4. [Conclus„o](#4-conclus„o)
+4. [Conclus√£o](#4-conclus√£o)
 5. [Changelog](#5-changelog)
 
-### 1. IntroduÁ„o
-Este documento descreve os testes funcionais para o projeto SENTINELA.
-O objetivo È garantir o bom funcionamento do sistema bem como auxiliar as equipes de desenvolvimento posteriores.
+### 1. Introdu√ß√£o
+Este documento descreve os testes funcionais para o projeto SENTINELA.  
+O objetivo √© garantir o bom funcionamento do sistema bem como auxiliar as equipes de desenvolvimento posteriores.
 
 ### 2. Casos de Teste
 
-#### 2.1. CT-01: Criar Usu·rio
-- **DescriÁ„o**: 
-Cria usu·rios no sistema
+#### 2.1. CT-01: Criar Usu√°rio  
+- **Descri√ß√£o**:  
+Cria usu√°rios no sistema
 
-- **Procedimento**: 
-1) Acessar o sistema como usu·rio sem login
-2) Clicar em "Filiar", no canto superior direito da tela
-3) Preencher os dados pessoais
-4) Clicar em "Enviar solicitaÁ„o"
-5) Clicar em "Solicitar FiliaÁ„o ao Sindpol-DF"
+- **Procedimento**:   
+1) Acessar o sistema como usu√°rio sem login  
+2) Clicar em "Filiar", no canto superior direito da tela  
+3) Preencher os dados pessoais  
+4) Clicar em "Enviar solicita√ß√£o"  
+5) Clicar em "Solicitar Filia√ß√£o ao Sindpol-DF"  
 
 - **Entrada**: 
-Ao preencher os dados pessoais
-	Nome: Sicrana da Silva
-	Religi„o: CatÛlica
-	Tipo SanguÌneo: A+
-	MatrÌcula: 012345678
-	Data de Nascimento: 01/01/2001
-	Sexo: Feminino
-	Naturalidade: BrasÌlia
-	UF: DF
-	Estado Civil: Solteiro
-	Escolaridade: Mestrado
-	RG: 1100112223
-	”rg„o expedidor: SSP
-	UF: DF
-	CPF: 00055544488
-	Data de ExpediÁ„o: 01/01/2016
-	Nome do Pai: Pai de Sicrana
-	Nome da m„e: M„e de Sicrana
-	e-mail: [oculto]*
-	Celular: (61) 99123-9123
-	Telefone:
-	Cep:
-	Cidade:
-	UF:
-	Logradouro:
-	Complemento:
-	Cargo: Cargo da Sicrana
-	Data de ContrataÁ„o: 01/01/2023
-	LotaÁ„o: Setor de AlimentaÁ„o
-	”rg„o: PolÌcia Penal
-	Posto de Trabalho: Posto de trabalho da Sicrana
+Ao preencher os dados pessoais  
+	Nome: Sicrana da Silva  
+	Religi√£o: Cat√≥lica  
+	Tipo Sangu√≠neo: A+  
+	Matr√≠cula: 012345678  
+	Data de Nascimento: 01/01/2001  
+	Sexo: Feminino  
+	Naturalidade: Bras√≠lia  
+	UF: DF  
+	Estado Civil: Solteiro  
+	Escolaridade: Mestrado  
+	RG: 1100112223  
+	√ìrg√£o expedidor: SSP  
+	UF: DF  
+	CPF: 00055544488  
+	Data de Expedi√ß√£o: 01/01/2016  
+	Nome do Pai: Pai de Sicrana  
+	Nome da m√£e: M√£e de Sicrana  
+	e-mail: [oculto]*  
+	Celular: (61) 99123-9123  
+	Telefone:  
+	Cep:  
+	Cidade:  
+	UF:  
+	Logradouro:  
+	Complemento:  
+	Cargo: Cargo da Sicrana  
+	Data de Contrata√ß√£o: 01/01/2023  
+	Lota√ß√£o: Setor de Alimenta√ß√£o  
+	√ìrg√£o: Pol√≠cia Penal  
+	Posto de Trabalho: Posto de trabalho da Sicrana  
 
-- **Resultado Esperado**: 
-Retorno ‡ p·gina inicial do Sistema
+- **Resultado Esperado**:  
+Retorno √† p√°gina inicial do Sistema
 
-- **Resultado Obtido:**:
-Retorno ‡ p·gina inicial do sistema
+- **Resultado Obtido:**:  
+Retorno √† p√°gina inicial do sistema
 
-- **ObservaÁıes:**
-E-mail de recebimento de cadastro deve ser recebido no endereÁo de email fornecido.
+- **Observa√ß√µes**:  
+E-mail de recebimento de cadastro deve ser recebido no endere√ßo de email fornecido.
+
+***
 
 #### 2.2. CT-02 Realizar Login
-- **DescriÁ„o**: 
+- **Descri√ß√£o**: 
 Realiza login no sistema
 
-- **Procedimento**:
-1) Acessar o sistema como usu·rio sem login
-2) Preencher dados de login
-3) Clicar em "Entrar"
+- **Procedimento**:  
+1) Acessar o sistema como usu√°rio sem login  
+2) Preencher dados de login  
+3) Clicar em "Entrar"  
 
-- **Entrada**:
-Ao preencher dados de login:
-email: [oculto]
-senha [oculto]
+- **Entrada**:  
+Ao preencher dados de login:  
+email: [oculto]   
+senha [oculto]  
 
 - **Resultado Esperado**:
-Visualiza a p·gina de usu·rio do sistema, que possui:
+Visualiza a p√°gina de usu√°rio do sistema, que possui:
 Um menu na esquerda com:
-	- o bras„o do Sindpol;
-	- o logotipo do SENTINELA;
-	- links para navegaÁ„o do site;
-	- a mensagem "VocÍ est· logado como [usu·rio]";
-		onde [usu·rio] È o nome do usu·rio logado;
-	- opÁ„o de realizar o logout.
-Um quadro no centro e direita com informaÁıes a respeito do sistema.
+	* o bras√£o do Sindpol;
+	* o logotipo do SENTINELA;
+	* links para navega√ß√£o do site;
+	* a mensagem "Voc√™ est√° logado como [usu√°rio]";
+		> onde [usu√°rio] √© o nome do usu√°rio logado;
+	* op√ß√£o de realizar o logout.
+Um quadro no centro e direita com informa√ß√µes a respeito do sistema.
 
-- **Resultado Obtido**:
-VisualizaÁ„o da p·gina de usu·rio do sistema, que possui:
+- **Resultado Obtido**:  
+Visualiza√ß√£o da p√°gina de usu√°rio do sistema, que possui:
 Um menu na esquerda com:
-	- o bras„o do Sindpol;
-	- o logotipo do SENTINELA;
-	- links para navegaÁ„o do site incluindo o link "p·gina inicial";
-	- a mensagem "VocÍ est· logado como [usu·rio]";
-		onde [usu·rio] È o nome do usu·rio logado;
-	- opÁ„o de realizar o logout.
-Um quadro no centro e direita com informaÁıes a respeito do sistema.
+	* o bras√£o do Sindpol;
+	* o logotipo do SENTINELA;
+	* links para navega√ß√£o do site incluindo o link "p√°gina inicial";
+	* a mensagem "Voc√™ est√° logado como [usu√°rio]";
+		> onde [usu√°rio] √© o nome do usu√°rio logado;
+	* op√ß√£o de realizar o logout.
+Um quadro no centro e direita com informa√ß√µes a respeito do sistema.
 
-- *ObservaÁıes**:
-sem observaÁıes
+- *Observa√ß√µes**:  
+sem observa√ß√µes
 
-#### 2.3. CT-03 Aceitar usu·rio.
-- **DescriÁ„o**: 
-Aceita um usu·rio pendente, dando a ele acesso ao sistema.
+#### 2.3. CT-03 Aceitar usu√°rio.
+- **Descri√ß√£o**: 
+Aceita um usu√°rio pendente, dando a ele acesso ao sistema.
 
 - **Procedimento**:
-1) Acessar o sistema como usu·rio Administrador
-2) No menu lateral, selecionar a opÁ„o "Cadastros"
-3) Selecionar "FiliaÁıes Pendentes"
-4) Selecionar usu·rios da lista
+1) Acessar o sistema como usu√°rio Administrador
+2) No menu lateral, selecionar a op√ß√£o "Cadastros"
+3) Selecionar "Filia√ß√µes Pendentes"
+4) Selecionar usu√°rios da lista
 5) Selecionar "Aprovar"
 
 - **Entrada**:
-Ao selecionar usu·rios da lista
-	Marcar a checkbox referente ‡ Sicrana da Silva
+Ao selecionar usu√°rios da lista
+	Marcar a checkbox referente √† Sicrana da Silva
 
 - **Resultado Esperado**:
-Uma mensagem confirmando a aprovaÁ„o da senha deve aparecer na tela.
+Uma mensagem confirmando a aprova√ß√£o da senha deve aparecer na tela.
 
 - **Resultado Obtido**:
-Uma mensagem apareceu na tela confirmando a aprovaÁ„o da solicitaÁ„o.
+Uma mensagem apareceu na tela confirmando a aprova√ß√£o da solicita√ß√£o.
 
-- *ObservaÁıes**:
-Um email È enviado ao e-mail cadastrado do usuario que foi aceito, para que ele gere a senha de acesso ao sistema.
+- *Observa√ß√µes**:
+Um email √© enviado ao e-mail cadastrado do usuario que foi aceito, para que ele gere a senha de acesso ao sistema.
 
 ### 3. Ambiente de Teste
-DescriÁ„o do ambiente de teste:
+Descri√ß√£o do ambiente de teste:
 - Software: Windows 11 Home Single Language
-	Vers„o: 24H2
-	CompilaÁ„o do SO: 26100.2894
+	Vers√£o: 24H2
+	Compila√ß√£o do SO: 26100.2894
 - Navegador: Opera GX
-	Fluxo de atualizaÁ„o:Early Access
+	Fluxo de atualiza√ß√£o:Early Access
 	Core:115.0.5322.152
 	Sistema:Windows 11 64-bit
-	Vers„o do Chromium:130.0.6723.170
+	Vers√£o do Chromium:130.0.6723.170
 
-### 4. Conclus„o
+### 4. Conclus√£o
 [WIP]
 
 ### 5. Changelog
-#### Vers„o 0.0.1 - 29/01/2025
-- Primeira vers„o do documento criada.
+#### Vers√£o 0.0.1 - 29/01/2025
+- Primeira vers√£o do documento criada.
