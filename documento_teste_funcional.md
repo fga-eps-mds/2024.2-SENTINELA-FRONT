@@ -7,8 +7,9 @@
 ### Sumário
 1. [Introdução](#1-introdução)
 2. [Casos de Teste](#2-casos-de-teste)
-   1. [Caso de Teste CT-01](#21-ct-01-criar-usuario)
-   2. [Caso de Teste CT-02](#22-ct-02-realizar-login)
+   1. [CT-01 Criar Usuario](#21-ct-01-criar-usuario)
+   2. [CT-02 Realizar Login](#22-ct-02-realizar-login)
+   3. [CT-03 Aceitar Usuario](#23-ct-03-aceitar-usuario) 
 3. [Ambiente de Teste](#3-ambiente-de-teste)
 4. [Conclusão](#4-conclusão)
 5. [Changelog](#5-changelog)
@@ -19,7 +20,7 @@ O objetivo é garantir o bom funcionamento do sistema bem como auxiliar as equip
 
 ### 2. Casos de Teste
 
-#### 2.1. CT-01: Criar Usuário  
+#### 2.1. CT-01 Criar Usuário  
 - **Descrição**:  
 Cria usuários no sistema
 
@@ -31,7 +32,7 @@ Cria usuários no sistema
 5) Clicar em "Solicitar Filiação ao Sindpol-DF"  
 
 - **Entrada**: 
-Ao preencher os dados pessoais  
+Ao preencher os dados pessoais  						
 	Nome: Sicrana da Silva  
 	Religião: Católica  
 	Tipo Sanguíneo: A+  
@@ -84,9 +85,9 @@ Realiza login no sistema
 3) Clicar em "Entrar"  
 
 - **Entrada**:  
-Ao preencher dados de login:  
-email: [oculto]   
-senha [oculto]  
+*Ao preencher dados de login:  
+  *email: [oculto]   
+  *senha [oculto]  
 
 - **Resultado Esperado**:
 Visualiza a página de usuário do sistema, que possui:
@@ -95,7 +96,7 @@ Um menu na esquerda com:
 	* o logotipo do SENTINELA;
 	* links para navegação do site;
 	* a mensagem "Você está logado como [usuário]";
-		> onde [usuário] é o nome do usuário logado;
+		- onde [usuário] é o nome do usuário logado;
 	* opção de realizar o logout.
 Um quadro no centro e direita com informações a respeito do sistema.
 
@@ -106,14 +107,16 @@ Um menu na esquerda com:
 	* o logotipo do SENTINELA;
 	* links para navegação do site incluindo o link "página inicial";
 	* a mensagem "Você está logado como [usuário]";
-		> onde [usuário] é o nome do usuário logado;
+		- onde [usuário] é o nome do usuário logado;
 	* opção de realizar o logout.
 Um quadro no centro e direita com informações a respeito do sistema.
 
-- *Observações**:  
+- **Observações**:  
 sem observações
 
-#### 2.3. CT-03 Aceitar usuário.
+***
+
+#### 2.3. CT-03 Aceitar Usuário
 - **Descrição**: 
 Aceita um usuário pendente, dando a ele acesso ao sistema.
 
@@ -134,19 +137,21 @@ Uma mensagem confirmando a aprovação da senha deve aparecer na tela.
 - **Resultado Obtido**:
 Uma mensagem apareceu na tela confirmando a aprovação da solicitação.
 
-- *Observações**:
+- **Observações**:
 Um email é enviado ao e-mail cadastrado do usuario que foi aceito, para que ele gere a senha de acesso ao sistema.
 
+***
+
 ### 3. Ambiente de Teste
-Descrição do ambiente de teste:
-- Software: Windows 11 Home Single Language
-	Versão: 24H2
-	Compilação do SO: 26100.2894
-- Navegador: Opera GX
-	Fluxo de atualização:Early Access
-	Core:115.0.5322.152
-	Sistema:Windows 11 64-bit
-	Versão do Chromium:130.0.6723.170
+Descrição do ambiente de teste:  
+- Software: Windows 11 Home Single Language  
+  *Versão: 24H2  
+  *Compilação do SO: 26100.2894  
+- Navegador: Opera GX  
+  *Fluxo de atualização:Early Access  	
+  *Core:115.0.5322.152  
+  *Sistema:Windows 11 64-bit  
+  *Versão do Chromium:130.0.6723.170  
 
 ### 4. Conclusão
 [WIP]
