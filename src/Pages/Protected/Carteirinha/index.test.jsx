@@ -57,6 +57,7 @@ describe("Carteirinha Component", () => {
       expect(screen.getByText("John Doe")).toBeInTheDocument();
       expect(screen.getByText("123.456.789-00")).toBeInTheDocument();
     });
+    console.log("Finalizando teste 'should render membership data correctly'");
   });
 
   it("should call downloadPDF when clicking on 'BAIXAR CARTEIRINHA' button", async () => {
@@ -65,22 +66,29 @@ describe("Carteirinha Component", () => {
       addImage: vi.fn(),
       save: mockSave,
     }));
-
+  
     render(<Carteirinha />);
-
+  
     await waitFor(() => {
       expect(screen.getByText("BAIXAR CARTEIRINHA")).toBeInTheDocument();
     });
-
+  
     const button = screen.getByText("BAIXAR CARTEIRINHA");
     fireEvent.click(button);
-
+  
     await waitFor(() => {
       expect(html2canvas).toHaveBeenCalled();
       expect(mockSave).toHaveBeenCalledWith("carteirinha.pdf");
     });
+  
+    // Captura erros inesperados
+    try {
+      fireEvent.click(button);
+    } catch (error) {
+      console.error("Erro ao clicar no botão:", error);
+    }
   });
-
+  
   it("should log an error if fetch fails", async () => {
     vi.spyOn(console, "error").mockImplementation(() => {});
     global.fetch = vi.fn(() => Promise.reject(new Error("Fetch error")));

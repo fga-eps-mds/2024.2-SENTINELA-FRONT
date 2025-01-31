@@ -19,11 +19,12 @@ describe("PermissionCRUD Component", () => {
     jest.clearAllMocks(); // Limpa os mocks antes de cada teste
   });
 
-  test("deve renderizar o título corretamente", () => {
+  test('deve renderizar o título corretamente', () => {
     render(<PermissionCRUD />);
     const title = screen.getByText(/Permission Management/i);
     expect(title).toBeInTheDocument();
   });
+  
 
   test("deve chamar fetchPermissions ao carregar o componente", async () => {
     BaseService.APIUsers.get.mockResolvedValueOnce({ data: [] });

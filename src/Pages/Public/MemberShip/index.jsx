@@ -60,7 +60,6 @@ const MemberShip = () => {
   const [unfilledDependent, setUnfilledDependent] = useState(false);
   const [orgaosList, setOrgaosList] = useState([]);
   const [lotacaoList, setLotacaoList] = useState([]);
-  const [senha, setSenha] = useState([]);
 
   const navigate = useNavigate();
   // Function to validate a field
@@ -155,7 +154,6 @@ const MemberShip = () => {
     postoDeTrabalho: "Posto de Trabalho",
     orgaoExpedidor: "Órgão Expedidor",
     religiao: "Religião",
-    senha: "Senha",
   };
 
   //const situacaoAtualList = ["Ativo", "Inativo"];
@@ -383,7 +381,6 @@ const MemberShip = () => {
       shipperOrganization: orgaoExpedidor,
       religion: religiao,
       dependents: dependentes,
-      senha,
     };
 
     const message = await createMemberShip(formData);
@@ -557,15 +554,6 @@ const MemberShip = () => {
           onChange={(e) => setEmail(e.target.value)}
           onBlur={(e) => handleBlur(e, "email")}
           erro={erro("email")}
-        />
-
-        <FieldText
-          label="Senha *"
-          type="password"
-          value={senha}
-          onChange={(e) => setSenha(e.target.value)}
-          onBlur={(e) => handleBlur(e, "senha")}
-          erro={erro("senha")}
         />
 
         <h3> Dados de Contato </h3>

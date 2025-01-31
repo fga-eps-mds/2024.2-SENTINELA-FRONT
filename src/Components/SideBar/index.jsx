@@ -79,33 +79,39 @@ export default function SideBar() {
                 setIsSideBarOpen(false);
               }}
             />
-            <SideButton
-              // hidden={checkModule(permissions, "users") ? "flex" : "none"}
-              key="filiacao"
-              text="CADASTROS"
-              onClick={() => {
-                navigate("/usuarios/hub");
-                setIsSideBarOpen(false);
-              }}
-            />
-            <SideButton
-              // hidden={checkModule(permissions, "finance") ? "flex" : "none"}
-              key="financeiro"
-              text="FINANCEIRO"
-              onClick={() => {
-                navigate("/finance/hub");
-                setIsSideBarOpen(false);
-              }}
-            />
-            <SideButton
-              // hidden={checkModule(permissions, "benefits") ? "flex" : "none"}
-              key="beneficios"
-              text="BENEFÍCIOS"
-              onClick={() => {
-                navigate("/beneficios");
-                setIsSideBarOpen(false);
-              }}
-            />
+            {(checkAction("filiados_cadastrar") || checkAction("usuarios_visualizar") || checkAction("perfis_visualizar") || checkAction("filiados_cadastrar") || checkAction("orgaos_visualizar") || checkAction("associados_visualizar"))&& (
+              <SideButton
+                // hidden={checkModule(permissions, "users") ? "flex" : "none"}
+                key="filiacao"
+                text="CADASTROS"
+                onClick={() => {
+                  navigate("/usuarios/hub");
+                  setIsSideBarOpen(false);
+                }}
+              />
+            )}
+            {(checkAction("filiados_cadastrar") || checkAction("beneficios_criar") || checkAction("beneficios_visualizar") || checkAction("beneficios_editar")) && (
+              <SideButton
+                // hidden={checkModule(permissions, "finance") ? "flex" : "none"}
+                key="financeiro"
+                text="FINANCEIRO"
+                onClick={() => {
+                  navigate("/finance/hub");
+                  setIsSideBarOpen(false);
+                }}
+              />
+            )}
+            {(checkAction("beneficios_visualizar") || checkAction("beneficios_criar") || checkAction("beneficios_editar") ) && (
+              <SideButton
+                // hidden={checkModule(permissions, "benefits") ? "flex" : "none"}
+                key="beneficios"
+                text="BENEFÍCIOS"
+                onClick={() => {
+                  navigate("/beneficios");
+                  setIsSideBarOpen(false);
+                }}
+              />
+            )}
             <SideButton
               hidden={user ? "none" : "flex"}
               key="login"
@@ -136,15 +142,6 @@ export default function SideBar() {
                 }}
               />
             )}
-            <SideButton
-              hidden={user ? "none" : "flex"}
-              key="Verificarsindicalizado"
-              text="VERIFICAR SINDICALIZADO"
-              onClick={() => {
-                navigate("/verificar-membro");
-                setIsSideBarOpen(false);
-              }}
-            />
             {checkAction("sindicalizado_visualizar_status") && (
               <SideButton
                 // hidden={checkModule(permissions, "users") ? "flex" : "none"}

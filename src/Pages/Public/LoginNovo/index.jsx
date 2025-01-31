@@ -13,7 +13,9 @@ import { useNavigate } from "react-router-dom";
 import AdvantagesModal from "../../../Components/AdvantagesModal";
 import { getBenefitsForm } from "../../../Services/benefitsService";
 
+
 export default function loginNovo() {
+    
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const context = useContext(AuthContext);
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -195,7 +197,7 @@ export default function loginNovo() {
               maxWidth="400px"
             />
             {error && <div className="error-message">{error}</div>}{" "}
-            {/* Exibe a mensagem de erro */}
+            
           </div>
         </div>
 
@@ -256,4 +258,6 @@ export default function loginNovo() {
       </div>
     </>
   );
+ 
+
 }

@@ -1,0 +1,42 @@
+
+  
+  /* Estilo para a caixa de alerta */
+  .alertaExclusao {
+    display: flex;
+    flex-direction: column;
+    background-color: #EBDEC9;
+    width: 340px;
+    height: 220px;
+    border-radius: 20px;
+    border: 2px solid #AE883C;
+  }
+  
+  /* Estilo para a caixa de texto dentro da alerta */
+  .caixaTextoMensagem {
+    background-color: #AE883C;
+    margin-left: 34px;
+    width: 270px;
+    height: 52px;
+    border-radius: 4px;
+    margin-top: 46px;
+  }
+  
+  /* Estilo para o texto dentro da caixa */
+  .textoMensagem {
+    text-align: center;
+    margin-top: 15px;
+    color: white;
+  }
+  
+  /* Estilo para o botão */
+  .botaoFechar {
+    margin-top: 32px;
+    width: 270px;
+    height: 52px;
+    background-color: transparent;
+    color: #AE883C;
+    border: none;
+    border: 2px solid #AE883C;
+    border-radius: 8px;
+  }
+  
