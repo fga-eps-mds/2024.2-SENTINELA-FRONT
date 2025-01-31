@@ -37,6 +37,9 @@ import GenerateFinancialReport from "../Pages/Protected/FinancialMovements/Gener
 import PermissionCRUD from "../Pages/Protected/Permissions/permissionsHandler.jsx";
 import RelatorioAtualizacoes from "../Pages/Protected/RelatorioAtualizacoes";
 import { checkAction } from "../Utils/permission.jsx";
+import PatrimonioCreate from "../Pages/Protected/Patrimonios/PatrimonioCreate";
+import PatrimonioList from "../Pages/Protected/Patrimonios/PatrimonioList";
+import PatrimonioUpdate from "../Pages/Protected/Patrimonios/PatrimonioUpdate";
 
 import DataImport from "../Pages/Protected/DataImport/index.jsx";
 
@@ -265,6 +268,36 @@ const ProtectedRoutes = () => {
           <PermissionProtect
             element={<FinanceList />}
             moduleName="finance"
+            actions={["read", "create", "update", "delete"]}
+          />
+        }
+      />
+      <Route
+        path="/patrimonio/create"
+        element={
+          <PermissionProtect
+            element={<PatrimonioCreate />}
+            moduleName="patrimonio"
+            actions={["create"]}
+          />
+        }
+      />
+      <Route
+        path="/patrimonio/update/:id"
+        element={
+          <PermissionProtect
+            element={<PatrimonioUpdate />}
+            moduleName="patrimonio"
+            actions={["update", "delete", "read"]}
+          />
+        }
+      />
+      <Route
+        path="/patrimonio/list"
+        element={
+          <PermissionProtect
+            element={<PatrimonioList />}
+            moduleName="patrimonio"
             actions={["read", "create", "update", "delete"]}
           />
         }

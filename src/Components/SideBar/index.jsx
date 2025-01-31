@@ -101,6 +101,17 @@ export default function SideBar() {
                 }}
               />
             )}
+            {(checkAction("filiados_cadastrar") || checkAction("beneficios_criar") || checkAction("beneficios_visualizar") || checkAction("beneficios_editar")) && (
+              <SideButton
+                // hidden={checkModule(permissions, "finance") ? "flex" : "none"}
+                key="patrimonios"
+                text="PATRIMONIOS"
+                onClick={() => {
+                  navigate("/patrimonio/list");
+                  setIsSideBarOpen(false);
+                }}
+              />
+            )}
             {(checkAction("beneficios_visualizar") || checkAction("beneficios_criar") || checkAction("beneficios_editar") ) && (
               <SideButton
                 // hidden={checkModule(permissions, "benefits") ? "flex" : "none"}
