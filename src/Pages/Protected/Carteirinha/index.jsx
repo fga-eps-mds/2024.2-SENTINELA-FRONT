@@ -21,7 +21,7 @@ const Carteirinha = () => {
   useEffect(() => {
     const fetchMembership = async () => {
       try {
-        const response = await fetch("http://localhost:3001/membership", {
+        const response = await fetch("http://localhost:3001/logged-membership", {
           headers: {
             Authorization: `Bearer ${getToken()}`,
           },
