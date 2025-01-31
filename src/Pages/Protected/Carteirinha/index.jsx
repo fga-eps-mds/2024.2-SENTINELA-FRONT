@@ -27,7 +27,7 @@ const Carteirinha = () => {
           },
         });
         const data = await response.json();
-        setMembershipData(data[0]);
+        setMembershipData(data);
       } catch (error) {
         console.error("Erro ao buscar os dados do membership:", error);
       }
@@ -72,9 +72,9 @@ const Carteirinha = () => {
   };
 
   // Render loading state
-  if (!membershipData) {
-    return <div>Carregando dados...</div>;
-  }
+    if (!membershipData) {
+      return <div>Carregando dados...</div>;
+    }
 
   const { name, birthDate, cpf, expeditionDate, hiringDate } = membershipData;
 
