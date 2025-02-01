@@ -12,8 +12,8 @@ import FieldText from "../../../../Components/FieldText";
 import { APIBank } from "../../../../Services/BaseService";
 import { checkAction } from "../../../../Utils/permission";
 
-export default function FinancialList() {
-  const [movements, setMovements] = useState([]);
+export default function patrimonioList() {
+  const [patrimonio, setpatrimonio] = useState([]);
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
   const [dataInicio, setDataInicio] = useState(null);
@@ -24,9 +24,9 @@ export default function FinancialList() {
   const storagedUser = JSON.parse(localStorage.getItem("@App:user"));
 
   useEffect(() => {
-    const fetchMovements = async () => {
+    const fetchpatrimonio = async () => {
       try {
-        const response = await APIBank.get(`/financialMovements`, {
+        const response = await APIBank.get(`/patrimonio`, {
           headers: {
             Authorization: `Bearer ${storagedUser.token}`,
           },
@@ -34,43 +34,27 @@ export default function FinancialList() {
 
         const data = response.data;
         if (Array.isArray(data)) {
-          setMovements(data);
+          setpatrimonio(data);
         } else {
           console.error("Os dados recebidos não são um array.");
         }
       } catch (error) {
-        console.error("Erro ao buscar movimentos financeiros:", error);
+        console.error("Erro ao buscar patrimonios:", error);
       }
     };
 
-    fetchMovements();
+    fetchpatrimonio();
   }, []);
 
   const handleSubmit = () => {
-    navigate("/movimentacoes/criar");
+    navigate("/patrimonio/create");
   };
 
-  const handleItemClick = (movement) => {
-    navigate(`/movimentacoes/visualizar/${movement._id}`, {
-      state: { movementId: movement._id },
+  const handleItemClick = (patrimonio) => {
+    navigate(`/patrimonio/visualizar/${patrimonio._id}`, {
+      state: { patrimonioId: patrimonio._id },
     });
   };
-
-  const filteredMovements = movements.filter((movement) => {
-    const isDocumentTypeMatch = movement.tipoDocumento
-      .toLowerCase()
-      .includes(search.toLowerCase());
-
-    const movementDate = new Date(movement.datadeVencimento);
-    const startDate = dataInicio ? new Date(dataInicio) : null;
-    const finalDate = dataFinal ? new Date(dataFinal) : null;
-
-    const isDateInRange =
-      (!startDate || movementDate >= startDate) &&
-      (!finalDate || movementDate <= finalDate);
-
-    return isDocumentTypeMatch && isDateInRange;
-  });
 
   return (
     <section className="container-financialist">
@@ -79,7 +63,7 @@ export default function FinancialList() {
           <h1>Lista de movimentações</h1>
           {canCreate && (
             <PrimaryButton
-              text="Cadastrar movimentação"
+              text="Cadastrar patrimonio"
               onClick={handleSubmit}
             />
           )}
@@ -87,7 +71,7 @@ export default function FinancialList() {
 
         <div className="search-box-financialList">
           <FieldText
-            label="Pesquisar movimentação"
+            label="Pesquisar patrimonio"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
@@ -107,8 +91,8 @@ export default function FinancialList() {
         </div>
 
         <List>
-          {filteredMovements.map((movement, index) => (
-            <div key={movement._id}>
+          {patrimonio.map((patrimonio, index) => (
+            <div key={patrimonio._id}>
               <ListItem>
                 <ListItemButton
                   className="list-item-financialList"
@@ -122,19 +106,18 @@ export default function FinancialList() {
                   onMouseLeave={(e) =>
                     (e.currentTarget.style.backgroundColor = "transparent")
                   }
-                  onClick={() => handleItemClick(movement)}
+                  onClick={() => handleItemClick(patrimonio)}
                 >
                   <ListItemText
-                    primary={movement.tipoDocumento}
+                    primary={patrimonio.nome}
                     secondary={`Data de vencimento: ${new Date(
-                      movement.datadeVencimento
+                      patrimonio.etiqueta
                     ).toLocaleDateString()}`}
                   />
-                  <ListItemText secondary={movement.descricao} />
+                  <ListItemText secondary={patrimonio.localizacao} />
                 </ListItemButton>
               </ListItem>
 
-              {index < filteredMovements.length - 1 && <Divider />}
             </div>
           ))}
         </List>
