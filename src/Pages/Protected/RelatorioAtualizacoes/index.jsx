@@ -123,8 +123,8 @@ const DataImport = () => {
                     const transaction = {
                         name: row["servidor(nome)"] || "", // Nome do servidor
                         cpf: row["cpf_servidor"] || "", // CPF do servidor
-                        previousStatus: row["status_parc_holerite"] || "", // Status anterior
-                        currentStatus: row["status_atual_parc"] || "", // Status atual
+                        previousStatus: row["status_atual_parc"] || "", // Status anterior
+                        currentStatus: row["status_parc_holerite"] || "", // Status atual
                     };
     
                     console.log("Transação mapeada:", transaction);

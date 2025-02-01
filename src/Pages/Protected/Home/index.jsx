@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../../../Context/auth";
 import { getUsers } from "../../../Services/userService";
+import { getBenefitsForm} from "../../../Services/benefitsService";
 import FieldSelect from "../../../Components/FieldSelect";
 import "./index.css";
 import { Doughnut } from "react-chartjs-2";
@@ -16,27 +17,81 @@ const Home = () => {
   const [isSind, setIsSind] = useState("Sindicalizado");
   const [lotacao, setLotacao] = useState("");
   const [orgao, setOrgao] = useState("");
+  const [beneficio, setBeneficio] = useState([]);
 
   // Opções de filtro
   const filiadosOptions = ["Sindicalizado", "Não Sindicalizado"];
 
   useEffect(() => {
-    const fetchUsers = async () => {
+    const fetchAllData = async () => {
       try {
-        const response = await getUsers();
-        if (Array.isArray(response)) {
-          const normalizedUsers = normalizeUserData(response);
-          setData(normalizedUsers);
+        // Busca usuários e benefícios em paralelo
+        const [usersResponse, benefitsResponse] = await Promise.all([
+          getUsers(),
+          getBenefitsForm()
+        ]);
+  
+        // Processa usuários
+        if (Array.isArray(usersResponse)) {
+          setData(normalizeUserData(usersResponse));
         } else {
-          console.error("Os dados recebidos não são um array.");
+          console.error("Dados de usuários não são um array");
         }
+  
+        // Processa benefícios
+        if (Array.isArray(benefitsResponse)) {
+          setBeneficio(benefitsResponse);
+        } else {
+          console.error("Dados de benefícios não são um array");
+        }
+  
       } catch (error) {
-        console.error("Erro ao buscar usuários:", error);
+        console.error("Erro ao carregar dados:", error);
       }
     };
-
-    fetchUsers();
+  
+    fetchAllData();
   }, []);
+
+  // useEffect(() => {
+  //   const fetchUsers = async () => {
+  //     try {
+  //       const response = await getUsers();
+  //       if (Array.isArray(response)) {
+  //         const normalizedUsers = normalizeUserData(response);
+  //         setData(normalizedUsers);
+  //       } else {
+  //         console.error("Os dados recebidos não são um array.");
+  //       }
+  //     } catch (error) {
+  //       console.error("Erro ao buscar usuários:", error);
+  //     }
+  //   };
+
+  //   fetchUsers();
+  // }, []);
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       // carrega usuários
+  //       const usersResponse = await getUsers();
+  //       if (Array.isArray(usersResponse)) {
+  //         setData(normalizeUserData(usersResponse));
+  //       }
+
+  //       // Carrega benefícios
+  //       const benefitsResponse = await getBenefitsForm();
+  //       if (Array.isArray(benefitsResponse)) {
+  //         setBenefitsData(benefitsResponse);
+  //       }
+  //     } catch (error) {
+  //       console.error("Erro ao carregar dados:", error);
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, []);
 
   function normalizeUserData(users) {
     return users.map((user) => {
@@ -93,6 +148,7 @@ const Home = () => {
       return user.status === true && (orgao === "" || user.orgao === orgao);
     });
   };
+
 
   // Dados filtrados para cada gráfico
   const filteredDataByLotacao = getFilteredDataByLotacao();
@@ -160,12 +216,59 @@ const Home = () => {
     },
   };
 
+  const chartBenefits = {
+    labels: beneficio.map(b => b.nome),
+    datasets: [
+      {
+        label: "Benefícios Utilizados",
+        data: beneficio.map(b => b.usuarios?.length || 0), // Usa optional chaining
+        backgroundColor: [
+          '#FF6384', '#36A2EB', '#FFCE56', 
+          '#4BC0C0', '#9966FF'
+        ],
+        borderWidth: 4,
+      }
+    ]
+  };
+  
+  const optionsBenefits = {
+    plugins: {
+      tooltip: {
+        callbacks: {
+          label: (context) => {
+            const label = context.label || '';
+            const value = context.raw || 0;
+            const total = context.dataset.data.reduce((a, b) => a + b, 0);
+            const percentage = ((value / total) * 100).toFixed(1) + '%';
+            
+            return `${label}: ${value} usuários (${percentage})`;
+          }
+        }
+      }
+    }
+  };
+
+  // const getFilteredBenefits = () => {
+  //   return beneficio.map(beneficio => ({
+  //     ...beneficio,
+  //     totalUsuarios: beneficio.usuarios.filter(usuario => 
+  //       usuario.status === true && // Filtro por status
+  //       (lotacao === "" || usuario.lotacao === lotacao)
+  //     ).length
+  //   }));
+  // };
+  
+  // // atualiza o gráfico
+  // data: getFilteredBenefits().map(b => b.totalUsuarios)
+
   // Função para limpar todos os filtros
   const clearFilters = () => {
     setIsSind("Sindicalizado");
     setLotacao("");
     setOrgao("");
+    setBeneficio([]);
   };
+
 
   return (
     user && (
@@ -227,6 +330,17 @@ const Home = () => {
               options={orgaolist}
               value={orgao}
             />
+          </div>
+          <div className="donut-box2">
+            <h1>Distribuição de Benefícios</h1>
+            {beneficio.length > 0 ? (
+              <Doughnut data={chartBenefits} options={optionsBenefits} />
+            ) : (
+              <div className="no-data">
+                <p>Nenhum dado de benefícios disponível</p>
+                <p>Verifique a conexão com o servidor</p>
+              </div>
+            )}
           </div>
         </div>
 

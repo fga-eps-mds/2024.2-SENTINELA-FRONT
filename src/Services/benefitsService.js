@@ -15,6 +15,7 @@ export async function userLogin(email, password) {
 
 export const createBenefitsForm = async (benefitsData) => {
   try {
+    
     const storagedUser = localStorage.getItem("@App:user");
     const storagedToken = localStorage.getItem("@App:token");
     let user = null;
