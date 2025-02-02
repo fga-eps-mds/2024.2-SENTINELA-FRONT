@@ -21,13 +21,13 @@ const Carteirinha = () => {
   useEffect(() => {
     const fetchMembership = async () => {
       try {
-        const response = await fetch("http://localhost:3001/membership", {
+        const response = await fetch("http://localhost:3001/logged-membership", {
           headers: {
             Authorization: `Bearer ${getToken()}`,
           },
         });
         const data = await response.json();
-        setMembershipData(data[0]);
+        setMembershipData(data);
       } catch (error) {
         console.error("Erro ao buscar os dados do membership:", error);
       }
@@ -72,9 +72,9 @@ const Carteirinha = () => {
   };
 
   // Render loading state
-  if (!membershipData) {
-    return <div>Carregando dados...</div>;
-  }
+    if (!membershipData) {
+      return <div>Carregando dados...</div>;
+    }
 
   const { name, birthDate, cpf, expeditionDate, hiringDate } = membershipData;
 
