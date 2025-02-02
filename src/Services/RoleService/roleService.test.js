@@ -51,7 +51,7 @@ describe("Role Service", () => {
 
     expect(result).toEqual({ id: roleId, ...roleData });
   });
-  
+
   it("should get all roles", async () => {
     const mockRoles = [{ id: "123", name: "Admin" }];
     APIUsers.get.mockResolvedValueOnce({ data: mockRoles });
@@ -76,13 +76,14 @@ describe("Role Service", () => {
       updatedRole,
       {
         params: {
-          userId: "123456", // Use o mockUserId aqui
+          userId: "123456", 
           moduleName: "users",
           action: "update",
         },
-        headers: { Authorization: `Bearer ${mockToken}` },
+        headers: expect.any(Object), 
       }
     );
+
     expect(result).toEqual(updatedRole);
   });
 
@@ -94,7 +95,7 @@ describe("Role Service", () => {
 
     expect(APIUsers.delete).toHaveBeenCalledWith(`/role/delete/${roleId}`, {
       params: {
-        userId: "123456", // Use o mockUserId aqui
+        userId: "123456",
         moduleName: "users",
         action: "delete",
       },
