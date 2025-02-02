@@ -1,4 +1,5 @@
 import { APIBank } from "../BaseService";
+import { getToken } from "../Functions/loader";
 
 const storagedToken = localStorage.getItem("@App:token");
 let token = null;
@@ -22,7 +23,7 @@ export const createpatrimonio = async (patrimonioData) => {
       { patrimonioData },
       {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${getToken()}`,
         },
       }
     );
@@ -46,7 +47,7 @@ export const getpatrimonio = async () => {
 
     const response = await APIBank.get("/patrimonio", {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${getToken()}`,
       },
     });
     return response.data;
@@ -63,7 +64,7 @@ export const getpatrimonioById = async (id) => {
 
     const response = await APIBank.get(`/patrimonio/${id}`, {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${getToken()}`,
       },
     });
     return response.data;
@@ -86,7 +87,7 @@ export const updatepatrimonioById = async (
       { patrimonioData },
       {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${getToken()}`,
         },
       }
     );
@@ -108,7 +109,7 @@ export const deletepatrimonioById = async (id) => {
 
     await APIBank.delete(`/patrimonio/delete/${id}`, {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${getToken()}`,
       },
     });
     console.log(`Patrimonio com ID ${id} deletado com sucesso.`);

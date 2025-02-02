@@ -12,6 +12,7 @@ import { getSupplierForm } from "../../../../Services/supplierService";
 import { useNavigate } from "react-router-dom";
 import { handleCpfCnpjInput } from "../../../../Utils/validators";
 import { getToken } from "../../../../Services/Functions/loader";
+import { APIBank } from "../../../../Services/BaseService";
 
 
 export default function patrimonioCreate() {
@@ -27,28 +28,6 @@ export default function patrimonioCreate() {
   const maxDescricaoLength = 130;
   const maxNumerodeEtiqueta = 9999;
 
-  useEffect(() => {
-    const fetchpatrimonio = async () => {
-      try {
-        const response = await APIBank.get(`/patrimonio`, {
-          headers: {
-            Authorization: `Bearer ${getToken()}`,
-          },
-        });
-
-        const data = response.data;
-        if (Array.isArray(data)) {
-          setMovements(data);
-        } else {
-          console.error("Os dados recebidos não são um array.");
-        }
-      } catch (error) {
-        console.error("Erro ao buscar patrimonio", error);
-      }
-    };
-
-    fetchpatrimonio ();
-  }, []);
 
   const handleCurrencyInput = (value, setValue) => {
     // Remove qualquer caractere que não seja número
@@ -89,7 +68,7 @@ export default function patrimonioCreate() {
   const handleChangeNumerodeEtiqueta = (event) => {
     const { value } = event.target;
     if (value.length <= maxNumerodeEtiqueta) {
-      setNumerodeSerie(value);
+      setNumerodeEtiqueta(value);
     }
   };
 
@@ -190,12 +169,6 @@ export default function patrimonioCreate() {
             onChange={handleChangeNumerodeEtiqueta}
             value={numerodeEtiqueta}
           />
-        </div>
-
-        <div>
-          <small>
-            {descricao.length}/{maxDescricaoLength} caracteres
-          </small>
         </div>
         <PrimaryButton text="Cadastrar" onClick={handleSubmit} />
         <Modal

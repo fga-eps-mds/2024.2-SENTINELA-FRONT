@@ -11,6 +11,7 @@ import DataSelect from "../../../../Components/DataSelect";
 import FieldText from "../../../../Components/FieldText";
 import { APIBank } from "../../../../Services/BaseService";
 import { checkAction } from "../../../../Utils/permission";
+import { getToken } from "../../../../Services/Functions/loader";
 
 export default function patrimonioList() {
   const [patrimonio, setpatrimonio] = useState([]);
@@ -28,7 +29,7 @@ export default function patrimonioList() {
       try {
         const response = await APIBank.get(`/patrimonio`, {
           headers: {
-            Authorization: `Bearer ${storagedUser.token}`,
+            Authorization: `Bearer ${getToken()}`,
           },
         });
 
@@ -60,7 +61,7 @@ export default function patrimonioList() {
     <section className="container-financialist">
       <div className="forms-container-financialList">
         <div className="double-box-financialList">
-          <h1>Lista de movimentações</h1>
+          <h1>Lista de patrimônios</h1>
           {canCreate && (
             <PrimaryButton
               text="Cadastrar patrimonio"
