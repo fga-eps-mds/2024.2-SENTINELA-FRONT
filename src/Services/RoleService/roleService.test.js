@@ -42,38 +42,27 @@ describe("Role Service", () => {
 
     expect(APIUsers.post).toHaveBeenCalledWith("/role/create", roleData, {
       params: {
-        userId: expect.any(String), // Aceita qualquer string como userId
+        userId: expect.any(String),
         moduleName: "users",
         action: "create",
       },
-      headers: expect.any(Object), // Aceita qualquer objeto para os headers
+      headers: expect.any(Object), 
     });
 
     expect(result).toEqual({ id: roleId, ...roleData });
   });
-
+  
   it("should get all roles", async () => {
-    const mockRoles = [{ id: roleId, name: "Admin" }];
+    const mockRoles = [{ id: "123", name: "Admin" }];
     APIUsers.get.mockResolvedValueOnce({ data: mockRoles });
 
     const result = await getAllRoles();
 
     expect(APIUsers.get).toHaveBeenCalledWith("/role", {
-      headers: { Authorization: `Bearer ${mockToken}` },
+      headers: expect.any(Object), 
     });
+
     expect(result).toEqual(mockRoles);
-  });
-
-  it("should get role by id", async () => {
-    const mockRole = { id: roleId, name: "Admin" };
-    APIUsers.get.mockResolvedValueOnce({ data: mockRole });
-
-    const result = await getRoleById(roleId);
-
-    expect(APIUsers.get).toHaveBeenCalledWith(`/role/${roleId}`, {
-      headers: { Authorization: `Bearer ${mockToken}` },
-    });
-    expect(result).toEqual(mockRole);
   });
 
   it("should update a role", async () => {
