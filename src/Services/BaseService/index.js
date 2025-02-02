@@ -28,5 +28,18 @@ const APIBenefits = axios.create({
     Authorization: `Bearer ${getToken()}`,
   },
 });
+const addAuthInterceptor = (apiInstance) => {
+  apiInstance.interceptors.request.use((config) => {
+    const token = getToken();
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  });
+};
 
+// Aplica o interceptor a todas as instâncias do axios
+addAuthInterceptor(APIUsers);
+addAuthInterceptor(APIBank);
+addAuthInterceptor(APIBenefits);
 export { APIUsers, APIBank, APIBenefits };
