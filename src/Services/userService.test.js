@@ -158,27 +158,31 @@ describe("User Service", () => {
       status: "active",
       role: "admin",
     };
-
+  
     // Mock da resposta do post
     APIUsers.post.mockResolvedValueOnce({
       data: { id: "1", name: "New User" },
     });
-
+  
     await createUser(userData); // Chama a função para criar o usuário
-
+  
     // Verifica se a chamada foi feita corretamente
-    expect(APIUsers.post).toHaveBeenCalledWith("/signup", {
-      ...userData,
-      params: {
-        userId: `${mockUser._id}`, // Verifica o ID do usuário
-        moduleName: "users",
-        action: "create",
+    expect(APIUsers.post).toHaveBeenCalledWith(
+      "/signup", 
+      {
+        ...userData,
+        params: {
+          userId: `${mockUser._id}`, // Verifica o ID do usuário
+          moduleName: "users",
+          action: "create",
+        },
       },
-      headers: {
-        Authorization: `Bearer ${mockToken}`, // Verifica o token
-      },
-    });
+      { 
+        headers: { Authorization: `Bearer ${mockToken}` } // Verifica o token
+      }
+    );
   });
+  
 
   it("should log and return undefined when API call fails in createUser", async () => {
     APIUsers.post.mockRejectedValueOnce(new Error("API error"));
