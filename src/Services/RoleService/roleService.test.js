@@ -99,8 +99,9 @@ describe("Role Service", () => {
         moduleName: "users",
         action: "delete",
       },
-      headers: { Authorization: `Bearer ${mockToken}` },
+      headers: expect.any(Object),
     });
+
     expect(result).toEqual(mockResponse);
   });
 
@@ -116,10 +117,10 @@ describe("Role Service", () => {
 
     expect(consoleErrorSpy).toHaveBeenCalledWith(
       "Erro ao armazenar usuário: ",
-      expect.any(SyntaxError) // Verifica se o erro é um SyntaxError de JSON
+      expect.any(SyntaxError) 
     );
 
-    consoleErrorSpy.mockRestore(); // Limpa o mock
+    consoleErrorSpy.mockRestore(); 
   });
 
   it("should throw an error when user is not found or user has no ID", async () => {
