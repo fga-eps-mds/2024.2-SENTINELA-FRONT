@@ -17,5 +17,6 @@ export default defineConfig({
       : [],
     outputFile: "coverage/coverage.xml",
     testTimeout: 30000,
+    include: ['**/*.test.{js,jsx,ts,tsx}', '**/*.spec.{js,jsx,ts,tsx}'],
   },
 });

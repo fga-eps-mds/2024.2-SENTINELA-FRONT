@@ -81,7 +81,7 @@ export default function SideBar() {
             />
             {(checkAction("filiados_cadastrar") || checkAction("usuarios_visualizar") || checkAction("perfis_visualizar") || checkAction("filiados_cadastrar") || checkAction("orgaos_visualizar") || checkAction("associados_visualizar"))&& (
               <SideButton
-                // hidden={checkModule(permissions, "users") ? "flex" : "none"}
+{/*                  hidden={checkModule(permissions, "users") ? "flex" : "none"} */}
                 key="filiacao"
                 text="CADASTROS"
                 onClick={() => {
@@ -92,7 +92,7 @@ export default function SideBar() {
             )}
             {(checkAction("filiados_cadastrar") || checkAction("beneficios_criar") || checkAction("beneficios_visualizar") || checkAction("beneficios_editar")) && (
               <SideButton
-                // hidden={checkModule(permissions, "finance") ? "flex" : "none"}
+{/*                 hidden={checkModule(permissions, "finance") ? "flex" : "none"} */}
                 key="financeiro"
                 text="FINANCEIRO"
                 onClick={() => {
@@ -114,7 +114,7 @@ export default function SideBar() {
             )}
             {(checkAction("beneficios_visualizar") || checkAction("beneficios_criar") || checkAction("beneficios_editar") ) && (
               <SideButton
-                // hidden={checkModule(permissions, "benefits") ? "flex" : "none"}
+{/*                 hidden={checkModule(permissions, "benefits") ? "flex" : "none"} */}
                 key="beneficios"
                 text="BENEFÍCIOS"
                 onClick={() => {
@@ -144,7 +144,7 @@ export default function SideBar() {
             )}
             {checkAction("filiado_visualizar_carteirinha") && (
               <SideButton
-                // hidden={checkModule(permissions, "users") ? "flex" : "none"}
+{/*                 hidden={checkModule(permissions, "users") ? "flex" : "none"} */}
                 key="carteirinha"
                 text="CARTEIRINHA"
                 onClick={() => {
@@ -155,7 +155,7 @@ export default function SideBar() {
             )}
             {checkAction("sindicalizado_visualizar_status") && (
               <SideButton
-                // hidden={checkModule(permissions, "users") ? "flex" : "none"}
+{/*                 hidden={checkModule(permissions, "users") ? "flex" : "none"} */}
                 key="Verificarsindicalizado"
                 text="VERIFICAR SINDICALIZADO"
                 onClick={() => {
