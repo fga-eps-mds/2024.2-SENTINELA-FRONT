@@ -53,7 +53,7 @@ export default function patrimonioCreate() {
 
     fetchpatrimonio();
   }, []);
-  // Função para encontrar o próximo número de etiqueta disponível, levando em conta exclusões
+ /*  Função para encontrar o próximo número de etiqueta disponível, levando em conta exclusões
   const findNextEtiqueta = () => {
     // Ordena o array de patrimônios pela etiqueta
     const etiquetas = patrimonio
@@ -71,18 +71,16 @@ export default function patrimonioCreate() {
       nextEtiqueta++;
     }
     return nextEtiqueta;
-  };
-
+  }; 
+*/
   // Atualiza o número de etiqueta
   useEffect(() => {
-    if (patrimonio.length > 0) {
-      const nextEtiqueta = findNextEtiqueta();
-      setNumerodeEtiqueta(nextEtiqueta); // Atualiza com o próximo número disponível
+    if (Array.isArray(patrimonio) && patrimonio.length > 0) {
+      setNumerodeEtiqueta(patrimonio[patrimonio.length - 1].numerodeEtiqueta + 1);
     } else {
-      setNumerodeEtiqueta(1); // Se não houver patrimônios, começa com a etiqueta 1
+      setNumerodeEtiqueta(1); // Ou qualquer número inicial desejado
     }
-  }, [patrimonio]);  
-
+  }, [patrimonio]);
   const handleCurrencyInput = (value, setValue) => {
     // Remove qualquer caractere que não seja número
     const numericValue = value.replace(/\D/g, "");
@@ -224,7 +222,7 @@ export default function patrimonioCreate() {
 
           <FieldText
             label="Etiqueta de Patrimônio"
-            onChange={(newValue) => findNextEtiqueta()}
+            onChange={(newValue) => (patrimonio.numerodeEtiqueta[patrimonio.length - 1] + 1)}
             value={numerodeEtiqueta.toString().padStart(4, '0')}
           />
         </div>
