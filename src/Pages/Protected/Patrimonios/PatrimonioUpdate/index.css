@@ -22,9 +22,14 @@
   }
   .double-buttons-mov button {
     flex: 1; /* Faz com que os botões ocupem o espaço disponível igualmente */
-    margin-top: 0;
+    margin-top: 3%;
     margin-bottom: 0.7rem;
     height: 40px;
+  }
+
+  .historico-container {
+    margin-top: 0;
+    margin-bottom: 0.7rem;
   }
 
   .forms-container > h1 {
@@ -54,11 +59,21 @@
   .container {
     display: grid;
   }
+
+  .historico-container {
+    margin-top: 0;
+    margin-bottom: 0.7rem;
+  }
+
 }
 
 @media screen and (min-width: 700px) {
   .container {
     display: flex;
+  }
+
+  .historico-container {
+    margin-bottom: 1rem;
   }
   .profile-status {
     font-size: 18px;
@@ -123,7 +138,7 @@
 
   .double-buttons-mov button {
     flex: 1; /* Faz com que os botões ocupem o espaço disponível igualmente */
-    margin-top: 0;
+    margin-top: 3%;
     margin-bottom: 0;
     height: 40px;
   }

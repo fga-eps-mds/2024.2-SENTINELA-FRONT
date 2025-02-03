@@ -259,7 +259,7 @@ export default function patrimonioCreate() {
             label="Patrimonio Doado"
             checked={doacao}
             onCheckboxChange={(e) => setDoacao(e.target.checked)}
-            disabled={false}
+            disabled={true}
           />
         </div>
         <PrimaryButton text="Cadastrar" onClick={handleSubmit} />

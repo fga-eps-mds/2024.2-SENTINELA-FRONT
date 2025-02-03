@@ -19,6 +19,8 @@ import { handleCpfCnpjInput } from "../../../../Utils/validators";
 import { checkAction } from "../../../../Utils/permission";
 import { getToken } from "../../../../Services/Functions/loader";
 import FieldTextCheckbox from "../../../../Components/FieldTextCheckbox";
+import { APIBank } from "../../../../Services/BaseService";
+import { getpatrimonioLocalizacao, createpatrimonioLocalizacao, deletepatrimonioLocalizacaoById } from "../../../../Services/patrimonioLocalizacaoService";
 
 export default function FinancialUpdate() {
   const [nome, setNome] = useState("");
@@ -32,6 +34,11 @@ export default function FinancialUpdate() {
   const [showSaveModal, setShowSaveModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showDeletedModal, setShowDeletedModal] = useState(false);
+  const [patrimonioLocalizacao, setpatrimonioLocalizacao] = useState([]);
+  const [DeLocalizacao, setDeLocalizacao] = useState("");
+  const [mostrar, setMostrar] = useState(false);
+  const [mostrarHistorico, setMostrarHistorico] = useState(false);
+
   const maxDescricaoLength = 130;
   const canUpdate = checkAction("update");
   const canDelete = checkAction("delete");
@@ -54,6 +61,7 @@ export default function FinancialUpdate() {
           setDatadeCadastro(data.datadeCadastro || "");
           setDoacao(data.doacao || (false));
           setLocalizacao(data.localizacao || "");
+          setDeLocalizacao(data.localizacao || "");
           setNumerodeEtiqueta(data.numerodeEtiqueta || "");
           setValor(data.valor ? data.valor.toString() : "0.00");
           setNumerodeSerie(data.numerodeSerie) || "";
@@ -65,6 +73,29 @@ export default function FinancialUpdate() {
 
     fetchpatrimonio();
   }, [patrimonioId]);
+
+  useEffect(() => {
+    const fetchpatrimonioLocalizacao = async () => {
+      try {
+        const response = await APIBank.get(`/patrimonioLocalizacao`, {
+          headers: {
+            Authorization: `Bearer ${getToken()}`,
+          },
+        });
+
+        const data = response.data;
+        if (Array.isArray(data)) {
+          setpatrimonioLocalizacao(data);
+        } else {
+          console.error("Os dados recebidos não são um array.");
+        }
+      } catch (error) {
+        console.error("Erro ao buscar patrimoniosLocalizacao:", error);
+      }
+    };
+
+    fetchpatrimonioLocalizacao();
+  }, []);
 
   const handleSave = async () => {
     setShowSaveModal(false);
@@ -79,6 +110,26 @@ export default function FinancialUpdate() {
         datadeCadastro,
         descricao,
     };
+
+    if(updatedData.localizacao !== DeLocalizacao)
+    {
+      try {
+        const updatedDataLocalizacao = {
+          numerodeEtiqueta: updatedData.numerodeEtiqueta,
+          de: DeLocalizacao,
+          para: updatedData.localizacao,
+          data: new Date(),
+      };
+      await createpatrimonioLocalizacao(updatedDataLocalizacao, {
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      });
+    }catch (error) {
+      console.error("Erro ao salvar alterações de localizacao:", error);
+    }
+
+      };
       await updatepatrimonioById(patrimonioId, updatedData,  {
         headers: {
           Authorization: `Bearer ${getToken()}`,
@@ -93,6 +144,11 @@ export default function FinancialUpdate() {
   const handleDelete = async () => {
     try {
       await deletepatrimonioById(patrimonioId);
+      for(let i = 0; i < patrimonioLocalizacao.length; i++)
+      {
+        if(patrimonioLocalizacao[i].numerodeEtiqueta === numerodeEtiqueta){
+        await deletepatrimonioLocalizacaoById(patrimonioLocalizacao[i]._id);}
+      }
       setShowDeletedModal(true);
     } catch (error) {
       console.error("Erro ao deletar patrimonio:", error);
@@ -134,16 +190,15 @@ export default function FinancialUpdate() {
     setNumerodeSerie(event.target.value);
   };
 
-  const handleChangePagamento = (event) => {
-    console.log("Forma de Pagamento:", event.target.value);
-    setPagamento(event.target.value);
-  };
-
   const handleChangeDescricao = (event) => {
     const { value } = event.target;
     if (value.length <= maxDescricaoLength) {
       setDescricao(value);
     }
+  };
+
+  const handleShowHistoric = () => {
+  setMostrarHistorico(!mostrarHistorico);
   };
 
   return (
@@ -222,13 +277,35 @@ export default function FinancialUpdate() {
             label="Patrimonio Doado"
             checked={doacao}
             onCheckboxChange={(e) => setDoacao(e.target.checked)}
-            disabled={false}
+            disabled={true}
           />
-        </div><div>
-          <small>
-            {descricao.length}/{maxDescricaoLength} caracteres
-          </small>
         </div>
+        <div className="Botao-historico">
+  <PrimaryButton text={mostrarHistorico ? "Esconder Histórico" : "Mostrar Histórico de Movimentações"} onClick={handleShowHistoric} />
+</div>
+
+            {/* Histórico de movimentações */}
+            {mostrarHistorico && (
+              <div className="historico-container">
+                <h3>Histórico de Movimentações</h3>
+                <ul>
+                {patrimonioLocalizacao.length > 0 ? (
+                patrimonioLocalizacao
+                .filter(item => item.numerodeEtiqueta === numerodeEtiqueta) // Filtra pelos itens com a condição
+                .map((item, index) => (
+                  <li key={index}>
+                    <strong>Data:</strong> {dayjs(item.data).format("DD/MM/YYYY HH:mm")}<br />
+                    <strong>De:</strong> {item.de} ➝ <strong>Para:</strong> {item.para}
+                  </li>
+                ))
+            ) : (
+              <p>Nenhum histórico encontrado.</p>
+            )}
+                </ul>
+              </div>
+            )}
+
+
         <div className="double-buttons-mov">
           {canDelete && (
             <SecondaryButton
