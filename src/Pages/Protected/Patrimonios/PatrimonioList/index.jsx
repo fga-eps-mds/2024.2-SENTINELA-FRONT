@@ -9,6 +9,7 @@ import Divider from "@mui/material/Divider";
 import ListItemText from "@mui/material/ListItemText";
 import DataSelect from "../../../../Components/DataSelect";
 import FieldText from "../../../../Components/FieldText";
+import FieldSelect from "../../../../Components/FieldSelect";
 import { APIBank } from "../../../../Services/BaseService";
 import { checkAction } from "../../../../Utils/permission";
 import { getToken } from "../../../../Services/Functions/loader";
@@ -16,9 +17,9 @@ import { getToken } from "../../../../Services/Functions/loader";
 export default function patrimonioList() {
   const [patrimonio, setpatrimonio] = useState([]);
   const [search, setSearch] = useState("");
+  const [searchEtiqueta, setSearchEtiqueta] = useState("");
   const navigate = useNavigate();
-  const [dataInicio, setDataInicio] = useState(null);
-  const [dataFinal, setDataFinal] = useState(null);
+  const [loc, setLocalizacao] = useState(null)
   // const permissions = usePermissions();
   const canCreate = checkAction("create");
 
@@ -57,6 +58,26 @@ export default function patrimonioList() {
     });
   };
 
+  const filteredPatrimonio = patrimonio.filter((patrimonio) => {
+    const isDocumentTypeMatch = patrimonio.nome
+    .toLowerCase()
+    .includes(search.toLowerCase());
+      // Formata numerodeEtiqueta para 4 dígitos com zero à esquerda
+    const formattedEtiqueta = patrimonio.numerodeEtiqueta
+    .toString()
+    .padStart(4, '0');  // Converte para string e adiciona zeros à esquerda
+    const isEtiqueta = formattedEtiqueta.includes(searchEtiqueta);
+
+
+    const movementDate = patrimonio.localizacao;
+    const Loc = loc
+
+    const isDateInRange =
+      (!Loc || movementDate === Loc);
+
+    return isDocumentTypeMatch && isEtiqueta && isDateInRange;
+  });
+
   return (
     <section className="container-financialist">
       <div className="forms-container-financialList">
@@ -70,29 +91,46 @@ export default function patrimonioList() {
           )}
         </div>
 
+        <div className="double-box-financialList">
         <div className="search-box-financialList">
           <FieldText
-            label="Pesquisar patrimonio"
+            label="Pesquisar patrimonio por nome"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
         </div>
+        <div className="search-box-patrimonioList">
+          <FieldText
+            label="Pesquisar patrimonio por etiqueta"
+            value={searchEtiqueta}
+            onChange={(e) => setSearchEtiqueta(e.target.value)}
+          />
+        </div>
+        </div>
 
         <div className="date-box-financialList">
-          <DataSelect
-            label="Data inicial"
-            value={dataInicio}
-            onChange={(newValue) => setDataInicio(newValue)}
-          />
-          <DataSelect
-            label="Data final"
-            value={dataFinal}
-            onChange={(newValue) => setDataFinal(newValue)}
+    
+          <FieldSelect
+            label="Localização"
+            onChange={(e) => setLocalizacao(e.target.value)}
+            value={loc}
+            options={[
+              "",
+              "SAlA DE COMUNICAÇÃO",
+              "JURÍDICO",
+              "PRESIDÊNCIA",
+              "SALA DE REUNIÃO",
+              "RECEPÇÃO",
+              "COPA",
+              "SALA DE PODCAST",
+              "RECEPÇÃO DO PODCAST",
+              "OUTROS",
+            ]}
           />
         </div>
 
         <List>
-          {patrimonio.map((patrimonio, index) => (
+          {filteredPatrimonio.map((patrimonio, index) => (
             <div key={patrimonio._id}>
               <ListItem>
                 <ListItemButton
@@ -111,14 +149,12 @@ export default function patrimonioList() {
                 >
                   <ListItemText
                     primary={patrimonio.nome}
-                    secondary={`Data de vencimento: ${new Date(
-                      patrimonio.etiqueta
-                    ).toLocaleDateString()}`}
+                    secondary={'Numero de Etiqueta: ' + patrimonio.numerodeEtiqueta.toString().padStart(4, '0')}
                   />
-                  <ListItemText secondary={patrimonio.localizacao} />
+                  <ListItemText secondary={'Localização:' + patrimonio.localizacao} />
                 </ListItemButton>
               </ListItem>
-
+              {index < filteredPatrimonio.length - 1 && <Divider />}
             </div>
           ))}
         </List>

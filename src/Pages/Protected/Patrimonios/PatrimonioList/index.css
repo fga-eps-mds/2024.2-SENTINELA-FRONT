@@ -35,6 +35,13 @@
     position: relative;
   }
 
+  .search-box-patrimonioList{
+    display: grid;
+    width: 70%;
+    margin-top: 1rem;
+    position: relative;
+  }
+
   .forms-container-financialList h1 {
     text-align: center;
     margin: 0 auto;
@@ -101,6 +108,14 @@
     margin-top: 1rem;
     position: relative;
   }
+
+  .search-box-patrimonioList{
+    display: grid;
+    width: 70%;
+    margin-top: 1rem;
+    position: left;
+  }
+
 
   .double-box-financialList {
     display: grid;
