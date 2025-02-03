@@ -82,6 +82,8 @@ export const updatepatrimonioById = async (
       throw new Error("No token found");
     }
 
+    console.log("Enviando dados:", patrimonioData);
+
     const response = await APIBank.patch(
       `/patrimonio/update/${id}`,
       { patrimonioData },

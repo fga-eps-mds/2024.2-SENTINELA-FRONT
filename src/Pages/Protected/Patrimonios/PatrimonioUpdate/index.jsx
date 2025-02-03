@@ -8,168 +8,82 @@ import SecondaryButton from "../../../../Components/SecondaryButton";
 import "./index.css";
 import DataSelect from "../../../../Components/DataSelect";
 import {
-  getFinancialMovementsById,
-  updateFinancialMovementsById,
-  deleteFinancialMovementsById,
-} from "../../../../Services/FinancialMovementsService";
+  getpatrimonioById,
+  updatepatrimonioById,
+  deletepatrimonioById,
+} from "../../../../Services/patrimonioService";
 import { getUsers } from "../../../../Services/userService";
 import { getSupplierForm } from "../../../../Services/supplierService";
 import dayjs from "dayjs";
 import { handleCpfCnpjInput } from "../../../../Utils/validators";
 import { checkAction } from "../../../../Utils/permission";
+import { getToken } from "../../../../Services/Functions/loader";
+import FieldTextCheckbox from "../../../../Components/FieldTextCheckbox";
 
 export default function FinancialUpdate() {
-  const [contaOrigem, setContaOrigem] = useState("");
-  const [contaDestino, setContaDestino] = useState("");
-  const [nomeOrigem, setNomeOrigem] = useState("");
-  const [nomeDestino, setNomeDestino] = useState("");
-  const [tipoDocumento, setTipoDocumento] = useState("");
-  const [cpFCnpj, setcpFCnpj] = useState("");
-  const [valorBruto, setValorBruto] = useState("");
-  const [valorLiquido, setValorLiquido] = useState("");
-  const [acrescimo, setAcrescimo] = useState("");
-  const [desconto, setDesconto] = useState("");
-  const [pagamento, setPagamento] = useState("");
-  const [dataVencimento, setDataVencimento] = useState(null);
-  const [dataPagamento, setDataPagamento] = useState(null);
+  const [nome, setNome] = useState("");
   const [descricao, setDescricao] = useState("");
+  const [valor, setValor] = useState("");
+  const [numerodeSerie, setNumerodeSerie] = useState("");
+  const [numerodeEtiqueta, setNumerodeEtiqueta] = useState("");
+  const [localizacao, setLocalizacao] = useState("");
+  const [doacao, setDoacao] = useState(false);
+  const [datadeCadastro, setDatadeCadastro] = useState(null);
   const [showSaveModal, setShowSaveModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showDeletedModal, setShowDeletedModal] = useState(false);
-  const [nomesOrigem, setNomesOrigem] = useState([]);
-  const [nomesDestino, setNomesDestino] = useState([]);
   const maxDescricaoLength = 130;
   const canUpdate = checkAction("update");
   const canDelete = checkAction("delete");
 
   const navigate = useNavigate();
   const location = useLocation();
-  const movementId = location.state?.movementId;
+  const patrimonioId = location.state?.patrimonioId;
 
   useEffect(() => {
-    const fetchMovement = async () => {
-      if (movementId) {
+    const fetchpatrimonio = async () => {
+      if (patrimonioId) {
         try {
-          const data = await getFinancialMovementsById(movementId);
-          setContaOrigem(data.contaOrigem || "");
-          setContaDestino(data.contaDestino || "");
-          setNomeOrigem(data.nomeOrigem || "");
-          setNomeDestino(data.nomeDestino || "");
-          setTipoDocumento(data.tipoDocumento || "");
-          setcpFCnpj(data.cpFCnpj || "");
-          setValorBruto(data.valorBruto ? data.valorBruto.toString() : "0.00");
-          setValorLiquido(
-            data.valorLiquido ? data.valorLiquido.toString() : "0.00"
-          );
-          setAcrescimo(data.acrescimo ? data.acrescimo.toString() : "0.00");
-          setDesconto(data.desconto ? data.desconto.toString() : "0.00");
-          setPagamento(data.formadePagamento || "");
-          setDataVencimento(dayjs(data.datadeVencimento || null));
-          setDataPagamento(dayjs(data.datadePagamento || null));
+          const data = await getpatrimonioById(patrimonioId, {
+            headers: {
+              Authorization: `Bearer ${getToken()}`,
+            },
+          });
+          setNome(data.nome || "");
           setDescricao(data.descricao || "");
+          setDatadeCadastro(data.datadeCadastro || "");
+          setDoacao(data.doacao || (false));
+          setLocalizacao(data.localizacao || "");
+          setNumerodeEtiqueta(data.numerodeEtiqueta || "");
+          setValor(data.valor ? data.valor.toString() : "0.00");
+          setNumerodeSerie(data.numerodeSerie) || "";
         } catch (error) {
-          console.error("Erro ao buscar dados da movimentação:", error);
+          console.error("Erro ao buscar dados do patrimonio:", error);
         }
       }
     };
 
-    fetchMovement();
-  }, [movementId]);
-
-  useEffect(() => {
-    const fetchNomesOrigem = async () => {
-      try {
-        switch (contaOrigem) {
-          case "Sindicalizado": {
-            const users = await getUsers();
-            if (Array.isArray(users)) {
-              setNomesOrigem(users.map((user) => user.name));
-            } else {
-              console.error("Os dados recebidos não são um array.");
-            }
-            break;
-          }
-          case "Sindicato": {
-            setNomesOrigem(["Conta BRB", "Conta Mercado Pago"]);
-            break;
-          }
-          case "Fornecedor": {
-            const suppliers = await getSupplierForm();
-            if (Array.isArray(suppliers)) {
-              setNomesOrigem(suppliers.map((supplier) => supplier.nome));
-            } else {
-              console.error("Os dados recebidos não são um array.");
-            }
-            break;
-          }
-          default:
-            console.error("Tipo de conta desconhecido.");
-        }
-      } catch (error) {
-        console.error("Erro ao buscar lista de nomes:", error);
-      }
-    };
-
-    if (contaOrigem) fetchNomesOrigem();
-  }, [contaOrigem]);
-
-  useEffect(() => {
-    const fetchNomesDestino = async () => {
-      try {
-        switch (contaDestino) {
-          case "Sindicalizado": {
-            const users = await getUsers();
-            if (Array.isArray(users)) {
-              setNomesDestino(users.map((user) => user.name));
-            } else {
-              console.error("Os dados recebidos não são um array.");
-            }
-            break;
-          }
-          case "Sindicato": {
-            setNomesDestino(["Conta BRB", "Conta Mercado Pago"]);
-            break;
-          }
-          case "Fornecedor": {
-            const suppliers = await getSupplierForm();
-            if (Array.isArray(suppliers)) {
-              setNomesDestino(suppliers.map((supplier) => supplier.nome));
-            } else {
-              console.error("Os dados recebidos não são um array.");
-            }
-            break;
-          }
-          default:
-            console.error("Tipo de conta desconhecido.");
-        }
-      } catch (error) {
-        console.error("Erro ao buscar lista de nomes:", error);
-      }
-    };
-
-    if (contaDestino) fetchNomesDestino();
-  }, [contaDestino]);
+    fetchpatrimonio();
+  }, [patrimonioId]);
 
   const handleSave = async () => {
     setShowSaveModal(false);
     try {
       const updatedData = {
-        contaOrigem,
-        contaDestino,
-        nomeOrigem,
-        nomeDestino,
-        tipoDocumento,
-        cpFCnpj,
-        valorBruto,
-        valorLiquido,
-        acrescimo,
-        desconto,
-        formadePagamento: pagamento,
-        datadeVencimento: dataVencimento,
-        datadePagamento: dataPagamento,
+        nome,
+        valor: parseFloat(valor),
+        numerodeEtiqueta,
+        numerodeSerie,
+        localizacao,
+        doacao,
+        datadeCadastro,
         descricao,
-      };
-      await updateFinancialMovementsById(movementId, updatedData);
+    };
+      await updatepatrimonioById(patrimonioId, updatedData,  {
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      });
       setShowSaveModal(true);
     } catch (error) {
       console.error("Erro ao salvar alterações:", error);
@@ -178,10 +92,10 @@ export default function FinancialUpdate() {
 
   const handleDelete = async () => {
     try {
-      await deleteFinancialMovementsById(movementId);
+      await deletepatrimonioById(patrimonioId);
       setShowDeletedModal(true);
     } catch (error) {
-      console.error("Erro ao deletar movimentação:", error);
+      console.error("Erro ao deletar patrimonio:", error);
     }
   };
 
@@ -202,29 +116,22 @@ export default function FinancialUpdate() {
       : "R$ 0,00";
   };
 
-  const handleCpfCnpjChange = (value) => {
-    const formattedValue = handleCpfCnpjInput(value);
-    setcpFCnpj(formattedValue);
+  const handleChangeNome = (event) => {
+    console.log("Nome:", event.target.value);
+    setNome(event.target.value);
   };
 
-  const handleChangeNomeOrigem = (event) => {
-    console.log("Nome Origem:", event.target.value);
-    setNomeOrigem(event.target.value);
+  const handleChangeNumerodeEtiqueta = (event) => {
   };
 
-  const handleChangeNomeDestino = (event) => {
-    console.log("Nome Destino:", event.target.value);
-    setNomeDestino(event.target.value);
+  const handleChangeLocalizacao = (event) => {
+    const { value } = event.target;
+    setLocalizacao(value);
   };
 
-  const handleChangeContaOrigem = (event) => {
-    console.log("Conta Origem:", event.target.value);
-    setContaOrigem(event.target.value);
-  };
-
-  const handleChangeContaDestino = (event) => {
-    console.log("Conta Destino:", event.target.value);
-    setContaDestino(event.target.value);
+  const handleChangeNumerodeSerie = (event) => {
+    console.log("Numero de Serie:", event.target.value);
+    setNumerodeSerie(event.target.value);
   };
 
   const handleChangePagamento = (event) => {
@@ -242,164 +149,82 @@ export default function FinancialUpdate() {
   return (
     <section className="container">
       <div className="forms-container">
-        <h1> Visualização de Movimentações Financeiras </h1>
-        <h3>Dados da movimentação financeira</h3>
+        <h1> Visualização de Patrimônios </h1>
+        <h3>Dados do Patrimônio</h3>
+
+        
+        <div className="descricao-fin">
+          <FieldText
+            label="Nome"
+            onChange={handleChangeNome}
+            value={nome}
+          />
+        </div>
 
         <div className="double-box-fin">
-          <FieldSelect
-            label="Conta origem"
-            value={contaOrigem}
-            onChange={handleChangeContaOrigem}
-            options={["Fornecedor", "Sindicalizado", "Sindicato"]}
-          />
-          <FieldSelect
-            label="Conta destino"
-            value={contaDestino}
-            onChange={handleChangeContaDestino}
-            options={["Fornecedor", "Sindicalizado", "Sindicato"]}
-          />
-          <FieldSelect
-            label="Nome origem *"
-            value={nomeOrigem}
-            onChange={handleChangeNomeOrigem}
-            options={nomesOrigem}
-          />
-          <FieldSelect
-            label="Nome Destino *"
-            value={nomeDestino}
-            onChange={handleChangeNomeDestino}
-            options={nomesDestino}
-          />
-          <FieldSelect
-            label="Tipo Documento"
-            value={tipoDocumento}
-            onChange={(e) => setTipoDocumento(e.target.value)}
-            options={[
-              "",
-              "AÇÃO JUDICIAL",
-              "ACORDO EXTRAJUDICIAL",
-              "ADVOGADO",
-              "ALUGUEL",
-              "APLICAÇÃO FINANCEIRA",
-              "ASSEMBLEIA",
-              "ASSESSORIA COMUNICAÇÃO",
-              "CARTÓRIO",
-              "CELULAR",
-              "COMBUSTÍVEL",
-              "CONDOMÍNO",
-              "CONTABILIDADE",
-              "CONVÊNIO",
-              "CUSTAS JUDICIAIS",
-              "DARF",
-              "DAR-GDF",
-              "DIVERSOS",
-              "DOAÇÕES",
-              "DPVAT",
-              "ENERGIA",
-              "ESTÁGIO",
-              "EVENTOS",
-              "EXPEDIENTE",
-              "FGTS",
-              "FIXO/INTERNET",
-              "FUNCIONÁRIO",
-              "GPS (INSS)",
-              "IMÓVEL - SEDE SINDPEN",
-              "INDENIZAÇÃO",
-              "IPTU",
-              "IPVA",
-              "LAZER",
-              "LICENCIAMENTO",
-              "MULTA",
-              "PAPELARIA",
-              "PATROCÍNIO",
-              "REEMBOLSO",
-              "RESCISÃO CONTRATO TRAB.",
-              "RESTAURANTE",
-              "SEGURO VIDA",
-              "TARIFAS BANCÁRIAS",
-              "PUBLICIDADE",
-            ]}
-          />
           <FieldText
-            label="CPF/CNPJ"
-            value={cpFCnpj}
-            onChange={(e) => handleCpfCnpjChange(e.target.value)}
-          />
-          <FieldText
-            label="Valor Bruto *"
-            value={
-              typeof valorBruto === "string"
-                ? `R$ ${valorBruto.replace(".", ",")}`
-                : "R$ 0,00"
-            }
-            onChange={(e) => handleCurrencyInput(e.target.value, setValorBruto)}
-          />
-          <FieldText
-            label="Valor Liquído"
-            value={
-              typeof valorLiquido === "string"
-                ? `R$ ${valorLiquido.replace(".", ",")}`
-                : "R$ 0,00"
-            }
-            onChange={(e) =>
-              handleCurrencyInput(e.target.value, setValorLiquido)
-            }
-          />
-          <FieldText
-            label="Acréscimo"
-            value={
-              typeof acrescimo === "string"
-                ? `R$ ${acrescimo.replace(".", ",")}`
-                : "R$ 0,00"
-            }
-            onChange={(e) => handleCurrencyInput(e.target.value, setAcrescimo)}
-          />
-          <FieldText
-            label="Desconto"
-            value={
-              typeof desconto === "string"
-                ? `R$ ${desconto.replace(".", ",")}`
-                : "R$ 0,00"
-            }
-            onChange={(e) => handleCurrencyInput(e.target.value, setDesconto)}
-          />
-
-          <DataSelect
-            label="Data de pagamento"
-            value={dataPagamento}
-            onChange={(newValue) => setDataPagamento(newValue)}
-          />
-          <DataSelect
-            label="Data de vencimento *"
-            value={dataVencimento}
-            onChange={(newValue) => setDataVencimento(newValue)}
-          />
-        </div>
-        <div className="descricao-fin">
-          <FieldSelect
-            label="Forma de Pagamento"
-            value={pagamento}
-            onChange={handleChangePagamento}
-            options={[
-              "Crédito",
-              "Débito",
-              "PIX",
-              "Dinheiro",
-              "Boleto",
-              "Cheque",
-              "Depósito",
-            ]}
-          />
-        </div>
-        <div className="descricao-fin">
-          <FieldText
-            label="Descrição"
+            label="Descrição *"
             value={descricao}
             onChange={handleChangeDescricao}
           />
+
+          <FieldText
+            label="Valor *"
+            value={
+              valor ? `R$ ${valor.replace(".", ",")}` : "R$ 0,00"
+            }
+            onChange={(e) => handleCurrencyInput(e.target.value, setValor)}
+          />
+
         </div>
 
-        <div>
+        <div className="double-box-fin">
+          <FieldText
+            label="Numero de Serie"
+            onChange={handleChangeNumerodeSerie}
+            value={numerodeSerie}
+          />
+
+          <FieldText
+            label="Etiqueta de Patrimônio"
+            onChange={handleChangeNumerodeEtiqueta}
+            value={numerodeEtiqueta.toString().padStart(4, '0')}
+          />
+        </div>
+
+        <div className="double-box-fin">
+        <FieldSelect
+            label="Localização"
+            onChange={handleChangeLocalizacao}
+            value={localizacao}
+            options={[
+              "",
+              "SAlA DE COMUNICAÇÃO",
+              "JURÍDICO",
+              "PRESIDÊNCIA",
+              "SALA DE REUNIÃO",
+              "RECEPÇÃO",
+              "COPA",
+              "SALA DE PODCAST",
+              "RECEPÇÃO DO PODCAST",
+              "OUTROS",
+            ]}
+          />
+          <DataSelect
+            label="Data de cadastro"
+            value={datadeCadastro}
+            onChange={handleChangeNumerodeEtiqueta}
+          />
+
+        </div>
+        <div className="descricao-fin">
+        <FieldTextCheckbox
+            label="Patrimonio Doado"
+            checked={doacao}
+            onCheckboxChange={(e) => setDoacao(e.target.checked)}
+            disabled={false}
+          />
+        </div><div>
           <small>
             {descricao.length}/{maxDescricaoLength} caracteres
           </small>
@@ -411,6 +236,7 @@ export default function FinancialUpdate() {
               onClick={() => setShowDeleteModal(true)}
             />
           )}
+
           {canUpdate && <PrimaryButton text="Salvar" onClick={handleSave} />}
         </div>
 
@@ -420,37 +246,37 @@ export default function FinancialUpdate() {
             text="OK"
             onClick={() => {
               setShowSaveModal(false);
-              navigate("/movimentacoes/lista");
+              navigate("/patrimonio/list");
             }}
             width="338px"
           />
         </Modal>
 
         <Modal
-          alertTitle="Deseja deletar movimentação do sistema?"
+          alertTitle="Deseja deletar patrimonio do sistema?"
           show={showDeleteModal}
         >
           <SecondaryButton
             key={"deleteButtons"}
-            text="EXCLUIR MOVIMENTAÇÃO"
+            text="EXCLUIR PATRIMONIO"
             onClick={handleDelete}
             width="338px"
           />
           <SecondaryButton
             key={"modalButtons"}
-            text="CANCELAR E MANTER MOVIMENTAÇÃO"
+            text="CANCELAR E MANTER PATRIMONIO"
             onClick={() => setShowDeleteModal(false)}
             width="338px"
           />
         </Modal>
 
-        <Modal alertTitle="Movimentação Deletada" show={showDeletedModal}>
+        <Modal alertTitle="Patrimonio Deletado" show={showDeletedModal}>
           <SecondaryButton
             key={"okButtons"}
             text="OK"
             onClick={() => {
               setShowDeletedModal(false);
-              navigate("/movimentacoes/lista");
+              navigate("/patrimonio/list");
             }}
             width="338px"
           />

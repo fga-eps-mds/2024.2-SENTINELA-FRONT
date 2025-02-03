@@ -52,7 +52,7 @@ export default function patrimonioList() {
   };
 
   const handleItemClick = (patrimonio) => {
-    navigate(`/patrimonio/visualizar/${patrimonio._id}`, {
+    navigate(`/patrimonio/update/${patrimonio._id}`, {
       state: { patrimonioId: patrimonio._id },
     });
   };

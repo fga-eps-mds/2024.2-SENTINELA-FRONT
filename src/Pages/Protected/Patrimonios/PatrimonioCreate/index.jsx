@@ -13,9 +13,11 @@ import { useNavigate } from "react-router-dom";
 import { handleCpfCnpjInput } from "../../../../Utils/validators";
 import { getToken } from "../../../../Services/Functions/loader";
 import { APIBank } from "../../../../Services/BaseService";
+import FieldTextCheckbox from "../../../../Components/FieldTextCheckbox";
 
 
 export default function patrimonioCreate() {
+  const [patrimonio, setpatrimonio] = useState([]);
   const [nome, setNome] = useState("");
   const [descricao, setDescricao] = useState("");
   const [valor, setValor] = useState("");
@@ -23,11 +25,63 @@ export default function patrimonioCreate() {
   const [numerodeEtiqueta, setNumerodeEtiqueta] = useState("");
   const [localizacao, setLocalizacao] = useState("");
   const [doacao, setDoacao] = useState(false);
-  const [datadeCadastro, setDatadeCadastro] = useState(null);
+  const [datadeCadastro, setDatadeCadastro] = useState(new Date());
   const [showModal, setShowModal] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
   const maxDescricaoLength = 130;
   const maxNumerodeEtiqueta = 9999;
 
+  useEffect(() => {
+    const fetchpatrimonio = async () => {
+      try {
+        const response = await APIBank.get(`/patrimonio`, {
+          headers: {
+            Authorization: `Bearer ${getToken()}`,
+          },
+        });
+
+        const data = response.data;
+        if (Array.isArray(data)) {
+          setpatrimonio(data);
+        } else {
+          console.error("Os dados recebidos não são um array.");
+        }
+      } catch (error) {
+        console.error("Erro ao buscar patrimonios:", error);
+      }
+    };
+
+    fetchpatrimonio();
+  }, []);
+  // Função para encontrar o próximo número de etiqueta disponível, levando em conta exclusões
+  const findNextEtiqueta = () => {
+    // Ordena o array de patrimônios pela etiqueta
+    const etiquetas = patrimonio
+      .map((item) => item.numerodeEtiqueta)
+      .sort((a, b) => a - b);
+
+    let nextEtiqueta = 1; // Começa verificando a partir do número 1
+
+    // Encontra a menor etiqueta ausente
+    for (let i = 0; i < etiquetas.length; i++) {
+    
+      if (etiquetas[i] !== nextEtiqueta) {
+        return nextEtiqueta;
+      }
+      nextEtiqueta++;
+    }
+    return nextEtiqueta;
+  };
+
+  // Atualiza o número de etiqueta
+  useEffect(() => {
+    if (patrimonio.length > 0) {
+      const nextEtiqueta = findNextEtiqueta();
+      setNumerodeEtiqueta(nextEtiqueta); // Atualiza com o próximo número disponível
+    } else {
+      setNumerodeEtiqueta(1); // Se não houver patrimônios, começa com a etiqueta 1
+    }
+  }, [patrimonio]);  
 
   const handleCurrencyInput = (value, setValue) => {
     // Remove qualquer caractere que não seja número
@@ -58,6 +112,11 @@ export default function patrimonioCreate() {
     }
   };
 
+  const handleChangeLocalizacao = (event) => {
+    const { value } = event.target;
+    setLocalizacao(value);
+  };
+
   const handleChangeNumerodeSerie = (event) => {
     const { value } = event.target;
     if (value.length <= maxDescricaoLength) {
@@ -71,6 +130,10 @@ export default function patrimonioCreate() {
       setNumerodeEtiqueta(value);
     }
   };
+
+  const handleChangeDooacao = (event) => {
+      setDoacao(!doacao);
+  }
 
   const navigate = useNavigate();
 
@@ -127,12 +190,19 @@ export default function patrimonioCreate() {
         <h1> Cadastro de Patrimonio </h1>
         <h3>Dados do Patrimonio</h3>
 
+        <div className="descricao-fin">
+          <FieldText
+            label="Nome"
+            onChange={handleChangeNome}
+            value={nome}
+          />
+        </div>
+
         <div className="double-box-fin">
           <FieldText
-            label="Nome *"
-            value={nome}
-            onChange={handleChangeNome}
-            options={nome}
+            label="Descrição *"
+            value={descricao}
+            onChange={handleChangeDescricao}
           />
 
           <FieldText
@@ -143,31 +213,53 @@ export default function patrimonioCreate() {
             onChange={(e) => handleCurrencyInput(e.target.value, setValor)}
           />
 
-          <DataSelect
-            label="Data de cadastro"
-            value={datadeCadastro}
-            onChange={(newValue) => setDatadeCadastro(newValue)}
-          />
         </div>
-        <div className="descricao-fin">
-          <FieldText
-            label="Descrição"
-            onChange={handleChangeDescricao}
-            value={descricao}
-          />
-        </div>
-        <div className="descricao-fin">
+
+        <div className="double-box-fin">
           <FieldText
             label="Numero de Serie"
             onChange={handleChangeNumerodeSerie}
             value={numerodeSerie}
           />
+
+          <FieldText
+            label="Etiqueta de Patrimônio"
+            onChange={(newValue) => findNextEtiqueta()}
+            value={numerodeEtiqueta.toString().padStart(4, '0')}
+          />
+        </div>
+
+        <div className="double-box-fin">
+        <FieldSelect
+            label="Localização"
+            onChange={handleChangeLocalizacao}
+            value={localizacao}
+            options={[
+              "",
+              "SAlA DE COMUNICAÇÃO",
+              "JURÍDICO",
+              "PRESIDÊNCIA",
+              "SALA DE REUNIÃO",
+              "RECEPÇÃO",
+              "COPA",
+              "SALA DE PODCAST",
+              "RECEPÇÃO DO PODCAST",
+              "OUTROS",
+            ]}
+          />
+          <DataSelect
+            label="Data de cadastro"
+            value={datadeCadastro}
+            onChange={(newValue) => setDatadeCadastro(new Date())}
+          />
+
         </div>
         <div className="descricao-fin">
-          <FieldText
-            label="Numero de Etiqueta"
-            onChange={handleChangeNumerodeEtiqueta}
-            value={numerodeEtiqueta}
+        <FieldTextCheckbox
+            label="Patrimonio Doado"
+            checked={doacao}
+            onCheckboxChange={(e) => setDoacao(e.target.checked)}
+            disabled={false}
           />
         </div>
         <PrimaryButton text="Cadastrar" onClick={handleSubmit} />
