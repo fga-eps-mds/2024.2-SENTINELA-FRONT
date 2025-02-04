@@ -10,7 +10,7 @@ const permissions = [
   },
   {
     module: "settings",
-    access: ["read"],
+    access: ["read", "write"],
   },
   {
     module: "dashboard",
@@ -37,6 +37,16 @@ describe("checkModule", () => {
 });
 
 describe("checkAction", () => {
+   beforeEach(() => {
+    localStorage.setItem(
+      "@App:permissions",
+      JSON.stringify([{ module: "users", actions: ["read", "write"] },{ module: "settings", actions: ["read", 'write'] }])
+    );
+  });
+
+  afterEach(() => {
+    localStorage.clear(); 
+  });
   it('should return true for action "read" in module "users"', () => {
     expect(checkAction("read")).toBe(true);
   });
