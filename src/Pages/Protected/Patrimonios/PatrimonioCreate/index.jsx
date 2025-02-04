@@ -162,7 +162,10 @@ export default function patrimonioCreate() {
 
     if (
       !nome ||
-      !datadeCadastro 
+      !datadeCadastro || 
+      !descricao ||
+      !numerodeEtiqueta ||
+      !valor
 
     ) {
       alert("Preencha todos os campos obrigatórios!");
@@ -190,7 +193,7 @@ export default function patrimonioCreate() {
 
         <div className="descricao-fin">
           <FieldText
-            label="Nome"
+            label="Nome *"
             onChange={handleChangeNome}
             value={nome}
           />
