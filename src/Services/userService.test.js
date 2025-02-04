@@ -164,7 +164,7 @@ describe("User Service", () => {
       data: { id: "1", name: "New User" },
     });
   
-    await createUser(userData); // Chama a função para criar o usuário
+    await createUser(userData); 
   
     // Verifica se a chamada foi feita corretamente
     expect(APIUsers.post).toHaveBeenCalledWith(
@@ -172,7 +172,7 @@ describe("User Service", () => {
       {
         ...userData,
         params: {
-          userId: `${mockUser._id}`, // Verifica o ID do usuário
+          userId: `${mockUser._id}`, 
           moduleName: "users",
           action: "create",
         },
