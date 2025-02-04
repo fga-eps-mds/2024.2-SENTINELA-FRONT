@@ -6,7 +6,6 @@ import * as LoaderFunctions from "./../Services/Functions/loader";
 import * as PermissionUtils from "../Utils/permission";
 import "@testing-library/jest-dom";
 
-
 vi.spyOn(BaseService.APIUsers, "get").mockImplementation(() => Promise.resolve({ data: [] }));
 vi.spyOn(BaseService.APIUsers, "post").mockImplementation(() => Promise.resolve());
 vi.spyOn(BaseService.APIUsers, "patch").mockImplementation(() => Promise.resolve());
