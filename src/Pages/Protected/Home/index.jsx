@@ -3,12 +3,12 @@ import { useAuth } from "../../../Context/auth";
 import { getUsers } from "../../../Services/userService";
 import FieldSelect from "../../../Components/FieldSelect";
 import "./index.css";
-import { Doughnut } from "react-chartjs-2";
-import { Chart, ArcElement, Tooltip } from "chart.js";
+import { Doughnut, Line } from "react-chartjs-2";
+import { Chart, ArcElement, Tooltip, CategoryScale, LinearScale, PointElement, LineElement } from "chart.js";
 import SecondaryButton from "../../../Components/SecondaryButton";
 
 // Registrar os elementos necessários no Chart.js
-Chart.register(ArcElement, Tooltip);
+Chart.register(ArcElement, Tooltip, CategoryScale, LinearScale, PointElement, LineElement);
 
 const Home = () => {
   const { user } = useAuth();
@@ -82,7 +82,7 @@ const Home = () => {
   const getFilteredDataByLotacao = () => {
     return data.filter((user) => {
       return (
-        user.status === true && (lotacao === "" || user.lotacao === lotacao)
+          user.status === true && (lotacao === "" || user.lotacao === lotacao)
       );
     });
   };
@@ -101,9 +101,9 @@ const Home = () => {
   // Contagem de gênero
   const genderCounts = {
     Male: filteredDataByLotacao.filter((user) => user.sex === "Masculino")
-      .length,
+        .length,
     Female: filteredDataByLotacao.filter((user) => user.sex === "Feminino")
-      .length,
+        .length,
   };
 
   const dataLotacao = {
@@ -121,7 +121,7 @@ const Home = () => {
   // Contagem de usuários por órgão com base nos filtros
   const orgaoCounts = orgaolist.reduce((acc, org) => {
     const filteredByOrgao = filteredDataByOrgao.filter(
-      (user) => user.orgao === org
+        (user) => user.orgao === org
     );
     acc[org] = filteredByOrgao.length;
     return acc;
@@ -141,6 +141,31 @@ const Home = () => {
           "#B3AC94",
         ],
         borderWidth: 4,
+      },
+    ],
+  };
+
+  // Dados para o gráfico de linhas
+  const lineChartData = {
+    labels: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"],
+    datasets: [
+      {
+        label: "Filiações",
+        data: [65, 59, 80, 81, 56, 55, 40, 30, 45, 60, 70, 85],
+        borderColor: "#36A2EB",
+        fill: false,
+      },
+      {
+        label: "Desfiliações",
+        data: [28, 48, 40, 19, 86, 27, 90, 20, 35, 50, 60, 75],
+        borderColor: "#FF6384",
+        fill: false,
+      },
+      {
+        label: "Não filiados",
+        data: [18, 38, 30, 29, 76, 17, 80, 10, 25, 40, 50, 65],
+        borderColor: "#4BC0C0",
+        fill: false,
       },
     ],
   };
@@ -168,71 +193,76 @@ const Home = () => {
   };
 
   return (
-    user && (
-      <section className="dash-section">
-        <div className="filiados-section">
-          <h1 style={{ fontSize: 40 }}>Filiados</h1>
+      user && (
+          <section className="dash-section">
+            <div className="filiados-section">
+              <h1 style={{ fontSize: 40 }}>Filiados</h1>
 
-          <div className="filiados">
-            <div className="filiados-box">
-              <h2>Total</h2>
-              <h1 style={{ color: "#E2B73D !important" }} id="box">
-                {data.length}
-              </h1>
+              <div className="filiados">
+                <div className="filiados-box">
+                  <h2>Total</h2>
+                  <h1 style={{ color: "#E2B73D !important" }} id="box">
+                    {data.length}
+                  </h1>
+                </div>
+
+                <div className="filiados-box">
+                  <h2>{isSind}</h2>
+                  <h1 style={{ color: "#E2B73D !important" }} id="box">
+                    {isSind === "Sindicalizado"
+                        ? data.filter((item) => item.status === true).length
+                        : data.filter((item) => item.status === false).length}
+                  </h1>
+                </div>
+
+                <FieldSelect
+                    label="Filtro"
+                    onChange={(e) => {
+                      setIsSind(e.target.value);
+                    }}
+                    options={filiadosOptions}
+                    value={isSind}
+                />
+              </div>
             </div>
 
-            <div className="filiados-box">
-              <h2>{isSind}</h2>
-              <h1 style={{ color: "#E2B73D !important" }} id="box">
-                {isSind === "Sindicalizado"
-                  ? data.filter((item) => item.status === true).length
-                  : data.filter((item) => item.status === false).length}
-              </h1>
+            <div className="lotation">
+              <div className="donut-box">
+                <h1>Divisão de sexo por lotação</h1>
+                <Doughnut data={dataLotacao} options={optionsLotacao} />
+
+                <FieldSelect
+                    label="Filtro de Lotação"
+                    onChange={(e) => {
+                      setLotacao(e.target.value);
+                    }}
+                    options={lotacoesOptions}
+                    value={lotacao}
+                />
+              </div>
+
+              <div className="donut-box">
+                <h1>Divisão de lotação por órgão</h1>
+                <Doughnut data={dataOrgao} options={optionsLotacao} />
+                <FieldSelect
+                    label="Filtro de Órgão"
+                    onChange={(e) => {
+                      setOrgao(e.target.value);
+                    }}
+                    options={orgaolist}
+                    value={orgao}
+                />
+              </div>
             </div>
 
-            <FieldSelect
-              label="Filtro"
-              onChange={(e) => {
-                setIsSind(e.target.value);
-              }}
-              options={filiadosOptions}
-              value={isSind}
-            />
-          </div>
-        </div>
+            <div className="line-chart">
+              <h1>Filiações, Desfiliações e Não filiados ao longo do tempo</h1>
+              <Line data={lineChartData} options={optionsLotacao} />
+            </div>
 
-        <div className="lotation">
-          <div className="donut-box">
-            <h1>Divisão de sexo por lotação</h1>
-            <Doughnut data={dataLotacao} options={optionsLotacao} />
-
-            <FieldSelect
-              label="Filtro de Lotação"
-              onChange={(e) => {
-                setLotacao(e.target.value);
-              }}
-              options={lotacoesOptions}
-              value={lotacao}
-            />
-          </div>
-
-          <div className="donut-box">
-            <h1>Divisão de lotação por órgão</h1>
-            <Doughnut data={dataOrgao} options={optionsLotacao} />
-            <FieldSelect
-              label="Filtro de Órgão"
-              onChange={(e) => {
-                setOrgao(e.target.value);
-              }}
-              options={orgaolist}
-              value={orgao}
-            />
-          </div>
-        </div>
-
-        <SecondaryButton text="Limpar Filtros" onClick={clearFilters} />
-      </section>
-    )
+            <SecondaryButton text="Limpar Filtros" onClick={clearFilters} />
+          </section>
+      )
   );
 };
 
