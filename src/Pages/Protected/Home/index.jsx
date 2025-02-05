@@ -4,11 +4,11 @@ import { getUsers } from "../../../Services/userService";
 import FieldSelect from "../../../Components/FieldSelect";
 import "./index.css";
 import { Doughnut, Line } from "react-chartjs-2";
-import { Chart, ArcElement, Tooltip, CategoryScale, LinearScale, PointElement, LineElement } from "chart.js";
+import { Chart, ArcElement, Tooltip, CategoryScale, LinearScale, PointElement, LineElement, Legend } from "chart.js";
 import SecondaryButton from "../../../Components/SecondaryButton";
 
 // Registrar os elementos necessários no Chart.js
-Chart.register(ArcElement, Tooltip, CategoryScale, LinearScale, PointElement, LineElement);
+Chart.register(ArcElement, Tooltip, CategoryScale, LinearScale, PointElement, LineElement, Legend);
 
 const Home = () => {
   const { user } = useAuth();
@@ -145,30 +145,42 @@ const Home = () => {
     ],
   };
 
+  //cria um estado para armazenar opcoes do filtro
+  const [visualizationType, setVisualizationType] = useState("Mensal");
+
   // Dados para o gráfico de linhas
-  const lineChartData = {
-    labels: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"],
-    datasets: [
-      {
-        label: "Filiações",
-        data: [65, 59, 80, 81, 56, 55, 40, 30, 45, 60, 70, 85],
-        borderColor: "#36A2EB",
-        fill: false,
-      },
-      {
-        label: "Desfiliações",
-        data: [28, 48, 40, 19, 86, 27, 90, 20, 35, 50, 60, 75],
-        borderColor: "#FF6384",
-        fill: false,
-      },
-      {
-        label: "Não filiados",
-        data: [18, 38, 30, 29, 76, 17, 80, 10, 25, 40, 50, 65],
-        borderColor: "#4BC0C0",
-        fill: false,
-      },
-    ],
+  const getLineChartData = () => {
+    if (visualizationType === "Mensal") {
+      return {
+        labels: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"],
+        datasets: [
+          { label: "Filiações", data: [6, 1, 2, 5, 3, 0, 2, 8, 3, 9, 1, 2], borderColor: "#36A2EB", fill: false },
+          { label: "Desfiliações", data: [1, 3, 1, 3, 2, 0, 0, 2, 0, 2, 1, 0], borderColor: "#FF6384", fill: false },
+          { label: "Não filiados", data: [10, 2, 6, 3, 5, 3, 2, 2, 2, 2, 3, 5], borderColor: "#4BC0C0", fill: false },
+        ],
+      };
+    } else if (visualizationType === "Semestral") {
+      return {
+        labels: ["1º Semestre", "2º Semestre"],
+        datasets: [
+          { label: "Filiações", data: [395, 330], borderColor: "#36A2EB", fill: false },
+          { label: "Desfiliações", data: [248, 296], borderColor: "#FF6384", fill: false },
+          { label: "Não filiados", data: [208, 195], borderColor: "#4BC0C0", fill: false },
+        ],
+      };
+    } else {
+      return {
+        labels: ["2024"],
+        datasets: [
+          { label: "Filiações", data: [725], borderColor: "#36A2EB", fill: false },
+          { label: "Desfiliações", data: [544], borderColor: "#FF6384", fill: false },
+          { label: "Não filiados", data: [403], borderColor: "#4BC0C0", fill: false },
+        ],
+      };
+    }
   };
+
+  const lineChartData = getLineChartData();
 
   const optionsLotacao = {
     responsive: true,
@@ -190,6 +202,31 @@ const Home = () => {
     setIsSind("Sindicalizado");
     setLotacao("");
     setOrgao("");
+  };
+
+  const optionsLineChart = {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: true, // Garante que a legenda apareça
+        position: "right", // Coloca a legenda ao lado do gráfico
+        labels: {
+          font: {
+            size: 14, // Ajusta o tamanho da fonte
+          },
+          color: "#333", // Cor do texto da legenda
+          usePointStyle: true, // Usa pequenos ícones coloridos na legenda
+          padding: 20, // Dá mais espaço entre os itens da legenda
+        },
+      },
+      tooltip: {
+        callbacks: {
+          label: function (tooltipItem) {
+            return `${tooltipItem.dataset.label}: ${tooltipItem.raw}`;
+          },
+        },
+      },
+    },
   };
 
   return (
@@ -255,9 +292,16 @@ const Home = () => {
               </div>
             </div>
 
+            <FieldSelect
+                label="Tipo de Visualização"
+                onChange={(e) => setVisualizationType(e.target.value)}
+                options={["Mensal", "Semestral", "Anual"]}
+                value={visualizationType}
+            />
+
             <div className="line-chart">
               <h1>Filiações, Desfiliações e Não filiados ao longo do tempo</h1>
-              <Line data={lineChartData} options={optionsLotacao} />
+              <Line data={lineChartData} options={optionsLineChart} />
             </div>
 
             <SecondaryButton text="Limpar Filtros" onClick={clearFilters} />
