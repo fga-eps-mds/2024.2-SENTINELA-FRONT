@@ -26,6 +26,9 @@ export default function patrimonioList() {
   const [loc, setLocalizacao] = useState(null);
   const [localizacoes, setLocalizacoes] = useState([]);
   const [newLocalizacao, setnewLocalizacao] = useState("");
+  const [showDeletedModal, setShowDeletedModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [localizacaoADeletar, setLocalizacaoADeletar] = useState([]);
   // const permissions = usePermissions();
   const canCreate = checkAction("create");
 
@@ -117,6 +120,7 @@ export default function patrimonioList() {
   
       // Se não houver patrimônios, prossegue com a exclusão
       await deletelocalizacaoById(localizacao._id);
+      setShowDeletedModal(true);
   
       // Atualiza a lista de localizações após a exclusão
       fetchlocalizacao();
@@ -204,7 +208,10 @@ export default function patrimonioList() {
                 marginTop="10px"
               />
             </ListItem>
-            LISTA DE LOCALIZAÇÕES:
+
+
+            <div>*clique no nome da localização para deletar*</div>
+            <div>LISTA DE LOCALIZAÇÕES:</div>
 
             {/* Mapeando todas as localizações */}
             {localizacoes.map((localizacoes) => (
@@ -222,7 +229,11 @@ export default function patrimonioList() {
                             onMouseLeave={(e) =>
                               (e.currentTarget.style.backgroundColor = "transparent")
                             }
-                            onClick={() => handleLocalizacaoDelete(localizacoes)}
+                            onClick={() => {
+                              setLocalizacaoADeletar(localizacoes);
+                              setShowDeleteModal(true);
+                            }
+                          }
                           >
                 <ListItemText primary={localizacoes.localizacao} />
                 </ListItemButton>
@@ -235,6 +246,36 @@ export default function patrimonioList() {
               maxWidth="150px"
               marginTop="10px"
             />
+            <Modal
+              alertTitle={"Deseja deletar localização '" + localizacaoADeletar.localizacao + "' do sistema?"}
+              show={showDeleteModal}
+            >
+
+              <SecondaryButton
+            key={"deleteButtons"}
+            text="EXCLUIR LOCALIZAÇÃO"
+            onClick={() => handleLocalizacaoDelete(localizacaoADeletar)}
+            width="338px"
+          />
+          <SecondaryButton
+            key={"modalButtons"}
+            text="CANCELAR E MANTER LOCALIZAÇÃO"
+            onClick={() => setShowDeleteModal(false)}
+            width="338px"
+          />
+            </Modal>
+
+            <Modal alertTitle="Localização Deletada" show={showDeletedModal}>
+          <SecondaryButton
+            key={"okButtons"}
+            text="OK"
+            onClick={() => {
+              setShowDeletedModal(false);
+              setShowDeleteModal(false)
+            }}
+            width="338px"
+          />
+        </Modal>
             </BigModal>
 
                     </div>
