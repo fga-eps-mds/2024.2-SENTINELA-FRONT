@@ -187,7 +187,7 @@ export default function patrimonioList() {
             label="Localização"
             onChange={(e) => setLocalizacao(e.target.value)}
             value={loc}
-            options={localizacoes.map((loc) => loc.localizacao)}
+            options={["", ...localizacoes.map((loc) => loc.localizacao)]}
           />
           </div>
           <SecondaryButton
