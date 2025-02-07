@@ -229,6 +229,24 @@ const Home = () => {
     },
   };
 
+  // Dados mockados para ativo e aposentado
+  const dataMock = {
+    Ativo: 100, // Exemplo: 120 usuários ativos
+    Aposentado: 54, // Exemplo: 80 usuários aposentados
+  };
+
+  const dataStatus = {
+    labels: ["Ativo", "Aposentado"],
+    datasets: [
+      {
+        label: "Distribuição de Ativos e Aposentados",
+        data: [dataMock.Ativo, dataMock.Aposentado],
+        backgroundColor: ["#36A2EB", "#FF6384"], // Cores do gráfico
+        borderWidth: 4,
+      },
+    ],
+  };
+
   return (
       user && (
           <section className="dash-section">
@@ -300,6 +318,11 @@ const Home = () => {
             <div className="line-chart">
               <h1>Filiações, Desfiliações e Não filiados ao longo do tempo</h1>
               <Line data={lineChartData} options={optionsLineChart}/>
+            </div>
+
+            <div className="donut-box">
+              <h1>Distribuição de Ativos e Aposentados</h1>
+              <Doughnut data={dataStatus} options={optionsLotacao}/>
             </div>
 
             <SecondaryButton text="Limpar Filtros" onClick={clearFilters}/>
