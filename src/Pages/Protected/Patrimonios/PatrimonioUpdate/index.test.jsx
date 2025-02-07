@@ -1,11 +1,11 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { render, screen, cleanup, waitFor } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
-import FinancialUpdate from "./index";
+import PatrimonioUpdate from "./index";
 import {
-  deleteFinancialMovementsById,
-  updateFinancialMovementsById,
-} from "../../../../Services/FinancialMovementsService";
+  deletepatrimonioById,
+  updatepatrimonioById,
+} from "../../../../Services/patrimonioService";
 import userEvent from "@testing-library/user-event";
 import dayjs from "dayjs";
 import "@testing-library/jest-dom";
@@ -18,31 +18,26 @@ vi.mock("../../../../Utils/permission", () => ({
 }));
 
 function mockServices() {
-  vi.mock("../../../../Services/FinancialMovementsService", () => ({
-    getFinancialMovementsById: vi.fn(() =>
+  vi.mock("../../../../Services/patrimonioService", () => ({
+    getpatrimonioById: vi.fn(() =>
       Promise.resolve({
-        contaOrigem: "Fornecedor",
-        contaDestino: "Sindicalizado",
-        nomeOrigem: "Nome Exemplo",
-        nomeDestino: "Nome Exemplo",
-        tipoDocumento: "AÇÃO JUDICIAL",
-        cpFCnpj: "",
-        valorBruto: "1000",
-        valorLiquido: "",
-        acrescimo: "",
-        desconto: "",
-        formadePagamento: "PIX",
-        datadeVencimento: dayjs("2024-01-01"),
-        datadePagamento: dayjs("2024-02-01"),
-        descricao: "Descrição de exemplo",
+        _id: "1",
+        nome: "Patrimonio A",
+        descricao: "Descricao A",
+        valor: "100",
+        numerodeSerie: "000a",
+        numerodeEtiqueta: "0001",
+        localizacao: "OUTROS",
+        doacao: false,
+        datadeCadastro: "2025-02-04T00:00:00.00Z"
       })
     ),
-    updateFinancialMovementsById: vi.fn(),
-    deleteFinancialMovementsById: vi.fn(),
+    updatepatrimonioById: vi.fn(),
+    deletepatrimonioById: vi.fn(),
   }));
 
   vi.mock("../../../../Services/userService", () => ({
-    getUsers: vi.fn(() => Promise.resolve([{ name: "Nome Exemplo" }])),
+    getUsers: vi.fn(() => Promise.resolve([{ nome: "Nome Exemplo" }])),
   }));
 
   vi.mock("../../../../Services/supplierService", () => ({
@@ -50,7 +45,7 @@ function mockServices() {
   }));
 }
 
-describe("FinancialUpdate", () => {
+describe("PatrimonioUpdate", () => {
   beforeEach(() => {
     mockServices();
     localStorage.setItem("@App:user", JSON.stringify({ token: "mock-token" }));
@@ -62,10 +57,10 @@ describe("FinancialUpdate", () => {
     localStorage.clear();
   });
 
-  it("renders the FinancialUpdate page correctly", () => {
+  it("renders the PatrimonioUpdate page correctly", () => {
     render(
       <Router>
-        <FinancialUpdate />
+        <PatrimonioUpdate />
       </Router>
     );
 
@@ -75,7 +70,7 @@ describe("FinancialUpdate", () => {
   it("should handle delete button click", async () => {
     render(
       <Router>
-        <FinancialUpdate />
+        <PatrimonioUpdate />
       </Router>
     );
 
@@ -83,42 +78,43 @@ describe("FinancialUpdate", () => {
     await userEvent.click(screen.getByText("Deletar"));
 
     // Click the confirm delete button
-    await userEvent.click(screen.getByText("EXCLUIR MOVIMENTAÇÃO"));
+    await userEvent.click(screen.getByText("EXCLUIR PATRIMONIO"));
 
     await waitFor(() => {
-      expect(deleteFinancialMovementsById).toHaveBeenCalledTimes(1);
-      expect(screen.getByText("Movimentação Deletada")).toBeInTheDocument();
+      expect(deletepatrimonioById).toHaveBeenCalledTimes(1);
+      expect(screen.getByText("Patrimonio Deletado")).toBeInTheDocument();
     });
   });
 
-  it("should format CPF/CNPJ correctly", async () => {
+  it("should handle delete button click and CANCELAR", async () => {
     render(
       <Router>
-        <FinancialUpdate />
+        <PatrimonioUpdate />
       </Router>
     );
 
-    const cpfCnpjInput = screen.getByLabelText("CPF/CNPJ");
+    // Open delete modal
+    await userEvent.click(screen.getByText("Deletar"));
 
-    await userEvent.type(cpfCnpjInput, "12345678901");
-    expect(cpfCnpjInput.value).toBe("123.456.789-01");
+    // Click the confirm delete button
+    await userEvent.click(screen.getByText("CANCELAR E MANTER PATRIMONIO"));
 
-    await userEvent.clear(cpfCnpjInput);
-    await userEvent.type(cpfCnpjInput, "12345678000199");
-    expect(cpfCnpjInput.value).toBe("12.345.678/0001-99");
+    await waitFor(() => {
+      expect(deletepatrimonioById).toHaveBeenCalledTimes(0);
+    });
   });
 
-  it("should handle save button click and call updateFinancialMovementsById", async () => {
+  it("should handle save button click and call updatePatrimonioById", async () => {
     render(
       <Router>
-        <FinancialUpdate />
+        <PatrimonioUpdate />
       </Router>
     );
 
     await userEvent.click(screen.getByText("Salvar"));
 
     await waitFor(() => {
-      expect(updateFinancialMovementsById).toHaveBeenCalledTimes(1);
+      expect(updatepatrimonioById).toHaveBeenCalledTimes(1);
       expect(screen.getByText("Alterações Salvas")).toBeInTheDocument();
     });
   });
@@ -126,24 +122,24 @@ describe("FinancialUpdate", () => {
   it("should render labels correctly", () => {
     render(
       <Router>
-        <FinancialUpdate />
+        <PatrimonioUpdate />
       </Router>
     );
 
-    screen.debug(); // Verifique o HTML renderizado
+    screen.debug(); // Verifique o HTML renderizad
   });
 
   it("should correctly update fields when changing inputs", async () => {
     render(
       <Router>
-        <FinancialUpdate />
+        <PatrimonioUpdate />
       </Router>
     );
 
-    const descricaoInput = screen.getByLabelText("Descrição");
+    const descricaoInput = screen.getByLabelText("Nome");
 
     await userEvent.clear(descricaoInput);
-    await userEvent.type(descricaoInput, "Descrição alterada");
-    expect(descricaoInput.value).toBe("Descrição alterada");
+    await userEvent.type(descricaoInput, "Nome alterada");
+    expect(descricaoInput.value).toBe("Nome alterada");
   });
 });
