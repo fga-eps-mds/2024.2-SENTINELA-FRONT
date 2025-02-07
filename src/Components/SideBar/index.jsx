@@ -101,13 +101,13 @@ export default function SideBar() {
                 }}
               />
             )}
-            {(checkAction("filiados_cadastrar") || checkAction("beneficios_criar") || checkAction("beneficios_visualizar") || checkAction("beneficios_editar")) && (
+            {(checkAction("patrimonio_criar") || checkAction("patrimonio_deletar") || checkAction("patrimonio_visualizar") || checkAction("patrimonio_editar")) && (
               <SideButton
                 // hidden={checkModule(permissions, "finance") ? "flex" : "none"}
                 key="patrimonios"
-                text="PATRIMONIOS"
+                text="PATRIMÔNIO"
                 onClick={() => {
-                  navigate("/patrimonio/list");
+                  navigate("/patrimonio/hub");
                   setIsSideBarOpen(false);
                 }}
               />

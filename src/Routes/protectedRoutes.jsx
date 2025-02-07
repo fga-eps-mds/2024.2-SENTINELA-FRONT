@@ -40,6 +40,7 @@ import { checkAction } from "../Utils/permission.jsx";
 import PatrimonioCreate from "../Pages/Protected/Patrimonios/PatrimonioCreate";
 import PatrimonioList from "../Pages/Protected/Patrimonios/PatrimonioList";
 import PatrimonioUpdate from "../Pages/Protected/Patrimonios/PatrimonioUpdate";
+import PatrimonioHubPage from "../Pages/Protected/Patrimonios/PatrimonioHubPage";
 
 import DataImport from "../Pages/Protected/DataImport/index.jsx";
 
@@ -268,6 +269,16 @@ const ProtectedRoutes = () => {
           <PermissionProtect
             element={<FinanceList />}
             moduleName="finance"
+            actions={["read", "create", "update", "delete"]}
+          />
+        }
+      />
+      <Route
+        path="/patrimonio/hub"
+        element={
+          <PermissionProtect
+            element={<PatrimonioHubPage />}
+            moduleName="patrimonio"
             actions={["read", "create", "update", "delete"]}
           />
         }
