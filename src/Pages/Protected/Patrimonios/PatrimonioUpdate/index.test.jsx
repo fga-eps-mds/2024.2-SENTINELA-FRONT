@@ -142,4 +142,19 @@ describe("PatrimonioUpdate", () => {
     await userEvent.type(descricaoInput, "Nome alterada");
     expect(descricaoInput.value).toBe("Nome alterada");
   });
+
+  it("should correctly update fields when changing inputs", async () => {
+    render(
+      <Router>
+        <PatrimonioUpdate />
+      </Router>
+    );
+
+    const descricaoInput = screen.getByLabelText("Numero de Serie");
+
+    await userEvent.clear(descricaoInput);
+    await userEvent.type(descricaoInput, "EFG1");
+    expect(descricaoInput.value).toBe("EFG1");
+
+  });
 });
