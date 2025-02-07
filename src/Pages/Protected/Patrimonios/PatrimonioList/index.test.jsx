@@ -1,10 +1,11 @@
 import { describe, it, expect, beforeEach, vi, afterEach } from "vitest";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
-import FinancialList from "./index";
+import PatrimonioList from "./index.jsx";
 import { APIBank } from "../../../../Services/BaseService";
 
 import "@testing-library/jest-dom";
+import userEvent from "@testing-library/user-event";
 
 vi.mock("../../../../Services/BaseService");
 
@@ -15,7 +16,7 @@ vi.mock("../../../../Utils/permission", () => ({
   checkAction: () => true,
 }));
 
-describe("FinancialList", () => {
+describe("patrimonioList", () => {
   beforeEach(() => {
     localStorage.setItem("@App:user", JSON.stringify({ token: "mock-token" }));
   });
@@ -30,119 +31,193 @@ describe("FinancialList", () => {
 
     render(
       <Router>
-        <FinancialList />
+        <PatrimonioList />
       </Router>
     );
 
-    expect(screen.getByText("Lista de movimentações")).toBeInTheDocument();
-    expect(screen.getByText("Cadastrar movimentação")).toBeInTheDocument();
-    expect(screen.getByLabelText("Pesquisar movimentação")).toBeInTheDocument();
+    expect(screen.getByText("Lista de patrimônios")).toBeInTheDocument();
+    expect(screen.getByText("Cadastrar patrimonio")).toBeInTheDocument();
+    expect(screen.getByLabelText("Pesquisar patrimonio por nome")).toBeInTheDocument();
 
-    await waitFor(() => expect(APIBank.get).toHaveBeenCalledTimes(1));
+    await waitFor(() => expect(APIBank.get).toHaveBeenCalledTimes(2));
   });
-
-  it("fetches and displays financial movements", async () => {
-    const movements = [
+  
+  it("fetches and displays assets", async () => {
+    const patrimonio = [
       {
         _id: "1",
-        tipoDocumento: "Receita",
-        datadePagamento: "2024-08-01T00:00:00Z",
-        descricao: "Movimento 1",
+        nome: "Patrimonio A",
+        descricao: "Descricao A",
+        valor: "100",
+        numerodeSerie: "000a",
+        numerodeEtiqueta: "0001",
+        localizacao: "OUTROS",
+        doacao: false,
+        datadeCadastro: "2025-02-04T00:00:00.00Z"
+      },
+      {
+        _id: "1",
+        nome: "Patrimonio B",
+        descricao: "Descricao B",
+        valor: "200",
+        numerodeSerie: "000b",
+        numerodeEtiqueta: "0001",
+        localizacao: "OUTROS",
+        doacao: true,
+        datadeCadastro: "2025-02-04T00:00:00.00Z"
+      },
+    ];
+    APIBank.get.mockResolvedValue({ data: patrimonio });
+    
+    render(
+      <Router>
+        <PatrimonioList />
+      </Router>
+    );
+    
+    await waitFor(() => expect(APIBank.get).toHaveBeenCalledTimes(2));
+    expect(screen.getByText("Patrimonio A")).toBeInTheDocument();
+    expect(screen.getByText("Patrimonio B")).toBeInTheDocument();
+  });
+    
+  it("filters assets based on search input (numerodeEtiqueta)", async () => {
+    const patrimonio = [
+      {
+        _id: "1",
+        nome: "Patrimonio A",
+        descricao: "Descricao A",
+        valor: "100",
+        numerodeSerie: "000a",
+        numerodeEtiqueta: "0001",
+        localizacao: "OUTROS",
+        doacao: false,
+        datadeCadastro: "2025-02-04T00:00:00.00Z"
       },
       {
         _id: "2",
-        tipoDocumento: "Despesa",
-        datadePagamento: "2024-08-02T00:00:00Z",
-        descricao: "Movimento 2",
+        nome: "Patrimonio B",
+        descricao: "Descricao B",
+        valor: "200",
+        numerodeSerie: "000b",
+        numerodeEtiqueta: "0002",
+        localizacao: "OUTROS",
+        doacao: true,
+        datadeCadastro: "2025-02-04T00:00:00.00Z"
       },
     ];
-    APIBank.get.mockResolvedValue({ data: movements });
+    APIBank.get.mockResolvedValue({ data: patrimonio });
 
     render(
       <Router>
-        <FinancialList />
+        <PatrimonioList />
       </Router>
     );
 
-    await waitFor(() => expect(APIBank.get).toHaveBeenCalledTimes(1));
-    expect(screen.getByText("Receita")).toBeInTheDocument();
-    expect(screen.getByText("Despesa")).toBeInTheDocument();
+    await waitFor(() => expect(APIBank.get).toHaveBeenCalledTimes(2));
+
+    const searchInput = screen.getByLabelText("Pesquisar patrimonio por etiqueta");
+    fireEvent.change(searchInput, { target: { value: "0001" } });
+
+
+    expect(screen.getByText("Patrimonio A")).toBeInTheDocument();
+    expect(screen.queryByText("Patrimonio B")).not.toBeInTheDocument();
   });
 
-  it("filters financial movements based on search input", async () => {
-    const movements = [
+  it("filters assets based on search input (nome)", async () => {
+    const patrimonio = [
       {
         _id: "1",
-        tipoDocumento: "Receita",
-        datadePagamento: "2024-08-01T00:00:00Z",
-        descricao: "Movimento 1",
+        nome: "Patrimonio A",
+        descricao: "Descricao A",
+        valor: "100",
+        numerodeSerie: "000a",
+        numerodeEtiqueta: "0001",
+        localizacao: "OUTROS",
+        doacao: false,
+        datadeCadastro: "2025-02-04T00:00:00.00Z"
       },
       {
         _id: "2",
-        tipoDocumento: "Despesa",
-        datadePagamento: "2024-08-02T00:00:00Z",
-        descricao: "Movimento 2",
+        nome: "Patrimonio B",
+        descricao: "Descricao B",
+        valor: "200",
+        numerodeSerie: "000b",
+        numerodeEtiqueta: "0002",
+        localizacao: "OUTROS",
+        doacao: true,
+        datadeCadastro: "2025-02-04T00:00:00.00Z"
       },
     ];
-    APIBank.get.mockResolvedValue({ data: movements });
+    APIBank.get.mockResolvedValue({ data: patrimonio });
 
     render(
       <Router>
-        <FinancialList />
+        <PatrimonioList />
       </Router>
     );
 
-    await waitFor(() => expect(APIBank.get).toHaveBeenCalledTimes(1));
+    await waitFor(() => expect(APIBank.get).toHaveBeenCalledTimes(2));
 
-    const searchInput = screen.getByLabelText("Pesquisar movimentação");
-    fireEvent.change(searchInput, { target: { value: "Receita" } });
+    const searchInput = screen.getByLabelText("Pesquisar patrimonio por nome");
+    fireEvent.change(searchInput, { target: { value: "Patrimonio B" } });
 
-    expect(screen.getByText("Receita")).toBeInTheDocument();
-    expect(screen.queryByText("Despesa")).not.toBeInTheDocument();
+
+    expect(screen.getByText("Patrimonio B")).toBeInTheDocument();
+    expect(screen.queryByText("Patrimonio A")).not.toBeInTheDocument();
   });
 
-  it("navigates to financial movement creation page on button click", async () => {
+  it("navigates to asset creation page on button click", async () => {
     render(
       <Router>
-        <FinancialList />
+        <PatrimonioList />
       </Router>
     );
 
-    fireEvent.click(screen.getByText(/Cadastrar movimentação/i));
+    fireEvent.click(screen.getByText(/Cadastrar patrimonio/i));
     await waitFor(() => {
-      expect(window.location.pathname).toBe("/movimentacoes/criar");
+      expect(window.location.pathname).toBe("/patrimonio/create");
     });
   });
 
-  it("navigates to financial movement detail page on list item click", async () => {
-    const movements = [
+  it("navigates to asset detail page on list item click", async () => {
+    const patrimonio = [
       {
         _id: "1",
-        tipoDocumento: "Receita",
-        datadePagamento: "2024-08-01T00:00:00Z",
-        descricao: "Movimento 1",
+        nome: "Patrimonio A",
+        descricao: "Descricao A",
+        valor: "100",
+        numerodeSerie: "000a",
+        numerodeEtiqueta: "0001",
+        localizacao: "OUTROS",
+        doacao: false,
+        datadeCadastro: "2025-02-04T00:00:00.00Z"
       },
       {
         _id: "2",
-        tipoDocumento: "Despesa",
-        datadePagamento: "2024-08-02T00:00:00Z",
-        descricao: "Movimento 2",
+        nome: "Patrimonio B",
+        descricao: "Descricao B",
+        valor: "200",
+        numerodeSerie: "000b",
+        numerodeEtiqueta: "0002",
+        localizacao: "OUTROS",
+        doacao: true,
+        datadeCadastro: "2025-02-04T00:00:00.00Z"
       },
     ];
-    APIBank.get.mockResolvedValue({ data: movements });
+    APIBank.get.mockResolvedValue({ data: patrimonio });
 
     render(
       <Router>
-        <FinancialList />
+        <PatrimonioList />
       </Router>
     );
-
+    
     await waitFor(() => {
-      fireEvent.click(screen.getByText("Receita"));
+      fireEvent.click(screen.getByText("Patrimonio A"));
     });
 
     expect(window.location.pathname).toBe(
-      `/movimentacoes/visualizar/${movements[0]._id}`
-    );
+      `/patrimonio/update/${patrimonio[0]._id}`
+      );
   });
-});
+}); 
