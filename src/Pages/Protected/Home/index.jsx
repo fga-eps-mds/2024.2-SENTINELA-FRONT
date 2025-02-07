@@ -233,19 +233,19 @@ const Home = () => {
       user && (
           <section className="dash-section">
             <div className="filiados-section">
-              <h1 style={{ fontSize: 40 }}>Filiados</h1>
+              <h1 style={{fontSize: 40}}>Filiados</h1>
 
               <div className="filiados">
                 <div className="filiados-box">
                   <h2>Total</h2>
-                  <h1 style={{ color: "#E2B73D !important" }} id="box">
+                  <h1 style={{color: "#E2B73D !important"}} id="box">
                     {data.length}
                   </h1>
                 </div>
 
                 <div className="filiados-box">
                   <h2>{isSind}</h2>
-                  <h1 style={{ color: "#E2B73D !important" }} id="box">
+                  <h1 style={{color: "#E2B73D !important"}} id="box">
                     {isSind === "Sindicalizado"
                         ? data.filter((item) => item.status === true).length
                         : data.filter((item) => item.status === false).length}
@@ -263,6 +263,33 @@ const Home = () => {
               </div>
             </div>
 
+            <div className="lotation">
+              <div className="donut-box">
+                <h1>Divisão de sexo por lotação</h1>
+                <Doughnut data={dataLotacao} options={optionsLotacao}/>
+                <FieldSelect
+                    label="Filtro de Lotação"
+                    onChange={(e) => {
+                      setLotacao(e.target.value);
+                    }}
+                    options={lotacoesOptions}
+                    value={lotacao}
+                />
+              </div>
+              <div className="donut-box">
+                <h1>Divisão de lotação por órgão</h1>
+                <Doughnut data={dataOrgao} options={optionsLotacao}/>
+                <FieldSelect
+                    label="Filtro de Órgão"
+                    onChange={(e) => {
+                      setOrgao(e.target.value);
+                    }}
+                    options={orgaolist}
+                    value={orgao}
+                />
+              </div>
+            </div>
+
             <FieldSelect
                 label="Tipo de Visualização"
                 onChange={(e) => setVisualizationType(e.target.value)}
@@ -272,10 +299,10 @@ const Home = () => {
 
             <div className="line-chart">
               <h1>Filiações, Desfiliações e Não filiados ao longo do tempo</h1>
-              <Line data={lineChartData} options={optionsLineChart} />
+              <Line data={lineChartData} options={optionsLineChart}/>
             </div>
 
-            <SecondaryButton text="Limpar Filtros" onClick={clearFilters} />
+            <SecondaryButton text="Limpar Filtros" onClick={clearFilters}/>
           </section>
       )
   );
