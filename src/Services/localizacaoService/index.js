@@ -14,9 +14,6 @@ if (storagedToken) {
 
 export const createlocalizacao = async (localizacaoData) => {
   try {
-    if (!token) {
-      throw new Error("No token found");
-    }
 
     const response = await APIBank.post(
       `/localizacao/create`,
@@ -41,9 +38,6 @@ export const createlocalizacao = async (localizacaoData) => {
 
 export const getlocalizacao = async () => {
   try {
-    if (!token) {
-      throw new Error("No token found");
-    }
 
     const response = await APIBank.get("/localizacao", {
       headers: {
@@ -58,9 +52,6 @@ export const getlocalizacao = async () => {
 
 export const getlocalizacaoById = async (id) => {
   try {
-    if (!token) {
-      throw new Error("No token found");
-    }
 
     const response = await APIBank.get(`/localizacao/${id}`, {
       headers: {
@@ -78,9 +69,6 @@ export const updatelocalizacaoById = async (
   localizacaoData
 ) => {
   try {
-    if (!token) {
-      throw new Error("No token found");
-    }
 
     console.log("Enviando dados:", localizacaoData);
 
@@ -105,9 +93,6 @@ export const updatelocalizacaoById = async (
 
 export const deletelocalizacaoById = async (id) => {
   try {
-    if (!token) {
-      throw new Error("No token found");
-    }
 
     await APIBank.delete(`/localizacao/delete/${id}`, {
       headers: {
