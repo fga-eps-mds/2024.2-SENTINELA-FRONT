@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../../../Context/auth";
 import { getUsers } from "../../../Services/userService";
-import { getBenefitsForm} from "../../../Services/benefitsService";
 import FieldSelect from "../../../Components/FieldSelect";
 import "./index.css";
 import { Doughnut } from "react-chartjs-2";
@@ -23,75 +22,30 @@ const Home = () => {
   const filiadosOptions = ["Sindicalizado", "Não Sindicalizado"];
 
   useEffect(() => {
-    const fetchAllData = async () => {
+    const fetchUsers = async () => {
       try {
-        // Busca usuários e benefícios em paralelo
-        const [usersResponse, benefitsResponse] = await Promise.all([
-          getUsers(),
-          getBenefitsForm()
-        ]);
-  
-        // Processa usuários
-        if (Array.isArray(usersResponse)) {
-          setData(normalizeUserData(usersResponse));
+        const response = await getUsers();
+        if (Array.isArray(response)) {
+          const normalizedUsers = normalizeUserData(response);
+          setData(normalizedUsers);
+          // Criar benefícios temporários para teste
+          const tempBenefits = {};
+          normalizedUsers.forEach((user, index) => {
+            const sampleBenefits = ["Plano de Saúde", "Vale Alimentação", "Auxílio Transporte"];
+            user.Benefits = [sampleBenefits[index % sampleBenefits.length]]; // Atribuir benefícios aleatórios
+          });
+          setData([...normalizedUsers]);
         } else {
-          console.error("Dados de usuários não são um array");
+          console.error("Os dados recebidos não são um array.");
         }
-  
-        // Processa benefícios
-        if (Array.isArray(benefitsResponse)) {
-          setBeneficio(benefitsResponse);
-        } else {
-          console.error("Dados de benefícios não são um array");
-        }
-  
       } catch (error) {
-        console.error("Erro ao carregar dados:", error);
+        console.error("Erro ao buscar usuários:", error);
       }
     };
-  
-    fetchAllData();
+
+    fetchUsers();
   }, []);
 
-  // useEffect(() => {
-  //   const fetchUsers = async () => {
-  //     try {
-  //       const response = await getUsers();
-  //       if (Array.isArray(response)) {
-  //         const normalizedUsers = normalizeUserData(response);
-  //         setData(normalizedUsers);
-  //       } else {
-  //         console.error("Os dados recebidos não são um array.");
-  //       }
-  //     } catch (error) {
-  //       console.error("Erro ao buscar usuários:", error);
-  //     }
-  //   };
-
-  //   fetchUsers();
-  // }, []);
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       // carrega usuários
-  //       const usersResponse = await getUsers();
-  //       if (Array.isArray(usersResponse)) {
-  //         setData(normalizeUserData(usersResponse));
-  //       }
-
-  //       // Carrega benefícios
-  //       const benefitsResponse = await getBenefitsForm();
-  //       if (Array.isArray(benefitsResponse)) {
-  //         setBenefitsData(benefitsResponse);
-  //       }
-  //     } catch (error) {
-  //       console.error("Erro ao carregar dados:", error);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, []);
 
   function normalizeUserData(users) {
     return users.map((user) => {
@@ -148,6 +102,19 @@ const Home = () => {
       return user.status === true && (orgao === "" || user.orgao === orgao);
     });
   };
+
+  //função para obter dados filtrados por benefícios
+  const benefitCounts = {};
+  data.forEach((user) => {
+    if (user.Benefits && user.Benefits.length > 0) {
+      user.Benefits.forEach((benefit) => {
+        if (!benefitCounts[benefit]) {
+          benefitCounts[benefit] = 0;
+        }
+        benefitCounts[benefit]++;
+      });
+    }
+  });
 
 
   // Dados filtrados para cada gráfico
@@ -217,58 +184,69 @@ const Home = () => {
   };
 
   const chartBenefits = {
-    labels: beneficio.map(b => b.nome),
+    labels: Object.keys(benefitCounts),
     datasets: [
       {
-        label: "Benefícios Utilizados",
-        data: beneficio.map(b => b.usuarios?.length || 0), // Usa optional chaining
-        backgroundColor: [
-          '#FF6384', '#36A2EB', '#FFCE56', 
-          '#4BC0C0', '#9966FF'
-        ],
+        label: "Benefícios Utilizados Por FIliados",
+        data: Object.values(benefitCounts),
+        backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0", "#9966FF"],
         borderWidth: 4,
-      }
-    ]
+      },
+    ],
   };
-  
-  const optionsBenefits = {
-    plugins: {
-      tooltip: {
-        callbacks: {
-          label: (context) => {
-            const label = context.label || '';
-            const value = context.raw || 0;
-            const total = context.dataset.data.reduce((a, b) => a + b, 0);
-            const percentage = ((value / total) * 100).toFixed(1) + '%';
-            
-            return `${label}: ${value} usuários (${percentage})`;
-          }
-        }
-      }
-    }
-  };
+console.log("ainnn tira", Object.keys(benefitCounts));
 
-  // const getFilteredBenefits = () => {
-  //   return beneficio.map(beneficio => ({
-  //     ...beneficio,
-  //     totalUsuarios: beneficio.usuarios.filter(usuario => 
-  //       usuario.status === true && // Filtro por status
-  //       (lotacao === "" || usuario.lotacao === lotacao)
-  //     ).length
-  //   }));
-  // };
+  const optionsBenefits = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: true,
+        position: "left",
+        labels: {
+          boxWidth: 15,
+          padding: 10,
+          font: {
+            size: 14,
+          },
+          color: "#333", 
+          usePointStyle: true, 
+          padding: 20,
+        },
+      },
+    },
+    animation: {
+      onComplete: function (event) {
+        const chart = event.chart;
+        const ctx = chart.ctx;
+        ctx.font = "12px Arial";
+        ctx.fillStyle = "#000";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
   
-  // // atualiza o gráfico
-  // data: getFilteredBenefits().map(b => b.totalUsuarios)
+        chart.data.datasets.forEach((dataset, i) => {
+          const meta = chart.getDatasetMeta(i);
+          meta.data.forEach((element, index) => {
+            const data = dataset.data[index];
+            const total = dataset.data.reduce((a, b) => a + b, 0);
+            const percentage = ((data / total) * 100).toFixed(1) + "%";
+  
+            const position = element.tooltipPosition();
+            ctx.fillText(percentage, position.x, position.y);
+          });
+        });
+      },
+    },
+  };
+  
+  
 
   // Função para limpar todos os filtros
   const clearFilters = () => {
     setIsSind("Sindicalizado");
     setLotacao("");
     setOrgao("");
-    setBeneficio([]);
   };
-
 
   return (
     user && (
@@ -305,10 +283,10 @@ const Home = () => {
         </div>
 
         <div className="lotation">
+
           <div className="donut-box">
             <h1>Divisão de sexo por lotação</h1>
             <Doughnut data={dataLotacao} options={optionsLotacao} />
-
             <FieldSelect
               label="Filtro de Lotação"
               onChange={(e) => {
@@ -331,16 +309,22 @@ const Home = () => {
               value={orgao}
             />
           </div>
+
           <div className="donut-box2">
             <h1>Distribuição de Benefícios</h1>
-            {beneficio.length > 0 ? (
-              <Doughnut data={chartBenefits} options={optionsBenefits} />
-            ) : (
-              <div className="no-data">
-                <p>Nenhum dado de benefícios disponível</p>
-                <p>Verifique a conexão com o servidor</p>
+            {Object.keys(benefitCounts).length > 0 ? (
+              <div style={{ position: 'relative', height: '400px', width: '100%' }}>
+                <Doughnut
+                  data={chartBenefits}
+                  options={optionsBenefits}
+                  redraw
+                />
               </div>
-            )}
+          ) : (
+            <div className="no-data">
+              <p>Carregando dados de benefícios...</p>
+            </div>
+          )}
           </div>
         </div>
 
