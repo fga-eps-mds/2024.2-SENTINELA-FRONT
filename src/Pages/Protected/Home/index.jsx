@@ -263,35 +263,6 @@ const Home = () => {
               </div>
             </div>
 
-            <div className="lotation">
-              <div className="donut-box">
-                <h1>Divisão de sexo por lotação</h1>
-                <Doughnut data={dataLotacao} options={optionsLotacao} />
-
-                <FieldSelect
-                    label="Filtro de Lotação"
-                    onChange={(e) => {
-                      setLotacao(e.target.value);
-                    }}
-                    options={lotacoesOptions}
-                    value={lotacao}
-                />
-              </div>
-
-              <div className="donut-box">
-                <h1>Divisão de lotação por órgão</h1>
-                <Doughnut data={dataOrgao} options={optionsLotacao} />
-                <FieldSelect
-                    label="Filtro de Órgão"
-                    onChange={(e) => {
-                      setOrgao(e.target.value);
-                    }}
-                    options={orgaolist}
-                    value={orgao}
-                />
-              </div>
-            </div>
-
             <FieldSelect
                 label="Tipo de Visualização"
                 onChange={(e) => setVisualizationType(e.target.value)}
