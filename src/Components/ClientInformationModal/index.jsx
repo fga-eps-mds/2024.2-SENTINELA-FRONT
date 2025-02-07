@@ -10,10 +10,10 @@ export default function ClientInformationModal({ transaction, onClose, onQuitado
                     <p className="nomeTitular">{transaction?.name}</p>
 
                     <p className="tituloCpf">CPF</p>
-                    <p className="cpfTitular">{transaction?.cpf}</p>
+                    <p className="cpfTitular">{transaction?.cpf_servidor || transaction?.cpf}</p>
 
                     <p className="tituloStatus">STATUS</p>
-                    <p className="statusTitular">{transaction?.currentStatus}</p>
+                    <p className="statusTitular">{transaction?.newSituation}</p>
 
                     <button className="botaoParaDesfiliar" onClick={onDesfiliar}>
                         DESFILIAR

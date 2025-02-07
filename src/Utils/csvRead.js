@@ -27,7 +27,7 @@ export const readcsv = async (file, delimiter = "") => {
   };
 
   const handleUpdateUser = async (user, formData) => {
-    console.log("handleUpdateUser chamada");
+    console.log("handleUpdateUser chamada: ", formData);
     try {
       const message = await updateMembership(user._id, formData);
       if (message) {
@@ -131,13 +131,22 @@ export const readcsv = async (file, delimiter = "") => {
                 console.log("  Usuário na mesma situação");
               } else {
                 const newSituation = userCsv.status_parc_holerite;
+                const oldSituation = user.situation;
                 console.log(
-                  `Atualizando usuário: ${userCsv.nome || userCsv.cpf_servidor} de ${user.situation} para ${newSituation}`
+                  `Atualizando usuário: ${userCsv.name || userCsv.cpf_servidor} de ${user.situation} para ${newSituation}`
                 );
 
-                const formData = { situation: newSituation };
+                const formData = {
+                  ...user, // Preserva os dados existentes do usuário
+                  situation: newSituation,
+                };
                 handleUpdateUser(user, formData);
-                updatedUsers.push({ ...user, newSituation });
+                updatedUsers.push({
+                  ...user,
+                  newSituation,
+                  oldSituation,
+                  inCsv: true,
+                });
               }
             }
 
@@ -150,9 +159,17 @@ export const readcsv = async (file, delimiter = "") => {
                 console.log(
                   `Atualizando usuário ausente no CSV: ${user.name} (${user.cpf}) para Pendente`
                 );
-                const formData = { situation: "Pendente" };
+                const formData = {
+                  ...user, // Preserva os dados existentes do usuário
+                  situation: "Pendente",
+                };
                 await handleUpdateUser(user, formData);
-                updatedUsers.push({ ...user, newSituation: "Pendente" });
+                updatedUsers.push({
+                  ...user,
+                  newSituation: "Pendente",
+                  oldSituation: user.situation,
+                  inCsv: false,
+                });
               }
             }
 

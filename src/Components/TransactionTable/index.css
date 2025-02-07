@@ -19,7 +19,6 @@
   font-family: inter;
   font-size: 1rem;
 }
-
 .data-table th.name-column,
 .data-table td.name-column {
   width: 300px; /* Ajuste a largura conforme necessário */
@@ -32,15 +31,6 @@
 .data-table td.icone-column {
   width: 5px; /* Ajuste a largura conforme necessário */
 }
-
-.data-import {
-  padding-left: 7.5rem;
-  max-width: 65rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 .icon-button {
   cursor: pointer;
   font-size: 1.5rem;
@@ -49,35 +39,11 @@
   justify-content: center;
   align-items: center;
 }
-
 .data-table td.icon-cell {
   text-align: center;
   vertical-align: middle;
 }
-
 .table-container {
-  margin-bottom: 50px;
-  width: 100%;
-}
-
-.button-container {
-  display: flex;
-  justify-content: center;
-  margin-top: auto;
   margin-bottom: 20px;
-}
-
-.central-button {
-  padding: 10px 20px;
-  font-size: 16px;
-  background-color: #ae883c;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  width: 200px; /* Ajuste a largura conforme necessário */
-}
-
-.central-button:hover {
-  background-color: #8c6a2e;
+  width: 100%;
 }
