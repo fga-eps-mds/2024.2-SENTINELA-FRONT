@@ -165,8 +165,8 @@ export default function patrimonioCreate() {
       !datadeCadastro || 
       !descricao ||
       !numerodeEtiqueta ||
-      !valor
-
+      !valor ||
+      !localizacao
     ) {
       alert("Preencha todos os campos obrigatórios!");
       return;
@@ -232,7 +232,7 @@ export default function patrimonioCreate() {
 
         <div className="double-box-fin">
         <FieldSelect
-            label="Localização"
+            label="Localização *"
             onChange={handleChangeLocalizacao}
             value={localizacao}
             options={[
