@@ -220,4 +220,32 @@ describe("patrimonioList", () => {
       `/patrimonio/update/${patrimonio[0]._id}`
       );
   });
+  it("see localizacoes on button click", async () => {
+    render(
+      <Router>
+        <PatrimonioList />
+      </Router>
+    );
+
+    fireEvent.click(screen.getByText(/Gerenciar Localizações/i));
+    await waitFor(() => {
+      expect(screen.getByText("Criar Localização")).toBeInTheDocument();
+    });
+  });
+  
+  it("fechar pop up localizacoes on button click", async () => {
+    render(
+      <Router>
+        <PatrimonioList />
+      </Router>
+    );
+  
+    fireEvent.click(screen.getByText(/Gerenciar Localizações/i));
+    await waitFor(() => screen.getByText(/Fechar/i));
+    fireEvent.click(screen.getByText(/Fechar/i));
+    await waitFor(() => {
+      expect(screen.queryByText(/Fechar/i)).not.toBeInTheDocument();
+    });
+  });
+  
 }); 
