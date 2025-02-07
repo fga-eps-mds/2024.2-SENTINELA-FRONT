@@ -38,6 +38,7 @@ export default function FinancialUpdate() {
   const [DeLocalizacao, setDeLocalizacao] = useState("");
   const [mostrar, setMostrar] = useState(false);
   const [mostrarHistorico, setMostrarHistorico] = useState(false);
+  const [localizacoes, setLocalizacoes] = useState([]);
 
   const maxDescricaoLength = 130;
   const canUpdate = checkAction("update");
@@ -73,6 +74,29 @@ export default function FinancialUpdate() {
 
     fetchpatrimonio();
   }, [patrimonioId]);
+
+  useEffect(() =>{
+    const fetchlocalizacao = async () => {
+      try {
+        const response = await APIBank.get(`/localizacao`, {
+          headers: {
+            Authorization: `Bearer ${getToken()}`,
+          },
+        });
+  
+        const data = response.data;
+        if (Array.isArray(data)) {
+          setLocalizacoes(data);
+        } else {
+          console.error("Os dados recebidos não são um array.");
+        }
+      } catch (error) {
+        console.error("Erro ao buscar localizacoes:", error);
+      }
+    };
+    fetchlocalizacao();
+  }, []);
+
 
   useEffect(() => {
     const fetchpatrimonioLocalizacao = async () => {
@@ -252,18 +276,7 @@ export default function FinancialUpdate() {
             label="Localização"
             onChange={handleChangeLocalizacao}
             value={localizacao}
-            options={[
-              "",
-              "SAlA DE COMUNICAÇÃO",
-              "JURÍDICO",
-              "PRESIDÊNCIA",
-              "SALA DE REUNIÃO",
-              "RECEPÇÃO",
-              "COPA",
-              "SALA DE PODCAST",
-              "RECEPÇÃO DO PODCAST",
-              "OUTROS",
-            ]}
+            options={localizacoes.map((loc) => loc.localizacao)}
           />
           <DataSelect
             label="Data de cadastro"

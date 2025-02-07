@@ -28,6 +28,7 @@ export default function patrimonioCreate() {
   const [datadeCadastro, setDatadeCadastro] = useState(new Date());
   const [showModal, setShowModal] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
+  const [localizacoes, setLocalizacoes] = useState([]);
   const maxDescricaoLength = 130;
   const maxNumerodeEtiqueta = 9999;
 
@@ -81,6 +82,29 @@ export default function patrimonioCreate() {
       setNumerodeEtiqueta(1); // Ou qualquer número inicial desejado
     }
   }, [patrimonio]);
+
+  useEffect(() =>{
+    const fetchlocalizacao = async () => {
+      try {
+        const response = await APIBank.get(`/localizacao`, {
+          headers: {
+            Authorization: `Bearer ${getToken()}`,
+          },
+        });
+  
+        const data = response.data;
+        if (Array.isArray(data)) {
+          setLocalizacoes(data);
+        } else {
+          console.error("Os dados recebidos não são um array.");
+        }
+      } catch (error) {
+        console.error("Erro ao buscar localizacoes:", error);
+      }
+    };
+    fetchlocalizacao();
+  }, []);
+
   const handleCurrencyInput = (value, setValue) => {
     // Remove qualquer caractere que não seja número
     const numericValue = value.replace(/\D/g, "");
@@ -235,19 +259,8 @@ export default function patrimonioCreate() {
             label="Localização"
             onChange={handleChangeLocalizacao}
             value={localizacao}
-            options={[
-              "",
-              "SAlA DE COMUNICAÇÃO",
-              "JURÍDICO",
-              "PRESIDÊNCIA",
-              "SALA DE REUNIÃO",
-              "RECEPÇÃO",
-              "COPA",
-              "SALA DE PODCAST",
-              "RECEPÇÃO DO PODCAST",
-              "OUTROS",
-            ]}
-          />
+            options={localizacoes.map((loc) => loc.localizacao)}
+            />
           <DataSelect
             label="Data de cadastro"
             value={datadeCadastro}

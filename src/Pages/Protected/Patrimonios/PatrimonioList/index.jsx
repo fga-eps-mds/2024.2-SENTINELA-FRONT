@@ -2,24 +2,30 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./index.css";
 import PrimaryButton from "../../../../Components/PrimaryButton";
+import SecondaryButton from "../../../../Components/SecondaryButton";
+import Modal from "../../../../Components/Modal";
+import BigModal from "../../../../Components/BigModal";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import Divider from "@mui/material/Divider";
 import ListItemText from "@mui/material/ListItemText";
-import DataSelect from "../../../../Components/DataSelect";
 import FieldText from "../../../../Components/FieldText";
 import FieldSelect from "../../../../Components/FieldSelect";
 import { APIBank } from "../../../../Services/BaseService";
 import { checkAction } from "../../../../Utils/permission";
 import { getToken } from "../../../../Services/Functions/loader";
+import { createlocalizacao, deletelocalizacaoById } from "../../../../Services/localizacaoService";
 
 export default function patrimonioList() {
   const [patrimonio, setpatrimonio] = useState([]);
   const [search, setSearch] = useState("");
   const [searchEtiqueta, setSearchEtiqueta] = useState("");
   const navigate = useNavigate();
-  const [loc, setLocalizacao] = useState(null)
+  const [modalIsOpen, setmodalIsOpen] = useState(false);
+  const [loc, setLocalizacao] = useState(null);
+  const [localizacoes, setLocalizacoes] = useState([]);
+  const [newLocalizacao, setnewLocalizacao] = useState("");
   // const permissions = usePermissions();
   const canCreate = checkAction("create");
 
@@ -48,8 +54,47 @@ export default function patrimonioList() {
     fetchpatrimonio();
   }, []);
 
-  const handleSubmit = () => {
+  const fetchlocalizacao = async () => {
+    try {
+      const response = await APIBank.get(`/localizacao`, {
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      });
+
+      const data = response.data;
+      if (Array.isArray(data)) {
+        setLocalizacoes(data);
+      } else {
+        console.error("Os dados recebidos não são um array.");
+      }
+    } catch (error) {
+      console.error("Erro ao buscar localizacoes:", error);
+    }
+  };
+
+
+  useEffect(() => {
+    fetchlocalizacao();
+  }, []);
+
+  const handleSubmit = async () => {
     navigate("/patrimonio/create");
+  };
+
+  const handleCriarLocalizacao = async () => {
+    if (localizacoes.some((loc) => loc.localizacao.toLowerCase() === newLocalizacao.toLowerCase())) {
+      alert("Essa localização já existe!");
+      return;
+    }
+    try {
+      await createlocalizacao({ localizacao: newLocalizacao }, {
+        headers: { Authorization: `Bearer ${getToken()}` },
+      });
+      fetchlocalizacao();
+    } catch (error) {
+      console.error("Erro ao criar localização:", error);
+    }
   };
 
   const handleItemClick = (patrimonio) => {
@@ -57,6 +102,29 @@ export default function patrimonioList() {
       state: { patrimonioId: patrimonio._id },
     });
   };
+
+  const handleLocalizacaoDelete = async (localizacao) => {
+    try {
+      // Verifica se existe algum patrimônio com essa localização
+      const patrimonioRelacionado = patrimonio.some(
+        (item) => item.localizacao === localizacao.localizacao
+      );
+  
+      if (patrimonioRelacionado) {
+        alert("Não é possível excluir essa localização, pois existem patrimônios associados a ela.");
+        return;
+      }
+  
+      // Se não houver patrimônios, prossegue com a exclusão
+      await deletelocalizacaoById(localizacao._id);
+  
+      // Atualiza a lista de localizações após a exclusão
+      fetchlocalizacao();
+    } catch (error) {
+      console.error("Erro ao deletar localização:", error);
+    }
+  };
+  
 
   const filteredPatrimonio = patrimonio.filter((patrimonio) => {
     const isDocumentTypeMatch = patrimonio.nome
@@ -108,26 +176,69 @@ export default function patrimonioList() {
         </div>
         </div>
 
-        <div className="date-box-financialList">
-    
+        <div className="double-box-financialList">
+
+          <div className="search-localizacao-patrimonioList">
           <FieldSelect
             label="Localização"
             onChange={(e) => setLocalizacao(e.target.value)}
             value={loc}
-            options={[
-              "",
-              "SAlA DE COMUNICAÇÃO",
-              "JURÍDICO",
-              "PRESIDÊNCIA",
-              "SALA DE REUNIÃO",
-              "RECEPÇÃO",
-              "COPA",
-              "SALA DE PODCAST",
-              "RECEPÇÃO DO PODCAST",
-              "OUTROS",
-            ]}
+            options={localizacoes.map((loc) => loc.localizacao)}
           />
-        </div>
+          </div>
+          <SecondaryButton
+              text="Gerenciar Localizações"
+              onClick={() => setmodalIsOpen(true)}
+            />
+            <BigModal show={modalIsOpen} width="600px">
+            <ListItem>
+              <FieldText
+                label="Nova Localização"
+                value={newLocalizacao}
+                onChange={(e) => setnewLocalizacao(e.target.value)}
+              />
+              <PrimaryButton
+                text="Criar Localização"
+                onClick={() => handleCriarLocalizacao(newLocalizacao)}
+                maxWidth="200px"
+                marginTop="10px"
+              />
+            </ListItem>
+            LISTA DE LOCALIZAÇÕES:
+
+            {/* Mapeando todas as localizações */}
+            {localizacoes.map((localizacoes) => (
+              <ListItem key={localizacoes._id}>
+                <ListItemButton
+                            className=""
+                            style={{
+                              transition: "background-color 0.3s ease",
+                              color: "#332117",
+                            }}
+                            onMouseEnter={(e) =>
+                              (e.currentTarget.style.backgroundColor =
+                                "rgba(0, 0, 0, 0.1)")
+                            }
+                            onMouseLeave={(e) =>
+                              (e.currentTarget.style.backgroundColor = "transparent")
+                            }
+                            onClick={() => handleLocalizacaoDelete(localizacoes)}
+                          >
+                <ListItemText primary={localizacoes.localizacao} />
+                </ListItemButton>
+              </ListItem>
+            ))}
+
+            <SecondaryButton
+              text="Fechar"
+              onClick={() => setmodalIsOpen(false)}
+              maxWidth="150px"
+              marginTop="10px"
+            />
+            </BigModal>
+
+                    </div>
+          
 
         <List>
           {filteredPatrimonio.map((patrimonio, index) => (
