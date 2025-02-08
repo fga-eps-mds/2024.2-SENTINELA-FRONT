@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../../../Context/auth";
 import { getUsers } from "../../../Services/userService";
+import { getBenefitsForm } from "../../../Services/benefitsService";
 import FieldSelect from "../../../Components/FieldSelect";
 import "./index.css";
 import { Doughnut } from "react-chartjs-2";
@@ -27,14 +28,8 @@ const Home = () => {
         const response = await getUsers();
         if (Array.isArray(response)) {
           const normalizedUsers = normalizeUserData(response);
+          console.log("Usuários normalizados:", normalizedUsers); // Log para verificação
           setData(normalizedUsers);
-          // Criar benefícios temporários para teste
-          const tempBenefits = {};
-          normalizedUsers.forEach((user, index) => {
-            const sampleBenefits = ["Plano de Saúde", "Vale Alimentação", "Auxílio Transporte"];
-            user.Benefits = [sampleBenefits[index % sampleBenefits.length]]; // Atribuir benefícios aleatórios
-          });
-          setData([...normalizedUsers]);
         } else {
           console.error("Os dados recebidos não são um array.");
         }
@@ -42,10 +37,31 @@ const Home = () => {
         console.error("Erro ao buscar usuários:", error);
       }
     };
+  
+    fetchUsers(); // Chama a função após a definição
+  
+  }, []); 
 
-    fetchUsers();
+  useEffect(() => {
+    const getBenefits = async () => {
+      try {
+        const response = await getBenefitsForm();
+    
+        if (Array.isArray(response)) {
+          // Normalizando os dados antes de armazenar
+          const beneficiosComId = response.map((beneficio) => ({
+            nome: beneficio.nome ? beneficio.nome.toLowerCase().trim() : "", // Normalizando o nome
+          }));
+          console.log("array do beneficios:", beneficiosComId);
+          setBeneficioList(beneficiosComId);
+        }
+      } catch (error) {
+        console.error("Erro ao buscar os benefícios:", error);
+      }
+    };
+    
+    getBenefits();
   }, []);
-
 
   function normalizeUserData(users) {
     return users.map((user) => {
@@ -54,6 +70,9 @@ const Home = () => {
       }
       if (user.orgao) {
         user.orgao = user.orgao.toLowerCase().trim();
+      }
+      if(user.beneficio){
+        user.beneficio = user.beneficio.toLowerCase().trim();
       }
       return user;
     });
@@ -104,17 +123,51 @@ const Home = () => {
   };
 
   //função para obter dados filtrados por benefícios
-  const benefitCounts = {};
-  data.forEach((user) => {
-    if (user.Benefits && user.Benefits.length > 0) {
-      user.Benefits.forEach((benefit) => {
-        if (!benefitCounts[benefit]) {
-          benefitCounts[benefit] = 0;
+  useEffect(() => {
+    const countUsersByBenefit = () => {
+      const benefitCounts = {}; // Objeto para armazenar a contagem de usuários por benefício
+  
+      data.forEach((user) => {
+        if (user.beneficio && Array.isArray(user.beneficio)) {
+          // Iterar sobre os benefícios do usuário
+          user.beneficio.forEach((benefit) => {
+            const beneficioNome = benefit.toLowerCase().trim();
+  
+            // Verificar se o benefício existe na lista de benefícios
+            if (beneficioList.some((beneficio) => beneficio.nome.toLowerCase().trim() === beneficioNome)) {
+              // Se o benefício já foi contado, incrementa a contagem
+              if (!benefitCounts[beneficioNome]) {
+                benefitCounts[beneficioNome] = 0;
+              }
+              benefitCounts[beneficioNome]++;
+            }
+          });
         }
-        benefitCounts[benefit]++;
       });
+  
+      // Log para verificar o resultado da contagem
+      console.log("Contagem de usuários por benefício:", benefitCounts);
+  
+      // Aqui você pode atualizar o estado com os benefícios e suas contagens
+      setBenefitCount(benefitCounts);
+    };
+  
+    // Chama a função de contagem após a atualização dos dados de usuários e benefícios
+    if (data.length > 0 && beneficioList.length > 0) {
+      countUsersByBenefit();
     }
-  });
+  }, [data, beneficioList]); 
+  // const benefitCounts = {};
+  // data.forEach((user) => {
+  //   if (user.beneficio && user.beneficio.nome) {
+  //     const beneficioNome = user.beneficio.nome.toLowerCase().trim();
+  //     if (!benefitCounts[beneficioNome]) {
+  //       benefitCounts[beneficioNome] = 0;
+  //     }
+  //     benefitCounts[beneficioNome]++;
+  //   }
+  // });
+  
 
 
   // Dados filtrados para cada gráfico

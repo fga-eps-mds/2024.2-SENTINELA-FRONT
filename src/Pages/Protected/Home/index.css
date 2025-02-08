@@ -36,10 +36,6 @@
     align-items: center;
   }
 
-  .lotation {
-    
-  }
-
   .donut-box {
     display: flex;
     flex-direction: column;
@@ -64,18 +60,11 @@
   }
 
 
-  .donut-box {
-    
-  }
-
   .donut-box2 h1 {
     font-size: 1.2rem;
     text-align: center;
     margin-bottom: 1rem;
     color: #333;
-  }
-  .donut-box2 {
-    
   }
   .donut-box2 canvas {
     max-width: 100% !important;

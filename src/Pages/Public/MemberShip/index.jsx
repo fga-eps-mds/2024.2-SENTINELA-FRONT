@@ -13,6 +13,7 @@ import Alert from "@mui/material/Alert";
 import SecondaryButton from "../../../Components/SecondaryButton";
 import Modal from "../../../Components/Modal";
 import { useNavigate } from "react-router-dom";
+import { getBenefitsForm } from "../../../Services/benefitsService";
 import { listOrgans } from "../../../Services/organService";
 import { isValidEmail } from "../../../Utils/validators";
 import { mascaraTelefone } from "../../../Utils/validators";
@@ -32,6 +33,7 @@ const MemberShip = () => {
   const [dataExpedicao, setDataExpedicao] = useState(null);
   const [cargo, setCargo] = useState("");
   const [lotacao, setlotacao] = useState("");
+  const [beneficio, setBeneficio] = useState(""); //mudei aqui
   const [matricula, setMatricula] = useState("");
   const [nomeCompleto, setnomeCompleto] = useState("");
   const [dataNasc] = useState(null);
@@ -59,8 +61,12 @@ const MemberShip = () => {
   const [touchedFields, setTouchedFields] = useState({});
   const [unfilledDependent, setUnfilledDependent] = useState(false);
   const [orgaosList, setOrgaosList] = useState([]);
+  const [beneficioList, setBeneficioList] = useState([]);
+  const [beneficioId, setBeneficioID] = useState([]);
   const [lotacaoList, setLotacaoList] = useState([]);
   const [senha, setSenha] = useState([]);
+
+
 
   const navigate = useNavigate();
   // Function to validate a field
@@ -143,6 +149,7 @@ const MemberShip = () => {
     naturalidade: "Naturalidade",
     rg: "RG",
     orgao: "Órgão",
+    beneficio: "Benefício",
     cpf: "CPF",
     nomeDaMae: "Nome da Mãe",
     nomeDoPai: "Nome do Pai",
@@ -297,6 +304,28 @@ const MemberShip = () => {
     getOrgaos();
   }, []);
 
+  useEffect(() => {
+    const getBenefits = async () => {
+      try {
+        const response = await getBenefitsForm();
+  
+        if (Array.isArray(response)) {
+          // Armazena o ID e o nome do benefício corretamente
+          const beneficiosComId = response.map((beneficio) => ({
+            nome: beneficio.nome, // Nome do benefício
+          }));
+          console.log("array do beneficios:", beneficiosComId);
+          setBeneficioList(beneficiosComId);
+        }
+      } catch (error) {
+        console.error("Erro ao buscar os benefícios:", error);
+      }
+    };
+  
+    getBenefits();
+  }, []);
+  
+
   const handleSubmit = () => {
     const erros = {};
 
@@ -308,8 +337,9 @@ const MemberShip = () => {
     if (!cpf) erros.cpf = 1;
     if (!email) erros.email = 1;
     if (!celular) erros.celular = 1;
-    if (!orgao) erros.orgao = 1;
-    if (!lotacao) erros.lotacao = 1;
+    // if (!orgao) erros.orgao = 1;
+    // if (!lotacao) erros.lotacao = 1;
+    if (!beneficioId) erros.beneficio = 1;
 
     //CAMPOS OPCIONAIS
     //if (!estadoCivil) erros.estadoCivil = 1;
@@ -367,6 +397,7 @@ const MemberShip = () => {
       education: escolaridade,
       rg,
       orgao,
+      beneficio, //envia o id do beneficio
       cpf,
       hiringDate: dataContratacao,
       expeditionDate: dataExpedicao,
@@ -668,7 +699,23 @@ const MemberShip = () => {
             onBlur={(e) => handleBlur(e, "orgao")}
             erro={erro("orgao")}
           />
-
+          
+          <FieldSelect
+            label="Benefício *"
+            value={beneficio} // Exibe o nome do benefício selecionado
+            onChange={(e) => {
+              const selectedBeneficio = beneficioList.find(
+                (beneficio) => beneficio.nome === e.target.value
+              );
+              
+              setBeneficio(e.target.value);
+              console.log("nome do Benefício:", typeof selectedBeneficio.nome);
+              console.log("nome d Benefício:", typeof e.target.value);
+            }}
+            options={beneficioList.map((beneficio) => beneficio.nome)} // Exibe os nomes dos benefícios
+            onBlur={(e) => handleBlur(e, "beneficio")}
+            erro={erro("beneficio")}
+          />
           <FieldText
             label="Posto de Trabalho"
             value={postoDeTrabalho}
