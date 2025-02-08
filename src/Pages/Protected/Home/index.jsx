@@ -16,6 +16,7 @@ const Home = () => {
   const [isSind, setIsSind] = useState("Sindicalizado");
   const [lotacao, setLotacao] = useState("");
   const [orgao, setOrgao] = useState("");
+  const [lineChartData, setLineChartData] = useState({ labels: [], datasets: [] });
 
   // Opções de filtro
   const filiadosOptions = ["Sindicalizado", "Não Sindicalizado"];
@@ -27,6 +28,11 @@ const Home = () => {
         if (Array.isArray(response)) {
           const normalizedUsers = normalizeUserData(response);
           setData(normalizedUsers);
+
+          const processedData = processUserData(response);
+          console.log("Usuarios: ",processedData);
+          setLineChartData(processedData);
+
         } else {
           console.error("Os dados recebidos não são um array.");
         }
@@ -145,42 +151,128 @@ const Home = () => {
     ],
   };
 
-  //cria um estado para armazenar opcoes do filtro
   const [visualizationType, setVisualizationType] = useState("Mensal");
 
-  // Dados para o gráfico de linhas
-  const getLineChartData = () => {
-    if (visualizationType === "Mensal") {
-      return {
-        labels: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"],
-        datasets: [
-          { label: "Filiações", data: [6, 1, 2, 5, 3, 0, 2, 8, 3, 9, 1, 2], borderColor: "#36A2EB", fill: false },
-          { label: "Desfiliações", data: [1, 3, 1, 3, 2, 0, 0, 2, 0, 2, 1, 0], borderColor: "#FF6384", fill: false },
-          { label: "Não filiados", data: [10, 2, 6, 3, 5, 3, 2, 2, 2, 2, 3, 5], borderColor: "#4BC0C0", fill: false },
-        ],
-      };
-    } else if (visualizationType === "Semestral") {
-      return {
-        labels: ["1º Semestre", "2º Semestre"],
-        datasets: [
-          { label: "Filiações", data: [395, 330], borderColor: "#36A2EB", fill: false },
-          { label: "Desfiliações", data: [248, 296], borderColor: "#FF6384", fill: false },
-          { label: "Não filiados", data: [208, 195], borderColor: "#4BC0C0", fill: false },
-        ],
-      };
-    } else {
-      return {
-        labels: ["2024"],
-        datasets: [
-          { label: "Filiações", data: [725], borderColor: "#36A2EB", fill: false },
-          { label: "Desfiliações", data: [544], borderColor: "#FF6384", fill: false },
-          { label: "Não filiados", data: [403], borderColor: "#4BC0C0", fill: false },
-        ],
-      };
-    }
-  };
+  const processUserData = (users) => {
+    const monthNames = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
+    
+    // Estrutura inicial para armazenar os dados mensais
+    const monthlyData = monthNames.reduce((acc, month) => {
+      acc[month] = { filiados: 0, desfiliados: 0, naoFiliados: 0 };
+      return acc;
+    }, {});
+  
+    users.forEach((user) => {
+      // Processar filiações
+      if (user.role.name === "sindicalizado" && user.status == true) {
+        const date = new Date(user.hiringDate);
+        let month = "Dez"; // Assumindo Dezembro como padrão caso não haja uma data
+        if (date && !isNaN(date)) {
+          month = monthNames[date.getMonth()];
+        }
+        monthlyData[month].filiados += 1;
+      }
 
-  const lineChartData = getLineChartData();
+      // Processar não filiados
+      else if (user.role.name !== "sindicalizado") {
+        const date = new Date(user.updatedAt);
+        let month = "Dez"; // Assumindo Dezembro como padrão caso não haja uma data
+        if (date && !isNaN(date)) {
+          month = monthNames[date.getMonth()];
+        }
+        monthlyData[month].naoFiliados += 1;
+      }
+
+      // Processar desfiliações
+      else {
+        const date = new Date(user.updatedAt);
+        if (!isNaN(date)) {  
+          const month = monthNames[date.getMonth()];
+          monthlyData[month].desfiliados += 1;
+        }
+      }
+  
+      
+    });
+
+    return {
+      labels: Object.keys(monthlyData),
+      datasets: [
+        {
+          label: "Filiações",
+          data: Object.values(monthlyData).map((d) => d.filiados),
+          borderColor: "#FA0E0C",
+          fill: false,
+        },
+        {
+          label: "Desfiliações",
+          data: Object.values(monthlyData).map((d) => d.desfiliados),
+          borderColor: "#1B9D77",
+          fill: false,
+        },
+        {
+          label: "Não filiados",
+          data: Object.values(monthlyData).map((d) => d.naoFiliados),
+          borderColor: "#3245CC",
+          fill: false,
+        },
+      ],
+    };
+  };
+  
+
+  
+  // Dados para o gráfico de linhas
+  const getLineChartData = (lineChartData, visualizationType) => {
+    if (!lineChartData) return { labels: [], datasets: [] };
+
+    const calculateSemesterData = (data) => [
+      data.slice(0, 6).reduce((sum, value) => sum + value, 0),  // Soma dos primeiros 6 meses
+      data.slice(6, 12).reduce((sum, value) => sum + value, 0), // Soma dos últimos 6 meses
+    ];
+
+    const calculateAnnualData = (data) => [
+      data.reduce((sum, value) => sum + value, 0), // Soma de todos os meses
+    ];
+  
+    const config = {
+      Mensal: {
+        labels: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"],
+        data: lineChartData,
+      },
+      Semestral: {
+        labels: ["1º Semestre", "2º Semestre"],
+        data: {datasets: [
+            { data: calculateSemesterData(lineChartData.datasets[0]?.data || []) },
+            { data: calculateSemesterData(lineChartData.datasets[1]?.data || []) },
+            { data: calculateSemesterData(lineChartData.datasets[2]?.data || []) },
+          ],
+        },
+      },
+      Anual: {
+        labels: ["2025"],
+        data: {
+            datasets: [
+                { data: calculateAnnualData(lineChartData.datasets[0]?.data || []) },
+                { data: calculateAnnualData(lineChartData.datasets[1]?.data || []) },
+                { data: calculateAnnualData(lineChartData.datasets[2]?.data || []) },
+            ],
+        },
+      },
+    };  
+
+    const selectedData = config[visualizationType] || config["Mensal"];
+    console.log("linechardata: ", lineChartData);
+    return {
+        labels: selectedData.labels,
+        datasets: [
+            { label: "Filiações", data: selectedData.data.datasets[0]?.data || [], borderColor: "#FA0E0C", fill: false },
+            { label: "Desfiliações", data: selectedData.data.datasets[1]?.data || [], borderColor: "#1B9D77", fill: false },
+            { label: "Não filiados", data: selectedData.data.datasets[2]?.data || [], borderColor: "#3245CC", fill: false },
+        ],
+    };
+  };  
+  
 
   const optionsLotacao = {
     responsive: true,
@@ -227,6 +319,15 @@ const Home = () => {
         },
       },
     },
+    scales: {
+      y: {
+        beginAtZero: false, // Faz o eixo Y começar do zero
+        suggestedMax: Math.max(...lineChartData.datasets.flatMap(dataset => dataset.data)), // Define o máximo como o maior valor dos dados
+        ticks: {
+          stepSize: Math.ceil(Math.max(...lineChartData.datasets.flatMap(dataset => dataset.data))/10), // Define o intervalo dos ticks no eixo Y (ajuste conforme necessário)
+        },
+      },
+    }
   };
 
   // Dados mockados para ativo e aposentado
@@ -241,7 +342,7 @@ const Home = () => {
       {
         label: "Distribuição de Ativos e Aposentados",
         data: [dataMock.Ativo, dataMock.Aposentado],
-        backgroundColor: ["#36A2EB", "#FF6384"], // Cores do gráfico
+        backgroundColor: ["#DA5F02", "#1B9D77"], // Cores do gráfico
         borderWidth: 4,
       },
     ],
@@ -317,7 +418,7 @@ const Home = () => {
 
             <div className="line-chart">
               <h1>Filiações, Desfiliações e Não filiados ao longo do tempo</h1>
-              <Line data={lineChartData} options={optionsLineChart}/>
+              <Line data={getLineChartData(lineChartData, visualizationType)} options={optionsLineChart}/>
             </div>
 
             <div className="donut-box">
