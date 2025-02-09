@@ -2,7 +2,6 @@ import { render, screen, fireEvent, cleanup } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
 import { describe, it, expect, vi, afterEach } from "vitest";
 import "@testing-library/jest-dom";
-
 import BankAccountCreate from "./index";
 import { useAuth } from "../../../../Context/auth";
 
@@ -12,6 +11,10 @@ vi.mock("../../../../Context/auth", () => ({
 
 vi.mock("../../../../Services/bankAccountService", () => ({
   createBankAccount: vi.fn(),
+}));
+
+vi.mock("../../../../Utils/permission", () => ({
+  checkAction: vi.fn(() => true), // Garante que o componente renderiza
 }));
 
 describe("BankAccountCreate Component", () => {
@@ -31,7 +34,7 @@ describe("BankAccountCreate Component", () => {
       </Router>
     );
 
-    expect(screen.getByText("Cadastro de Conta Bancária")).toBeInTheDocument();
+    expect(screen.getByText(/Cadastro de Conta Bancária/i)).toBeInTheDocument();
   });
 
   it("shows error message when required fields are missing", () => {
@@ -45,7 +48,7 @@ describe("BankAccountCreate Component", () => {
       </Router>
     );
 
-    fireEvent.click(screen.getByText("CADASTRAR"));
+    fireEvent.click(screen.getByRole("button", { name: /cadastrar/i }));
 
     expect(
       screen.getByText(
@@ -53,53 +56,6 @@ describe("BankAccountCreate Component", () => {
       )
     ).toBeInTheDocument();
   });
-
-  // it("shows unique error message if name is already registered", async () => {
-  //   useAuth.mockReturnValue({
-  //     user: { id: 1, name: "Test User" },
-  //   });
-
-  //   createBankAccount.mockResolvedValue({
-  //     status: 409,
-  //     data: { error: "Nome já cadastrado" },
-  //   });
-
-  //   render(
-  //     <Router>
-  //       <BankAccountCreate />
-  //     </Router>
-  //   );
-
-  //   fireEvent.change(screen.getByLabelText("Nome *"), { target: { value: "Conta Teste" } });
-  //   fireEvent.click(screen.getByText("Cadastrar Conta"));
-
-  //   expect(await screen.findByText("Nome já cadastrado")).toBeInTheDocument();
-  // });
-
-  // it("navigates to list page after successful creation", async () => {
-  //   useAuth.mockReturnValue({
-  //     user: { id: 1, name: "Test User" },
-  //   });
-
-  //   createBankAccount.mockResolvedValue({
-  //     status: 201,
-  //   });
-
-  //   const navigate = vi.fn();
-  //   render(
-  //     <Router>
-  //       <BankAccountCreate navigate={navigate} />
-  //     </Router>
-  //   );
-
-  //   fireEvent.change(screen.getByLabelText("Nome *"), { target: { value: "Conta Teste" } });
-  //   fireEvent.click(screen.getByText("Cadastrar Conta"));
-
-  //   await waitFor(() => {
-  //     expect(screen.getByText("Cadastro concluído")).toBeInTheDocument();
-  //   });
-  //   expect(navigate).toHaveBeenCalledWith("/finance/list");
-  // });
 
   it("applies masks correctly", () => {
     useAuth.mockReturnValue({
@@ -112,9 +68,9 @@ describe("BankAccountCreate Component", () => {
       </Router>
     );
 
-    const agenciaInput = screen.getByLabelText("Agência");
-    const numeroContaInput = screen.getByLabelText("Número da conta");
-    const dvInput = screen.getByLabelText("DV");
+    const agenciaInput = screen.getByLabelText(/agência/i);
+    const numeroContaInput = screen.getByLabelText(/número da conta/i);
+    const dvInput = screen.getByLabelText(/dv/i);
 
     fireEvent.change(agenciaInput, { target: { value: "123456" } });
     expect(agenciaInput.value).toBe("12345");
