@@ -9,10 +9,9 @@ import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 import { listOrgans } from "../../../../Services/organService";
 import "./index.css";
-import { checkAction, usePermissions } from "../../../../Utils/permission";
+import { checkAction } from "../../../../Utils/permission";
 
 export default function OrganList() {
-  const permissions = usePermissions();
   const [search, setSearch] = useState("");
   const [organs, setOrgans] = useState([]);
   const navigate = useNavigate();
@@ -47,7 +46,7 @@ export default function OrganList() {
           <h1 className="title-center"> Lista de órgãos</h1>
           {checkAction("orgaos_criar") && (
             <PrimaryButton text="Cadastrar órgão" onClick={handleSubmit} />
-          )} 
+          )}
         </div>
         <div className="search-box-organs">
           <FieldText

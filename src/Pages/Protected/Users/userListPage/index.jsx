@@ -86,7 +86,6 @@ export default function UserListPage() {
               text="Cadastrar Sindicalizado"
               onClick={() => {
                 navigate("/filiacao");
-                setIsSideBarOpen(false);
               }}
             />
           )}

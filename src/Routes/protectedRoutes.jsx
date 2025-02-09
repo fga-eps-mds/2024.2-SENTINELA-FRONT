@@ -42,6 +42,7 @@ import PatrimonioList from "../Pages/Protected/Patrimonios/PatrimonioList";
 import PatrimonioUpdate from "../Pages/Protected/Patrimonios/PatrimonioUpdate";
 import PatrimonioHubPage from "../Pages/Protected/Patrimonios/PatrimonioHubPage";
 
+
 import DataImport from "../Pages/Protected/DataImport/index.jsx";
 
 const ProtectedRoutes = () => {
@@ -208,21 +209,21 @@ const ProtectedRoutes = () => {
           />
         }
       />
-        <Route
-          path="/carteirinha"
-          element={
-            // <PermissionProtect
-            //   element={<CarteirinhaPage />}
-            //   moduleName="users"
-            //   actions={["read", "create"]}
-            // />
-            <PermissionProtect
+      <Route
+        path="/carteirinha"
+        element={
+          // <PermissionProtect
+          //   element={<CarteirinhaPage />}
+          //   moduleName="users"
+          //   actions={["read", "create"]}
+          // />
+          <PermissionProtect
             element={<CarteirinhaPage />}
             moduleName="benefits"
             actions={["read", "create", "update", "delete"]}
           />
-          }
-        />
+        }
+      />
       <Route
         path="/beneficios/editar/:id"
         element={
@@ -398,14 +399,14 @@ const ProtectedRoutes = () => {
         }
       />
       <Route
-          path="/dataimport"
-          element={
-              <PermissionProtect
-                  element={<DataImport />}
-                  moduleName="finance"
-                  actions={["read", "create"]}
-              />
-          }
+        path="/dataimport"
+        element={
+          <PermissionProtect
+            element={<DataImport />}
+            moduleName="finance"
+            actions={["read", "create"]}
+          />
+        }
       />
     </Routes>
   );

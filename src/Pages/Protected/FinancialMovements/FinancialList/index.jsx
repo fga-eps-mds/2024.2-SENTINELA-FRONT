@@ -22,8 +22,6 @@ export default function FinancialList() {
   // const permissions = usePermissions();
   const canCreate = checkAction("create");
 
-  const storagedUser = JSON.parse(localStorage.getItem("@App:user"));
-
   useEffect(() => {
     const fetchMovements = async () => {
       try {
