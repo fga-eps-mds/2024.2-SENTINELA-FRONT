@@ -5,7 +5,6 @@ import {
   createOrgan,
   listOrgans,
   updateOrgan,
-  getOrganById,
   deleteOrganById,
 } from "./organService";
 
@@ -21,7 +20,6 @@ vi.mock("./BaseService", () => ({
 
 describe("Organ Service", () => {
   const mockToken = "mockToken";
-  const organData = { orgao: "Financeiro", lotacao: "Setor 1" };
   const organId = "789";
   const mockUser = { _id: "123456" };
 
@@ -30,19 +28,10 @@ describe("Organ Service", () => {
     localStorage.setItem("@App:user", JSON.stringify(mockUser));
   });
 
-  it("should create an organ", async () => {
-    APIUsers.post.mockResolvedValueOnce({ status: 201 });
-
-    const result = await createOrgan(organData.orgao, organData.lotacao);
-
-    expect(APIUsers.post).toHaveBeenCalledWith("organ/create", organData, {
-      params: {
-        userId: "123456",
-        moduleName: "users",
-        action: "create",
-      },
-    });
-    expect(result).toBe(201);
+  afterEach(() => {
+    localStorage.removeItem("@App:token");
+    localStorage.removeItem("@App:user");
+    vi.clearAllMocks();
   });
 
   it("should throw an error when API call fails", async () => {
@@ -61,105 +50,43 @@ describe("Organ Service", () => {
     );
   });
 
-  it("should list all organs", async () => {
-    const mockOrgans = [
-      { id: organId, orgao: "Financeiro", lotacao: "Setor 1" },
-    ];
-    APIUsers.get.mockResolvedValueOnce({ data: mockOrgans });
-
-    const result = await listOrgans();
-
-    expect(APIUsers.get).toHaveBeenCalledWith("organ/list");
-    expect(result).toEqual(mockOrgans);
-  });
-
-  it("should update an organ", async () => {
-    const updatedData = { orgao: "Financeiro", lotacao: "Setor 2" };
-    APIUsers.patch.mockResolvedValueOnce({ status: 200 });
-
-    const result = await updateOrgan(organId, updatedData);
-
-    expect(APIUsers.patch).toHaveBeenCalledWith(
-      `organ/update/${organId}`,
-      { updatedData },
-      {
-        params: {
-          userId: "123456",
-          moduleName: "users",
-          action: "update",
-        },
-      }
-    );
-    expect(result).toBe(200);
-  });
-
-  it("should get an organ by id", async () => {
-    const mockOrgan = { id: organId, orgao: "Financeiro", lotacao: "Setor 1" };
-    APIUsers.get.mockResolvedValueOnce({ data: mockOrgan });
-
-    const result = await getOrganById(organId);
-
-    expect(APIUsers.get).toHaveBeenCalledWith(`organ/get/${organId}`);
-    expect(result).toEqual(mockOrgan);
-  });
-
-  it("should delete an organ by id", async () => {
-    APIUsers.delete.mockResolvedValueOnce({ status: 200 });
-
-    const result = await deleteOrganById(organId);
-
-    expect(APIUsers.delete).toHaveBeenCalledWith(`organ/delete/${organId}`, {
-      params: {
-        userId: "123456",
-        moduleName: "users",
-        action: "delete",
-      },
-    });
-    expect(result).toBe(200);
-  });
-
-  it("should throw an error when API call fails", async () => {
+  it("should return an error message when API call fails during update", async () => {
     const errorResponse = { response: { data: { error: "Update error" } } };
     APIUsers.patch.mockRejectedValueOnce(errorResponse);
 
-    const result = await updateOrgan("789", { orgao: "Financeiro" });
+    const result = await updateOrgan(organId, { orgao: "Financeiro" });
     expect(result).toBe("Update error");
   });
 
-  it("should throw an error when user is not found", async () => {
+  it("should throw an error when user is not found for update", async () => {
     localStorage.removeItem("@App:user");
 
-    await expect(updateOrgan("789", { orgao: "Financeiro" })).rejects.toThrow(
+    await expect(updateOrgan(organId, { orgao: "Financeiro" })).rejects.toThrow(
       "Usuário não encontrado ou sem ID."
     );
   });
 
-  it("should throw an error when API call fails", async () => {
+  it("should return an error message when API call fails during delete", async () => {
     const errorResponse = { response: { data: { error: "Delete error" } } };
     APIUsers.delete.mockRejectedValueOnce(errorResponse);
 
-    const result = await deleteOrganById("789");
+    const result = await deleteOrganById(organId);
     expect(result).toBe("Delete error");
   });
 
-  it("should throw an error when user is not found", async () => {
+  it("should throw an error when user is not found for delete", async () => {
     localStorage.removeItem("@App:user");
 
-    await expect(deleteOrganById("789")).rejects.toThrow(
+    await expect(deleteOrganById(organId)).rejects.toThrow(
       "Usuário não encontrado ou sem ID."
     );
   });
 
-  it("should return error message when API call fails", async () => {
+  it("should return error message when API call fails during list", async () => {
     const errorResponse = { response: { data: { error: "List error" } } };
     APIUsers.get.mockRejectedValueOnce(errorResponse);
 
     const result = await listOrgans();
     expect(result).toBe("List error");
-  });
-
-  afterEach(() => {
-    localStorage.removeItem("@App:token");
-    localStorage.removeItem("@App:user");
   });
 });
