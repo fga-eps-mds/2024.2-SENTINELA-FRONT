@@ -2,6 +2,7 @@ import { render, screen, within, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { describe, it, expect, vi } from "vitest";
 import Home from "./index";
+import { processUserData, getLineChartData } from "./index.jsx";
 
 vi.mock("../../../Context/auth", () => ({
   useAuth: vi.fn().mockReturnValue({ user: {} }),
