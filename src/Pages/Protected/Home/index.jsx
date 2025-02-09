@@ -5,11 +5,11 @@ import { getBenefitsForm } from "../../../Services/benefitsService";
 import FieldSelect from "../../../Components/FieldSelect";
 import "./index.css";
 import { Doughnut } from "react-chartjs-2";
-import { Chart, ArcElement, Tooltip } from "chart.js";
+import { Chart, ArcElement, Tooltip, Legend} from "chart.js";
 import SecondaryButton from "../../../Components/SecondaryButton";
 
 // Registrar os elementos necessários no Chart.js
-Chart.register(ArcElement, Tooltip);
+Chart.register(ArcElement, Tooltip, Legend);
 
 const Home = () => {
   const { user } = useAuth();
@@ -18,6 +18,8 @@ const Home = () => {
   const [lotacao, setLotacao] = useState("");
   const [orgao, setOrgao] = useState("");
   const [beneficio, setBeneficio] = useState([]);
+  const [beneficioList, setBeneficioList] = useState([]); 
+  const [benefitCounts, setBenefitCounts] = useState({});
 
   // Opções de filtro
   const filiadosOptions = ["Sindicalizado", "Não Sindicalizado"];
@@ -48,12 +50,10 @@ const Home = () => {
         const response = await getBenefitsForm();
     
         if (Array.isArray(response)) {
-          // Normalizando os dados antes de armazenar
           const beneficiosComId = response.map((beneficio) => ({
-            nome: beneficio.nome ? beneficio.nome.toLowerCase().trim() : "", // Normalizando o nome
+            nome: beneficio.nome ? beneficio.nome.toLowerCase().trim() : "",
           }));
-          console.log("array do beneficios:", beneficiosComId);
-          setBeneficioList(beneficiosComId);
+          setBeneficioList(beneficiosComId); // Usando o setter correto
         }
       } catch (error) {
         console.error("Erro ao buscar os benefícios:", error);
@@ -123,40 +123,39 @@ const Home = () => {
   };
 
   //função para obter dados filtrados por benefícios
+
   useEffect(() => {
     const countUsersByBenefit = () => {
-      const benefitCounts = {}; // Objeto para armazenar a contagem de usuários por benefício
-  
+      const counts = {};
+
       data.forEach((user) => {
-        if (user.beneficio && Array.isArray(user.beneficio)) {
-          // Iterar sobre os benefícios do usuário
-          user.beneficio.forEach((benefit) => {
-            const beneficioNome = benefit.toLowerCase().trim();
-  
-            // Verificar se o benefício existe na lista de benefícios
-            if (beneficioList.some((beneficio) => beneficio.nome.toLowerCase().trim() === beneficioNome)) {
-              // Se o benefício já foi contado, incrementa a contagem
-              if (!benefitCounts[beneficioNome]) {
-                benefitCounts[beneficioNome] = 0;
-              }
-              benefitCounts[beneficioNome]++;
-            }
-          });
+        let beneficiosUsuario = user.beneficio;
+
+        if (!beneficiosUsuario) return;
+
+        if (!Array.isArray(beneficiosUsuario)) {
+          beneficiosUsuario = [beneficiosUsuario]; // Garante que seja um array
         }
+
+        beneficiosUsuario.forEach((benefit) => {
+          const beneficioNormalizado = benefit.toLowerCase().trim();
+          const beneficioExiste = beneficioList.some(b => b.nome === beneficioNormalizado);
+
+          if (beneficioExiste) {
+            counts[beneficioNormalizado] = (counts[beneficioNormalizado] || 0) + 1;
+          }
+        });
       });
-  
-      // Log para verificar o resultado da contagem
-      console.log("Contagem de usuários por benefício:", benefitCounts);
-  
-      // Aqui você pode atualizar o estado com os benefícios e suas contagens
-      setBenefitCount(benefitCounts);
+
+      setBenefitCounts(counts);
     };
-  
-    // Chama a função de contagem após a atualização dos dados de usuários e benefícios
+
     if (data.length > 0 && beneficioList.length > 0) {
       countUsersByBenefit();
     }
-  }, [data, beneficioList]); 
+}, [data, beneficioList]);
+
+
   // const benefitCounts = {};
   // data.forEach((user) => {
   //   if (user.beneficio && user.beneficio.nome) {
@@ -240,20 +239,20 @@ const Home = () => {
     labels: Object.keys(benefitCounts),
     datasets: [
       {
-        label: "Benefícios Utilizados Por FIliados",
+        label: "Benefícios utilizados por filiados",
         data: Object.values(benefitCounts),
         backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0", "#9966FF"],
         borderWidth: 4,
       },
     ],
   };
-console.log("ainnn tira", Object.keys(benefitCounts));
+  console.log("ainnn tira", Object.keys(benefitCounts));
 
   const optionsBenefits = {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
-      legend: {
+      Legend: {
         display: true,
         position: "left",
         labels: {
