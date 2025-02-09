@@ -6,7 +6,11 @@ import TransactionTable from ".";
 describe("TransactionTable", () => {
   it("renders correctly with no transactions", () => {
     render(
-      <TransactionTable transactions={[]} openModal={vi.fn()} isMissing={false} />
+      <TransactionTable
+        transactions={[]}
+        openModal={vi.fn()}
+        isMissing={false}
+      />
     );
 
     expect(screen.getByText("Nenhum dado encontrado.")).toBeInTheDocument();
@@ -25,22 +29,25 @@ describe("TransactionTable", () => {
         newSituation: "pendente",
       },
     ];
-  
+
     render(
-      <TransactionTable transactions={transactions} openModal={vi.fn()} isMissing={false} />
+      <TransactionTable
+        transactions={transactions}
+        openModal={vi.fn()}
+        isMissing={false}
+      />
     );
-  
+
     expect(screen.getByText("John Doe")).toBeInTheDocument();
     expect(screen.getByText("Jane Smith")).toBeInTheDocument();
-  
+
     // Verificar texto específico dentro do contexto da tabela
     const table = screen.getByRole("table");
     const cells = within(table).getAllByText("pendente");
     expect(cells).toHaveLength(2);
-  
+
     expect(screen.getByText("quitado")).toBeInTheDocument();
   });
-  
 
   it("renders correctly with transactions and isMissing=true", () => {
     const transactions = [
@@ -52,7 +59,11 @@ describe("TransactionTable", () => {
     ];
 
     render(
-      <TransactionTable transactions={transactions} openModal={vi.fn()} isMissing={true} />
+      <TransactionTable
+        transactions={transactions}
+        openModal={vi.fn()}
+        isMissing={true}
+      />
     );
 
     expect(screen.getByText("John Doe")).toBeInTheDocument();
@@ -71,12 +82,19 @@ describe("TransactionTable", () => {
     const openModalMock = vi.fn();
 
     render(
-      <TransactionTable transactions={transactions} openModal={openModalMock} isMissing={false} />
+      <TransactionTable
+        transactions={transactions}
+        openModal={openModalMock}
+        isMissing={false}
+      />
     );
 
     const iconButton = screen.getByText("🔍");
     fireEvent.click(iconButton);
 
-    expect(openModalMock).toHaveBeenCalledWith("clientModalVisible", transactions[0]);
+    expect(openModalMock).toHaveBeenCalledWith(
+      "clientModalVisible",
+      transactions[0]
+    );
   });
 });

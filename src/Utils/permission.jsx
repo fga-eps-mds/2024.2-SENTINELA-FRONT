@@ -18,13 +18,11 @@ export const checkAction = (action) => {
   const permissionsString = localStorage.getItem("@App:permissions");
   const permissions = JSON.parse(permissionsString);
 
-  let modulePermissions = false; 
-  if(permissions){
-    modulePermissions = permissions.find(
-      (permission) => permission === action
-    );
+  let modulePermissions = false;
+  if (permissions) {
+    modulePermissions = permissions.find((permission) => permission === action);
   }
-  
+
   return modulePermissions ? true : false;
 };
 
