@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import { APIBank } from "../../../Services/BaseService";
 import PrimaryButton from "../../../Components/PrimaryButton";
@@ -216,7 +217,7 @@ const DataImport = () => {
       <div className="titulo-extrato">Importar Extrato Bancário</div>
       <div className="botoes">
         <div className="upload-arquivo">
-          <label className="input-ofx" for="file-upload">
+          <label className="input-ofx" htmlFor="file-upload">
             SELECIONE UM ARQUIVO
           </label>
           <input

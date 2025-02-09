@@ -5,9 +5,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import "@testing-library/jest-dom/vitest";
 import {
   getRoleById,
-  updateRole,
-  deleteRole,
-  assignPermissionsToRole,
+  deleteRole
 } from "../../../../Services/RoleService/roleService";
 import {
   getAllPermissions,

@@ -1,4 +1,4 @@
-import { describe, expect, beforeEach, vi } from "vitest";
+import { describe, expect, beforeEach, vi, test } from "vitest";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import PermissionCRUD from "./../Pages/Protected/Permissions/permissionsHandler";
 import * as BaseService from "./../Services/BaseService/index";

@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 import React, { useState } from "react";
 import PrimaryButton from "../../../Components/PrimaryButton";
 import ClientInformationModal from "../../../Components/ClientInformationModal";
