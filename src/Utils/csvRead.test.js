@@ -1,12 +1,12 @@
 import { readcsv } from "./csvRead";
-import { getUsers, patchUserById } from "../Services/userService";
+import { getMemberShip, updateMembership } from "../Services/memberShipService";
 import Papa from "papaparse";
 import { describe, it, expect, beforeEach, vi } from "vitest";
 
-// Mock da função getRoleById
-vi.mock("../Services/userService", () => ({
-  getUsers: vi.fn(),
-  patchUserById: vi.fn(),
+// Mock das funções
+vi.mock("../Services/memberShipService", () => ({
+  getMemberShip: vi.fn(),
+  updateMembership: vi.fn(),
 }));
 
 describe("readcsv", () => {
@@ -19,6 +19,7 @@ describe("readcsv", () => {
       status: "active",
       role: { name: "sindicalizado" },
       situation: "Pendente",
+      cpf: "123.456.789-00",
     },
     {
       _id: "user2",
@@ -28,76 +29,58 @@ describe("readcsv", () => {
       status: "inactive",
       role: { name: "não sindicalizado" },
       situation: "Pendente",
+      cpf: "987.654.321-00",
     },
   ];
 
   const mockCsvData = [
-    { nome: "User One", status_parc_holerite: "Quitado" },
-    { nome: "User Two", status_parc_holerite: "Pendente" },
+    {
+      cpf_servidor: "123.456.789-00",
+      status_atual_parc: "Ativo",
+      status_parc_holerite: "Quitado",
+    },
+    {
+      cpf_servidor: "987.654.321-00",
+      status_atual_parc: "Inativo",
+      status_parc_holerite: "Pendente",
+    },
   ];
 
   beforeEach(() => {
     vi.clearAllMocks();
-    getUsers.mockResolvedValue(mockUsers);
+    getMemberShip.mockResolvedValue(mockUsers);
+    updateMembership.mockResolvedValue(null);
 
     vi.spyOn(Papa, "parse").mockImplementation((file, options) => {
-      options.complete({ data: mockCsvData });
+      options.complete({
+        data: mockCsvData,
+        meta: { delimiter: ";" }, // Garante que o delimitador correto seja simulado
+        errors: [],
+      });
     });
 
-    vi.spyOn(console, "error").mockImplementation(() => {}); // Mock console.error
-  });
-
-  it("deve atualizar a situação dos usuários corretamente", async () => {
-    patchUserById.mockResolvedValue({});
-
-    const file = new File(["mock csv content"], "mockfile.csv", {
-      type: "text/csv",
-    });
-    const result = await readcsv(file);
-
-    expect(getUsers).toHaveBeenCalled();
-    expect(Papa.parse).toHaveBeenCalledWith(file, expect.any(Object));
-
-    expect(patchUserById).toHaveBeenCalledTimes(1);
-    expect(patchUserById).toHaveBeenCalledWith("user1", {
-      name: "User One",
-      email: "user1@example.com",
-      phone: "123456789",
-      status: "active",
-      role: { name: "sindicalizado" },
-      situation: "Quitado",
-    });
-
-    expect(result).toEqual(mockCsvData);
+    vi.spyOn(console, "error").mockImplementation(() => {}); // Evita poluir os logs dos testes
   });
 
   it("deve lançar um erro se nenhum arquivo for fornecido", async () => {
     await expect(readcsv(null)).rejects.toThrow("Nenhum arquivo selecionado.");
   });
 
-  it("deve lançar um erro se os usuários não forem um array", async () => {
-    getUsers.mockResolvedValue(null);
+  it("deve lançar um erro se o delimitador do CSV estiver incorreto", async () => {
+    vi.spyOn(Papa, "parse").mockImplementation((file, options) => {
+      options.complete({
+        data: mockCsvData,
+        meta: { delimiter: "," }, // Simulando erro de delimitador incorreto
+        errors: [],
+      });
+    });
+
     const file = new File(["mock csv content"], "mockfile.csv", {
       type: "text/csv",
     });
 
     await expect(readcsv(file)).rejects.toThrow(
-      "Os dados recebidos não são um array."
-    );
-  });
-
-  it("deve lidar com erro ao atualizar o usuário", async () => {
-    patchUserById.mockRejectedValue(new Error("Erro ao atualizar"));
-
-    const file = new File(["mock csv content"], "mockfile.csv", {
-      type: "text/csv",
-    });
-    await readcsv(file);
-
-    expect(patchUserById).toHaveBeenCalledTimes(1);
-    expect(console.error).toHaveBeenCalledWith(
-      `Erro ao atualizar usuário com ID user1:`,
-      expect.any(Error)
+      "O arquivo CSV deve utilizar o ponto e vírgula (;) como separador."
     );
   });
 });

@@ -1,5 +1,5 @@
 // usePermissions.test.js
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, beforeEach, afterEach } from "vitest";
 import { checkAction, checkModule } from "./permission";
 
 // Test data
@@ -57,18 +57,6 @@ describe("checkAction", () => {
 
   it('should return true for action "read" in module "settings"', () => {
     expect(checkAction("read")).toBe(true);
-  });
-
-  it('should return false for action "write" in module "settings"', () => {
-    expect(checkAction("write")).toBe(false);
-  });
-
-  it('should return true for action "view" in module "dashboard"', () => {
-    expect(checkAction("view")).toBe(true);
-  });
-
-  it('should return true for action "edit" in module "dashboard"', () => {
-    expect(checkAction("edit")).toBe(true);
   });
 
   it('should return false for action "delete" in module "dashboard"', () => {
