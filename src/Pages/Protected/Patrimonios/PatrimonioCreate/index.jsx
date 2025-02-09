@@ -7,10 +7,7 @@ import SecondaryButton from "../../../../Components/SecondaryButton";
 import "./index.css";
 import DataSelect from "../../../../Components/DataSelect";
 import { createpatrimonio } from "../../../../Services/patrimonioService";
-import { getUsers } from "../../../../Services/userService";
-import { getSupplierForm } from "../../../../Services/supplierService";
 import { useNavigate } from "react-router-dom";
-import { handleCpfCnpjInput } from "../../../../Utils/validators";
 import { getToken } from "../../../../Services/Functions/loader";
 import { APIBank } from "../../../../Services/BaseService";
 import FieldTextCheckbox from "../../../../Components/FieldTextCheckbox";
@@ -27,7 +24,6 @@ export default function patrimonioCreate() {
   const [doacao, setDoacao] = useState(false);
   const [datadeCadastro, setDatadeCadastro] = useState(new Date());
   const [showModal, setShowModal] = useState(false);
-  const [isChecked, setIsChecked] = useState(false);
   const [localizacoes, setLocalizacoes] = useState([]);
   const maxDescricaoLength = 130;
   const maxNumerodeEtiqueta = 9999;
@@ -54,26 +50,7 @@ export default function patrimonioCreate() {
 
     fetchpatrimonio();
   }, []);
- /*  Função para encontrar o próximo número de etiqueta disponível, levando em conta exclusões
-  const findNextEtiqueta = () => {
-    // Ordena o array de patrimônios pela etiqueta
-    const etiquetas = patrimonio
-      .map((item) => item.numerodeEtiqueta)
-      .sort((a, b) => a - b);
 
-    let nextEtiqueta = 1; // Começa verificando a partir do número 1
-
-    // Encontra a menor etiqueta ausente
-    for (let i = 0; i < etiquetas.length; i++) {
-    
-      if (etiquetas[i] !== nextEtiqueta) {
-        return nextEtiqueta;
-      }
-      nextEtiqueta++;
-    }
-    return nextEtiqueta;
-  }; 
-*/
   // Atualiza o número de etiqueta
   useEffect(() => {
     if (Array.isArray(patrimonio) && patrimonio.length > 0) {
@@ -145,17 +122,6 @@ export default function patrimonioCreate() {
       setNumerodeSerie(value);
     }
   };
-
-  const handleChangeNumerodeEtiqueta = (event) => {
-    const { value } = event.target;
-    if (value.length <= maxNumerodeEtiqueta) {
-      setNumerodeEtiqueta(value);
-    }
-  };
-
-  const handleChangeDooacao = (event) => {
-      setDoacao(!doacao);
-  }
 
   const navigate = useNavigate();
 
@@ -249,7 +215,7 @@ export default function patrimonioCreate() {
 
           <FieldText
             label="Etiqueta de Patrimônio"
-            onChange={(newValue) => (patrimonio.numerodeEtiqueta[patrimonio.length - 1] + 1)}
+            onChange={() => (patrimonio.numerodeEtiqueta[patrimonio.length - 1] + 1)}
             value={numerodeEtiqueta.toString().padStart(4, '0')}
           />
         </div>
@@ -264,7 +230,7 @@ export default function patrimonioCreate() {
           <DataSelect
             label="Data de cadastro"
             value={datadeCadastro}
-            onChange={(newValue) => setDatadeCadastro(new Date())}
+            onChange={() => setDatadeCadastro(new Date())}
           />
 
         </div>

@@ -1,74 +1,69 @@
-.containerInformacao{
+.containerInformacao {
   position: fixed;
   top: 40%;
   left: 60%;
   transform: translate(-50%, -50%);
   width: 498px;
   height: 356px;
-  background-color: #EBDEC9;
+  background-color: #ebdec9;
   border-radius: 20px;
-  border: 2px solid #AE883C;
+  border: 2px solid #ae883c;
 }
 
-.tituloData{
-    margin-top: 3px;
-    margin-left: 15px;
-    color: #000000;
+.tituloData {
+  margin-top: 3px;
+  margin-left: 15px;
+  color: #000000;
 }
 
-.dataConfirmacao{
-    width: 425px;
-    height: 56px;
-    margin-top: 0px;
-    margin-left: 15px;
-    border: 1px solid #000000;
-    background-color: transparent;
-   
+.dataConfirmacao {
+  width: 425px;
+  height: 56px;
+  margin-top: 0px;
+  margin-left: 15px;
+  border: 1px solid #000000;
+  background-color: transparent;
 }
 
-.areaTexto{
-    margin-top: 15px;
-    margin-left: 15px;
-    width: 425px;
-    height: 147px;
-    font-size: 16px;
-    border: 1px solid #000000;
-    border-radius: 5px;
-    resize: none;
-    background-color: transparent;
-    
+.areaTexto {
+  margin-top: 15px;
+  margin-left: 15px;
+  width: 425px;
+  height: 147px;
+  font-size: 16px;
+  border: 1px solid #000000;
+  border-radius: 5px;
+  resize: none;
+  background-color: transparent;
 }
 
 .botaoDesfiliar {
-    margin-top: 20px;
-    margin-left: 15px;
-    width: 175px;
-    height: 52px;
-    background-color: transparent;
-    color: #AE883C;
-    border: none;
-    border: 2px solid #AE883C;
-    border-radius: 8px;
-  }
+  margin-top: 20px;
+  margin-left: 15px;
+  width: 175px;
+  height: 52px;
+  background-color: transparent;
+  color: #ae883c;
+  border: none;
+  border: 2px solid #ae883c;
+  border-radius: 8px;
+}
 
-  .botaoDesfiliar:hover {
-    background-color: #bdb2a2; 
-     
-  }
+.botaoDesfiliar:hover {
+  background-color: #bdb2a2;
+}
 
-  .botaoVoltar{
-    margin-top: 5px;
-    margin-left: 75px;
-    width: 175px;
-    height: 52px;
-    background-color: transparent;
-    color: #AE883C;
-    border: none;
-    border: 2px solid #AE883C;
-    border-radius: 8px;
-
-  }
-  .botaoVoltar:hover {
-    background-color: #bdb2a2; 
-     
-  }
+.botaoVoltar {
+  margin-top: 5px;
+  margin-left: 75px;
+  width: 175px;
+  height: 52px;
+  background-color: transparent;
+  color: #ae883c;
+  border: none;
+  border: 2px solid #ae883c;
+  border-radius: 8px;
+}
+.botaoVoltar:hover {
+  background-color: #bdb2a2;
+}

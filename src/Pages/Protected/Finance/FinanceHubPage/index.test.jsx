@@ -4,11 +4,14 @@ import { BrowserRouter as Router } from "react-router-dom";
 import Finance from "./index";
 import "@testing-library/jest-dom";
 import { useAuth } from "../../../../Context/auth";
+import * as permissionUtils from "../../../../Utils/permission";
 
 // Mock do hook useAuth
 vi.mock("../../../../Context/auth", () => ({
   useAuth: vi.fn(),
 }));
+
+vi.spyOn(permissionUtils, "checkAction").mockReturnValue(true);
 
 describe("Finance", () => {
   beforeEach(() => {
