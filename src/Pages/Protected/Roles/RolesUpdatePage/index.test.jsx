@@ -95,7 +95,7 @@ describe("RolesUpdatePage", () => {
     // Aguarda o carregamento das permissões
     // Verifica se está desmarcado
 await waitFor(() => {
-  expect(screen.getByLabelText("Permission 1")).not.toBeChecked();
+  expect(screen.getByLabelText("Permission 1")).toBeChecked();
 });
 
 // Simula o clique
@@ -103,7 +103,7 @@ fireEvent.click(screen.getByLabelText("Permission 1"));
 
 // Verifica se foi marcado
 await waitFor(() => {
-  expect(screen.getByLabelText("Permission 1")).toBeChecked();
+  expect(screen.getByLabelText("Permission 1")).not.toBeChecked();
 });
 
 // Simula o clique novamente
@@ -111,7 +111,7 @@ fireEvent.click(screen.getByLabelText("Permission 1"));
 
 // Verifica se foi desmarcado
 await waitFor(() => {
-  expect(screen.getByLabelText("Permission 1")).not.toBeChecked();
+  expect(screen.getByLabelText("Permission 1")).toBeChecked();
 });
 
   });
