@@ -58,9 +58,24 @@ describe("Home Component", () => {
 describe("Função processUserData", () => {
   it("deve processar corretamente os usuários", () => {
     const users = [
-      { role: { name: "sindicalizado" }, status: true, hiringDate: "2024-01-15", updatedAt: "2024-02-01" },
-      { role: { name: "não sindicalizado" }, status: false, hiringDate: "2023-05-10", updatedAt: "2024-03-20" },
-      { role: { name: "sindicalizado" }, status: false, hiringDate: "2023-07-22", updatedAt: "2024-04-10" },
+      {
+        role: { name: "sindicalizado" },
+        status: true,
+        hiringDate: "2024-01-15",
+        updatedAt: "2024-02-01",
+      },
+      {
+        role: { name: "não sindicalizado" },
+        status: false,
+        hiringDate: "2023-05-10",
+        updatedAt: "2024-03-20",
+      },
+      {
+        role: { name: "sindicalizado" },
+        status: false,
+        hiringDate: "2023-07-22",
+        updatedAt: "2024-04-10",
+      },
     ];
 
     const result = processUserData(users);
@@ -82,15 +97,28 @@ describe("Função getLineChartData", () => {
   const mockData = {
     datasets: [
       { data: [10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65] }, // Filiações
-      { data: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60] },  // Desfiliações
-      { data: [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24] },  // Não filiados
+      { data: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60] }, // Desfiliações
+      { data: [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24] }, // Não filiados
     ],
   };
 
   it("deve retornar dados mensais corretamente", () => {
     const result = getLineChartData(mockData, "Mensal");
 
-    expect(result.labels).toEqual(["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"]);
+    expect(result.labels).toEqual([
+      "Jan",
+      "Fev",
+      "Mar",
+      "Abr",
+      "Mai",
+      "Jun",
+      "Jul",
+      "Ago",
+      "Set",
+      "Out",
+      "Nov",
+      "Dez",
+    ]);
     expect(result.datasets[0].data.length).toBe(12);
   });
 
@@ -98,14 +126,19 @@ describe("Função getLineChartData", () => {
     const result = getLineChartData(mockData, "Semestral");
 
     expect(result.labels).toEqual(["1º Semestre", "2º Semestre"]);
-    expect(result.datasets[0].data).toEqual([10 + 15 + 20 + 25 + 30 + 35, 40 + 45 + 50 + 55 + 60 + 65]);
+    expect(result.datasets[0].data).toEqual([
+      10 + 15 + 20 + 25 + 30 + 35,
+      40 + 45 + 50 + 55 + 60 + 65,
+    ]);
   });
 
   it("deve retornar dados anuais corretamente", () => {
     const result = getLineChartData(mockData, "Anual");
 
     expect(result.labels).toEqual(["2025"]);
-    expect(result.datasets[0].data).toEqual([10 + 15 + 20 + 25 + 30 + 35 + 40 + 45 + 50 + 55 + 60 + 65]);
+    expect(result.datasets[0].data).toEqual([
+      10 + 15 + 20 + 25 + 30 + 35 + 40 + 45 + 50 + 55 + 60 + 65,
+    ]);
   });
 
   it("deve lidar com dados vazios sem erro", () => {

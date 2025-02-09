@@ -4,11 +4,28 @@ import { getUsers } from "../../../Services/userService";
 import FieldSelect from "../../../Components/FieldSelect";
 import "./index.css";
 import { Doughnut, Line } from "react-chartjs-2";
-import { Chart, ArcElement, Tooltip, CategoryScale, LinearScale, PointElement, LineElement, Legend } from "chart.js";
+import {
+  Chart,
+  ArcElement,
+  Tooltip,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Legend,
+} from "chart.js";
 import SecondaryButton from "../../../Components/SecondaryButton";
 
 // Registrar os elementos necessários no Chart.js
-Chart.register(ArcElement, Tooltip, CategoryScale, LinearScale, PointElement, LineElement, Legend);
+Chart.register(
+  ArcElement,
+  Tooltip,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Legend
+);
 
 const Home = () => {
   const { user } = useAuth();
@@ -16,7 +33,10 @@ const Home = () => {
   const [isSind, setIsSind] = useState("Sindicalizado");
   const [lotacao, setLotacao] = useState("");
   const [orgao, setOrgao] = useState("");
-  const [lineChartData, setLineChartData] = useState({ labels: [], datasets: [] });
+  const [lineChartData, setLineChartData] = useState({
+    labels: [],
+    datasets: [],
+  });
 
   // Opções de filtro
   const filiadosOptions = ["Sindicalizado", "Não Sindicalizado"];
@@ -30,9 +50,8 @@ const Home = () => {
           setData(normalizedUsers);
 
           const processedData = processUserData(response);
-          console.log("Usuarios: ",processedData);
+          console.log("Usuarios: ", processedData);
           setLineChartData(processedData);
-
         } else {
           console.error("Os dados recebidos não são um array.");
         }
@@ -88,7 +107,7 @@ const Home = () => {
   const getFilteredDataByLotacao = () => {
     return data.filter((user) => {
       return (
-          user.status === true && (lotacao === "" || user.lotacao === lotacao)
+        user.status === true && (lotacao === "" || user.lotacao === lotacao)
       );
     });
   };
@@ -107,9 +126,9 @@ const Home = () => {
   // Contagem de gênero
   const genderCounts = {
     Male: filteredDataByLotacao.filter((user) => user.sex === "Masculino")
-        .length,
+      .length,
     Female: filteredDataByLotacao.filter((user) => user.sex === "Feminino")
-        .length,
+      .length,
   };
 
   const dataLotacao = {
@@ -127,7 +146,7 @@ const Home = () => {
   // Contagem de usuários por órgão com base nos filtros
   const orgaoCounts = orgaolist.reduce((acc, org) => {
     const filteredByOrgao = filteredDataByOrgao.filter(
-        (user) => user.orgao === org
+      (user) => user.orgao === org
     );
     acc[org] = filteredByOrgao.length;
     return acc;
@@ -154,14 +173,27 @@ const Home = () => {
   const [visualizationType, setVisualizationType] = useState("Mensal");
 
   const processUserData = (users) => {
-    const monthNames = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
-    
+    const monthNames = [
+      "Jan",
+      "Fev",
+      "Mar",
+      "Abr",
+      "Mai",
+      "Jun",
+      "Jul",
+      "Ago",
+      "Set",
+      "Out",
+      "Nov",
+      "Dez",
+    ];
+
     // Estrutura inicial para armazenar os dados mensais
     const monthlyData = monthNames.reduce((acc, month) => {
       acc[month] = { filiados: 0, desfiliados: 0, naoFiliados: 0 };
       return acc;
     }, {});
-  
+
     users.forEach((user) => {
       // Processar filiações
       if (user.role.name === "sindicalizado" && user.status == true) {
@@ -186,13 +218,11 @@ const Home = () => {
       // Processar desfiliações
       else {
         const date = new Date(user.updatedAt);
-        if (!isNaN(date)) {  
+        if (!isNaN(date)) {
           const month = monthNames[date.getMonth()];
           monthlyData[month].desfiliados += 1;
         }
       }
-  
-      
     });
 
     return {
@@ -219,60 +249,104 @@ const Home = () => {
       ],
     };
   };
-  
 
-  
   // Dados para o gráfico de linhas
   const getLineChartData = (lineChartData, visualizationType) => {
     if (!lineChartData) return { labels: [], datasets: [] };
 
     const calculateSemesterData = (data) => [
-      data.slice(0, 6).reduce((sum, value) => sum + value, 0),  // Soma dos primeiros 6 meses
+      data.slice(0, 6).reduce((sum, value) => sum + value, 0), // Soma dos primeiros 6 meses
       data.slice(6, 12).reduce((sum, value) => sum + value, 0), // Soma dos últimos 6 meses
     ];
 
     const calculateAnnualData = (data) => [
       data.reduce((sum, value) => sum + value, 0), // Soma de todos os meses
     ];
-  
+
     const config = {
       Mensal: {
-        labels: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"],
+        labels: [
+          "Jan",
+          "Fev",
+          "Mar",
+          "Abr",
+          "Mai",
+          "Jun",
+          "Jul",
+          "Ago",
+          "Set",
+          "Out",
+          "Nov",
+          "Dez",
+        ],
         data: lineChartData,
       },
       Semestral: {
         labels: ["1º Semestre", "2º Semestre"],
-        data: {datasets: [
-            { data: calculateSemesterData(lineChartData.datasets[0]?.data || []) },
-            { data: calculateSemesterData(lineChartData.datasets[1]?.data || []) },
-            { data: calculateSemesterData(lineChartData.datasets[2]?.data || []) },
+        data: {
+          datasets: [
+            {
+              data: calculateSemesterData(
+                lineChartData.datasets[0]?.data || []
+              ),
+            },
+            {
+              data: calculateSemesterData(
+                lineChartData.datasets[1]?.data || []
+              ),
+            },
+            {
+              data: calculateSemesterData(
+                lineChartData.datasets[2]?.data || []
+              ),
+            },
           ],
         },
       },
       Anual: {
         labels: ["2025"],
         data: {
-            datasets: [
-                { data: calculateAnnualData(lineChartData.datasets[0]?.data || []) },
-                { data: calculateAnnualData(lineChartData.datasets[1]?.data || []) },
-                { data: calculateAnnualData(lineChartData.datasets[2]?.data || []) },
-            ],
+          datasets: [
+            {
+              data: calculateAnnualData(lineChartData.datasets[0]?.data || []),
+            },
+            {
+              data: calculateAnnualData(lineChartData.datasets[1]?.data || []),
+            },
+            {
+              data: calculateAnnualData(lineChartData.datasets[2]?.data || []),
+            },
+          ],
         },
       },
-    };  
+    };
 
     const selectedData = config[visualizationType] || config["Mensal"];
     console.log("linechardata: ", lineChartData);
     return {
-        labels: selectedData.labels,
-        datasets: [
-            { label: "Filiações", data: selectedData.data.datasets[0]?.data || [], borderColor: "#FA0E0C", fill: false },
-            { label: "Desfiliações", data: selectedData.data.datasets[1]?.data || [], borderColor: "#1B9D77", fill: false },
-            { label: "Não filiados", data: selectedData.data.datasets[2]?.data || [], borderColor: "#3245CC", fill: false },
-        ],
+      labels: selectedData.labels,
+      datasets: [
+        {
+          label: "Filiações",
+          data: selectedData.data.datasets[0]?.data || [],
+          borderColor: "#FA0E0C",
+          fill: false,
+        },
+        {
+          label: "Desfiliações",
+          data: selectedData.data.datasets[1]?.data || [],
+          borderColor: "#1B9D77",
+          fill: false,
+        },
+        {
+          label: "Não filiados",
+          data: selectedData.data.datasets[2]?.data || [],
+          borderColor: "#3245CC",
+          fill: false,
+        },
+      ],
     };
-  };  
-  
+  };
 
   const optionsLotacao = {
     responsive: true,
@@ -322,12 +396,18 @@ const Home = () => {
     scales: {
       y: {
         beginAtZero: false, // Faz o eixo Y começar do zero
-        suggestedMax: Math.max(...lineChartData.datasets.flatMap(dataset => dataset.data)), // Define o máximo como o maior valor dos dados
+        suggestedMax: Math.max(
+          ...lineChartData.datasets.flatMap((dataset) => dataset.data)
+        ), // Define o máximo como o maior valor dos dados
         ticks: {
-          stepSize: Math.ceil(Math.max(...lineChartData.datasets.flatMap(dataset => dataset.data))/10), // Define o intervalo dos ticks no eixo Y (ajuste conforme necessário)
+          stepSize: Math.ceil(
+            Math.max(
+              ...lineChartData.datasets.flatMap((dataset) => dataset.data)
+            ) / 10
+          ), // Define o intervalo dos ticks no eixo Y (ajuste conforme necessário)
         },
       },
-    }
+    },
   };
 
   // Dados mockados para ativo e aposentado
@@ -349,86 +429,89 @@ const Home = () => {
   };
 
   return (
-      user && (
-          <section className="dash-section">
-            <div className="filiados-section">
-              <h1 style={{fontSize: 40}}>Filiados</h1>
+    user && (
+      <section className="dash-section">
+        <div className="filiados-section">
+          <h1 style={{ fontSize: 40 }}>Filiados</h1>
 
-              <div className="filiados">
-                <div className="filiados-box">
-                  <h2>Total</h2>
-                  <h1 style={{color: "#E2B73D !important"}} id="box">
-                    {data.length}
-                  </h1>
-                </div>
-
-                <div className="filiados-box">
-                  <h2>{isSind}</h2>
-                  <h1 style={{color: "#E2B73D !important"}} id="box">
-                    {isSind === "Sindicalizado"
-                        ? data.filter((item) => item.status === true).length
-                        : data.filter((item) => item.status === false).length}
-                  </h1>
-                </div>
-
-                <FieldSelect
-                    label="Filtro"
-                    onChange={(e) => {
-                      setIsSind(e.target.value);
-                    }}
-                    options={filiadosOptions}
-                    value={isSind}
-                />
-              </div>
+          <div className="filiados">
+            <div className="filiados-box">
+              <h2>Total</h2>
+              <h1 style={{ color: "#E2B73D !important" }} id="box">
+                {data.length}
+              </h1>
             </div>
 
-            <div className="lotation">
-              <div className="donut-box">
-                <h1>Divisão de sexo por lotação</h1>
-                <Doughnut data={dataLotacao} options={optionsLotacao}/>
-                <FieldSelect
-                    label="Filtro de Lotação"
-                    onChange={(e) => {
-                      setLotacao(e.target.value);
-                    }}
-                    options={lotacoesOptions}
-                    value={lotacao}
-                />
-              </div>
-              <div className="donut-box">
-                <h1>Divisão de lotação por órgão</h1>
-                <Doughnut data={dataOrgao} options={optionsLotacao}/>
-                <FieldSelect
-                    label="Filtro de Órgão"
-                    onChange={(e) => {
-                      setOrgao(e.target.value);
-                    }}
-                    options={orgaolist}
-                    value={orgao}
-                />
-              </div>
+            <div className="filiados-box">
+              <h2>{isSind}</h2>
+              <h1 style={{ color: "#E2B73D !important" }} id="box">
+                {isSind === "Sindicalizado"
+                  ? data.filter((item) => item.status === true).length
+                  : data.filter((item) => item.status === false).length}
+              </h1>
             </div>
 
             <FieldSelect
-                label="Tipo de Visualização"
-                onChange={(e) => setVisualizationType(e.target.value)}
-                options={["Mensal", "Semestral", "Anual"]}
-                value={visualizationType}
+              label="Filtro"
+              onChange={(e) => {
+                setIsSind(e.target.value);
+              }}
+              options={filiadosOptions}
+              value={isSind}
             />
+          </div>
+        </div>
 
-            <div className="line-chart">
-              <h1>Filiações, Desfiliações e Não filiados ao longo do tempo</h1>
-              <Line data={getLineChartData(lineChartData, visualizationType)} options={optionsLineChart}/>
-            </div>
+        <div className="lotation">
+          <div className="donut-box">
+            <h1>Divisão de sexo por lotação</h1>
+            <Doughnut data={dataLotacao} options={optionsLotacao} />
+            <FieldSelect
+              label="Filtro de Lotação"
+              onChange={(e) => {
+                setLotacao(e.target.value);
+              }}
+              options={lotacoesOptions}
+              value={lotacao}
+            />
+          </div>
+          <div className="donut-box">
+            <h1>Divisão de lotação por órgão</h1>
+            <Doughnut data={dataOrgao} options={optionsLotacao} />
+            <FieldSelect
+              label="Filtro de Órgão"
+              onChange={(e) => {
+                setOrgao(e.target.value);
+              }}
+              options={orgaolist}
+              value={orgao}
+            />
+          </div>
+        </div>
 
-            <div className="donut-box">
-              <h1>Distribuição de Ativos e Aposentados</h1>
-              <Doughnut data={dataStatus} options={optionsLotacao}/>
-            </div>
+        <FieldSelect
+          label="Tipo de Visualização"
+          onChange={(e) => setVisualizationType(e.target.value)}
+          options={["Mensal", "Semestral", "Anual"]}
+          value={visualizationType}
+        />
 
-            <SecondaryButton text="Limpar Filtros" onClick={clearFilters}/>
-          </section>
-      )
+        <div className="line-chart">
+          <h1>Filiações, Desfiliações e Não filiados ao longo do tempo</h1>
+          <Line
+            data={getLineChartData(lineChartData, visualizationType)}
+            options={optionsLineChart}
+          />
+        </div>
+
+        <div className="donut-box">
+          <h1>Distribuição de Ativos e Aposentados</h1>
+          <Doughnut data={dataStatus} options={optionsLotacao} />
+        </div>
+
+        <SecondaryButton text="Limpar Filtros" onClick={clearFilters} />
+      </section>
+    )
   );
 };
 
