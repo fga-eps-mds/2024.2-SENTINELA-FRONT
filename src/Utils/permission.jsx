@@ -6,7 +6,7 @@ import AuthContext from "../Context/auth";
 import { getRoleById } from "../Services/RoleService/roleService";
 
 export const checkModule = (permissions, module) => {
-  return true;
+  
   const modulePermissions = permissions.find(
     (permission) => permission.module === module
   );
@@ -16,17 +16,15 @@ export const checkModule = (permissions, module) => {
 
 export const checkAction = (action) => {
   const permissionsString = localStorage.getItem("@App:permissions");
+  if (!permissionsString) return false; 
+
   const permissions = JSON.parse(permissionsString);
 
-  let modulePermissions = false; 
-  if(permissions){
-    modulePermissions = permissions.find(
-      (permission) => permission === action
-    );
-  }
-  
-  return modulePermissions ? true : false;
+  return permissions.some((permission) => 
+    permission.actions && permission.actions.includes(action)
+  );
 };
+
 
 export const usePermissions = () => {
   const { user } = useContext(AuthContext);

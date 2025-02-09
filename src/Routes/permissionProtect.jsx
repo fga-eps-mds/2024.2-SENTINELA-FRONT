@@ -35,17 +35,12 @@ const PermissionProtect = ({ element, moduleName, actions }) => {
     return <div>Loading...</div>;
   }
   console.log(moduleName, "chaama");
-  return element;
-  // Verifica se o usuário possui pelo menos uma das ações necessárias
   const hasPermission = actions.some((action) =>
     checkAction(userPermissions, action)
   );
-
-  if (hasPermission) {
-    return element;
-  } else {
-    return <Navigate to="/unauthorized" />;
-  }
+  
+  return hasPermission ? element : <Navigate to="/unauthorized" />;
+  
 };
 
 PermissionProtect.propTypes = {

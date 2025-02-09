@@ -1,234 +1,165 @@
-import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
-import { render, screen, fireEvent } from "@testing-library/react";
-import RolesUpdatePage from "./index";
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import RolesUpdatePage from "../RolesUpdatePage/index";
+import { useNavigate, useLocation } from "react-router-dom";
+import "@testing-library/jest-dom/vitest";
 import {
+  getRoleById,
   updateRole,
   deleteRole,
-  getRoleById,
+  assignPermissionsToRole,
 } from "../../../../Services/RoleService/roleService";
-import { MemoryRouter, Route, Routes } from "react-router-dom";
-import "@testing-library/jest-dom";
-import { waitFor } from "@testing-library/react";
+import {
+  getAllPermissions,
+  searchPermissionByName,
+} from "../../../../Services/Permissions/permissionsService";
 
+// Mock das funções de API
 vi.mock("../../../../Services/RoleService/roleService", () => ({
+  getRoleById: vi.fn(),
   updateRole: vi.fn(),
   deleteRole: vi.fn(),
-  getRoleById: vi.fn(),
+  assignPermissionsToRole: vi.fn(),
 }));
-vi.mock("../../../../Utils/permission", () => ({
-  usePermissions: () => ({
-    somePermission: true,
-  }),
-  checkAction: () => true,
+
+vi.mock("../../../../Services/Permissions/permissionsService", () => ({
+  getAllPermissions: vi.fn(),
+  searchPermissionByName: vi.fn(),
 }));
+
+// Mock do react-router-dom
+vi.mock("react-router-dom", () => ({
+  useNavigate: vi.fn(),
+  useLocation: vi.fn(),
+}));
+
 describe("RolesUpdatePage", () => {
+  const mockNavigate = vi.fn();
+  const mockLocation = { state: { roleId: "123" } };
+
   beforeEach(() => {
-    localStorage.setItem("@App:user", JSON.stringify({ token: "mock-token" }));
+    // Configura os mocks antes de cada teste
+    useNavigate.mockReturnValue(mockNavigate);
+    useLocation.mockReturnValue(mockLocation);
+
+    // Mock das funções de API
+    getRoleById.mockResolvedValue({
+      name: "Admin",
+      permissions: [{ _id: "perm1" }, { _id: "perm2" }],
+    });
+
+    getAllPermissions.mockResolvedValue([
+      { _id: "perm1", name: "Permission 1" },
+      { _id: "perm2", name: "Permission 2" },
+    ]);
+
+    searchPermissionByName.mockResolvedValue([
+      { _id: "perm1", name: "Permission 1" },
+    ]);
   });
 
   afterEach(() => {
     vi.clearAllMocks();
-    localStorage.clear();
   });
 
-  it("renders correctly", () => {
-    render(
-      <MemoryRouter initialEntries={[{ state: { roleId: "mock-role-id" } }]}>
-        <Routes>
-          <Route path="/" element={<RolesUpdatePage />} />
-        </Routes>
-      </MemoryRouter>
-    );
+  it("deve renderizar o componente corretamente", async () => {
+    render(<RolesUpdatePage />);
 
-    expect(screen.getByLabelText("Nome do Perfil")).toBeInTheDocument();
-    expect(screen.getByText("Financeiro")).toBeInTheDocument();
-    expect(screen.getByText("Benefícios")).toBeInTheDocument();
-    expect(screen.getByText("Usuários")).toBeInTheDocument();
+    // Verifica se o título da página está presente
+    expect(screen.getByText("Atualização de Perfil")).toBeInTheDocument();
+
+    // Verifica se o nome do perfil é carregado corretamente
+    await waitFor(() => {
+      expect(screen.getByDisplayValue("Admin")).toBeInTheDocument();
+    });
+
+    // Verifica se as permissões são carregadas
+    expect(screen.getByText("Permission 1")).toBeInTheDocument();
+    expect(screen.getByText("Permission 2")).toBeInTheDocument();
   });
 
-  it("displays error when profile name is empty and submit is clicked", () => {
-    render(
-      <MemoryRouter initialEntries={[{ state: { roleId: "mock-role-id" } }]}>
-        <Routes>
-          <Route path="/" element={<RolesUpdatePage />} />
-        </Routes>
-      </MemoryRouter>
-    );
+  it("deve atualizar o nome do perfil", async () => {
+    render(<RolesUpdatePage />);
 
-    fireEvent.click(screen.getByText("SALVAR"));
+    // Simula a alteração do nome do perfil
+    const input = screen.getByLabelText("Nome do Perfil");
+    fireEvent.change(input, { target: { value: "Novo Nome" } });
 
+    // Verifica se o valor foi atualizado
+    expect(input.value).toBe("Novo Nome");
+  });
+
+  it("deve selecionar e deselecionar permissões", async () => {
+    render(<RolesUpdatePage />);
+  
+    // Aguarda o carregamento das permissões
+    // Verifica se está desmarcado
+await waitFor(() => {
+  expect(screen.getByLabelText("Permission 1")).not.toBeChecked();
+});
+
+// Simula o clique
+fireEvent.click(screen.getByLabelText("Permission 1"));
+
+// Verifica se foi marcado
+await waitFor(() => {
+  expect(screen.getByLabelText("Permission 1")).toBeChecked();
+});
+
+// Simula o clique novamente
+fireEvent.click(screen.getByLabelText("Permission 1"));
+
+// Verifica se foi desmarcado
+await waitFor(() => {
+  expect(screen.getByLabelText("Permission 1")).not.toBeChecked();
+});
+
+  });
+
+  it("deve abrir e fechar o modal de confirmação de exclusão", async () => {
+    render(<RolesUpdatePage />);
+
+    // Simula o clique no botão de deletar
+    const deleteButton = screen.getByText("DELETAR");
+    fireEvent.click(deleteButton);
+
+    // Verifica se o modal de confirmação de exclusão foi aberto
+    expect(screen.getByText("Confirmação de exclusão")).toBeInTheDocument();
+
+    // Simula o clique no botão de cancelar
+    const cancelButton = screen.getByText("Cancelar");
+    fireEvent.click(cancelButton);
+
+    // Verifica se o modal foi fechado
     expect(
-      screen.getByText("Nome é um campo obrigatório!")
-    ).toBeInTheDocument();
+      screen.queryByText("Confirmação de exclusão")
+    ).not.toBeInTheDocument();
   });
 
-  it("toggles checkboxes correctly", () => {
-    render(
-      <MemoryRouter initialEntries={[{ state: { roleId: "mock-role-id" } }]}>
-        <Routes>
-          <Route path="/" element={<RolesUpdatePage />} />
-        </Routes>
-      </MemoryRouter>
-    );
+  it("deve deletar o perfil e redirecionar para a página de perfis", async () => {
+    render(<RolesUpdatePage />);
 
-    // Captura a linha correspondente ao módulo "Financeiro"
-    const financeRow = screen.getByText("Financeiro").closest("div");
+    // Simula o clique no botão de deletar
+    const deleteButton = screen.getByText("DELETAR");
+    fireEvent.click(deleteButton);
 
-    // Captura as checkboxes dentro dessa linha
-    const checkboxes = financeRow.querySelectorAll('input[type="checkbox"]');
+    // Simula o clique no botão de confirmar exclusão
+    const confirmButton = screen.getByText("Confirmar");
+    fireEvent.click(confirmButton);
 
-    const checkboxCriarFinanceiro = checkboxes[0]; // Primeira checkbox (Criar)
-    const checkboxVisualizarFinanceiro = checkboxes[1]; // Segunda checkbox (Visualizar)
-    const checkboxEditarFinanceiro = checkboxes[2];
-    const checkboxDeletarFinanceiro = checkboxes[3];
-    // Inicialmente desmarcadas
-    expect(checkboxCriarFinanceiro).not.toBeChecked();
-    expect(checkboxVisualizarFinanceiro).not.toBeChecked();
-    expect(checkboxEditarFinanceiro).not.toBeChecked();
-    expect(checkboxDeletarFinanceiro).not.toBeChecked();
-
-    // Clicar nas checkboxes
-    fireEvent.click(checkboxCriarFinanceiro);
-    fireEvent.click(checkboxVisualizarFinanceiro);
-    fireEvent.click(checkboxEditarFinanceiro);
-    fireEvent.click(checkboxDeletarFinanceiro);
-
-    // Espera que estejam marcadas
-    expect(checkboxCriarFinanceiro).toBeChecked();
-    expect(checkboxVisualizarFinanceiro).toBeChecked();
-    expect(checkboxEditarFinanceiro).toBeChecked();
-    expect(checkboxDeletarFinanceiro).toBeChecked();
-
-    // Clicar novamente para desmarcar
-    fireEvent.click(checkboxCriarFinanceiro);
-    fireEvent.click(checkboxVisualizarFinanceiro);
-    fireEvent.click(checkboxEditarFinanceiro);
-    fireEvent.click(checkboxDeletarFinanceiro);
-
-    // Espera que estejam desmarcadas
-    expect(checkboxCriarFinanceiro).not.toBeChecked();
-    expect(checkboxVisualizarFinanceiro).not.toBeChecked();
-    expect(checkboxEditarFinanceiro).not.toBeChecked();
-    expect(checkboxDeletarFinanceiro).not.toBeChecked();
-  });
-
-  it("submits the form with correct data", async () => {
-    render(
-      <MemoryRouter initialEntries={[{ state: { roleId: "mock-role-id" } }]}>
-        <Routes>
-          <Route path="/" element={<RolesUpdatePage />} />
-        </Routes>
-      </MemoryRouter>
-    );
-
-    fireEvent.change(screen.getByLabelText("Nome do Perfil"), {
-      target: { value: "Admin" },
-    });
-
-    const financeRow = screen.getByText("Financeiro").closest("div");
-    const financeCheckboxes = financeRow.querySelectorAll(
-      'input[type="checkbox"]'
-    );
-
-    fireEvent.click(financeCheckboxes[0]);
-    fireEvent.click(financeCheckboxes[2]);
-
-    // Adiciona logs para depurar
-    console.log("Antes de submeter o formulário");
-
-    // Mock da resposta da API
-    updateRole.mockResolvedValue({ status: 200 });
-
-    // Submeter o formulário
-    fireEvent.click(screen.getByRole("button", { name: /salvar/i }));
-
-    fireEvent.click(screen.getByText("Confirmar"));
-
-    // Adiciona logs para verificar se chegou aqui
-    console.log("Depois de submeter o formulário");
-
-    // Use waitFor para garantir que a função foi chamada corretamente
+    // Verifica se a função de deletar foi chamada
     await waitFor(() => {
-      expect(updateRole).toHaveBeenCalledWith("mock-role-id", {
-        name: "Admin",
-        permissions: [
-          { module: "finance", access: ["create", "update"] },
-          { module: "benefits", access: [] },
-          { module: "users", access: [] },
-        ],
-      });
+      expect(deleteRole).toHaveBeenCalledWith("123");
     });
 
-    // Verifica se o modal de sucesso foi exibido
-    expect(screen.getByText("PERFIL ALTERADO COM SUCESSO")).toBeInTheDocument();
-  });
+    // Verifica se o modal de sucesso foi aberto
+    expect(screen.getByText("Perfil deletado com sucesso!")).toBeInTheDocument();
 
-  it("deletes the profile correctly", async () => {
-    // Mock da resposta da função getRoleById para simular a resposta do serviço
-    getRoleById.mockResolvedValue({
-      name: "Admin",
-      permissions: [
-        { module: "finance", access: ["create", "read"] },
-        { module: "benefits", access: [] },
-        { module: "users", access: [] },
-      ],
-    });
+    // Simula o clique no botão "Ok" do modal de sucesso
+    const okButton = screen.getByText("Ok");
+    fireEvent.click(okButton);
 
-    render(
-      <MemoryRouter initialEntries={[{ state: { roleId: "mock-role-id" } }]}>
-        <Routes>
-          <Route path="/" element={<RolesUpdatePage />} />
-        </Routes>
-      </MemoryRouter>
-    );
-
-    // Mock da resposta da função deleteRole
-    deleteRole.mockResolvedValue({ status: 204 });
-
-    // Clicar no botão DELETAR para abrir o modal de confirmação
-    fireEvent.click(screen.getByText("DELETAR"));
-
-    // Clicar no botão Confirmar para deletar o perfil
-    fireEvent.click(screen.getByText("Confirmar"));
-
-    // Use waitFor para garantir que a função foi chamada corretamente
-    await waitFor(() => {
-      expect(deleteRole).toHaveBeenCalledWith("mock-role-id");
-    });
-
-    // Verifica se o modal de sucesso foi exibido
-    expect(screen.getByText("PERFIL DELETADO COM SUCESSO")).toBeInTheDocument();
-  });
-
-  it("displays warning when an unknown module is encountered", async () => {
-    // Espiona a função console.warn
-    const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
-
-    // Mock da função getRoleById para retornar um módulo desconhecido
-    getRoleById.mockResolvedValue({
-      name: "Admin",
-      permissions: [
-        { module: "unknown_module", access: ["create", "read"] }, // Módulo desconhecido
-      ],
-    });
-
-    render(
-      <MemoryRouter initialEntries={[{ state: { roleId: "mock-role-id" } }]}>
-        <Routes>
-          <Route path="/" element={<RolesUpdatePage />} />
-        </Routes>
-      </MemoryRouter>
-    );
-
-    // Aguarda a execução do efeito
-    await waitFor(() => {
-      // Verifica se console.warn foi chamado com a mensagem esperada
-      expect(warnSpy).toHaveBeenCalledWith(
-        "Módulo desconhecido encontrado: unknown_module"
-      );
-    });
-
-    // Limpa o mock do console.warn
-    warnSpy.mockRestore();
+    // Verifica se o redirecionamento ocorreu
+    expect(mockNavigate).toHaveBeenCalledWith("/perfis");
   });
 });
