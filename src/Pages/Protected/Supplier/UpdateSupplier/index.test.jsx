@@ -1,10 +1,5 @@
 import { describe, it, expect, vi, afterEach, beforeEach } from "vitest";
-import {
-  render,
-  screen,
-  cleanup,
-  waitFor,
-} from "@testing-library/react";
+import { render, screen, cleanup, waitFor } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
 import UpdateSupplier from "./index";
 import "@testing-library/jest-dom";
@@ -13,7 +8,9 @@ import "@testing-library/jest-dom";
 vi.mock("../../../../Utils/permission", () => {
   return {
     ...vi.importActual("../../../../Utils/permission"),
-    checkAction: vi.fn((permissions, action) => action === "update" || action === "delete"),
+    checkAction: vi.fn(
+      (permissions, action) => action === "update" || action === "delete"
+    ),
     usePermissions: () => ({}),
   };
 });
@@ -66,7 +63,9 @@ describe("SupplierUpdate", () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByText("Visualização de fornecedor")).toBeInTheDocument();
+      expect(
+        screen.getByText("Visualização de fornecedor")
+      ).toBeInTheDocument();
     });
 
     expect(screen).toMatchSnapshot();

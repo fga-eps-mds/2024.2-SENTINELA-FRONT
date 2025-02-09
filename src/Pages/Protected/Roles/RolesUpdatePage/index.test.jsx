@@ -91,29 +91,28 @@ describe("RolesUpdatePage", () => {
 
   it("deve selecionar e deselecionar permissões", async () => {
     render(<RolesUpdatePage />);
-  
+
     // Aguarda o carregamento das permissões
     // Verifica se está desmarcado
-await waitFor(() => {
-  expect(screen.getByLabelText("Permission 1")).toBeChecked();
-});
+    await waitFor(() => {
+      expect(screen.getByLabelText("Permission 1")).toBeChecked();
+    });
 
-// Simula o clique
-fireEvent.click(screen.getByLabelText("Permission 1"));
+    // Simula o clique
+    fireEvent.click(screen.getByLabelText("Permission 1"));
 
-// Verifica se foi marcado
-await waitFor(() => {
-  expect(screen.getByLabelText("Permission 1")).not.toBeChecked();
-});
+    // Verifica se foi marcado
+    await waitFor(() => {
+      expect(screen.getByLabelText("Permission 1")).not.toBeChecked();
+    });
 
-// Simula o clique novamente
-fireEvent.click(screen.getByLabelText("Permission 1"));
+    // Simula o clique novamente
+    fireEvent.click(screen.getByLabelText("Permission 1"));
 
-// Verifica se foi desmarcado
-await waitFor(() => {
-  expect(screen.getByLabelText("Permission 1")).toBeChecked();
-});
-
+    // Verifica se foi desmarcado
+    await waitFor(() => {
+      expect(screen.getByLabelText("Permission 1")).toBeChecked();
+    });
   });
 
   it("deve abrir e fechar o modal de confirmação de exclusão", async () => {
@@ -153,7 +152,9 @@ await waitFor(() => {
     });
 
     // Verifica se o modal de sucesso foi aberto
-    expect(screen.getByText("Perfil deletado com sucesso!")).toBeInTheDocument();
+    expect(
+      screen.getByText("Perfil deletado com sucesso!")
+    ).toBeInTheDocument();
 
     // Simula o clique no botão "Ok" do modal de sucesso
     const okButton = screen.getByText("Ok");

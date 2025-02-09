@@ -2,10 +2,7 @@ import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
 import { describe, it, expect, beforeEach, vi, afterEach } from "vitest";
 import UserUpdatePage from "./index";
-import {
-  getRoles,
-  getLoggedUser,
-} from "../../../../Services/userService";
+import { getRoles, getLoggedUser } from "../../../../Services/userService";
 import "@testing-library/jest-dom";
 
 vi.mock("../../../../Services/userService", () => ({

@@ -11,9 +11,7 @@ export async function createMemberShip(formData) {
       headers: {
         Authorization: `Bearer ${getToken()}`,
       },
-    }
-  
-  );
+    });
     return response.status;
   } catch (error) {
     return error.response.data.erro;
@@ -36,10 +34,11 @@ export async function getMemberShip(status) {
 
 export async function getMemberShipById(id) {
   try {
-    const response = await APIUsers.get(`membership/${id}`,{
+    const response = await APIUsers.get(`membership/${id}`, {
       headers: {
         Authorization: `Bearer ${getToken()}`,
-      }});
+      },
+    });
     return response.data;
   } catch (error) {
     console.error(error);
@@ -57,7 +56,7 @@ export const updateMemberStatus = async (memberId, formData) => {
       {
         headers: {
           Authorization: `Bearer ${getToken()}`,
-        }
+        },
       }
     );
     return response.data;
@@ -68,14 +67,17 @@ export const updateMemberStatus = async (memberId, formData) => {
 
 export const updateMembership = async (memberId, formData) => {
   try {
-    await APIUsers.patch(`membership/update/${memberId}`, {
-      formData,
-    },
-    {
-      headers: {
-        Authorization: `Bearer ${getToken()}`,
+    await APIUsers.patch(
+      `membership/update/${memberId}`,
+      {
+        formData,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
       }
-    });
+    );
 
     return false;
   } catch (error) {
@@ -85,12 +87,11 @@ export const updateMembership = async (memberId, formData) => {
 
 export async function deleteMember(memberId) {
   try {
-    await APIUsers.delete(`membership/delete/${memberId}`,
-      {
-        headers: {
-          Authorization: `Bearer ${getToken()}`,
-        }
-      });
+    await APIUsers.delete(`membership/delete/${memberId}`, {
+      headers: {
+        Authorization: `Bearer ${getToken()}`,
+      },
+    });
     return false;
   } catch (error) {
     return error.response.data.erro;

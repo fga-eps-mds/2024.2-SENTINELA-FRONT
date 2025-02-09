@@ -38,9 +38,8 @@ const PermissionProtect = ({ element, moduleName, actions }) => {
   const hasPermission = actions.some((action) =>
     checkAction(userPermissions, action)
   );
-  
+
   return hasPermission ? element : <Navigate to="/unauthorized" />;
-  
 };
 
 PermissionProtect.propTypes = {

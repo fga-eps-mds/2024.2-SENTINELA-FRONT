@@ -37,5 +37,4 @@ describe("DataImport Component", () => {
     expect(screen.getByText("SELECIONE UM ARQUIVO")).toBeInTheDocument();
     expect(screen.getByText("SALVAR")).toBeInTheDocument();
   });
-
 });

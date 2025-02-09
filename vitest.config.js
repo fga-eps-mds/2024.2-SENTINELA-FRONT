@@ -11,13 +11,13 @@ export default defineConfig({
       provider: "v8", // Ou "c8" se precisar de mais compatibilidade
       reporter: ["text", "html", "lcov"], // Adiciona "html" para gerar o relatório visual
       reportsDirectory: "coverage", // Diretório onde os arquivos serão gerados
-    },    
+    },
     environment: "jsdom",
     reporters: reporter
       ? [[reporter, { outputFile: "coverage/coverage.xml" }]]
       : [],
     outputFile: "coverage/coverage.xml",
     testTimeout: 30000,
-    include: ['**/*.test.{js,jsx,ts,tsx}', '**/*.spec.{js,jsx,ts,tsx}'],
+    include: ["**/*.test.{js,jsx,ts,tsx}", "**/*.spec.{js,jsx,ts,tsx}"],
   },
 });

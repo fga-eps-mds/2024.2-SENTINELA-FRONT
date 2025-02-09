@@ -37,15 +37,18 @@ describe("checkModule", () => {
 });
 
 describe("checkAction", () => {
-   beforeEach(() => {
+  beforeEach(() => {
     localStorage.setItem(
       "@App:permissions",
-      JSON.stringify([{ module: "users", actions: ["read", "write"] },{ module: "settings", actions: ["read", 'write'] }])
+      JSON.stringify([
+        { module: "users", actions: ["read", "write"] },
+        { module: "settings", actions: ["read", "write"] },
+      ])
     );
   });
 
   afterEach(() => {
-    localStorage.clear(); 
+    localStorage.clear();
   });
   it('should return true for action "read" in module "users"', () => {
     expect(checkAction("read")).toBe(true);

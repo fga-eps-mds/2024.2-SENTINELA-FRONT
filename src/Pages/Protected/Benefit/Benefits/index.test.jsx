@@ -18,7 +18,6 @@ vi.spyOn(PermissionUtils, "checkAction").mockImplementation((action) => {
   return action === "beneficios_criar" || action === "beneficios_visualizar";
 });
 
-
 vi.mock("../../../../Context/auth", () => ({
   useAuth: () => ({
     user: { name: "Test User" }, // Mocking a user
@@ -83,7 +82,9 @@ describe("Benefits", () => {
 
     await waitFor(() => {
       // Verificar que o botão CADASTRO DE BENEFÍCIOS não está presente
-      expect(screen.getByRole("button", { name: /CADASTRO DE BENEFÍCIOS/i })).toBeInTheDocument();
+      expect(
+        screen.getByRole("button", { name: /CADASTRO DE BENEFÍCIOS/i })
+      ).toBeInTheDocument();
       // O botão LISTA DE BENEFÍCIOS ainda deve estar presente
       expect(screen.getByText("LISTA DE BENEFÍCIOS")).toBeInTheDocument();
     });
