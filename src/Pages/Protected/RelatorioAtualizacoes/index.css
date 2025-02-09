@@ -14,7 +14,7 @@
 .import-button {
   padding: 10px 20px;
   font-size: 16px;
-  background-color: #AE883C;
+  background-color: #ae883c;
   color: white;
   border: none;
   border-radius: 5px;
@@ -22,5 +22,5 @@
   width: 200px; /* Ajuste a largura conforme necessário */
 }
 .import-button:hover {
-  background-color: #8C6A2E;
+  background-color: #8c6a2e;
 }

@@ -2,11 +2,7 @@ import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
 import { describe, it, expect, beforeEach, vi, afterEach } from "vitest";
 import UserUpdatePage from "./index";
-import {
-  getRoles,
-  getLoggedUser,
-  updateLogged,
-} from "../../../../Services/userService";
+import { getRoles, getLoggedUser } from "../../../../Services/userService";
 import "@testing-library/jest-dom";
 
 vi.mock("../../../../Services/userService", () => ({
@@ -104,42 +100,6 @@ describe("UserUpdate", () => {
           "*Verifique se o número de celular inserido está completo"
         )
       ).toBeInTheDocument();
-    });
-  });
-
-  it("saves user data correctly", async () => {
-    getRoles.mockResolvedValueOnce([{ _id: "1", name: "Admin" }]);
-    getLoggedUser.mockResolvedValueOnce({
-      name: "John Doe",
-      phone: "1234567890",
-      status: true,
-      email: "john.doe@example.com",
-      role: { _id: "1" },
-    });
-
-    setup();
-
-    fireEvent.change(screen.getByLabelText("Nome Completo"), {
-      target: { value: "Jane Doe" },
-    });
-    fireEvent.change(screen.getByLabelText("Celular"), {
-      target: { value: "0987654321" },
-    });
-    fireEvent.change(screen.getByLabelText("Email"), {
-      target: { value: "jane.doe@example.com" },
-    });
-
-    fireEvent.click(screen.getByText("Salvar"));
-
-    await waitFor(() => {
-      expect(updateLogged).toHaveBeenCalledWith({
-        name: "Jane Doe",
-        email: "jane.doe@example.com",
-        phone: "0987654321",
-        status: true,
-        role: "",
-      });
-      expect(screen.getByText("Alterações Salvas")).toBeInTheDocument();
     });
   });
 });

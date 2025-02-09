@@ -9,7 +9,6 @@ import {
   deleteRole,
 } from "./roleService";
 
-
 vi.mock("../../Functions/loader", () => ({
   getToken: vi.fn(() => "mockToken"),
 }));
@@ -33,8 +32,6 @@ describe("Role Service", () => {
     vi.clearAllMocks();
   });
 
-  
-
   it("should create a role", async () => {
     APIUsers.post.mockResolvedValueOnce({ data: { id: roleId, ...roleData } });
 
@@ -46,7 +43,7 @@ describe("Role Service", () => {
         moduleName: "users",
         action: "create",
       },
-      headers: expect.any(Object), 
+      headers: expect.any(Object),
     });
 
     expect(result).toEqual({ id: roleId, ...roleData });
@@ -59,7 +56,7 @@ describe("Role Service", () => {
     const result = await getAllRoles();
 
     expect(APIUsers.get).toHaveBeenCalledWith("/role", {
-      headers: expect.any(Object), 
+      headers: expect.any(Object),
     });
 
     expect(result).toEqual(mockRoles);
@@ -76,11 +73,11 @@ describe("Role Service", () => {
       updatedRole,
       {
         params: {
-          userId: "123456", 
+          userId: "123456",
           moduleName: "users",
           action: "update",
         },
-        headers: expect.any(Object), 
+        headers: expect.any(Object),
       }
     );
 
@@ -117,10 +114,10 @@ describe("Role Service", () => {
 
     expect(consoleErrorSpy).toHaveBeenCalledWith(
       "Erro ao armazenar usuário: ",
-      expect.any(SyntaxError) 
+      expect.any(SyntaxError)
     );
 
-    consoleErrorSpy.mockRestore(); 
+    consoleErrorSpy.mockRestore();
   });
 
   it("should throw an error when user is not found or user has no ID", async () => {

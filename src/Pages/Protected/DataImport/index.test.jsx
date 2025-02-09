@@ -1,10 +1,5 @@
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import { vi } from "vitest";
-import { APIBank } from "../../../Services/BaseService";
-import {
-  createFinancialMovements,
-  updateFinancialMovementsById,
-} from "../../../Services/FinancialMovementsService";
+import { render, screen } from "@testing-library/react";
+import { vi, describe, afterEach, beforeEach, expect, it } from "vitest";
 import DataImport from "./index";
 import "@testing-library/jest-dom";
 
@@ -37,5 +32,4 @@ describe("DataImport Component", () => {
     expect(screen.getByText("SELECIONE UM ARQUIVO")).toBeInTheDocument();
     expect(screen.getByText("SALVAR")).toBeInTheDocument();
   });
-
 });

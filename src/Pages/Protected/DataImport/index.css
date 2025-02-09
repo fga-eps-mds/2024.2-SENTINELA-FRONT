@@ -1,98 +1,97 @@
 /* tabela */
 .data-table {
-    width: 100%;
-    border-collapse: separate; /* Mude para 'separate' para ativar o border-spacing */
-    border-spacing: 0.313rem;
-    margin-top: 20px;
+  width: 100%;
+  border-collapse: separate; /* Mude para 'separate' para ativar o border-spacing */
+  border-spacing: 0.313rem;
+  margin-top: 20px;
 }
-.data-table th{
-    text-align: left;
-    padding-left: 1rem;
-    font-size: 1.5rem;
-    font-family: inter;
-    font-size: 1.25rem;
-    color: black;
+.data-table th {
+  text-align: left;
+  padding-left: 1rem;
+  font-size: 1.5rem;
+  font-family: inter;
+  font-size: 1.25rem;
+  color: black;
 }
 .data-table td {
-    padding: 0.938rem 1rem;
-    text-align: left;
-    background-color: #EAE3D7;
-    border-radius: 10px;
-    font-family: inter;
-    font-size: 1rem;
-    
+  padding: 0.938rem 1rem;
+  text-align: left;
+  background-color: #eae3d7;
+  border-radius: 10px;
+  font-family: inter;
+  font-size: 1rem;
 }
-.css-mck6no-MuiInputBase-root-MuiFilledInput-root-MuiSelect-root{
-    min-width: 200px;
-    margin: 0 !important;
-}
-
-.data-table td .text-input{
-    padding: 0.5rem 0.5rem;
-    text-align: left;
-    background-color: #EAE3D7;
-    font-family: inter;
-    font-size: 1rem;
-    border: none;
-    width: calc(100% - 2rem);
+.css-mck6no-MuiInputBase-root-MuiFilledInput-root-MuiSelect-root {
+  min-width: 200px;
+  margin: 0 !important;
 }
 
-.data-table td select{
-    width: 100%;
-    height: 100%;
-    border: none;
-    font: inherit;
-    color: inherit;
-    background: inherit;
+.data-table td .text-input {
+  padding: 0.5rem 0.5rem;
+  text-align: left;
+  background-color: #eae3d7;
+  font-family: inter;
+  font-size: 1rem;
+  border: none;
+  width: calc(100% - 2rem);
+}
+
+.data-table td select {
+  width: 100%;
+  height: 100%;
+  border: none;
+  font: inherit;
+  color: inherit;
+  background: inherit;
 }
 
 .data-table td input.text-input:focus {
-    outline: none;
+  outline: none;
 }
 
 /* container principal */
 .data-import {
-    padding-left: 7.5rem;
-    max-width: 65rem;
+  padding-left: 7.5rem;
+  max-width: 65rem;
 }
 
-.titulo-extrato{
-    font-size: 2rem;
-    padding-top: 2rem;
-    padding-bottom: 5rem;
-    color: #341F14;
-    font-family: Noto Sans;
-    font-weight: bold;
+.titulo-extrato {
+  font-size: 2rem;
+  padding-top: 2rem;
+  padding-bottom: 5rem;
+  color: #341f14;
+  font-family: Noto Sans;
+  font-weight: bold;
 }
 
 .upload-arquivo label {
-    display: inline-block;
-    padding: 0.5rem;
-    display: medium;
-    text-align: center;
-    width: 420px;
-    font-family: Noto Sans;
-    font-size: 16px;
-    color: #AE883C !important;
-    background-color: #EAE3D7; /* Cor de fundo */
-    border: 0.15rem solid #AE883C; /* Cor da borda */
-    border-radius: 5px; /* Borda arredondada */
-    cursor: pointer; /* Deixa o cursor como uma mãozinha */
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  display: inline-block;
+  padding: 0.5rem;
+  display: medium;
+  text-align: center;
+  width: 420px;
+  font-family: Noto Sans;
+  font-size: 16px;
+  color: #ae883c !important;
+  background-color: #eae3d7; /* Cor de fundo */
+  border: 0.15rem solid #ae883c; /* Cor da borda */
+  border-radius: 5px; /* Borda arredondada */
+  cursor: pointer; /* Deixa o cursor como uma mãozinha */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .upload-arquivo #file-upload {
-    display: none; /* Oculta o input de upload padrão */
+  display: none; /* Oculta o input de upload padrão */
 }
 
-.botoes{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.botoes {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.botoes div{
-    width: 420px;
-    padding: 0.5rem;
-    font-size: 16px;
+.botoes div {
+  width: 420px;
+  padding: 0.5rem;
+  font-size: 16px;
 }
