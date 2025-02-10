@@ -263,7 +263,6 @@ const Home = () => {
           },
           color: "#333", 
           usePointStyle: true, 
-          padding: 20,
         },
       },
     },

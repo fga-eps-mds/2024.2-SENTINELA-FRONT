@@ -62,7 +62,6 @@ const MemberShip = () => {
   const [unfilledDependent, setUnfilledDependent] = useState(false);
   const [orgaosList, setOrgaosList] = useState([]);
   const [beneficioList, setBeneficioList] = useState([]);
-  const [beneficioId, setBeneficioID] = useState([]);
   const [lotacaoList, setLotacaoList] = useState([]);
 
 
@@ -334,9 +333,8 @@ const MemberShip = () => {
     if (!cpf) erros.cpf = 1;
     if (!email) erros.email = 1;
     if (!celular) erros.celular = 1;
-    // if (!orgao) erros.orgao = 1;
-    // if (!lotacao) erros.lotacao = 1;
-    if (!beneficioId) erros.beneficio = 1;
+    if (!orgao) erros.orgao = 1;
+    if (!lotacao) erros.lotacao = 1;
 
     //CAMPOS OPCIONAIS
     //if (!estadoCivil) erros.estadoCivil = 1;

@@ -1,6 +1,7 @@
-import { render, screen, within, waitFor } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
+import { waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect, vi} from "vitest";
 import Home from "./index";
 
 vi.mock("../../../Context/auth", () => ({
