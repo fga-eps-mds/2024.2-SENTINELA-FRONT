@@ -16,13 +16,11 @@ export const checkAction = (action) => {
 
   const permissions = JSON.parse(permissionsString);
 
-  let modulePermissions = false; 
-  if(permissions){
-    modulePermissions = permissions.find(
-      (permission) => permission === action
-    );
+  let modulePermissions = false;
+  if (permissions) {
+    modulePermissions = permissions.find((permission) => permission === action);
   }
-  
+
   return modulePermissions ? true : false;
 };
 

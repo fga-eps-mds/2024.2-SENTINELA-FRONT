@@ -1,25 +1,10 @@
 import { APIBank } from "../BaseService";
 import { getToken } from "../Functions/loader";
 
-const storagedToken = localStorage.getItem("@App:token");
-let token = null;
-
-if (storagedToken) {
-  try {
-    token = JSON.parse(storagedToken);
-  } catch (error) {
-    console.error("O token armazenado não é um JSON válido:", error);
-  }
-}
-
 export const createpatrimonioLocalizacao = async (
   patrimonioLocalizacaoData
 ) => {
   try {
-    if (!token) {
-      throw new Error("No token found");
-    }
-
     const response = await APIBank.post(
       `/patrimonioLocalizacao/create`,
       { patrimonioLocalizacaoData },
@@ -43,10 +28,6 @@ export const createpatrimonioLocalizacao = async (
 
 export const getpatrimonioLocalizacao = async () => {
   try {
-    if (!token) {
-      throw new Error("No token found");
-    }
-
     const response = await APIBank.get("/patrimonioLocalizacao", {
       headers: {
         Authorization: `Bearer ${getToken()}`,
@@ -60,10 +41,6 @@ export const getpatrimonioLocalizacao = async () => {
 
 export const getpatrimonioLocalizacaoById = async (id) => {
   try {
-    if (!token) {
-      throw new Error("No token found");
-    }
-
     const response = await APIBank.get(`/patrimonioLocalizacao/${id}`, {
       headers: {
         Authorization: `Bearer ${getToken()}`,
@@ -80,10 +57,6 @@ export const updatepatrimonioLocalizacaoById = async (
   patrimonioLocalizacaoData
 ) => {
   try {
-    if (!token) {
-      throw new Error("No token found");
-    }
-
     console.log("Enviando dados:", patrimonioLocalizacaoData);
 
     const response = await APIBank.patch(
@@ -107,10 +80,6 @@ export const updatepatrimonioLocalizacaoById = async (
 
 export const deletepatrimonioLocalizacaoById = async (id) => {
   try {
-    if (!token) {
-      throw new Error("No token found");
-    }
-
     await APIBank.delete(`/patrimonioLocalizacao/delete/${id}`, {
       headers: {
         Authorization: `Bearer ${getToken()}`,

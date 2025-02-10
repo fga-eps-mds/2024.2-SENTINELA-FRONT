@@ -40,8 +40,8 @@ export default function FinancialUpdate() {
   const [localizacoes, setLocalizacoes] = useState([]);
 
   const maxDescricaoLength = 130;
-  const canUpdate = checkAction("update");
-  const canDelete = checkAction("delete");
+  const canUpdate = checkAction("patrimonio_editar");
+  const canDelete = checkAction("patrimonio_deletar");
 
   const navigate = useNavigate();
   const location = useLocation();
