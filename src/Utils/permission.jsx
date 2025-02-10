@@ -1,12 +1,8 @@
-/* eslint-disable no-unreachable */
-// src/hooks/usePermissions.js
-
 import { useContext, useState, useEffect } from "react";
 import AuthContext from "../Context/auth";
 import { getRoleById } from "../Services/RoleService/roleService";
 
 export const checkModule = (permissions, module) => {
-  return true;
   const modulePermissions = permissions.find(
     (permission) => permission.module === module
   );
@@ -16,6 +12,8 @@ export const checkModule = (permissions, module) => {
 
 export const checkAction = (action) => {
   const permissionsString = localStorage.getItem("@App:permissions");
+  if (!permissionsString) return false;
+
   const permissions = JSON.parse(permissionsString);
 
   let modulePermissions = false; 
