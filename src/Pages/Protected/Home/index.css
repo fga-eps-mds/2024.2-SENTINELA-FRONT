@@ -59,7 +59,6 @@
     align-items: center;
   }
 
-
   .donut-box2 h1 {
     font-size: 1.2rem;
     text-align: center;
@@ -83,7 +82,7 @@
     align-items: center;
     height: 200px;
     font-style: italic;
-    color: #AE883C;
+    color: #ae883c;
   }
 }
 
@@ -211,8 +210,8 @@
     justify-content: center;
     align-items: center;
   }
-  .donut-box2{
-    margin:inherit;
+  .donut-box2 {
+    margin: inherit;
   }
 
   .filiacoes {

@@ -35,7 +35,7 @@ const Home = () => {
   const [lotacao, setLotacao] = useState("");
   const [orgao, setOrgao] = useState("");
   //const [beneficio, setBeneficio] = useState([]);
-  const [beneficioList, setBeneficioList] = useState([]); 
+  const [beneficioList, setBeneficioList] = useState([]);
   const [benefitCounts, setBenefitCounts] = useState({});
   const [lineChartData, setLineChartData] = useState({
     labels: [],
@@ -64,16 +64,15 @@ const Home = () => {
         console.error("Erro ao buscar usuários:", error);
       }
     };
-  
+
     fetchUsers(); // Chama a função após a definição
-  
-  }, []); 
+  }, []);
 
   useEffect(() => {
     const getBenefits = async () => {
       try {
         const response = await getBenefitsForm();
-    
+
         if (Array.isArray(response)) {
           const beneficiosComId = response.map((beneficio) => ({
             nome: beneficio.nome ? beneficio.nome.toLowerCase().trim() : "",
@@ -84,7 +83,7 @@ const Home = () => {
         console.error("Erro ao buscar os benefícios:", error);
       }
     };
-    
+
     getBenefits();
   }, []);
 
@@ -96,7 +95,7 @@ const Home = () => {
       if (user.orgao) {
         user.orgao = user.orgao.toLowerCase().trim();
       }
-      if(user.beneficio){
+      if (user.beneficio) {
         user.beneficio = user.beneficio.toLowerCase().trim();
       }
       return user;
@@ -164,10 +163,13 @@ const Home = () => {
 
         beneficiosUsuario.forEach((benefit) => {
           const beneficioNormalizado = benefit.toLowerCase().trim();
-          const beneficioExiste = beneficioList.some(b => b.nome === beneficioNormalizado);
+          const beneficioExiste = beneficioList.some(
+            (b) => b.nome === beneficioNormalizado
+          );
 
           if (beneficioExiste) {
-            counts[beneficioNormalizado] = (counts[beneficioNormalizado] || 0) + 1;
+            counts[beneficioNormalizado] =
+              (counts[beneficioNormalizado] || 0) + 1;
           }
         });
       });
@@ -178,8 +180,7 @@ const Home = () => {
     if (data.length > 0 && beneficioList.length > 0) {
       countUsersByBenefit();
     }
-}, [data, beneficioList]);
-
+  }, [data, beneficioList]);
 
   // const benefitCounts = {};
   // data.forEach((user) => {
@@ -191,8 +192,6 @@ const Home = () => {
   //     benefitCounts[beneficioNome]++;
   //   }
   // });
-  
-
 
   // Dados filtrados para cada gráfico
   const filteredDataByLotacao = getFilteredDataByLotacao();
@@ -444,7 +443,13 @@ const Home = () => {
       {
         label: "Benefícios utilizados por filiados",
         data: Object.values(benefitCounts),
-        backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0", "#9966FF"],
+        backgroundColor: [
+          "#FF6384",
+          "#36A2EB",
+          "#FFCE56",
+          "#4BC0C0",
+          "#9966FF",
+        ],
         borderWidth: 4,
       },
     ],
@@ -464,8 +469,8 @@ const Home = () => {
           font: {
             size: 14,
           },
-          color: "#333", 
-          usePointStyle: true, 
+          color: "#333",
+          usePointStyle: true,
         },
       },
     },
@@ -477,14 +482,14 @@ const Home = () => {
         ctx.fillStyle = "#000";
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
-  
+
         chart.data.datasets.forEach((dataset, i) => {
           const meta = chart.getDatasetMeta(i);
           meta.data.forEach((element, index) => {
             const data = dataset.data[index];
             const total = dataset.data.reduce((a, b) => a + b, 0);
             const percentage = ((data / total) * 100).toFixed(1) + "%";
-  
+
             const position = element.tooltipPosition();
             ctx.fillText(percentage, position.x, position.y);
           });
@@ -492,8 +497,6 @@ const Home = () => {
       },
     },
   };
-  
-  
 
   // Função para limpar todos os filtros
   const clearFilters = () => {
@@ -595,7 +598,6 @@ const Home = () => {
         </div>
 
         <div className="lotation">
-
           <div className="donut-box">
             <h1>Divisão de sexo por lotação</h1>
             <Doughnut data={dataLotacao} options={optionsLotacao} />
@@ -624,18 +626,20 @@ const Home = () => {
           <div className="donut-box2">
             <h1>Distribuição de Benefícios</h1>
             {Object.keys(benefitCounts).length > 0 ? (
-              <div style={{ position: 'relative', height: '400px', width: '100%' }}>
+              <div
+                style={{ position: "relative", height: "400px", width: "100%" }}
+              >
                 <Doughnut
                   data={chartBenefits}
                   options={optionsBenefits}
                   redraw
                 />
               </div>
-          ) : (
-            <div className="no-data">
-              <p>Carregando dados de benefícios...</p>
-            </div>
-          )}
+            ) : (
+              <div className="no-data">
+                <p>Carregando dados de benefícios...</p>
+              </div>
+            )}
           </div>
         </div>
 

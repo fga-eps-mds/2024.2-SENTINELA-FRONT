@@ -1,14 +1,13 @@
 import { render, screen, within } from "@testing-library/react";
 import { waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import { describe, it, expect, vi} from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import Home from "./index";
 import { processUserData, getLineChartData } from "./index.jsx";
 
 vi.mock("../../../Context/auth", () => ({
   useAuth: vi.fn().mockReturnValue({ user: {} }),
 }));
-
 
 vi.mock("../../../Services/userService", () => ({
   getUsers: vi.fn().mockResolvedValue([
@@ -21,11 +20,13 @@ vi.mock("../../../Services/userService", () => ({
 }));
 
 vi.mock("../../../Services/benefitsService", () => ({
-  getBenefitsForm: vi.fn().mockResolvedValue([
-    { nome: "Benefício 1" },
-    { nome: "Benefício 2" },
-    { nome: "Benefício 3" },
-  ]),
+  getBenefitsForm: vi
+    .fn()
+    .mockResolvedValue([
+      { nome: "Benefício 1" },
+      { nome: "Benefício 2" },
+      { nome: "Benefício 3" },
+    ]),
 }));
 
 vi.mock("react-chartjs-2", () => ({

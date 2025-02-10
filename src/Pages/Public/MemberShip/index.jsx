@@ -64,7 +64,6 @@ const MemberShip = () => {
   const [beneficioList, setBeneficioList] = useState([]);
   const [lotacaoList, setLotacaoList] = useState([]);
 
-
   const navigate = useNavigate();
   // Function to validate a field
   const validateField = (fieldName, value) => {
@@ -304,7 +303,7 @@ const MemberShip = () => {
     const getBenefits = async () => {
       try {
         const response = await getBenefitsForm();
-  
+
         if (Array.isArray(response)) {
           // Armazena o ID e o nome do benefício corretamente
           const beneficiosComId = response.map((beneficio) => ({
@@ -317,10 +316,9 @@ const MemberShip = () => {
         console.error("Erro ao buscar os benefícios:", error);
       }
     };
-  
+
     getBenefits();
   }, []);
-  
 
   const handleSubmit = () => {
     const erros = {};
@@ -684,7 +682,7 @@ const MemberShip = () => {
             onBlur={(e) => handleBlur(e, "orgao")}
             erro={erro("orgao")}
           />
-          
+
           <FieldSelect
             label="Benefício *"
             value={beneficio} // Exibe o nome do benefício selecionado
@@ -692,7 +690,7 @@ const MemberShip = () => {
               const selectedBeneficio = beneficioList.find(
                 (beneficio) => beneficio.nome === e.target.value
               );
-              
+
               setBeneficio(e.target.value);
               console.log("nome do Benefício:", typeof selectedBeneficio.nome);
               console.log("nome d Benefício:", typeof e.target.value);

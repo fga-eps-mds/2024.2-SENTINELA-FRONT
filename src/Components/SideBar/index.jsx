@@ -18,7 +18,7 @@ export default function SideBar() {
   const handleSideBar = () => setIsSideBarOpen(!isSideBarOpen);
   const navigate = useNavigate();
   const context = useContext(AuthContext);
-  const { user, logout} = useAuth();
+  const { user } = useAuth();
   const [role, setRole] = useState("");
 
   useEffect(() => {}, [navigate]);
