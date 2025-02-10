@@ -64,8 +64,11 @@ const MemberShip = () => {
   const [beneficioList, setBeneficioList] = useState([]);
   const [beneficioId, setBeneficioID] = useState([]);
   const [lotacaoList, setLotacaoList] = useState([]);
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> master
 
   const navigate = useNavigate();
   // Function to validate a field
