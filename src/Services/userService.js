@@ -1,4 +1,3 @@
-// import { checkModule, checkAction } from "../Utils/permission";
 import { APIUsers } from "./BaseService";
 import { getToken, getUser } from "./Functions/loader";
 
