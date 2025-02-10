@@ -34,9 +34,7 @@ export default function PatrimonioList() {
   const [localizacaoADeletar, setLocalizacaoADeletar] = useState([]);
   // const permissions = usePermissions();
   const canCreate = checkAction("create");
-
-  const storagedUser = JSON.parse(localStorage.getItem("@App:user"));
-
+  
   useEffect(() => {
     const fetchpatrimonio = async () => {
       try {

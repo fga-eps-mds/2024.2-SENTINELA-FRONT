@@ -25,7 +25,6 @@ export default function PatrimonioCreate() {
   const [showModal, setShowModal] = useState(false);
   const [localizacoes, setLocalizacoes] = useState([]);
   const maxDescricaoLength = 130;
-  const maxNumerodeEtiqueta = 9999;
 
   useEffect(() => {
     const fetchpatrimonio = async () => {
