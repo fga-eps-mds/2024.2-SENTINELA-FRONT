@@ -12,7 +12,7 @@ import { getToken } from "../../../../Services/Functions/loader";
 import { APIBank } from "../../../../Services/BaseService";
 import FieldTextCheckbox from "../../../../Components/FieldTextCheckbox";
 
-export default function patrimonioCreate() {
+export default function PatrimonioCreate() {
   const [patrimonio, setpatrimonio] = useState([]);
   const [nome, setNome] = useState("");
   const [descricao, setDescricao] = useState("");

@@ -20,7 +20,7 @@ import {
   deletelocalizacaoById,
 } from "../../../../Services/localizacaoService";
 
-export default function patrimonioList() {
+export default function PatrimonioList() {
   const [patrimonio, setpatrimonio] = useState([]);
   const [search, setSearch] = useState("");
   const [searchEtiqueta, setSearchEtiqueta] = useState("");
