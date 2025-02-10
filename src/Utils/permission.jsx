@@ -27,6 +27,7 @@ export const checkAction = (action) => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
   // Verifica se o valor existe no localStorage
   if (!permissionsString) {
@@ -56,6 +57,8 @@ export const checkAction = (action) => {
 >>>>>>> master
 =======
 >>>>>>> e3585ed4ac65578a33c2797abd53001951274b04
+=======
+>>>>>>> master
   if (!permissionsString) return false;
 
   const permissions = JSON.parse(permissionsString);
@@ -65,11 +68,14 @@ export const checkAction = (action) => {
   );
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> e3585ed4ac65578a33c2797abd53001951274b04
 =======
 >>>>>>> master
 =======
 >>>>>>> e3585ed4ac65578a33c2797abd53001951274b04
+=======
+>>>>>>> master
 };
 
 
