@@ -10,17 +10,6 @@ export const checkModule = (permissions, module) => {
   return modulePermissions ? modulePermissions.access.length > 0 : false;
 };
 
-// export const checkAction = (action) => {
-//   const permissionsString = localStorage.getItem("@App:permissions");
-//   const permissions = JSON.parse(permissionsString);
-
-//   const modulePermissions = permissions.find(
-//     (permission) => permission === action
-//   );
-
-//   return modulePermissions ? true : false;
-// };
-
 export const checkAction = (action) => {
   // Obtém o valor de permissões do localStorage
   const permissionsString = localStorage.getItem("@App:permissions");
@@ -52,10 +41,12 @@ export const checkAction = (action) => {
   if (!permissionsString) return false;
 
   const permissions = JSON.parse(permissionsString);
+  let modulePermissions = false;
+  if (permissions) {
+    modulePermissions = permissions.find((permission) => permission === action);
+  }
 
-  return permissions.some(
-    (permission) => permission.actions && permission.actions.includes(action)
-  );
+  return modulePermissions ? true : false;
 };
 
 
