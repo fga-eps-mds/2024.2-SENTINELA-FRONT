@@ -41,7 +41,6 @@ import PatrimonioList from "../Pages/Protected/Patrimonios/PatrimonioList";
 import PatrimonioUpdate from "../Pages/Protected/Patrimonios/PatrimonioUpdate";
 import PatrimonioHubPage from "../Pages/Protected/Patrimonios/PatrimonioHubPage";
 
-
 import DataImport from "../Pages/Protected/DataImport/index.jsx";
 
 const ProtectedRoutes = () => {

@@ -29,7 +29,7 @@ function mockServices() {
         numerodeEtiqueta: "0001",
         localizacao: "OUTROS",
         doacao: false,
-        datadeCadastro: "2025-02-04T00:00:00.00Z"
+        datadeCadastro: "2025-02-04T00:00:00.00Z",
       })
     ),
     updatepatrimonioById: vi.fn(),
@@ -155,6 +155,5 @@ describe("PatrimonioUpdate", () => {
     await userEvent.clear(descricaoInput);
     await userEvent.type(descricaoInput, "EFG1");
     expect(descricaoInput.value).toBe("EFG1");
-
   });
 });

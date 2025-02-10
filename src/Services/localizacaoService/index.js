@@ -3,7 +3,6 @@ import { getToken } from "../Functions/loader";
 
 export const createlocalizacao = async (localizacaoData) => {
   try {
-
     const response = await APIBank.post(
       `/localizacao/create`,
       { localizacaoData },
@@ -27,7 +26,6 @@ export const createlocalizacao = async (localizacaoData) => {
 
 export const getlocalizacao = async () => {
   try {
-
     const response = await APIBank.get("/localizacao", {
       headers: {
         Authorization: `Bearer ${getToken()}`,
@@ -41,7 +39,6 @@ export const getlocalizacao = async () => {
 
 export const getlocalizacaoById = async (id) => {
   try {
-
     const response = await APIBank.get(`/localizacao/${id}`, {
       headers: {
         Authorization: `Bearer ${getToken()}`,
@@ -53,12 +50,8 @@ export const getlocalizacaoById = async (id) => {
   }
 };
 
-export const updatelocalizacaoById = async (
-  id,
-  localizacaoData
-) => {
+export const updatelocalizacaoById = async (id, localizacaoData) => {
   try {
-
     console.log("Enviando dados:", localizacaoData);
 
     const response = await APIBank.patch(
@@ -73,16 +66,12 @@ export const updatelocalizacaoById = async (
     console.log("Localizacao atualizado:", response.data);
     return response.data;
   } catch (error) {
-    console.error(
-      `Erro ao atualizar Localizacao com ID ${id}:`,
-      error
-    );
+    console.error(`Erro ao atualizar Localizacao com ID ${id}:`, error);
   }
 };
 
 export const deletelocalizacaoById = async (id) => {
   try {
-
     await APIBank.delete(`/localizacao/delete/${id}`, {
       headers: {
         Authorization: `Bearer ${getToken()}`,

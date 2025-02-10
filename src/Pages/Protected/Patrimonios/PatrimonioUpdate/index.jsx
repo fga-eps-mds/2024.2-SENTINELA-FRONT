@@ -17,7 +17,10 @@ import { checkAction } from "../../../../Utils/permission";
 import { getToken } from "../../../../Services/Functions/loader";
 import FieldTextCheckbox from "../../../../Components/FieldTextCheckbox";
 import { APIBank } from "../../../../Services/BaseService";
-import {createpatrimonioLocalizacao, deletepatrimonioLocalizacaoById } from "../../../../Services/patrimonioLocalizacaoService";
+import {
+  createpatrimonioLocalizacao,
+  deletepatrimonioLocalizacaoById,
+} from "../../../../Services/patrimonioLocalizacaoService";
 
 export default function FinancialUpdate() {
   const [nome, setNome] = useState("");
@@ -56,7 +59,7 @@ export default function FinancialUpdate() {
           setNome(data.nome || "");
           setDescricao(data.descricao || "");
           setDatadeCadastro(data.datadeCadastro || "");
-          setDoacao(data.doacao || (false));
+          setDoacao(data.doacao || false);
           setLocalizacao(data.localizacao || "");
           setDeLocalizacao(data.localizacao || "");
           setNumerodeEtiqueta(data.numerodeEtiqueta || "");
@@ -71,7 +74,7 @@ export default function FinancialUpdate() {
     fetchpatrimonio();
   }, [patrimonioId]);
 
-  useEffect(() =>{
+  useEffect(() => {
     const fetchlocalizacao = async () => {
       try {
         const response = await APIBank.get(`/localizacao`, {
@@ -79,7 +82,7 @@ export default function FinancialUpdate() {
             Authorization: `Bearer ${getToken()}`,
           },
         });
-  
+
         const data = response.data;
         if (Array.isArray(data)) {
           setLocalizacoes(data);
@@ -92,7 +95,6 @@ export default function FinancialUpdate() {
     };
     fetchlocalizacao();
   }, []);
-
 
   useEffect(() => {
     const fetchpatrimonioLocalizacao = async () => {
@@ -129,28 +131,26 @@ export default function FinancialUpdate() {
         doacao,
         datadeCadastro,
         descricao,
-    };
-
-    if(updatedData.localizacao !== DeLocalizacao)
-    {
-      try {
-        const updatedDataLocalizacao = {
-          numerodeEtiqueta: updatedData.numerodeEtiqueta,
-          de: DeLocalizacao,
-          para: updatedData.localizacao,
-          data: new Date(),
       };
-      await createpatrimonioLocalizacao(updatedDataLocalizacao, {
-        headers: {
-          Authorization: `Bearer ${getToken()}`,
-        },
-      });
-    }catch (error) {
-      console.error("Erro ao salvar alterações de localizacao:", error);
-    }
 
-      };
-      await updatepatrimonioById(patrimonioId, updatedData,  {
+      if (updatedData.localizacao !== DeLocalizacao) {
+        try {
+          const updatedDataLocalizacao = {
+            numerodeEtiqueta: updatedData.numerodeEtiqueta,
+            de: DeLocalizacao,
+            para: updatedData.localizacao,
+            data: new Date(),
+          };
+          await createpatrimonioLocalizacao(updatedDataLocalizacao, {
+            headers: {
+              Authorization: `Bearer ${getToken()}`,
+            },
+          });
+        } catch (error) {
+          console.error("Erro ao salvar alterações de localizacao:", error);
+        }
+      }
+      await updatepatrimonioById(patrimonioId, updatedData, {
         headers: {
           Authorization: `Bearer ${getToken()}`,
         },
@@ -164,10 +164,10 @@ export default function FinancialUpdate() {
   const handleDelete = async () => {
     try {
       await deletepatrimonioById(patrimonioId);
-      for(let i = 0; i < patrimonioLocalizacao.length; i++)
-      {
-        if(patrimonioLocalizacao[i].numerodeEtiqueta === numerodeEtiqueta){
-        await deletepatrimonioLocalizacaoById(patrimonioLocalizacao[i]._id);}
+      for (let i = 0; i < patrimonioLocalizacao.length; i++) {
+        if (patrimonioLocalizacao[i].numerodeEtiqueta === numerodeEtiqueta) {
+          await deletepatrimonioLocalizacaoById(patrimonioLocalizacao[i]._id);
+        }
       }
       setShowDeletedModal(true);
     } catch (error) {
@@ -197,8 +197,7 @@ export default function FinancialUpdate() {
     setNome(event.target.value);
   };
 
-  const handleChangeNumerodeEtiqueta = (event) => {
-  };
+  const handleChangeNumerodeEtiqueta = (event) => {};
 
   const handleChangeLocalizacao = (event) => {
     const { value } = event.target;
@@ -218,7 +217,7 @@ export default function FinancialUpdate() {
   };
 
   const handleShowHistoric = () => {
-  setMostrarHistorico(!mostrarHistorico);
+    setMostrarHistorico(!mostrarHistorico);
   };
 
   return (
@@ -227,13 +226,8 @@ export default function FinancialUpdate() {
         <h1> Visualização de Patrimônios </h1>
         <h3>Dados do Patrimônio</h3>
 
-        
         <div className="descricao-fin">
-          <FieldText
-            label="Nome"
-            onChange={handleChangeNome}
-            value={nome}
-          />
+          <FieldText label="Nome" onChange={handleChangeNome} value={nome} />
         </div>
 
         <div className="double-box-fin">
@@ -245,12 +239,9 @@ export default function FinancialUpdate() {
 
           <FieldText
             label="Valor *"
-            value={
-              valor ? `R$ ${valor.replace(".", ",")}` : "R$ 0,00"
-            }
+            value={valor ? `R$ ${valor.replace(".", ",")}` : "R$ 0,00"}
             onChange={(e) => handleCurrencyInput(e.target.value, setValor)}
           />
-
         </div>
 
         <div className="double-box-fin">
@@ -263,12 +254,12 @@ export default function FinancialUpdate() {
           <FieldText
             label="Etiqueta de Patrimônio"
             onChange={handleChangeNumerodeEtiqueta}
-            value={numerodeEtiqueta.toString().padStart(4, '0')}
+            value={numerodeEtiqueta.toString().padStart(4, "0")}
           />
         </div>
 
         <div className="double-box-fin">
-        <FieldSelect
+          <FieldSelect
             label="Localização"
             onChange={handleChangeLocalizacao}
             value={localizacao}
@@ -279,10 +270,9 @@ export default function FinancialUpdate() {
             value={datadeCadastro}
             onChange={handleChangeNumerodeEtiqueta}
           />
-
         </div>
         <div className="descricao-fin">
-        <FieldTextCheckbox
+          <FieldTextCheckbox
             label="Patrimonio Doado"
             checked={doacao}
             onCheckboxChange={(e) => setDoacao(e.target.checked)}
@@ -290,30 +280,39 @@ export default function FinancialUpdate() {
           />
         </div>
         <div className="Botao-historico">
-  <PrimaryButton text={mostrarHistorico ? "Esconder Histórico" : "Mostrar Histórico de Movimentações"} onClick={handleShowHistoric} />
-</div>
+          <PrimaryButton
+            text={
+              mostrarHistorico
+                ? "Esconder Histórico"
+                : "Mostrar Histórico de Movimentações"
+            }
+            onClick={handleShowHistoric}
+          />
+        </div>
 
-            {/* Histórico de movimentações */}
-            {mostrarHistorico && (
-              <div className="historico-container">
-                <h3>Histórico de Movimentações</h3>
-                <ul>
-                {patrimonioLocalizacao.length > 0 ? (
+        {/* Histórico de movimentações */}
+        {mostrarHistorico && (
+          <div className="historico-container">
+            <h3>Histórico de Movimentações</h3>
+            <ul>
+              {patrimonioLocalizacao.length > 0 ? (
                 patrimonioLocalizacao
-                .filter(item => item.numerodeEtiqueta === numerodeEtiqueta) // Filtra pelos itens com a condição
-                .map((item, index) => (
-                  <li key={index}>
-                    <strong>Data:</strong> {dayjs(item.data).format("DD/MM/YYYY HH:mm")}<br />
-                    <strong>De:</strong> {item.de} ➝ <strong>Para:</strong> {item.para}
-                  </li>
-                ))
-            ) : (
-              <p>Nenhum histórico encontrado.</p>
-            )}
-                </ul>
-              </div>
-            )}
-
+                  .filter((item) => item.numerodeEtiqueta === numerodeEtiqueta) // Filtra pelos itens com a condição
+                  .map((item, index) => (
+                    <li key={index}>
+                      <strong>Data:</strong>{" "}
+                      {dayjs(item.data).format("DD/MM/YYYY HH:mm")}
+                      <br />
+                      <strong>De:</strong> {item.de} ➝ <strong>Para:</strong>{" "}
+                      {item.para}
+                    </li>
+                  ))
+              ) : (
+                <p>Nenhum histórico encontrado.</p>
+              )}
+            </ul>
+          </div>
+        )}
 
         <div className="double-buttons-mov">
           {canDelete && (

@@ -12,7 +12,9 @@ if (storagedToken) {
   }
 }
 
-export const createpatrimonioLocalizacao = async (patrimonioLocalizacaoData) => {
+export const createpatrimonioLocalizacao = async (
+  patrimonioLocalizacaoData
+) => {
   try {
     if (!token) {
       throw new Error("No token found");

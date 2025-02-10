@@ -12,7 +12,6 @@ import { getToken } from "../../../../Services/Functions/loader";
 import { APIBank } from "../../../../Services/BaseService";
 import FieldTextCheckbox from "../../../../Components/FieldTextCheckbox";
 
-
 export default function patrimonioCreate() {
   const [patrimonio, setpatrimonio] = useState([]);
   const [nome, setNome] = useState("");
@@ -54,13 +53,15 @@ export default function patrimonioCreate() {
   // Atualiza o número de etiqueta
   useEffect(() => {
     if (Array.isArray(patrimonio) && patrimonio.length > 0) {
-      setNumerodeEtiqueta(patrimonio[patrimonio.length - 1].numerodeEtiqueta + 1);
+      setNumerodeEtiqueta(
+        patrimonio[patrimonio.length - 1].numerodeEtiqueta + 1
+      );
     } else {
       setNumerodeEtiqueta(1); // Ou qualquer número inicial desejado
     }
   }, [patrimonio]);
 
-  useEffect(() =>{
+  useEffect(() => {
     const fetchlocalizacao = async () => {
       try {
         const response = await APIBank.get(`/localizacao`, {
@@ -68,7 +69,7 @@ export default function patrimonioCreate() {
             Authorization: `Bearer ${getToken()}`,
           },
         });
-  
+
         const data = response.data;
         if (Array.isArray(data)) {
           setLocalizacoes(data);
@@ -152,7 +153,7 @@ export default function patrimonioCreate() {
 
     if (
       !nome ||
-      !datadeCadastro || 
+      !datadeCadastro ||
       !descricao ||
       !numerodeEtiqueta ||
       !valor ||
@@ -182,11 +183,7 @@ export default function patrimonioCreate() {
         <h3>Dados do Patrimonio</h3>
 
         <div className="descricao-fin">
-          <FieldText
-            label="Nome *"
-            onChange={handleChangeNome}
-            value={nome}
-          />
+          <FieldText label="Nome *" onChange={handleChangeNome} value={nome} />
         </div>
 
         <div className="double-box-fin">
@@ -198,12 +195,9 @@ export default function patrimonioCreate() {
 
           <FieldText
             label="Valor *"
-            value={
-              valor ? `R$ ${valor.replace(".", ",")}` : "R$ 0,00"
-            }
+            value={valor ? `R$ ${valor.replace(".", ",")}` : "R$ 0,00"}
             onChange={(e) => handleCurrencyInput(e.target.value, setValor)}
           />
-
         </div>
 
         <div className="double-box-fin">
@@ -215,27 +209,28 @@ export default function patrimonioCreate() {
 
           <FieldText
             label="Etiqueta de Patrimônio"
-            onChange={() => (patrimonio.numerodeEtiqueta[patrimonio.length - 1] + 1)}
-            value={numerodeEtiqueta.toString().padStart(4, '0')}
+            onChange={() =>
+              patrimonio.numerodeEtiqueta[patrimonio.length - 1] + 1
+            }
+            value={numerodeEtiqueta.toString().padStart(4, "0")}
           />
         </div>
 
         <div className="double-box-fin">
-        <FieldSelect
+          <FieldSelect
             label="Localização *"
             onChange={handleChangeLocalizacao}
             value={localizacao}
             options={localizacoes.map((loc) => loc.localizacao)}
-            />
+          />
           <DataSelect
             label="Data de cadastro"
             value={datadeCadastro}
             onChange={() => setDatadeCadastro(new Date())}
           />
-
         </div>
         <div className="descricao-fin">
-        <FieldTextCheckbox
+          <FieldTextCheckbox
             label="Patrimonio Doado"
             checked={doacao}
             onCheckboxChange={(e) => setDoacao(e.target.checked)}

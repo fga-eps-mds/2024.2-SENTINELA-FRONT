@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach} from "vitest";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 import {
   createpatrimonio,
   getpatrimonio,
@@ -71,7 +71,10 @@ describe("Patrimonio Service", () => {
 
     expect(result).toEqual(updatedData);
     expect(updatepatrimonioById).toHaveBeenCalledTimes(1);
-    expect(updatepatrimonioById).toHaveBeenCalledWith(patrimonioId, updatedData);
+    expect(updatepatrimonioById).toHaveBeenCalledWith(
+      patrimonioId,
+      updatedData
+    );
   });
 
   it("should delete a patrimonio by id", async () => {

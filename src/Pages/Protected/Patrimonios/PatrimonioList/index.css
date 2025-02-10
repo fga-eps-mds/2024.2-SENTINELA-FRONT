@@ -35,14 +35,14 @@
     position: relative;
   }
 
-  .search-box-patrimonioList{
+  .search-box-patrimonioList {
     display: grid;
     width: 70%;
     margin-top: 1rem;
     position: relative;
   }
 
-  .search-localizacao-patrimonioList{
+  .search-localizacao-patrimonioList {
     display: grid;
     width: 98%;
     margin-top: 1rem;
@@ -116,21 +116,19 @@
     position: relative;
   }
 
-  .search-localizacao-patrimonioList{
+  .search-localizacao-patrimonioList {
     display: grid;
     width: 98%;
     margin-top: 1rem;
     position: relative;
   }
 
-
-  .search-box-patrimonioList{
+  .search-box-patrimonioList {
     display: grid;
     width: 100%;
     margin-top: 1rem;
     position: left;
   }
-
 
   .double-box-financialList {
     display: grid;

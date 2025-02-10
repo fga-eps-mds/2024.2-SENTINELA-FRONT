@@ -73,10 +73,7 @@ export const getpatrimonioById = async (id) => {
   }
 };
 
-export const updatepatrimonioById = async (
-  id,
-  patrimonioData
-) => {
+export const updatepatrimonioById = async (id, patrimonioData) => {
   try {
     if (!token) {
       throw new Error("No token found");
@@ -96,10 +93,7 @@ export const updatepatrimonioById = async (
     console.log("Patrimonio atualizado:", response.data);
     return response.data;
   } catch (error) {
-    console.error(
-      `Erro ao atualizar patrimonio com ID ${id}:`,
-      error
-    );
+    console.error(`Erro ao atualizar patrimonio com ID ${id}:`, error);
   }
 };
 

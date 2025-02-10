@@ -67,7 +67,10 @@ describe("Localizacao Service", () => {
 
     expect(result).toEqual(updatedData);
     expect(updatelocalizacaoById).toHaveBeenCalledTimes(1);
-    expect(updatelocalizacaoById).toHaveBeenCalledWith(localizacaoId, updatedData);
+    expect(updatelocalizacaoById).toHaveBeenCalledWith(
+      localizacaoId,
+      updatedData
+    );
   });
 
   it("should delete a localizacao by id", async () => {

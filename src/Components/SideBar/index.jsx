@@ -108,7 +108,10 @@ export default function SideBar() {
               />
             )}
 
-            {(checkAction("patrimonio_criar") || checkAction("patrimonio_deletar") || checkAction("patrimonio_visualizar") || checkAction("patrimonio_editar")) && (
+            {(checkAction("patrimonio_criar") ||
+              checkAction("patrimonio_deletar") ||
+              checkAction("patrimonio_visualizar") ||
+              checkAction("patrimonio_editar")) && (
               <SideButton
                 // hidden={checkModule(permissions, "finance") ? "flex" : "none"}
                 key="patrimonios"

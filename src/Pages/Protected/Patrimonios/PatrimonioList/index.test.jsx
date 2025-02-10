@@ -36,11 +36,13 @@ describe("patrimonioList", () => {
 
     expect(screen.getByText("Lista de patrimônios")).toBeInTheDocument();
     expect(screen.getByText("Cadastrar patrimonio")).toBeInTheDocument();
-    expect(screen.getByLabelText("Pesquisar patrimonio por nome")).toBeInTheDocument();
+    expect(
+      screen.getByLabelText("Pesquisar patrimonio por nome")
+    ).toBeInTheDocument();
 
     await waitFor(() => expect(APIBank.get).toHaveBeenCalledTimes(2));
   });
-  
+
   it("fetches and displays assets", async () => {
     const patrimonio = [
       {
@@ -52,7 +54,7 @@ describe("patrimonioList", () => {
         numerodeEtiqueta: "0001",
         localizacao: "OUTROS",
         doacao: false,
-        datadeCadastro: "2025-02-04T00:00:00.00Z"
+        datadeCadastro: "2025-02-04T00:00:00.00Z",
       },
       {
         _id: "1",
@@ -63,22 +65,22 @@ describe("patrimonioList", () => {
         numerodeEtiqueta: "0001",
         localizacao: "OUTROS",
         doacao: true,
-        datadeCadastro: "2025-02-04T00:00:00.00Z"
+        datadeCadastro: "2025-02-04T00:00:00.00Z",
       },
     ];
     APIBank.get.mockResolvedValue({ data: patrimonio });
-    
+
     render(
       <Router>
         <PatrimonioList />
       </Router>
     );
-    
+
     await waitFor(() => expect(APIBank.get).toHaveBeenCalledTimes(2));
     expect(screen.getByText("Patrimonio A")).toBeInTheDocument();
     expect(screen.getByText("Patrimonio B")).toBeInTheDocument();
   });
-    
+
   it("filters assets based on search input (numerodeEtiqueta)", async () => {
     const patrimonio = [
       {
@@ -90,7 +92,7 @@ describe("patrimonioList", () => {
         numerodeEtiqueta: "0001",
         localizacao: "OUTROS",
         doacao: false,
-        datadeCadastro: "2025-02-04T00:00:00.00Z"
+        datadeCadastro: "2025-02-04T00:00:00.00Z",
       },
       {
         _id: "2",
@@ -101,7 +103,7 @@ describe("patrimonioList", () => {
         numerodeEtiqueta: "0002",
         localizacao: "OUTROS",
         doacao: true,
-        datadeCadastro: "2025-02-04T00:00:00.00Z"
+        datadeCadastro: "2025-02-04T00:00:00.00Z",
       },
     ];
     APIBank.get.mockResolvedValue({ data: patrimonio });
@@ -114,9 +116,10 @@ describe("patrimonioList", () => {
 
     await waitFor(() => expect(APIBank.get).toHaveBeenCalledTimes(2));
 
-    const searchInput = screen.getByLabelText("Pesquisar patrimonio por etiqueta");
+    const searchInput = screen.getByLabelText(
+      "Pesquisar patrimonio por etiqueta"
+    );
     fireEvent.change(searchInput, { target: { value: "0001" } });
-
 
     expect(screen.getByText("Patrimonio A")).toBeInTheDocument();
     expect(screen.queryByText("Patrimonio B")).not.toBeInTheDocument();
@@ -133,7 +136,7 @@ describe("patrimonioList", () => {
         numerodeEtiqueta: "0001",
         localizacao: "OUTROS",
         doacao: false,
-        datadeCadastro: "2025-02-04T00:00:00.00Z"
+        datadeCadastro: "2025-02-04T00:00:00.00Z",
       },
       {
         _id: "2",
@@ -144,7 +147,7 @@ describe("patrimonioList", () => {
         numerodeEtiqueta: "0002",
         localizacao: "OUTROS",
         doacao: true,
-        datadeCadastro: "2025-02-04T00:00:00.00Z"
+        datadeCadastro: "2025-02-04T00:00:00.00Z",
       },
     ];
     APIBank.get.mockResolvedValue({ data: patrimonio });
@@ -159,7 +162,6 @@ describe("patrimonioList", () => {
 
     const searchInput = screen.getByLabelText("Pesquisar patrimonio por nome");
     fireEvent.change(searchInput, { target: { value: "Patrimonio B" } });
-
 
     expect(screen.getByText("Patrimonio B")).toBeInTheDocument();
     expect(screen.queryByText("Patrimonio A")).not.toBeInTheDocument();
@@ -189,7 +191,7 @@ describe("patrimonioList", () => {
         numerodeEtiqueta: "0001",
         localizacao: "OUTROS",
         doacao: false,
-        datadeCadastro: "2025-02-04T00:00:00.00Z"
+        datadeCadastro: "2025-02-04T00:00:00.00Z",
       },
       {
         _id: "2",
@@ -200,7 +202,7 @@ describe("patrimonioList", () => {
         numerodeEtiqueta: "0002",
         localizacao: "OUTROS",
         doacao: true,
-        datadeCadastro: "2025-02-04T00:00:00.00Z"
+        datadeCadastro: "2025-02-04T00:00:00.00Z",
       },
     ];
     APIBank.get.mockResolvedValue({ data: patrimonio });
@@ -210,14 +212,14 @@ describe("patrimonioList", () => {
         <PatrimonioList />
       </Router>
     );
-    
+
     await waitFor(() => {
       fireEvent.click(screen.getByText("Patrimonio A"));
     });
 
     expect(window.location.pathname).toBe(
       `/patrimonio/update/${patrimonio[0]._id}`
-      );
+    );
   });
   it("see localizacoes on button click", async () => {
     render(
@@ -231,14 +233,14 @@ describe("patrimonioList", () => {
       expect(screen.getByText("Criar Localização")).toBeInTheDocument();
     });
   });
-  
+
   it("fechar pop up localizacoes on button click", async () => {
     render(
       <Router>
         <PatrimonioList />
       </Router>
     );
-  
+
     fireEvent.click(screen.getByText(/Gerenciar Localizações/i));
     await waitFor(() => screen.getByText(/Fechar/i));
     fireEvent.click(screen.getByText(/Fechar/i));
@@ -246,5 +248,4 @@ describe("patrimonioList", () => {
       expect(screen.queryByText(/Fechar/i)).not.toBeInTheDocument();
     });
   });
-  
-}); 
+});

@@ -27,7 +27,9 @@ async function fillUpRequiredFields() {
     const descricaoInput = await screen.findByLabelText("Descrição *");
     const valorInput = await screen.findByLabelText("Valor *");
     const numerodeSerieInput = await screen.findByLabelText("Numero de Serie");
-    const numerodeEtiquetaInput = await screen.findByLabelText("Etiqueta de Patrimônio");
+    const numerodeEtiquetaInput = await screen.findByLabelText(
+      "Etiqueta de Patrimônio"
+    );
     const localizacaoSelect = await screen.findByLabelText("Localização *");
 
     // Simulando seleção de opções e preenchimento de campos
@@ -68,23 +70,21 @@ describe("patrimonioCreate Component", () => {
   it("render patrimonioCreate page correctly", () => {
     expect(screen).toMatchSnapshot();
   });
-
 });
 
 it("should validate mandatory fields before submitting", async () => {
   await fillUpRequiredFields();
-  
+
   // Submetendo após preencher todos os campos obrigatórios
   //await userEvent.click(screen.getByText("Cadastrar"));
-  await waitFor(() => 
-    expect(screen.getByText("Cadastrar")).toBeInTheDocument());
-    userEvent.click(screen.getByText("Cadastrar"));
+  await waitFor(() =>
+    expect(screen.getByText("Cadastrar")).toBeInTheDocument()
+  );
+  userEvent.click(screen.getByText("Cadastrar"));
 
   await waitFor(() => {
     expect(patrimonioCreate).toHaveBeenCalledTimes(1);
   });
-  
-  
 
   it("should alert if mandatory fields are not filled", async () => {
     const alertMock = vi.spyOn(window, "alert").mockImplementation(() => {});

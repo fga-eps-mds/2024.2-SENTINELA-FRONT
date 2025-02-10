@@ -37,7 +37,9 @@ describe("PatrimonioLocalizacao Service", () => {
 
     expect(result).toBe(false);
     expect(createpatrimonioLocalizacao).toHaveBeenCalledTimes(1);
-    expect(createpatrimonioLocalizacao).toHaveBeenCalledWith(patrimonioLocalizacaoData);
+    expect(createpatrimonioLocalizacao).toHaveBeenCalledWith(
+      patrimonioLocalizacaoData
+    );
   });
 
   it("should fetch all patrimonioLocalizacoes", async () => {
@@ -57,27 +59,39 @@ describe("PatrimonioLocalizacao Service", () => {
 
     expect(result).toEqual(patrimonioLocalizacaoData);
     expect(getpatrimonioLocalizacaoById).toHaveBeenCalledTimes(1);
-    expect(getpatrimonioLocalizacaoById).toHaveBeenCalledWith(patrimonioLocalizacaoId);
+    expect(getpatrimonioLocalizacaoById).toHaveBeenCalledWith(
+      patrimonioLocalizacaoId
+    );
   });
 
   it("should update a patrimonioLocalizacao", async () => {
     const updatedData = { ...patrimonioLocalizacaoData, nome: "Localização B" };
     updatepatrimonioLocalizacaoById.mockResolvedValue(updatedData);
 
-    const result = await updatepatrimonioLocalizacaoById(patrimonioLocalizacaoId, updatedData);
+    const result = await updatepatrimonioLocalizacaoById(
+      patrimonioLocalizacaoId,
+      updatedData
+    );
 
     expect(result).toEqual(updatedData);
     expect(updatepatrimonioLocalizacaoById).toHaveBeenCalledTimes(1);
-    expect(updatepatrimonioLocalizacaoById).toHaveBeenCalledWith(patrimonioLocalizacaoId, updatedData);
+    expect(updatepatrimonioLocalizacaoById).toHaveBeenCalledWith(
+      patrimonioLocalizacaoId,
+      updatedData
+    );
   });
 
   it("should delete a patrimonioLocalizacao by id", async () => {
     deletepatrimonioLocalizacaoById.mockResolvedValue(undefined); // Simula sucesso na exclusão
 
-    const result = await deletepatrimonioLocalizacaoById(patrimonioLocalizacaoId);
+    const result = await deletepatrimonioLocalizacaoById(
+      patrimonioLocalizacaoId
+    );
 
     expect(result).toBeUndefined();
     expect(deletepatrimonioLocalizacaoById).toHaveBeenCalledTimes(1);
-    expect(deletepatrimonioLocalizacaoById).toHaveBeenCalledWith(patrimonioLocalizacaoId);
+    expect(deletepatrimonioLocalizacaoById).toHaveBeenCalledWith(
+      patrimonioLocalizacaoId
+    );
   });
 });

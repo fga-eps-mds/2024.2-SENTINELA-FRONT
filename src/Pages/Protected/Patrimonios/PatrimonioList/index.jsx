@@ -15,7 +15,10 @@ import FieldSelect from "../../../../Components/FieldSelect";
 import { APIBank } from "../../../../Services/BaseService";
 import { checkAction } from "../../../../Utils/permission";
 import { getToken } from "../../../../Services/Functions/loader";
-import { createlocalizacao, deletelocalizacaoById } from "../../../../Services/localizacaoService";
+import {
+  createlocalizacao,
+  deletelocalizacaoById,
+} from "../../../../Services/localizacaoService";
 
 export default function patrimonioList() {
   const [patrimonio, setpatrimonio] = useState([]);
@@ -76,7 +79,6 @@ export default function patrimonioList() {
     }
   };
 
-
   useEffect(() => {
     fetchlocalizacao();
   }, []);
@@ -86,14 +88,21 @@ export default function patrimonioList() {
   };
 
   const handleCriarLocalizacao = async () => {
-    if (localizacoes.some((loc) => loc.localizacao.toLowerCase() === newLocalizacao.toLowerCase())) {
+    if (
+      localizacoes.some(
+        (loc) => loc.localizacao.toLowerCase() === newLocalizacao.toLowerCase()
+      )
+    ) {
       alert("Essa localização já existe!");
       return;
     }
     try {
-      await createlocalizacao({ localizacao: newLocalizacao }, {
-        headers: { Authorization: `Bearer ${getToken()}` },
-      });
+      await createlocalizacao(
+        { localizacao: newLocalizacao },
+        {
+          headers: { Authorization: `Bearer ${getToken()}` },
+        }
+      );
       fetchlocalizacao();
     } catch (error) {
       console.error("Erro ao criar localização:", error);
@@ -112,40 +121,39 @@ export default function patrimonioList() {
       const patrimonioRelacionado = patrimonio.some(
         (item) => item.localizacao === localizacao.localizacao
       );
-  
+
       if (patrimonioRelacionado) {
-        alert("Não é possível excluir essa localização, pois existem patrimônios associados a ela.");
+        alert(
+          "Não é possível excluir essa localização, pois existem patrimônios associados a ela."
+        );
         return;
       }
-  
+
       // Se não houver patrimônios, prossegue com a exclusão
       await deletelocalizacaoById(localizacao._id);
       setShowDeletedModal(true);
-  
+
       // Atualiza a lista de localizações após a exclusão
       fetchlocalizacao();
     } catch (error) {
       console.error("Erro ao deletar localização:", error);
     }
   };
-  
 
   const filteredPatrimonio = patrimonio.filter((patrimonio) => {
     const isDocumentTypeMatch = patrimonio.nome
-    .toLowerCase()
-    .includes(search.toLowerCase());
-      // Formata numerodeEtiqueta para 4 dígitos com zero à esquerda
+      .toLowerCase()
+      .includes(search.toLowerCase());
+    // Formata numerodeEtiqueta para 4 dígitos com zero à esquerda
     const formattedEtiqueta = patrimonio.numerodeEtiqueta
-    .toString()
-    .padStart(4, '0');  // Converte para string e adiciona zeros à esquerda
+      .toString()
+      .padStart(4, "0"); // Converte para string e adiciona zeros à esquerda
     const isEtiqueta = formattedEtiqueta.includes(searchEtiqueta);
 
-
     const movementDate = patrimonio.localizacao;
-    const Loc = loc
+    const Loc = loc;
 
-    const isDateInRange =
-      (!Loc || movementDate === Loc);
+    const isDateInRange = !Loc || movementDate === Loc;
 
     return isDocumentTypeMatch && isEtiqueta && isDateInRange;
   });
@@ -156,45 +164,41 @@ export default function patrimonioList() {
         <div className="double-box-financialList">
           <h1>Lista de patrimônios</h1>
           {canCreate && (
-            <PrimaryButton
-              text="Cadastrar patrimonio"
-              onClick={handleSubmit}
-            />
+            <PrimaryButton text="Cadastrar patrimonio" onClick={handleSubmit} />
           )}
         </div>
 
         <div className="double-box-financialList">
-        <div className="search-box-financialList">
-          <FieldText
-            label="Pesquisar patrimonio por nome"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-        </div>
-        <div className="search-box-patrimonioList">
-          <FieldText
-            label="Pesquisar patrimonio por etiqueta"
-            value={searchEtiqueta}
-            onChange={(e) => setSearchEtiqueta(e.target.value)}
-          />
-        </div>
+          <div className="search-box-financialList">
+            <FieldText
+              label="Pesquisar patrimonio por nome"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </div>
+          <div className="search-box-patrimonioList">
+            <FieldText
+              label="Pesquisar patrimonio por etiqueta"
+              value={searchEtiqueta}
+              onChange={(e) => setSearchEtiqueta(e.target.value)}
+            />
+          </div>
         </div>
 
         <div className="double-box-financialList">
-
           <div className="search-localizacao-patrimonioList">
-          <FieldSelect
-            label="Localização"
-            onChange={(e) => setLocalizacao(e.target.value)}
-            value={loc}
-            options={["", ...localizacoes.map((loc) => loc.localizacao)]}
-          />
+            <FieldSelect
+              label="Localização"
+              onChange={(e) => setLocalizacao(e.target.value)}
+              value={loc}
+              options={["", ...localizacoes.map((loc) => loc.localizacao)]}
+            />
           </div>
           <SecondaryButton
-              text="Gerenciar Localizações"
-              onClick={() => setmodalIsOpen(true)}
-            />
-            <BigModal show={modalIsOpen} width="600px">
+            text="Gerenciar Localizações"
+            onClick={() => setmodalIsOpen(true)}
+          />
+          <BigModal show={modalIsOpen} width="600px">
             <ListItem>
               <FieldText
                 label="Nova Localização"
@@ -209,7 +213,6 @@ export default function patrimonioList() {
               />
             </ListItem>
 
-
             <div>*clique no nome da localização para deletar*</div>
             <div>LISTA DE LOCALIZAÇÕES:</div>
 
@@ -217,25 +220,24 @@ export default function patrimonioList() {
             {localizacoes.map((localizacoes) => (
               <ListItem key={localizacoes._id}>
                 <ListItemButton
-                            className=""
-                            style={{
-                              transition: "background-color 0.3s ease",
-                              color: "#332117",
-                            }}
-                            onMouseEnter={(e) =>
-                              (e.currentTarget.style.backgroundColor =
-                                "rgba(0, 0, 0, 0.1)")
-                            }
-                            onMouseLeave={(e) =>
-                              (e.currentTarget.style.backgroundColor = "transparent")
-                            }
-                            onClick={() => {
-                              setLocalizacaoADeletar(localizacoes);
-                              setShowDeleteModal(true);
-                            }
-                          }
-                          >
-                <ListItemText primary={localizacoes.localizacao} />
+                  className=""
+                  style={{
+                    transition: "background-color 0.3s ease",
+                    color: "#332117",
+                  }}
+                  onMouseEnter={(e) =>
+                    (e.currentTarget.style.backgroundColor =
+                      "rgba(0, 0, 0, 0.1)")
+                  }
+                  onMouseLeave={(e) =>
+                    (e.currentTarget.style.backgroundColor = "transparent")
+                  }
+                  onClick={() => {
+                    setLocalizacaoADeletar(localizacoes);
+                    setShowDeleteModal(true);
+                  }}
+                >
+                  <ListItemText primary={localizacoes.localizacao} />
                 </ListItemButton>
               </ListItem>
             ))}
@@ -247,39 +249,40 @@ export default function patrimonioList() {
               marginTop="10px"
             />
             <Modal
-              alertTitle={"Deseja deletar localização '" + localizacaoADeletar.localizacao + "' do sistema?"}
+              alertTitle={
+                "Deseja deletar localização '" +
+                localizacaoADeletar.localizacao +
+                "' do sistema?"
+              }
               show={showDeleteModal}
             >
-
               <SecondaryButton
-            key={"deleteButtons"}
-            text="EXCLUIR LOCALIZAÇÃO"
-            onClick={() => handleLocalizacaoDelete(localizacaoADeletar)}
-            width="338px"
-          />
-          <SecondaryButton
-            key={"modalButtons"}
-            text="CANCELAR E MANTER LOCALIZAÇÃO"
-            onClick={() => setShowDeleteModal(false)}
-            width="338px"
-          />
+                key={"deleteButtons"}
+                text="EXCLUIR LOCALIZAÇÃO"
+                onClick={() => handleLocalizacaoDelete(localizacaoADeletar)}
+                width="338px"
+              />
+              <SecondaryButton
+                key={"modalButtons"}
+                text="CANCELAR E MANTER LOCALIZAÇÃO"
+                onClick={() => setShowDeleteModal(false)}
+                width="338px"
+              />
             </Modal>
 
             <Modal alertTitle="Localização Deletada" show={showDeletedModal}>
-          <SecondaryButton
-            key={"okButtons"}
-            text="OK"
-            onClick={() => {
-              setShowDeletedModal(false);
-              setShowDeleteModal(false)
-            }}
-            width="338px"
-          />
-        </Modal>
-            </BigModal>
-
-                    </div>
-          
+              <SecondaryButton
+                key={"okButtons"}
+                text="OK"
+                onClick={() => {
+                  setShowDeletedModal(false);
+                  setShowDeleteModal(false);
+                }}
+                width="338px"
+              />
+            </Modal>
+          </BigModal>
+        </div>
 
         <List>
           {filteredPatrimonio.map((patrimonio, index) => (
@@ -301,9 +304,14 @@ export default function patrimonioList() {
                 >
                   <ListItemText
                     primary={patrimonio.nome}
-                    secondary={'Numero de Etiqueta: ' + patrimonio.numerodeEtiqueta.toString().padStart(4, '0')}
+                    secondary={
+                      "Numero de Etiqueta: " +
+                      patrimonio.numerodeEtiqueta.toString().padStart(4, "0")
+                    }
                   />
-                  <ListItemText secondary={'Localização:' + patrimonio.localizacao} />
+                  <ListItemText
+                    secondary={"Localização:" + patrimonio.localizacao}
+                  />
                 </ListItemButton>
               </ListItem>
               {index < filteredPatrimonio.length - 1 && <Divider />}

@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, afterEach, beforeEach } from "vitest";
-import { render, screen, cleanup} from "@testing-library/react";
+import { render, screen, cleanup } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
 import Patrimonio from "./index.jsx";
 import "@testing-library/jest-dom";
