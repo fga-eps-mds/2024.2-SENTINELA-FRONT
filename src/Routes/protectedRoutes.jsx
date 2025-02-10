@@ -120,7 +120,8 @@ const ProtectedRoutes = () => {
           <PermissionProtect
             element={<UserHubPage />}
             moduleName="users"
-            actions={["read", "update", "delete"]}
+            actions={["read"]}
+            //actions={["read", "update", "delete"]}
           />
         }
       />

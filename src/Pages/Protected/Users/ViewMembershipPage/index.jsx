@@ -335,7 +335,7 @@ const ViewMembershipPage = () => {
 
         <div className="section-form-benefits">
           <FieldText
-            label="Religião"
+            label="Relião"
             value={religion}
             onChange={(e) => setReligion(e.target.value)}
             onBlur={(e) => handleBlur(e, "religiao")}
