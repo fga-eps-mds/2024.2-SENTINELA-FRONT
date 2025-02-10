@@ -1,4 +1,4 @@
-/* eslint-disable no-unreachable */
+ 
 // src/hooks/usePermissions.js
 
 import { useContext, useState, useEffect } from "react";
