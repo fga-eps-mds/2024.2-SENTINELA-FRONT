@@ -1,4 +1,3 @@
- 
 import { useContext, useState, useEffect } from "react";
 import AuthContext from "../Context/auth";
 import PropTypes from "prop-types";
