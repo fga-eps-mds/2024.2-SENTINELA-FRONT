@@ -135,8 +135,6 @@ export default function UserUpdatePage() {
     }
   };
 
-  const handleChangeLogin = (event) => setLogin(event.target.value);
-
   const handleSaveModal = () => setShowSaveModal(true);
   const handleSavePasswordModal = () => setShowPasswordSaveModal(true);
 

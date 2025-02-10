@@ -125,7 +125,6 @@ export default function UserUpdatePage() {
     }
   };
 
-  const handleChangeLogin = (event) => setLogin(event.target.value);
   const handlePerfilChange = (event) =>
     setPerfilSelecionado(event.target.value);
 

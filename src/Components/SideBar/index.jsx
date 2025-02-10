@@ -79,8 +79,13 @@ export default function SideBar() {
                 setIsSideBarOpen(false);
               }}
             />
-            {(checkAction("filiados_cadastrar") || checkAction("usuarios_visualizar") || checkAction("perfis_visualizar") || checkAction("filiados_cadastrar") || checkAction("orgaos_visualizar") || checkAction("associados_visualizar"))&& (
-              <SideButton 
+            {(checkAction("filiados_cadastrar") ||
+              checkAction("usuarios_visualizar") ||
+              checkAction("perfis_visualizar") ||
+              checkAction("filiados_cadastrar") ||
+              checkAction("orgaos_visualizar") ||
+              checkAction("associados_visualizar")) && (
+              <SideButton
                 key="filiacao"
                 text="CADASTROS"
                 onClick={() => {
@@ -89,7 +94,10 @@ export default function SideBar() {
                 }}
               />
             )}
-            {(checkAction("filiados_cadastrar") || checkAction("beneficios_criar") || checkAction("beneficios_visualizar") || checkAction("beneficios_editar")) && (
+            {(checkAction("filiados_cadastrar") ||
+              checkAction("beneficios_criar") ||
+              checkAction("beneficios_visualizar") ||
+              checkAction("beneficios_editar")) && (
               <SideButton
                 key="financeiro"
                 text="FINANCEIRO"
@@ -99,7 +107,9 @@ export default function SideBar() {
                 }}
               />
             )}
-            {(checkAction("beneficios_visualizar") || checkAction("beneficios_criar") || checkAction("beneficios_editar") ) && (
+            {(checkAction("beneficios_visualizar") ||
+              checkAction("beneficios_criar") ||
+              checkAction("beneficios_editar")) && (
               <SideButton
                 key="beneficios"
                 text="BENEFÍCIOS"

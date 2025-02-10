@@ -58,8 +58,9 @@
     "vitest": "^2.0.5"
   },
   "jest": {
-  "testEnvironment": "jsdom",
-  "setupFilesAfterEnv": ["@testing-library/jest-dom"]
-}
-
+    "testEnvironment": "jsdom",
+    "setupFilesAfterEnv": [
+      "@testing-library/jest-dom"
+    ]
+  }
 }
