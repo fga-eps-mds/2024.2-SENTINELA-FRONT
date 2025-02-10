@@ -17,7 +17,7 @@ const Home = () => {
   const [isSind, setIsSind] = useState("Sindicalizado");
   const [lotacao, setLotacao] = useState("");
   const [orgao, setOrgao] = useState("");
-  const [beneficio, setBeneficio] = useState([]);
+  //const [beneficio, setBeneficio] = useState([]);
   const [beneficioList, setBeneficioList] = useState([]); 
   const [benefitCounts, setBenefitCounts] = useState({});
 
