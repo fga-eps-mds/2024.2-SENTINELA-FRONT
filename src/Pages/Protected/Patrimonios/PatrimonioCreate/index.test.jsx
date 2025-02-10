@@ -2,7 +2,6 @@ import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { render, screen, cleanup } from "@testing-library/react";
 import { BrowserRouter as Router, useNavigate } from "react-router-dom";
 import "@testing-library/jest-dom";
-import userEvent from "@testing-library/user-event";
 
 // Mock para o hook useNavigate
 vi.mock("react-router-dom", async () => {
