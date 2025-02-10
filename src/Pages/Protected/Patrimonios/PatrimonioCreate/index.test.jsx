@@ -16,7 +16,7 @@ vi.mock("react-router-dom", async () => {
 
 function mockServices() {
   vi.mock("../../../../Services/patrimonioService", () => ({
-    createpatrimonio: vi.fn(),
+    patrimonioCreate: vi.fn(),
   }));
 }
 
@@ -73,15 +73,18 @@ describe("patrimonioCreate Component", () => {
 
 it("should validate mandatory fields before submitting", async () => {
   await fillUpRequiredFields();
-
+  
   // Submetendo após preencher todos os campos obrigatórios
   //await userEvent.click(screen.getByText("Cadastrar"));
-  await waitFor(() => expect(screen.getByText("Cadastrar")).toBeInTheDocument());
-  userEvent.click(screen.getByText("Cadastrar"));
+  await waitFor(() => 
+    expect(screen.getByText("Cadastrar")).toBeInTheDocument());
+    userEvent.click(screen.getByText("Cadastrar"));
 
   await waitFor(() => {
-    expect(createpatrimonio).toHaveBeenCalledTimes(1);
+    expect(patrimonioCreate).toHaveBeenCalledTimes(1);
   });
+  
+  
 
   it("should alert if mandatory fields are not filled", async () => {
     const alertMock = vi.spyOn(window, "alert").mockImplementation(() => {});

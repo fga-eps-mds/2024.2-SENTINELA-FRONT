@@ -36,7 +36,6 @@ import Unauthorized from "../Pages/Protected/Unauthorized";
 import GenerateFinancialReport from "../Pages/Protected/FinancialMovements/GenerateFinancialReport";
 import PermissionCRUD from "../Pages/Protected/Permissions/permissionsHandler.jsx";
 import RelatorioAtualizacoes from "../Pages/Protected/RelatorioAtualizacoes";
-import { checkAction } from "../Utils/permission.jsx";
 import PatrimonioCreate from "../Pages/Protected/Patrimonios/PatrimonioCreate";
 import PatrimonioList from "../Pages/Protected/Patrimonios/PatrimonioList";
 import PatrimonioUpdate from "../Pages/Protected/Patrimonios/PatrimonioUpdate";

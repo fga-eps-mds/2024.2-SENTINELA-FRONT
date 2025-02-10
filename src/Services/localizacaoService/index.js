@@ -1,17 +1,6 @@
 import { APIBank } from "../BaseService";
 import { getToken } from "../Functions/loader";
 
-const storagedToken = localStorage.getItem("@App:token");
-let token = null;
-
-if (storagedToken) {
-  try {
-    token = JSON.parse(storagedToken);
-  } catch (error) {
-    console.error("O token armazenado não é um JSON válido:", error);
-  }
-}
-
 export const createlocalizacao = async (localizacaoData) => {
   try {
 

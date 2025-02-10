@@ -5,7 +5,6 @@ import PatrimonioList from "./index.jsx";
 import { APIBank } from "../../../../Services/BaseService";
 
 import "@testing-library/jest-dom";
-import userEvent from "@testing-library/user-event";
 
 vi.mock("../../../../Services/BaseService");
 

@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, afterEach, beforeEach } from "vitest";
-import { render, screen, cleanup, fireEvent } from "@testing-library/react";
+import { render, screen, cleanup} from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
 import Patrimonio from "./index.jsx";
 import "@testing-library/jest-dom";
@@ -50,7 +50,7 @@ describe("Patrimonio", () => {
 
   it("checks permissions before rendering the button", () => {
     // Mock with permissions that do not allow the button to be displayed
-    checkAction.mockImplementation((permission) => false);
+    checkAction.mockImplementation(() => false);
 
     render(
       <Router>

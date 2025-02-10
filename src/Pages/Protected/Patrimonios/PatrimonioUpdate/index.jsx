@@ -12,15 +12,12 @@ import {
   updatepatrimonioById,
   deletepatrimonioById,
 } from "../../../../Services/patrimonioService";
-import { getUsers } from "../../../../Services/userService";
-import { getSupplierForm } from "../../../../Services/supplierService";
 import dayjs from "dayjs";
-import { handleCpfCnpjInput } from "../../../../Utils/validators";
 import { checkAction } from "../../../../Utils/permission";
 import { getToken } from "../../../../Services/Functions/loader";
 import FieldTextCheckbox from "../../../../Components/FieldTextCheckbox";
 import { APIBank } from "../../../../Services/BaseService";
-import { getpatrimonioLocalizacao, createpatrimonioLocalizacao, deletepatrimonioLocalizacaoById } from "../../../../Services/patrimonioLocalizacaoService";
+import {createpatrimonioLocalizacao, deletepatrimonioLocalizacaoById } from "../../../../Services/patrimonioLocalizacaoService";
 
 export default function FinancialUpdate() {
   const [nome, setNome] = useState("");
@@ -36,7 +33,6 @@ export default function FinancialUpdate() {
   const [showDeletedModal, setShowDeletedModal] = useState(false);
   const [patrimonioLocalizacao, setpatrimonioLocalizacao] = useState([]);
   const [DeLocalizacao, setDeLocalizacao] = useState("");
-  const [mostrar, setMostrar] = useState(false);
   const [mostrarHistorico, setMostrarHistorico] = useState(false);
   const [localizacoes, setLocalizacoes] = useState([]);
 
