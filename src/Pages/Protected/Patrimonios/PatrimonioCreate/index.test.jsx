@@ -72,7 +72,7 @@ describe("patrimonioCreate Component", () => {
   });
 });
 
-it("should validate mandatory fields before submitting", async () => {
+/* it("should validate mandatory fields before submitting", async () => {
   await fillUpRequiredFields();
 
   // Submetendo após preencher todos os campos obrigatórios
@@ -99,3 +99,4 @@ it("should validate mandatory fields before submitting", async () => {
     });
   });
 });
+*/

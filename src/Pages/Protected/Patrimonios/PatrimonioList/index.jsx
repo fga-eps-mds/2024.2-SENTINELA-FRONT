@@ -34,7 +34,7 @@ export default function PatrimonioList() {
   const [localizacaoADeletar, setLocalizacaoADeletar] = useState([]);
   // const permissions = usePermissions();
   const canCreate = checkAction("create");
-  
+
   useEffect(() => {
     const fetchpatrimonio = async () => {
       try {
