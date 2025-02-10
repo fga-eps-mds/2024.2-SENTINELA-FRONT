@@ -2,75 +2,96 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
+  padding: 1.25rem;
   background-color: #fff;
   min-height: 100vh;
-  gap: 15px;
+  gap: 0.9375rem;
 }
 
 .carteirinha {
   background: #eae3d7;
-  height: 420px;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  width: 650px;
-  padding: 20px 30px;
+  min-height: 26.25rem;
+  border-radius: 0.625rem;
+  box-shadow: 0 0.25rem 0.375rem rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 40.625rem;
+  padding: 1.25rem 1.875rem;
   text-align: left;
   font-family: Arial, sans-serif, "Noto Sans";
 }
 
 .carteirinha-header {
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
 }
 
 .carteirinha-header h1 {
   font-family: "Noto Sans";
   font-weight: 900;
-  letter-spacing: -2.5px;
+  letter-spacing: -0.15625rem;
   line-height: 123.5%;
-  font-size: 70px;
+  font-size: clamp(2.5rem, 5vw, 4.375rem);
   color: #ae883c !important;
-  margin: -12px;
-  margin-top: 10px;
-  margin-left: -12px;
-  text-shadow: 0px 100px 80px rgba(226, 183, 61, 0.25);
+  margin: -0.75rem;
+  margin-top: 0.625rem;
+  margin-left: -0.75rem;
+  text-shadow: 0px 6.25rem 5rem rgba(226, 183, 61, 0.25);
 }
+
 .carteirinha-header p {
   color: #341f14;
-  font-size: 15px;
-  margin-top: 3px;
-  margin-left: -10px;
+  font-size: clamp(0.875rem, 2vw, 0.9375rem);
+  margin-top: 0.1875rem;
+  margin-left: -0.625rem;
   font-weight: bold !important;
-  font-weight: 500;
 }
+
 .Sind {
   font-family: "Noto Sans" !important;
   color: #ae883c !important;
-  font-size: 20px !important;
+  font-size: clamp(1.125rem, 3vw, 1.25rem) !important;
   font-weight: 900 !important;
-  text-shadow: 0px 4px 4px rgba(226, 183, 61, 0.25);
+  text-shadow: 0px 0.25rem 0.25rem rgba(226, 183, 61, 0.25);
 }
+
 .info-and-badge {
-  margin-left: -10px;
+  margin-left: -0.625rem;
   display: flex;
-  align-items: center;
-  justify-content: flex-start;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .info-and-badge {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
 }
 
 .carteirinha-info {
-  flex: 2;
+  width: 100%;
 }
 
 .info-line {
   display: flex;
-  gap: 60px;
-  margin-bottom: 10px;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 0.625rem;
+}
+
+@media (min-width: 576px) {
+  .info-line {
+    flex-direction: row;
+    gap: 3.75rem;
+  }
 }
 
 .info-block {
   text-align: left;
-  font-size: 11px;
-  margin-top: 15px;
+  font-size: 0.6875rem;
+  margin-top: 0.9375rem;
+  width: 100%;
 }
 
 .info-block strong {
@@ -79,7 +100,7 @@
 }
 
 .info-block span {
-  font-size: 16px;
+  font-size: clamp(0.875rem, 2vw, 1rem);
   color: #333;
 }
 
@@ -87,134 +108,121 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  flex: 1;
-  position: relative;
-  top: -10px;
+  width: 100%;
+  max-width: 12.5rem;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .badge-section {
+    width: auto;
+    position: relative;
+    top: -0.625rem;
+  }
 }
 
 .badge-logo {
-  width: 170px;
-  margin-bottom: 10px;
+  width: 100%;
+  max-width: 10.625rem;
+  margin-bottom: 0.625rem;
 }
 
-.badge-section p {
-  margin-top: -5px;
-  font-size: 12px;
-  font-weight: bold;
-  color: #555;
+.info-color {
+  background-color: white;
+  border-radius: 0.25rem;
+  padding: 0.3125rem 1.75rem 0.3125rem 0.3125rem;
+  width: 100%;
+  max-width: 9.375rem;
+  margin-top: 0.3125rem;
+}
+
+.info-color-titular {
+  background-color: white;
+  border-radius: 0.25rem;
+  padding: 0.3125rem 1.75rem 0.3125rem 0.3125rem;
+  width: 100%;
+  max-width: 22.5rem;
+  margin-top: 0.3125rem;
 }
 
 .qr-section {
-  margin-top: 20px;
+  margin-top: 1.25rem;
   text-align: center;
 }
 
 .qr-code {
-  align-content: center;
-  width: 200px;
-  height: auto;
-  margin: auto;
-  border: 5px solid #d49a3c;
-  border-radius: 5px;
-  padding: 5px;
+  width: 100%;
+  max-width: 12.5rem;
+  margin: 0 auto;
+  border: 0.3125rem solid #d49a3c;
+  border-radius: 0.3125rem;
+  padding: 0.3125rem;
   background-color: #fff;
 }
+
 .qr-code-numero {
   font-weight: 900;
   line-height: 123.5%;
-  font-size: 25px;
+  font-size: clamp(1.25rem, 3vw, 1.5625rem);
   color: #341f14 !important;
-  margin-top: 13px;
-  margin-bottom: 8px;
-  text-shadow: 0px 4px 4px rgba(226, 183, 61, 0.25);
-}
-
-.carteirinha-footer {
-  color: #341f14;
-  font-size: 12px;
-  margin-top: 0px;
-  font-weight: 900;
-  text-align: center;
+  margin-top: 0.8125rem;
+  margin-bottom: 0.5rem;
+  text-shadow: 0px 0.25rem 0.25rem rgba(226, 183, 61, 0.25);
 }
 
 .social-media {
-  color: #333;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  margin-top: -120px;
+  gap: 0.625rem;
+  margin-top: 0.625rem;
 }
 
 .social-icon {
-  font-size: 20px;
-  margin-top: 130px;
+  width: 1.25rem;
+  height: 1.25rem;
   color: #333;
   cursor: pointer;
   transition: color 0.3s ease;
 }
 
-.social-icon:hover {
-  color: #d49a3c;
+.footer-logos {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.25rem;
+}
+
+.footer-logo {
+  width: 3.125rem;
+  height: auto;
 }
 
 .download-button {
-  padding: 12px 75px;
+  padding: 0.75rem 2rem;
   background-color: #eae3d7;
   color: #7f5539;
-  font-size: 16px;
+  font-size: clamp(0.875rem, 2vw, 1rem);
   font-weight: bold;
-  border: none;
-  border: 3px solid #7f5539;
-  border-radius: 30px;
+  border: 0.1875rem solid #7f5539;
+  border-radius: 1.875rem;
   cursor: pointer;
-  transition:
-    background-color 0.3s ease,
-    transform 0.3s ease;
+  transition: all 0.3s ease;
   text-transform: uppercase;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  display: inline-block;
+  box-shadow: 0 0.25rem 0.375rem rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 18.75rem;
+  margin-top: 1.25rem;
+}
+
+@media (min-width: 576px) {
+  .download-button {
+    width: auto;
+    padding: 0.75rem 4.6875rem;
+  }
 }
 
 .download-button:hover {
   background-color: #eae3d7;
   transform: scale(1.05);
-}
-
-.download-button:focus {
-  outline: none; /* Remove o contorno padrão do foco */
-}
-
-.info-color {
-  background-color: white;
-  border-radius: 4px;
-  padding: 5px 28px;
-  padding-left: 5px;
-  width: 150px;
-  margin-top: 5px;
-}
-
-.info-color-titular {
-  background-color: white;
-  border-radius: 4px;
-  padding: 5px 28px;
-  padding-left: 5px;
-  width: 360px;
-  margin-top: 5px;
-}
-.social-icon {
-  width: 20px;
-  height: 20px;
-}
-
-.footer-logos {
-  display: flex;
-  justify-content: center;
-  margin-left: 500px;
-  margin-top: -50px;
-}
-
-.footer-logo {
-  width: 50px;
-  height: auto;
 }
