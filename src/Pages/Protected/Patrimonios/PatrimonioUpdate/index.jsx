@@ -197,7 +197,7 @@ export default function FinancialUpdate() {
     setNome(event.target.value);
   };
 
-  const handleChangeNumerodeEtiqueta = (event) => {};
+  const handleChangeNumerodeEtiqueta = () => {};
 
   const handleChangeLocalizacao = (event) => {
     const { value } = event.target;

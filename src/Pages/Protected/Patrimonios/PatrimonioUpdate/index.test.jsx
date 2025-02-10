@@ -7,7 +7,6 @@ import {
   updatepatrimonioById,
 } from "../../../../Services/patrimonioService";
 import userEvent from "@testing-library/user-event";
-import dayjs from "dayjs";
 import "@testing-library/jest-dom";
 
 vi.mock("../../../../Utils/permission", () => ({
