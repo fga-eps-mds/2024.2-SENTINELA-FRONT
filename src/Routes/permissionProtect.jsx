@@ -33,9 +33,8 @@ const PermissionProtect = ({ element, moduleName, actions }) => {
     // Exibe um carregando enquanto as permissões estão sendo buscadas
     return <div>Loading...</div>;
   }
-  console.log(moduleName, "chaama");
   const hasPermission = actions.some((action) =>
-    checkAction(userPermissions, action)
+    checkAction(action)
   );
 
   return hasPermission ? element : <Navigate to="/unauthorized" />;
