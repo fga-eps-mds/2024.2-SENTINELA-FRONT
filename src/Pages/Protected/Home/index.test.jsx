@@ -1,6 +1,7 @@
 import { render, screen, within } from "@testing-library/react";
+import { waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect, vi} from "vitest";
 import Home from "./index";
 import { processUserData, getLineChartData } from "./index.jsx";
 
@@ -8,7 +9,7 @@ vi.mock("../../../Context/auth", () => ({
   useAuth: vi.fn().mockReturnValue({ user: {} }),
 }));
 
-//Entrada de dados
+
 vi.mock("../../../Services/userService", () => ({
   getUsers: vi.fn().mockResolvedValue([
     { status: true, lotacao: "Lotacao 1", orgao: "Orgao 1", sex: "Masculino" },
@@ -16,6 +17,14 @@ vi.mock("../../../Services/userService", () => ({
     { status: false, lotacao: "Lotacao 2", orgao: "Orgao 1", sex: "Masculino" },
     { status: false, lotacao: "Lotacao 2", orgao: "Orgao 2", sex: "Feminino" },
     { status: true, lotacao: "Lotacao 3", orgao: "Orgao 1", sex: "Masculino" },
+  ]),
+}));
+
+vi.mock("../../../Services/benefitsService", () => ({
+  getBenefitsForm: vi.fn().mockResolvedValue([
+    { nome: "Benefício 1" },
+    { nome: "Benefício 2" },
+    { nome: "Benefício 3" },
   ]),
 }));
 
@@ -119,6 +128,16 @@ describe("Home Component", () => {
     expect(within(donutBox2).getByText(/Filtro de Órgão/i)).toBeInTheDocument();
 
     expect(screen.getByText("Limpar Filtros")).toBeInTheDocument();
+  });
+
+  it("fetches and displays users correctly", async () => {
+    await waitFor(() => render(<Home />));
+    expect(screen.getByText("Filiados")).toBeInTheDocument();
+  });
+
+  it("fetches and processes benefits correctly", async () => {
+    await waitFor(() => render(<Home />));
+    expect(screen.getByText("Distribuição de Benefícios")).toBeInTheDocument();
   });
 });
 

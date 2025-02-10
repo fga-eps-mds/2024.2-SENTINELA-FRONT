@@ -1,7 +1,20 @@
 @media screen and (max-width: 768px) {
+  #box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 10rem;
+    height: 10rem;
+    border: 10px solid #ae883c;
+    border-radius: 5rem;
+    margin-top: 1rem;
+  }
   .dash-section {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    gap: 2rem;
   }
 
   .filiados-section {
@@ -21,15 +34,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-  }
-
-  .lotation {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-
-    margin: 3rem;
-    align-items: flex-end;
   }
 
   .donut-box {
@@ -55,21 +59,31 @@
     align-items: center;
   }
 
-  #box {
+
+  .donut-box2 h1 {
+    font-size: 1.2rem;
+    text-align: center;
+    margin-bottom: 1rem;
+    color: #333;
+  }
+  .donut-box2 canvas {
+    max-width: 100% !important;
+    height: 400px !important;
+    margin: 0 auto;
+  }
+  .no-data {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+    font-size: 0.9rem;
+  }
+  .loading {
     display: flex;
     justify-content: center;
     align-items: center;
-
-    width: 10rem;
-    height: 10rem;
-    border: 10px solid #ae883c;
-    border-radius: 5rem;
-    margin-top: 1rem;
-  }
-
-  .donut-box {
-    width: 100%;
-    width: 15rem;
+    height: 200px;
+    font-style: italic;
+    color: #AE883C;
   }
 }
 
@@ -183,7 +197,7 @@
 
   .lotation {
     display: flex;
-    flex-direction: row;
+    flex-wrap: wrap;
     justify-content: space-between;
     width: 100%;
     margin: 3rem;
@@ -196,6 +210,9 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+  }
+  .donut-box2{
+    margin:inherit;
   }
 
   .filiacoes {
