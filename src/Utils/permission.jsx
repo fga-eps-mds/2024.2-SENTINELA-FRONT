@@ -1,3 +1,5 @@
+// src/hooks/usePermissions.js
+
 import { useContext, useState, useEffect } from "react";
 import AuthContext from "../Context/auth";
 import { getRoleById } from "../Services/RoleService/roleService";
@@ -39,7 +41,7 @@ export const checkAction = (action) => {
   }
 
   if (!permissionsString) return false;
-
+  
   const permissions = JSON.parse(permissionsString);
   let modulePermissions = false;
   if (permissions) {
