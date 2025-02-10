@@ -94,6 +94,7 @@ export default function SideBar() {
                 }}
               />
             )}
+
             {(checkAction("filiados_cadastrar") ||
               checkAction("beneficios_criar") ||
               checkAction("beneficios_visualizar") ||
