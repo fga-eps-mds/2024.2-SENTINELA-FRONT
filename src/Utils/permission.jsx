@@ -26,6 +26,7 @@ export const checkAction = (action) => {
   const permissionsString = localStorage.getItem("@App:permissions");
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
   // Verifica se o valor existe no localStorage
   if (!permissionsString) {
@@ -53,6 +54,8 @@ export const checkAction = (action) => {
 =======
 =======
 >>>>>>> master
+=======
+>>>>>>> e3585ed4ac65578a33c2797abd53001951274b04
   if (!permissionsString) return false;
 
   const permissions = JSON.parse(permissionsString);
@@ -61,9 +64,12 @@ export const checkAction = (action) => {
     (permission) => permission.actions && permission.actions.includes(action)
   );
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> e3585ed4ac65578a33c2797abd53001951274b04
 =======
 >>>>>>> master
+=======
+>>>>>>> e3585ed4ac65578a33c2797abd53001951274b04
 };
 
 
