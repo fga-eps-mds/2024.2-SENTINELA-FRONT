@@ -1,8 +1,5 @@
 import { render, screen, within } from "@testing-library/react";
-<<<<<<< HEAD
 import { waitFor } from "@testing-library/react";
-=======
->>>>>>> 9cd35d21ce82272adc7e45c836db51d417aa6a57
 import "@testing-library/jest-dom";
 import { describe, it, expect, vi} from "vitest";
 import Home from "./index";
