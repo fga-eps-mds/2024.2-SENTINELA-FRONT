@@ -304,7 +304,7 @@ describe("MemberShip Component", () => {
 
     // antesMerge(82) 27 - depoisMerge(82) 27 Entradas (não contando datas) antes da abertura do formulario de dependente
     let inputs = container.querySelectorAll(".MuiFilledInput-input");
-    expect(inputs).toHaveLength(27);
+    expect(inputs).toHaveLength(28);
 
     // Clicar no botão para abrir
     const icon = screen.getByTestId("AddCircleOutlineIcon");
@@ -322,7 +322,7 @@ describe("MemberShip Component", () => {
 
     // Verificar os novos campos (4 novos + 1 de Data)
     inputs = container.querySelectorAll(".MuiFilledInput-input");
-    expect(inputs).toHaveLength(31); //mudou de 31 no merge(82)
+    expect(inputs).toHaveLength(32); //mudou de 31 no merge(82)
 
     //Selecionar ultimas entradas
     inputs = Array.from(inputs).slice(-4);
@@ -372,7 +372,7 @@ describe("MemberShip Component", () => {
 
     // Preencher
     let inputs = container.querySelectorAll(".MuiFilledInput-input");
-    expect(inputs).toHaveLength(31);
+    expect(inputs).toHaveLength(32);
     inputs = Array.from(inputs).slice(-4);
     fireEvent.change(inputs[0], { target: { value: "João Teste" } });
     fireEvent.change(inputs[1], { target: { value: "Filho" } });
