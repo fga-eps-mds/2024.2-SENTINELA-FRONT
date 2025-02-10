@@ -1,70 +1,18 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable no-unused-vars */
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+import { readcsv } from "../../../Utils/csvRead";
+import { patchUserById, getUsers } from "../../../Services/userService";
+
 import ClientInformationModal from "../../../Components/ClientInformationModal";
 import CancelInformationModal from "../../../Components/CancelInformationModal";
 import CanceledModal from "../../../Components/CanceledModal";
 import PayedModal from "../../../Components/PayedModal";
-import { readcsv } from "../../../Utils/csvRead";
-import { patchUserById, getUsers } from "../../../Services/userService";
+import TransactionTable from "../../../Components/TransactionTable";
+
 import "./index.css";
 
-const TransactionTable = ({ transactions, openModal }) => {
-  const getSituation = (situation) => {
-    if (!situation) return "";
-    switch (situation.toLowerCase()) {
-      case "quitado":
-        return "status-quitado";
-      case "desfiliado":
-        return "status-desfiliado";
-      case "pendente":
-        return "status-pendente";
-      default:
-        return "";
-    }
-  };
-
-  return (
-    <div className="table-container">
-      <table className="data-table">
-        <thead>
-          <tr>
-            <th className="name-column">Nome</th>
-            <th>Status Anterior</th>
-            <th>Status Atual</th>
-            <th></th> {/* Nova coluna para o ícone */}
-          </tr>
-        </thead>
-        <tbody>
-          {transactions.length === 0 ? (
-            <tr>
-              <td colSpan="4">Nenhum dado encontrado.</td>
-            </tr>
-          ) : (
-            transactions.map((item, index) => (
-              <tr key={index} className={getSituation(item.currentStatus)}>
-                <td className="name-column">{item.name}</td>
-                <td>{item.previousStatus}</td>
-                <td>{item.currentStatus}</td>
-                <td className="icon-cell">
-                  <span
-                    className="icon-button"
-                    onClick={() => openModal("clientModalVisible", item)}
-                  >
-                    &#x1F50D; {/* Ícone (lupa) */}
-                  </span>
-                </td>
-              </tr>
-            ))
-          )}
-        </tbody>
-      </table>
-    </div>
-  );
-};
-
 const DataImport = () => {
-  const [transactions, setTransactions] = useState([]);
+  const [missingUsers, setMissingUsers] = useState([]);
+  const [updatedUsers, setUpdatedUsers] = useState([]);
   const [modals, setModals] = useState({
     clientModalVisible: false,
     cancelModalVisible: false,
@@ -105,41 +53,10 @@ const DataImport = () => {
       try {
         // Passar o delimitador correto (ponto e vírgula)
         const result = await readcsv(file, ";"); // Passa o delimitador como ponto e vírgula
+
+        setMissingUsers(result.missingUsers);
+        setUpdatedUsers(result.updatedUsers);
         console.log("Dados do CSV processados:", result);
-
-        // Limpeza do cabeçalho (remover a parte com '***' e renomear as colunas)
-        const cleanedResult = result.map((row) => {
-          // Limpeza das chaves para garantir que estamos acessando os dados corretamente
-          const cleanRow = {};
-
-          // Exemplo de como você pode limpar as colunas
-          for (const [key, value] of Object.entries(row)) {
-            // Limpeza do nome da chave
-            const cleanedKey = key.replace(/\*\*\*|;/g, "").trim(); // Remove "***" e ponto e vírgula
-            cleanRow[cleanedKey] = value ? value.trim() : ""; // Garantir que o valor esteja limpo
-          }
-
-          return cleanRow;
-        });
-
-        // Agora podemos mapear os dados de forma mais limpa
-        const mappedTransactions = cleanedResult
-          .map((row) => {
-            // Acesso às propriedades do CSV já limpas
-            const transaction = {
-              name: row["servidor(nome)"] || "", // Nome do servidor
-              cpf: row["cpf_servidor"] || "", // CPF do servidor
-              previousStatus: row["status_parc_holerite"] || "", // Status anterior
-              currentStatus: row["status_atual_parc"] || "", // Status atual
-            };
-
-            console.log("Transação mapeada:", transaction);
-            return transaction;
-          })
-          .filter((item) => item.name && item.cpf); // Filtra transações válidas
-
-        console.log("Transações finais mapeadas:", mappedTransactions);
-        setTransactions(mappedTransactions); // Atualiza o estado com as transações mapeadas
       } catch (error) {
         console.error("Erro ao processar o arquivo CSV:", error);
       }
@@ -182,10 +99,10 @@ const DataImport = () => {
     }
 
     // Atualizar o estado local após a mudança
-    setTransactions((prevTransactions) =>
+    setUpdatedUsers((prevTransactions) =>
       prevTransactions.map((transaction) =>
         transaction.cpf === cpf
-          ? { ...transaction, currentStatus: "Quitado" }
+          ? { ...transaction, newSituation: "Quitado" }
           : transaction
       )
     );
@@ -238,10 +155,10 @@ const DataImport = () => {
     }
 
     // Atualizar o estado local
-    setTransactions((prevTransactions) =>
+    setUpdatedUsers((prevTransactions) =>
       prevTransactions.map((transaction) =>
         transaction.cpf === cpf
-          ? { ...transaction, currentStatus: "Desfiliado" }
+          ? { ...transaction, newSituation: "Desfiliado" }
           : transaction
       )
     );
@@ -251,25 +168,27 @@ const DataImport = () => {
     openModal("canceledModalVisible");
   };
 
-  //filtragem
-  const filteredTransactions = transactions.filter(
-    (item) => item.previousStatus !== item.currentStatus && item.currentStatus
+  const pendingTransactions = updatedUsers.filter(
+    (item) =>
+      item.newSituation && item.newSituation.toLowerCase() === "pendente"
   );
 
-  const pendingTransactions = filteredTransactions.filter(
+  const otherTransactions = updatedUsers.filter(
     (item) =>
-      item.currentStatus && item.currentStatus.toLowerCase() === "pendente"
-  );
-
-  const otherTransactions = filteredTransactions.filter(
-    (item) =>
-      item.currentStatus && item.currentStatus.toLowerCase() !== "pendente"
+      item.newSituation && item.newSituation.toLowerCase() !== "pendente"
   );
 
   return (
     <div className="data-import">
       <h1>Relatório de Atualizações</h1>
       <div className="transactions-container">
+        <h2>Usuários Faltando</h2>
+        <TransactionTable
+          transactions={missingUsers}
+          openModal={openModal}
+          isMissing={true}
+        />
+        <h2>Usuários Atualizados</h2>
         <TransactionTable
           transactions={pendingTransactions}
           openModal={openModal}
@@ -285,6 +204,7 @@ const DataImport = () => {
             onChange={handleFileUpload}
             style={{ display: "none" }}
             id="file-upload"
+            data-testid="upInput"
           />
           <button
             className="import-button"

@@ -1,3 +1,4 @@
+/* eslint-disable no-unreachable */
 import { useContext, useState, useEffect } from "react";
 import AuthContext from "../Context/auth";
 import PropTypes from "prop-types";
@@ -35,7 +36,11 @@ const PermissionProtect = ({ element, actions }) => {
   }
   const hasPermission = actions.some((action) => checkAction(action));
 
-  return hasPermission ? element : <Navigate to="/unauthorized" />;
+  if (hasPermission) {
+    return element;
+  } else {
+    return <Navigate to="/unauthorized" />;
+  }
 };
 
 PermissionProtect.propTypes = {
