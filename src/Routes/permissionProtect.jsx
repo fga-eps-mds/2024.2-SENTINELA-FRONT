@@ -5,9 +5,9 @@ import { checkAction } from "../Utils/permission";
 import { Navigate } from "react-router-dom";
 import { getRoleById } from "../Services/RoleService/roleService";
 
-const PermissionProtect = ({ element, moduleName, actions }) => {
+const PermissionProtect = ({ element, actions }) => {
   const { user } = useContext(AuthContext);
-  const [userPermissions, setUserPermissions] = useState([]);
+  const [, setUserPermissions] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -35,7 +35,11 @@ const PermissionProtect = ({ element, moduleName, actions }) => {
   }
   const hasPermission = actions.some((action) => checkAction(action));
 
-  return hasPermission ? element : <Navigate to="/unauthorized" />;
+  if (hasPermission) {
+    return element;
+  } else {
+    return <Navigate to="/unauthorized" />;
+  }
 };
 
 PermissionProtect.propTypes = {

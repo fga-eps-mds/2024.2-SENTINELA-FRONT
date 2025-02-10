@@ -3,12 +3,29 @@ import { useAuth } from "../../../Context/auth";
 import { getUsers } from "../../../Services/userService";
 import FieldSelect from "../../../Components/FieldSelect";
 import "./index.css";
-import { Doughnut } from "react-chartjs-2";
-import { Chart, ArcElement, Tooltip } from "chart.js";
+import { Doughnut, Line } from "react-chartjs-2";
+import {
+  Chart,
+  ArcElement,
+  Tooltip,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Legend,
+} from "chart.js";
 import SecondaryButton from "../../../Components/SecondaryButton";
 
 // Registrar os elementos necessários no Chart.js
-Chart.register(ArcElement, Tooltip);
+Chart.register(
+  ArcElement,
+  Tooltip,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Legend
+);
 
 const Home = () => {
   const { user } = useAuth();
@@ -16,6 +33,10 @@ const Home = () => {
   const [isSind, setIsSind] = useState("Sindicalizado");
   const [lotacao, setLotacao] = useState("");
   const [orgao, setOrgao] = useState("");
+  const [lineChartData, setLineChartData] = useState({
+    labels: [],
+    datasets: [],
+  });
 
   // Opções de filtro
   const filiadosOptions = ["Sindicalizado", "Não Sindicalizado"];
@@ -27,6 +48,10 @@ const Home = () => {
         if (Array.isArray(response)) {
           const normalizedUsers = normalizeUserData(response);
           setData(normalizedUsers);
+
+          const processedData = processUserData(response);
+          console.log("Usuarios: ", processedData);
+          setLineChartData(processedData);
         } else {
           console.error("Os dados recebidos não são um array.");
         }
@@ -145,6 +170,184 @@ const Home = () => {
     ],
   };
 
+  const [visualizationType, setVisualizationType] = useState("Mensal");
+
+  const processUserData = (users) => {
+    const monthNames = [
+      "Jan",
+      "Fev",
+      "Mar",
+      "Abr",
+      "Mai",
+      "Jun",
+      "Jul",
+      "Ago",
+      "Set",
+      "Out",
+      "Nov",
+      "Dez",
+    ];
+
+    // Estrutura inicial para armazenar os dados mensais
+    const monthlyData = monthNames.reduce((acc, month) => {
+      acc[month] = { filiados: 0, desfiliados: 0, naoFiliados: 0 };
+      return acc;
+    }, {});
+
+    users.forEach((user) => {
+      // Processar filiações
+      if (user.role.name === "sindicalizado" && user.status == true) {
+        const date = new Date(user.hiringDate);
+        let month = "Dez"; // Assumindo Dezembro como padrão caso não haja uma data
+        if (date && !isNaN(date)) {
+          month = monthNames[date.getMonth()];
+        }
+        monthlyData[month].filiados += 1;
+      }
+
+      // Processar não filiados
+      else if (user.role.name !== "sindicalizado") {
+        const date = new Date(user.updatedAt);
+        let month = "Dez"; // Assumindo Dezembro como padrão caso não haja uma data
+        if (date && !isNaN(date)) {
+          month = monthNames[date.getMonth()];
+        }
+        monthlyData[month].naoFiliados += 1;
+      }
+
+      // Processar desfiliações
+      else {
+        const date = new Date(user.updatedAt);
+        if (!isNaN(date)) {
+          const month = monthNames[date.getMonth()];
+          monthlyData[month].desfiliados += 1;
+        }
+      }
+    });
+
+    return {
+      labels: Object.keys(monthlyData),
+      datasets: [
+        {
+          label: "Filiações",
+          data: Object.values(monthlyData).map((d) => d.filiados),
+          borderColor: "#FA0E0C",
+          fill: false,
+        },
+        {
+          label: "Desfiliações",
+          data: Object.values(monthlyData).map((d) => d.desfiliados),
+          borderColor: "#1B9D77",
+          fill: false,
+        },
+        {
+          label: "Não filiados",
+          data: Object.values(monthlyData).map((d) => d.naoFiliados),
+          borderColor: "#3245CC",
+          fill: false,
+        },
+      ],
+    };
+  };
+
+  // Dados para o gráfico de linhas
+  const getLineChartData = (lineChartData, visualizationType) => {
+    if (!lineChartData) return { labels: [], datasets: [] };
+
+    const calculateSemesterData = (data) => [
+      data.slice(0, 6).reduce((sum, value) => sum + value, 0), // Soma dos primeiros 6 meses
+      data.slice(6, 12).reduce((sum, value) => sum + value, 0), // Soma dos últimos 6 meses
+    ];
+
+    const calculateAnnualData = (data) => [
+      data.reduce((sum, value) => sum + value, 0), // Soma de todos os meses
+    ];
+
+    const config = {
+      Mensal: {
+        labels: [
+          "Jan",
+          "Fev",
+          "Mar",
+          "Abr",
+          "Mai",
+          "Jun",
+          "Jul",
+          "Ago",
+          "Set",
+          "Out",
+          "Nov",
+          "Dez",
+        ],
+        data: lineChartData,
+      },
+      Semestral: {
+        labels: ["1º Semestre", "2º Semestre"],
+        data: {
+          datasets: [
+            {
+              data: calculateSemesterData(
+                lineChartData.datasets[0]?.data || []
+              ),
+            },
+            {
+              data: calculateSemesterData(
+                lineChartData.datasets[1]?.data || []
+              ),
+            },
+            {
+              data: calculateSemesterData(
+                lineChartData.datasets[2]?.data || []
+              ),
+            },
+          ],
+        },
+      },
+      Anual: {
+        labels: ["2025"],
+        data: {
+          datasets: [
+            {
+              data: calculateAnnualData(lineChartData.datasets[0]?.data || []),
+            },
+            {
+              data: calculateAnnualData(lineChartData.datasets[1]?.data || []),
+            },
+            {
+              data: calculateAnnualData(lineChartData.datasets[2]?.data || []),
+            },
+          ],
+        },
+      },
+    };
+
+    const selectedData = config[visualizationType] || config["Mensal"];
+    console.log("linechardata: ", lineChartData);
+    return {
+      labels: selectedData.labels,
+      datasets: [
+        {
+          label: "Filiações",
+          data: selectedData.data.datasets[0]?.data || [],
+          borderColor: "#FA0E0C",
+          fill: false,
+        },
+        {
+          label: "Desfiliações",
+          data: selectedData.data.datasets[1]?.data || [],
+          borderColor: "#1B9D77",
+          fill: false,
+        },
+        {
+          label: "Não filiados",
+          data: selectedData.data.datasets[2]?.data || [],
+          borderColor: "#3245CC",
+          fill: false,
+        },
+      ],
+    };
+  };
+
   const optionsLotacao = {
     responsive: true,
     plugins: {
@@ -165,6 +368,64 @@ const Home = () => {
     setIsSind("Sindicalizado");
     setLotacao("");
     setOrgao("");
+  };
+
+  const optionsLineChart = {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: true, // Garante que a legenda apareça
+        position: "right", // Coloca a legenda ao lado do gráfico
+        labels: {
+          font: {
+            size: 14, // Ajusta o tamanho da fonte
+          },
+          color: "#333", // Cor do texto da legenda
+          usePointStyle: true, // Usa pequenos ícones coloridos na legenda
+          padding: 20, // Dá mais espaço entre os itens da legenda
+        },
+      },
+      tooltip: {
+        callbacks: {
+          label: function (tooltipItem) {
+            return `${tooltipItem.dataset.label}: ${tooltipItem.raw}`;
+          },
+        },
+      },
+    },
+    scales: {
+      y: {
+        beginAtZero: false, // Faz o eixo Y começar do zero
+        suggestedMax: Math.max(
+          ...lineChartData.datasets.flatMap((dataset) => dataset.data)
+        ), // Define o máximo como o maior valor dos dados
+        ticks: {
+          stepSize: Math.ceil(
+            Math.max(
+              ...lineChartData.datasets.flatMap((dataset) => dataset.data)
+            ) / 10
+          ), // Define o intervalo dos ticks no eixo Y (ajuste conforme necessário)
+        },
+      },
+    },
+  };
+
+  // Dados mockados para ativo e aposentado
+  const dataMock = {
+    Ativo: 100, // Exemplo: 120 usuários ativos
+    Aposentado: 54, // Exemplo: 80 usuários aposentados
+  };
+
+  const dataStatus = {
+    labels: ["Ativo", "Aposentado"],
+    datasets: [
+      {
+        label: "Distribuição de Ativos e Aposentados",
+        data: [dataMock.Ativo, dataMock.Aposentado],
+        backgroundColor: ["#DA5F02", "#1B9D77"], // Cores do gráfico
+        borderWidth: 4,
+      },
+    ],
   };
 
   return (
@@ -205,7 +466,6 @@ const Home = () => {
           <div className="donut-box">
             <h1>Divisão de sexo por lotação</h1>
             <Doughnut data={dataLotacao} options={optionsLotacao} />
-
             <FieldSelect
               label="Filtro de Lotação"
               onChange={(e) => {
@@ -215,7 +475,6 @@ const Home = () => {
               value={lotacao}
             />
           </div>
-
           <div className="donut-box">
             <h1>Divisão de lotação por órgão</h1>
             <Doughnut data={dataOrgao} options={optionsLotacao} />
@@ -228,6 +487,26 @@ const Home = () => {
               value={orgao}
             />
           </div>
+        </div>
+
+        <FieldSelect
+          label="Tipo de Visualização"
+          onChange={(e) => setVisualizationType(e.target.value)}
+          options={["Mensal", "Semestral", "Anual"]}
+          value={visualizationType}
+        />
+
+        <div className="line-chart">
+          <h1>Filiações, Desfiliações e Não filiados ao longo do tempo</h1>
+          <Line
+            data={getLineChartData(lineChartData, visualizationType)}
+            options={optionsLineChart}
+          />
+        </div>
+
+        <div className="donut-box">
+          <h1>Distribuição de Ativos e Aposentados</h1>
+          <Doughnut data={dataStatus} options={optionsLotacao} />
         </div>
 
         <SecondaryButton text="Limpar Filtros" onClick={clearFilters} />

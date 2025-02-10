@@ -1,23 +1,8 @@
 import { APIBank } from "../BaseService";
 import { getToken } from "../Functions/loader";
 
-const storagedToken = localStorage.getItem("@App:token");
-let token = null;
-
-if (storagedToken) {
-  try {
-    token = JSON.parse(storagedToken);
-  } catch (error) {
-    console.error("O token armazenado não é um JSON válido:", error);
-  }
-}
-
 export const createpatrimonio = async (patrimonioData) => {
   try {
-    if (!token) {
-      throw new Error("No token found");
-    }
-
     const response = await APIBank.post(
       `/patrimonio/create`,
       { patrimonioData },
@@ -41,10 +26,6 @@ export const createpatrimonio = async (patrimonioData) => {
 
 export const getpatrimonio = async () => {
   try {
-    if (!token) {
-      throw new Error("No token found");
-    }
-
     const response = await APIBank.get("/patrimonio", {
       headers: {
         Authorization: `Bearer ${getToken()}`,
@@ -58,10 +39,6 @@ export const getpatrimonio = async () => {
 
 export const getpatrimonioById = async (id) => {
   try {
-    if (!token) {
-      throw new Error("No token found");
-    }
-
     const response = await APIBank.get(`/patrimonio/${id}`, {
       headers: {
         Authorization: `Bearer ${getToken()}`,
@@ -75,10 +52,6 @@ export const getpatrimonioById = async (id) => {
 
 export const updatepatrimonioById = async (id, patrimonioData) => {
   try {
-    if (!token) {
-      throw new Error("No token found");
-    }
-
     console.log("Enviando dados:", patrimonioData);
 
     const response = await APIBank.patch(
@@ -99,9 +72,6 @@ export const updatepatrimonioById = async (id, patrimonioData) => {
 
 export const deletepatrimonioById = async (id) => {
   try {
-    if (!token) {
-      throw new Error("No token found");
-    }
 
     await APIBank.delete(`/patrimonio/delete/${id}`, {
       headers: {
