@@ -21,11 +21,76 @@ vi.mock("../../../Services/userService", () => ({
 
 vi.mock("react-chartjs-2", () => ({
   Doughnut: () => <div>Mocked Doughnut Chart</div>,
+  Line: () => <div>Mocked Line Chart</div>, // Mock para o componente Line
 }));
 
+vi.mock("./index.jsx", async (importOriginal) => {
+  const actual = await importOriginal(); // Importa as exportações originais
+  return {
+    ...actual, // Preserva as outras exportações
+    processUserData: vi.fn((users) => {
+      if (!users || users.length === 0) {
+        return {
+          datasets: [
+            { data: new Array(12).fill(0) },
+            { data: new Array(12).fill(0) },
+            { data: new Array(12).fill(0) },
+          ],
+        };
+      }
+      return {
+        datasets: [
+          { data: [1, 0, 0] },
+          { data: [0, 1, 0] },
+          { data: [0, 0, 1] },
+        ],
+      };
+    }),
+    getLineChartData: vi.fn((data, type) => {
+      if (!data || data.length === 0) {
+        return { labels: [], datasets: [] };
+      }
+      switch (type) {
+        case "Mensal":
+          return {
+            labels: [
+              "Jan",
+              "Fev",
+              "Mar",
+              "Abr",
+              "Mai",
+              "Jun",
+              "Jul",
+              "Ago",
+              "Set",
+              "Out",
+              "Nov",
+              "Dez",
+            ],
+            datasets: [
+              { data: [10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65] },
+            ],
+          };
+        case "Semestral":
+          return {
+            labels: ["1º Semestre", "2º Semestre"],
+            datasets: [{ data: [135, 315] }],
+          };
+        case "Anual":
+          return {
+            labels: ["2025"],
+            datasets: [{ data: [450] }],
+          };
+        default:
+          return { labels: [], datasets: [] };
+      }
+    }),
+  };
+});
+
 describe("Home Component", () => {
-  it("renders without crashing", async () => {
-    await waitFor(() => render(<Home />));
+  it("renders without crashing", () => {
+    render(<Home />);
 
     expect(screen.getByText("Filiados")).toBeInTheDocument();
     expect(screen.getByText("Divisão de sexo por lotação")).toBeInTheDocument();
@@ -34,9 +99,10 @@ describe("Home Component", () => {
     ).toBeInTheDocument();
 
     const doughnutCharts = screen.getAllByText("Mocked Doughnut Chart");
-    expect(doughnutCharts).toHaveLength(2);
+    expect(doughnutCharts).toHaveLength(3);
     expect(doughnutCharts[0]).toBeInTheDocument();
     expect(doughnutCharts[1]).toBeInTheDocument();
+    expect(doughnutCharts[2]).toBeInTheDocument();
 
     const filiadosSection = screen.getByText("Filiados").closest("div");
     expect(within(filiadosSection).getByText(/Filtro/i)).toBeInTheDocument();
