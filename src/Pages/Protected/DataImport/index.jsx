@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import { APIBank } from "../../../Services/BaseService";
@@ -347,11 +344,6 @@ const DataImport = () => {
 };
 
 export default DataImport;
-=======
-=======
->>>>>>> e3585ed4ac65578a33c2797abd53001951274b04
-=======
->>>>>>> master
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import { APIBank } from "../../../Services/BaseService";
@@ -698,10 +690,3 @@ const DataImport = () => {
 };
 
 export default DataImport;
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> master
-=======
->>>>>>> e3585ed4ac65578a33c2797abd53001951274b04
-=======
->>>>>>> master

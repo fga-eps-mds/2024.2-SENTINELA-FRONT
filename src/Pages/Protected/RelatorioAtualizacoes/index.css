@@ -1,5 +1,5 @@
 .data-table {
-<<<<<<< HEAD
+
     width: 100%;
     border-collapse: separate;
     margin-top: 20px;
@@ -72,8 +72,6 @@
   }
   .import-button:hover {
     background-color: #8c6a2e;
-  }
-=======
   width: 100%;
   border-collapse: separate;
   margin-top: 20px;
@@ -147,10 +145,4 @@
 .import-button:hover {
   background-color: #8c6a2e;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> master
-=======
->>>>>>> e3585ed4ac65578a33c2797abd53001951274b04
-=======
->>>>>>> master
+
