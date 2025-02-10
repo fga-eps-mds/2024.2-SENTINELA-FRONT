@@ -72,7 +72,6 @@ export const updatepatrimonioById = async (id, patrimonioData) => {
 
 export const deletepatrimonioById = async (id) => {
   try {
-
     await APIBank.delete(`/patrimonio/delete/${id}`, {
       headers: {
         Authorization: `Bearer ${getToken()}`,

@@ -1,7 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { render, screen, cleanup, waitFor } from "@testing-library/react";
+import { render, screen, cleanup } from "@testing-library/react";
 import { BrowserRouter as Router, useNavigate } from "react-router-dom";
-import patrimonioCreate from "./index.jsx";
 import "@testing-library/jest-dom";
 import userEvent from "@testing-library/user-event";
 
@@ -18,30 +17,6 @@ function mockServices() {
   vi.mock("../../../../Services/patrimonioService", () => ({
     patrimonioCreate: vi.fn(),
   }));
-}
-
-// Função auxiliar para preencher campos obrigatórios
-async function fillUpRequiredFields() {
-  try {
-    const nomeInput = await screen.findByLabelText("Nome *");
-    const descricaoInput = await screen.findByLabelText("Descrição *");
-    const valorInput = await screen.findByLabelText("Valor *");
-    const numerodeSerieInput = await screen.findByLabelText("Numero de Serie");
-    const numerodeEtiquetaInput = await screen.findByLabelText(
-      "Etiqueta de Patrimônio"
-    );
-    const localizacaoSelect = await screen.findByLabelText("Localização *");
-
-    // Simulando seleção de opções e preenchimento de campos
-    await userEvent.type(nomeInput, "Nome Exemplo");
-    await userEvent.type(descricaoInput, "Descrição de exemplo");
-    await userEvent.type(valorInput, "1000");
-    await userEvent.type(numerodeSerieInput, "12345");
-    await userEvent.type(numerodeEtiquetaInput, "0001");
-    await userEvent.selectOptions(localizacaoSelect, "OUTROS");
-  } catch (error) {
-    console.error("Erro ao preencher campos:", error);
-  }
 }
 
 describe("patrimonioCreate Component", () => {
