@@ -1,12 +1,8 @@
-/* eslint-disable no-unreachable */
-// src/hooks/usePermissions.js
-
 import { useContext, useState, useEffect } from "react";
 import AuthContext from "../Context/auth";
 import { getRoleById } from "../Services/RoleService/roleService";
 
 export const checkModule = (permissions, module) => {
-  return true;
   const modulePermissions = permissions.find(
     (permission) => permission.module === module
   );
@@ -28,6 +24,7 @@ export const checkModule = (permissions, module) => {
 export const checkAction = (action) => {
   // Obtém o valor de permissões do localStorage
   const permissionsString = localStorage.getItem("@App:permissions");
+<<<<<<< HEAD
 
   // Verifica se o valor existe no localStorage
   if (!permissionsString) {
@@ -52,6 +49,15 @@ export const checkAction = (action) => {
     console.error("Erro ao analisar as permissões:", error);
     return false;
   }
+=======
+  if (!permissionsString) return false;
+
+  const permissions = JSON.parse(permissionsString);
+
+  return permissions.some(
+    (permission) => permission.actions && permission.actions.includes(action)
+  );
+>>>>>>> e3585ed4ac65578a33c2797abd53001951274b04
 };
 
 

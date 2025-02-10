@@ -36,7 +36,6 @@ import Unauthorized from "../Pages/Protected/Unauthorized";
 import GenerateFinancialReport from "../Pages/Protected/FinancialMovements/GenerateFinancialReport";
 import PermissionCRUD from "../Pages/Protected/Permissions/permissionsHandler.jsx";
 import RelatorioAtualizacoes from "../Pages/Protected/RelatorioAtualizacoes";
-import { checkAction } from "../Utils/permission.jsx";
 
 import DataImport from "../Pages/Protected/DataImport/index.jsx";
 
@@ -205,18 +204,21 @@ const ProtectedRoutes = () => {
           />
         }
       />
-      {checkAction("filiado_visualizar_carteirinha") && (
-        <Route
-          path="/carteirinha"
-          element={
-            <PermissionProtect
-              element={<CarteirinhaPage />}
-              moduleName="users"
-              actions={["read", "create"]}
-            />
-          }
-        />
-      )}
+      <Route
+        path="/carteirinha"
+        element={
+          // <PermissionProtect
+          //   element={<CarteirinhaPage />}
+          //   moduleName="users"
+          //   actions={["read", "create"]}
+          // />
+          <PermissionProtect
+            element={<CarteirinhaPage />}
+            moduleName="benefits"
+            actions={["read", "create", "update", "delete"]}
+          />
+        }
+      />
       <Route
         path="/beneficios/editar/:id"
         element={
@@ -352,14 +354,14 @@ const ProtectedRoutes = () => {
         }
       />
       <Route
-          path="/dataimport"
-          element={
-              <PermissionProtect
-                  element={<DataImport />}
-                  moduleName="finance"
-                  actions={["read", "create"]}
-              />
-          }
+        path="/dataimport"
+        element={
+          <PermissionProtect
+            element={<DataImport />}
+            moduleName="finance"
+            actions={["read", "create"]}
+          />
+        }
       />
     </Routes>
   );

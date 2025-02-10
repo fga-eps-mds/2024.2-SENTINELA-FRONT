@@ -1,109 +1,105 @@
 .overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Fundo escuro com opacidade */
-<<<<<<< HEAD
-    z-index: 1; /* Certifique-se de que o overlay fique atrás do modal */
-=======
-    z-index: 1; /* Certifique-se de que o overlay fique atrÃ¡s do modal */
->>>>>>> 4d511b01d7a80eeec11cd2cee38c0eb617b2f855
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Fundo escuro com opacidade */
+  z-index: 1; /* Certifique-se de que o overlay fique atrÃ¡s do modal */
 }
 .containerInformacao {
-    position: fixed;
-    top: 27%;
-    left: 30%;
-    transform: translate(-50%, -50%);
-    width: 652px;
-    height: 356px;
-    background-color: #EBDEC9;
-    border-radius: 20px;
-    border: 2px solid #AE883C;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    z-index: 2;
+  position: fixed;
+  top: 27%;
+  left: 30%;
+  transform: translate(-50%, -50%);
+  width: 652px;
+  height: 356px;
+  background-color: #ebdec9;
+  border-radius: 20px;
+  border: 2px solid #ae883c;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 2;
 }
 
 .tituloTitular {
-    margin-top: 1px;
-    margin-left: 0;
-    font-weight: bold;
-    font-size: 1.2rem;
+  margin-top: 1px;
+  margin-left: 0;
+  font-weight: bold;
+  font-size: 1.2rem;
 }
 
 .nomeTitular {
-    margin-top: 5px;
-    margin-left: 0;
-    width: 100%;
-    height: 45px;
-    background-color: #AE883C;
-    color: #FFFFFF;
-    padding: 10px;
-    border-radius: 5px;
+  margin-top: 5px;
+  margin-left: 0;
+  width: 100%;
+  height: 45px;
+  background-color: #ae883c;
+  color: #ffffff;
+  padding: 10px;
+  border-radius: 5px;
 }
 
 .tituloCpf {
-    margin-top: 10px;
-    margin-left: 0;
-    font-weight: bold;
-    font-size: 1.2rem;
+  margin-top: 10px;
+  margin-left: 0;
+  font-weight: bold;
+  font-size: 1.2rem;
 }
 
 .cpfTitular {
-    margin-top: 5px;
-    margin-left: 0;
-    width: 100%;
-    height: 45px;
-    background-color: #AE883C;
-    color: #FFFFFF;
-    padding: 10px;
-    border-radius: 5px;
+  margin-top: 5px;
+  margin-left: 0;
+  width: 100%;
+  height: 45px;
+  background-color: #ae883c;
+  color: #ffffff;
+  padding: 10px;
+  border-radius: 5px;
 }
 
 .tituloStatus {
-    margin-top: 10px;
-    margin-left: 0;
-    font-weight: bold;
-    font-size: 1.2rem;
+  margin-top: 10px;
+  margin-left: 0;
+  font-weight: bold;
+  font-size: 1.2rem;
 }
 
 .statusTitular {
-    margin-top: 5px;
-    margin-left: 0;
-    width: 100%;
-    height: 45px;
-    background-color: #AE883C;
-    color: #FFFFFF;
-    padding: 10px;
-    border-radius: 5px;
+  margin-top: 5px;
+  margin-left: 0;
+  width: 100%;
+  height: 45px;
+  background-color: #ae883c;
+  color: #ffffff;
+  padding: 10px;
+  border-radius: 5px;
 }
 
-.botaoParaDesfiliar, .botaoParaVoltar, .botaoQuitar {
-    margin-top: 20px;
-    width: 140px;
-    height: 52px;
-    background-color: #EAE3D7;
-    color: #AE883C;
-    border: none;
-    border: 2px solid #AE883C;
-    border-radius: 4px;
-    cursor: pointer;
+.botaoParaDesfiliar,
+.botaoParaVoltar,
+.botaoQuitar {
+  margin-top: 20px;
+  width: 140px;
+  height: 52px;
+  background-color: #eae3d7;
+  color: #ae883c;
+  border: none;
+  border: 2px solid #ae883c;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
-.botaoParaDesfiliar:hover, .botaoParaVoltar:hover, .botaoQuitar:hover {
-    background-color: #bdb2a2;
+.botaoParaDesfiliar:hover,
+.botaoParaVoltar:hover,
+.botaoQuitar:hover {
+  background-color: #bdb2a2;
 }
 
 .botaoParaVoltar {
-    margin-left: 15px;
+  margin-left: 15px;
 }
 
 .botaoQuitar {
-    margin-left: 17px;
-<<<<<<< HEAD
+  margin-left: 17px;
 }
-=======
-}
->>>>>>> 4d511b01d7a80eeec11cd2cee38c0eb617b2f855

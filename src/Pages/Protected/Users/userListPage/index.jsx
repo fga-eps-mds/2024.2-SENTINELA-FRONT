@@ -74,10 +74,19 @@ export default function UserListPage() {
       <div className="forms-container-userlist">
         <div className="double-box-userlist">
           <h1>Lista de Usuários</h1>
+          <br />
           {hasPermission && (
             <PrimaryButton
               text="Cadastrar Usuário"
               onClick={handleRegisterClick}
+            />
+          )}
+          {hasPermission && (
+            <PrimaryButton
+              text="Cadastrar Sindicalizado"
+              onClick={() => {
+                navigate("/filiacao");
+              }}
             />
           )}
         </div>

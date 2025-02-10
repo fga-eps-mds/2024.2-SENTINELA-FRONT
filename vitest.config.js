@@ -8,8 +8,9 @@ export default defineConfig({
   test: {
     globals: true,
     coverage: {
-      provider: "v8",
-      reporter: ["lcov"],
+      provider: "v8", // Ou "c8" se precisar de mais compatibilidade
+      reporter: ["text", "html", "lcov"], // Adiciona "html" para gerar o relatório visual
+      reportsDirectory: "coverage", // Diretório onde os arquivos serão gerados
     },
     environment: "jsdom",
     reporters: reporter
@@ -17,5 +18,6 @@ export default defineConfig({
       : [],
     outputFile: "coverage/coverage.xml",
     testTimeout: 30000,
+    include: ["**/*.test.{js,jsx,ts,tsx}", "**/*.spec.{js,jsx,ts,tsx}"],
   },
 });

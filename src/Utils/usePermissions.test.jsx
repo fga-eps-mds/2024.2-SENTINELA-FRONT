@@ -1,74 +1,68 @@
-import { describe, it, expect, beforeEach, vi } from "vitest";
-import { renderHook } from "@testing-library/react";
-import { waitFor } from "@testing-library/react";
-import AuthContext from "../Context/auth";
-import { getRoleById } from "../Services/RoleService/roleService";
-import { usePermissions } from "./permission";
+import { describe, expect, beforeEach, vi, test } from "vitest";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import PermissionCRUD from "./../Pages/Protected/Permissions/permissionsHandler";
+import * as BaseService from "./../Services/BaseService/index";
+import * as LoaderFunctions from "./../Services/Functions/loader";
+import * as PermissionUtils from "../Utils/permission";
+import "@testing-library/jest-dom";
 
-// Mock da função getRoleById
-vi.mock("../Services/RoleService/roleService", () => ({
-  getRoleById: vi.fn(),
-}));
+vi.spyOn(BaseService.APIUsers, "get").mockImplementation(() =>
+  Promise.resolve({ data: [] })
+);
+vi.spyOn(BaseService.APIUsers, "post").mockImplementation(() =>
+  Promise.resolve()
+);
+vi.spyOn(BaseService.APIUsers, "patch").mockImplementation(() =>
+  Promise.resolve()
+);
+vi.spyOn(BaseService.APIUsers, "delete").mockImplementation(() =>
+  Promise.resolve()
+);
 
-describe("usePermissions Hook", () => {
+vi.spyOn(LoaderFunctions, "getToken").mockReturnValue("mocked_token");
+vi.spyOn(PermissionUtils, "checkAction").mockReturnValue(true);
+
+describe("PermissionCRUD Component", () => {
   beforeEach(() => {
-    vi.clearAllMocks();
+    vi.clearAllMocks(); // Limpa os mocks antes de cada teste
   });
 
-  it("should return permissions from context", async () => {
-    // Mock do AuthContext
-    const wrapper = ({ children }) => (
-      <AuthContext.Provider value={{ user: { role: "123" } }}>
-        {children}
-      </AuthContext.Provider>
-    );
-
-    const mockPermissions = [
-      { module: "users", access: ["read", "write"] },
-      { module: "roles", access: ["read"] },
-    ];
-
-    getRoleById.mockResolvedValue({ permissions: mockPermissions });
-
-    const { result } = renderHook(() => usePermissions(), { wrapper });
-
-    // Use waitFor to wait for the state updates
-    await waitFor(() => {
-      expect(result.current).toEqual(mockPermissions);
-    });
-
-    expect(getRoleById).toHaveBeenCalledWith("123");
+  test("deve renderizar o título corretamente", () => {
+    render(<PermissionCRUD />);
+    const title = screen.getByText(/Permission Management/i);
+    expect(title).toBeInTheDocument();
   });
 
-  it("should handle errors when fetching permissions", async () => {
-    // Mock do AuthContext
-    const wrapper = ({ children }) => (
-      <AuthContext.Provider value={{ user: { role: "123" } }}>
-        {children}
-      </AuthContext.Provider>
+  test("deve chamar fetchPermissions ao carregar o componente", async () => {
+    render(<PermissionCRUD />);
+    await waitFor(() =>
+      expect(BaseService.APIUsers.get).toHaveBeenCalledTimes(1)
     );
+  });
 
-    getRoleById.mockRejectedValue(new Error("Failed to fetch"));
+  test("deve permitir a criação de permissões se o usuário tiver permissão", async () => {
+    render(<PermissionCRUD />);
+    const input = screen.getByLabelText(/Permission Name/i);
+    const button = screen.getByText(/Criar Permissão/i);
 
-    const { result } = renderHook(() => usePermissions(), { wrapper });
+    fireEvent.change(input, { target: { value: "Nova Permissão" } });
+    fireEvent.click(button);
 
-    // Use waitFor to wait for the state updates
     await waitFor(() => {
-      expect(result.current).toEqual([]);
+      expect(BaseService.APIUsers.post).toHaveBeenCalledWith(
+        "permission/create/",
+        { name: "Nova Permissão" }
+      );
     });
   });
 
-  it("should return empty permissions if no user role", async () => {
-    // Mock do AuthContext
-    const wrapper = ({ children }) => (
-      <AuthContext.Provider value={{ user: {} }}>
-        {children}
-      </AuthContext.Provider>
-    );
+  test("deve exibir permissões na tabela", async () => {
+    const mockPermissions = [{ _id: "1", name: "Admin" }];
+    BaseService.APIUsers.get.mockResolvedValueOnce({ data: mockPermissions });
 
-    const { result } = renderHook(() => usePermissions(), { wrapper });
-
-    // Assert directly since there's no async code to wait for
-    expect(result.current).toEqual([]);
+    render(<PermissionCRUD />);
+    await waitFor(() => {
+      expect(screen.getByText(/Admin/i)).toBeInTheDocument();
+    });
   });
 });

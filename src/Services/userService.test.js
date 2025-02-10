@@ -164,20 +164,23 @@ describe("User Service", () => {
       data: { id: "1", name: "New User" },
     });
 
-    await createUser(userData); // Chama a função para criar o usuário
+    await createUser(userData);
 
     // Verifica se a chamada foi feita corretamente
-    expect(APIUsers.post).toHaveBeenCalledWith("/signup", {
-      ...userData,
-      params: {
-        userId: `${mockUser._id}`, // Verifica o ID do usuário
-        moduleName: "users",
-        action: "create",
+    expect(APIUsers.post).toHaveBeenCalledWith(
+      "/signup",
+      {
+        ...userData,
+        params: {
+          userId: `${mockUser._id}`,
+          moduleName: "users",
+          action: "create",
+        },
       },
-      headers: {
-        Authorization: `Bearer ${mockToken}`, // Verifica o token
-      },
-    });
+      {
+        headers: { Authorization: `Bearer ${mockToken}` }, // Verifica o token
+      }
+    );
   });
 
   it("should log and return undefined when API call fails in createUser", async () => {

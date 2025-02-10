@@ -11,6 +11,7 @@ import DataSelect from "../../../../Components/DataSelect";
 import FieldText from "../../../../Components/FieldText";
 import { APIBank } from "../../../../Services/BaseService";
 import { checkAction } from "../../../../Utils/permission";
+import { getToken } from "../../../../Services/Functions/loader";
 
 export default function FinancialList() {
   const [movements, setMovements] = useState([]);
@@ -21,14 +22,12 @@ export default function FinancialList() {
   // const permissions = usePermissions();
   const canCreate = checkAction("create");
 
-  const storagedUser = JSON.parse(localStorage.getItem("@App:user"));
-
   useEffect(() => {
     const fetchMovements = async () => {
       try {
         const response = await APIBank.get(`/financialMovements`, {
           headers: {
-            Authorization: `Bearer ${storagedUser.token}`,
+            Authorization: `Bearer ${getToken()}`,
           },
         });
 
