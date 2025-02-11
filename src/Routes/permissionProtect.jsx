@@ -3,11 +3,9 @@ import AuthContext from "../Context/auth";
 import PropTypes from "prop-types";
 import { checkAction } from "../Utils/permission";
 import { Navigate } from "react-router-dom";
-import { getRoleById } from "../Services/RoleService/roleService";
 
 const PermissionProtect = ({ element, actions }) => {
   const { user } = useContext(AuthContext);
-  const [, setUserPermissions] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
