@@ -211,15 +211,10 @@ const ProtectedRoutes = () => {
       <Route
         path="/carteirinha"
         element={
-          // <PermissionProtect
-          //   element={<CarteirinhaPage />}
-          //   moduleName="users"
-          //   actions={["read", "create"]}
-          // />
           <PermissionProtect
             element={<CarteirinhaPage />}
             moduleName="benefits"
-            actions={["read", "create", "update", "delete"]}
+            actions={["read"]}
           />
         }
       />

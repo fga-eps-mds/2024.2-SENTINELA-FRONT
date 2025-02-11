@@ -12,18 +12,7 @@ const PermissionProtect = ({ element, actions }) => {
 
   useEffect(() => {
     const fetchRolePermissions = async () => {
-      if (user?.role) {
-        try {
-          const role = await getRoleById(user.role);
-          setUserPermissions(role?.permissions || []);
-        } catch (error) {
-          console.error("Failed to fetch role permissions:", error);
-          setUserPermissions([]);
-        }
-        setLoading(false);
-      } else {
-        setLoading(false);
-      }
+      setLoading(false);
     };
 
     fetchRolePermissions();
