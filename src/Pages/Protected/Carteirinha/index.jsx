@@ -78,7 +78,8 @@ const Carteirinha = () => {
     return <div>Carregando dados...</div>;
   }
 
-  const { name, birthDate, cpf, expeditionDate, hiringDate, phone } = membershipData;
+  const { name, birthDate, cpf, expeditionDate, hiringDate, phone } =
+    membershipData;
 
   return (
     <div className="carteirinha-container" ref={cardRef}>

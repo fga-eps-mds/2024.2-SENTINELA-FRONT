@@ -1,14 +1,6 @@
 import "./index.css";
-
-//import LabeledTextField from "../../../../Components/LabeledTextField/index.jsx";
-//import PrimaryButton from "../../../../Components/PrimaryButton/index.jsx";
-//import SecondaryButton from "../../../../Components/SecondaryButton/index.jsx";
-//import UnderlinedTextButton from "../../../../Components/UnderlinedTextButton/index.jsx";
 import { useState } from "react";
-//import AuthContext, { useAuth } from "../../../../Context/auth.jsx";
 import { useNavigate } from "react-router-dom";
-//import Card from "../../../../Components/Card/index.jsx";
-//import FieldText from "../../../../Components/FieldText/index.jsx";
 
 const VerifyMemberForm = () => {
   const [name, setName] = useState("");
