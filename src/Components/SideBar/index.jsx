@@ -209,7 +209,10 @@ export default function SideBar() {
               key="logout"
               className="btn-logout"
               onClick={() => {
-                context.Logout();
+                if (context && context.Logout) {
+                  context.Logout();
+                   }
+              
                 navigate("/");
                 window.location.reload();
               }}
@@ -225,8 +228,4 @@ export default function SideBar() {
     </>
   );
 }
-/*
-SideBar.propTypes = {
-  fullHeight: PropTypes.bool,
-};
-*/
+

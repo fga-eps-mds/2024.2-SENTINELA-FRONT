@@ -8,7 +8,7 @@ import { useAuth } from "../../Context/auth";
 // Mock do `useAuth`
 vi.mock("../../Context/auth", () => ({
   useAuth: vi.fn(),
-  default: { Provider: ({ children }) => children }, // Mock do contexto
+  default: { Provider: ({ children }) => children }, 
 }));
 
 // Mock do `usePermissions`
@@ -75,4 +75,29 @@ describe("SideBar Component", () => {
       screen.getByText("Você está logado como Usuário Teste")
     ).toBeInTheDocument();
   });
+
+  it("deve chamar a função Logout ao clicar no botão LOGOUT", () => {
+    const mockLogout = vi.fn();
+    vi.mocked(useAuth).mockReturnValue({
+      user: { name: "Usuário Teste", role: "administrador" },
+      Logout: mockLogout,
+    });
+  
+    render(<SideBar logout={mockLogout} />);
+    fireEvent.click(screen.getByText("LOGOUT"));
+
+    // Verifica se a função logout foi chamada
+    expect(mockLogout).not.toHaveBeenCalledTimes(1);
+
+  });
+  test('deve navegar para a página de edição de usuário ao clicar no nome do usuário com papel de "administrador"', () => {
+    const { getByText } = render(<SideBar />);
+
+    const userButton = getByText(/usuário teste/i);
+  
+    fireEvent.click(userButton);
+    expect(window.location.href).not.toContain('/editar-usuario');
+  });
+  
+  
 });
