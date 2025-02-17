@@ -4,7 +4,7 @@ import { DateField } from "@mui/x-date-pickers/DateField";
 import TextField from "@mui/material/TextField";
 import dayjs from "dayjs";
 
-export default function BasicDateField(label, value) {
+export default function BasicDateField({label, value}) {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DateField
