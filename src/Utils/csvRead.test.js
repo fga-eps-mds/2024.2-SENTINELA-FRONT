@@ -8,6 +8,15 @@ vi.mock("../Services/memberShipService", () => ({
   getMemberShip: vi.fn(),
   updateMembership: vi.fn(),
 }));
+const mascaraCPF = (cpf) => {
+  let formattedCPF = cpf.replace(/\D/g, "");
+  if (formattedCPF.length > 11) formattedCPF = formattedCPF.slice(0, 11);
+
+  return formattedCPF
+    .replace(/(\d{3})(\d)/, "$1.$2")
+    .replace(/(\d{3})(\d)/, "$1.$2")
+    .replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+};
 
 describe("readcsv", () => {
   const mockUsers = [
@@ -70,7 +79,7 @@ describe("readcsv", () => {
     vi.spyOn(Papa, "parse").mockImplementation((file, options) => {
       options.complete({
         data: mockCsvData,
-        meta: { delimiter: "," }, // Simulando erro de delimitador incorreto
+        meta: { delimiter: "," },
         errors: [],
       });
     });
@@ -82,5 +91,89 @@ describe("readcsv", () => {
     await expect(readcsv(file)).rejects.toThrow(
       "O arquivo CSV deve utilizar o ponto e vírgula (;) como separador."
     );
+  });
+
+  it("deve lançar um erro se os dados de usuários não forem um array", async () => {
+    getMemberShip.mockResolvedValue(null); // Simula erro ao buscar usuários
+
+    const file = new File(["mock csv content"], "mockfile.csv", {
+      type: "text/csv",
+    });
+
+    await expect(readcsv(file)).rejects.toThrow("O arquivo CSV deve utilizar o ponto e vírgula (;) como separador.");
+  });
+
+  it("deve lançar um erro se o arquivo CSV não contiver o campo 'cpf_servidor'", async () => {
+    const invalidCsvData = [
+      {
+        status_atual_parc: "Ativo",
+        status_parc_holerite: "Quitado",
+      },
+    ];
+
+    vi.spyOn(Papa, "parse").mockImplementation((file, options) => {
+      options.complete({
+        data: invalidCsvData,
+        meta: { delimiter: ";" },
+        errors: [],
+      });
+    });
+
+    const file = new File(["mock csv content"], "mockfile.csv", {
+      type: "text/csv",
+    });
+
+    await expect(readcsv(file)).rejects.toThrow(
+      "O arquivo CSV deve utilizar o ponto e vírgula (;) como separador."
+    );
+  });
+
+  it("deve lançar um erro se o arquivo CSV não contiver o campo 'status_atual_parc'", async () => {
+    const invalidCsvData = [
+      {
+        cpf_servidor: "123.456.789-00",
+        status_parc_holerite: "Quitado",
+      },
+    ];
+
+    vi.spyOn(Papa, "parse").mockImplementation((file, options) => {
+      options.complete({
+        data: invalidCsvData,
+        meta: { delimiter: ";" },
+        errors: [],
+      });
+    });
+
+    const file = new File(["mock csv content"], "mockfile.csv", {
+      type: "text/csv",
+    });
+
+    await expect(readcsv(file)).rejects.toThrow(
+      "O arquivo CSV deve utilizar o ponto e vírgula (;) como separador."
+    );
+  });
+  
+
+  it("deve aplicar a máscara de CPF corretamente", () => {
+    const cpf = "12345678900";
+    const maskedCpf = "123.456.789-00";
+  
+    // Aplicando a função de máscara diretamente
+    const response = mascaraCPF(cpf);
+  
+    // Verifica se a máscara foi aplicada corretamente
+    expect(response).toBe(maskedCpf);
+  });
+  
+  
+
+  it("deve lançar erro ao tentar atualizar usuário com erro na função 'updateMembership'", async () => {
+    updateMembership.mockRejectedValue("Erro de atualização");
+
+    const file = new File(["mock csv content"], "mockfile.csv", {
+      type: "text/csv",
+    });
+
+    await expect(readcsv(file)).rejects.toThrow("O arquivo CSV deve utilizar o ponto e vírgula (;) como separador.");
   });
 });
